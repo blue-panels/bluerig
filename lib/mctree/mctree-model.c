@@ -146,22 +146,41 @@ mctree_model_add_visible_children (const mctree_node_t *node, int depth, GArray 
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The nodes of @node opened down to @target_depth, those below closed.  A loop over a stack, not
+   a recursion: gcc 15.2 with -O2 -flto made clones of the recursion for the constant depths it
+   was called with, and a call with 2 after one with 1 opened nothing */
 static void
-mctree_node_expand_to_depth (mctree_node_t *node, int current_depth, int target_depth)
+mctree_node_expand_to_depth (mctree_node_t *node, int target_depth)
 {
-    guint i;
+    const int zero = 0;
+    GPtrArray *nodes;
+    GArray *depths;
 
     if (node == NULL)
         return;
 
-    node->expanded = current_depth < target_depth;
+    nodes = g_ptr_array_new ();
+    depths = g_array_new (FALSE, FALSE, sizeof (int));
+    g_ptr_array_add (nodes, node);
+    g_array_append_val (depths, zero);
+    while (nodes->len > 0)
+    {
+        mctree_node_t *n = g_ptr_array_steal_index (nodes, nodes->len - 1);
+        const int depth = g_array_index (depths, int, depths->len - 1);
+        guint i;
 
-    if (node->children == NULL)
-        return;
+        g_array_set_size (depths, depths->len - 1);
+        n->expanded = depth < target_depth;
+        for (i = 0; n->children != NULL && i < n->children->len; i++)
+        {
+            const int below = depth + 1;
 
-    for (i = 0; i < node->children->len; i++)
-        mctree_node_expand_to_depth (g_ptr_array_index (node->children, i), current_depth + 1,
-                                     target_depth);
+            g_ptr_array_add (nodes, g_ptr_array_index (n->children, i));
+            g_array_append_val (depths, below);
+        }
+    }
+    g_ptr_array_free (nodes, TRUE);
+    g_array_free (depths, TRUE);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -296,7 +315,7 @@ mctree_model_expand_to_depth (mctree_model_t *model, int depth)
     if (depth < 0)
         depth = 0;
 
-    mctree_node_expand_to_depth (model->root, 0, depth);
+    mctree_node_expand_to_depth (model->root, depth);
 }
 
 /* --------------------------------------------------------------------------------------------- */

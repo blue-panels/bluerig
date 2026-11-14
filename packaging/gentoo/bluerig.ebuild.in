@@ -18,6 +18,7 @@ RESTRICT="!test? ( test )"
 
 COMMON_DEPEND="
 	dev-libs/glib:2
+	dev-libs/json-glib
 	slang? ( sys-libs/slang )
 	!slang? ( sys-libs/ncurses:0= )
 	gpm? ( sys-libs/gpm )

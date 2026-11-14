@@ -2,6 +2,17 @@
 
 The releases of bluerig, newest first.
 
+## 1.0.1
+
+- The first published release: 1.0.0 was built but not published, since its
+  packages for Ubuntu 26.04, Arch and macOS failed.
+- The tree of a project and of Schema opens again in a build by gcc 15 with
+  link-time optimization, as Ubuntu 26.04 makes its packages.
+- The packages for Arch and Gentoo need json-glib, which the language
+  servers, the debug adapters and the queries are built with.
+- The package for macOS takes the modules of the editor and the Lua runtime
+  with their libraries.
+
 ## 1.0.0
 
 - bluerig is a terminal IDE, a continuation of cooledit by Paul Sheer: the
