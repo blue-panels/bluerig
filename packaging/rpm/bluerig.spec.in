@@ -1,7 +1,7 @@
 Name:            bluerig
 Version:         @VERSION@
 Release:         1%{?dist}
-Summary:         Console text editor, a continuation of cooledit
+Summary:         Terminal IDE, a continuation of cooledit
 License:         GPL-3.0-or-later
 URL:             https://github.com/blue-panels/bluerig
 Source0:         %{url}/releases/download/bluerig-%{version}/bluerig-%{version}.tar.gz
@@ -25,13 +25,21 @@ Suggests:        hunspell
 Suggests:        ctags
 
 %description
-bluerig is a console text editor that continues cooledit by Paul Sheer.  It has syntax highlighting, code folding, an
-undo history browser, keyboard macros with a macro explorer, ctags and etags
-navigation, spell checking through aspell or hunspell loaded at run time, a
-user menu, multiple windows, skins and editable key bindings.
+bluerig is a terminal IDE that continues cooledit by Paul Sheer.  Its editor
+has syntax highlighting, code folding, an undo history browser, keyboard
+macros, a user menu, multiple windows, skins and editable key bindings, and
+works with language servers for completion, documentation and diagnostics.
+
+bluerig -D opens the project of a directory: its tree, its build with meson,
+cmake or make, and its debugger, gdb or a debug adapter.  bluerig -G opens a
+Git window on a work tree, and bluerig -Q runs the queries of a file in
+PostgreSQL, by libpq, or in MongoDB, by mongosh.
+
+Spell checking uses aspell or hunspell, whichever is installed; libpq and the
+spell checker are loaded at run time.
 
 %package lua
-Summary:         Lua runtime and scripts for the bluerig text editor
+Summary:         Lua runtime and scripts for bluerig
 Requires:        %{name}%{?_isa} = %{version}-%{release}
 
 %description lua

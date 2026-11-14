@@ -3,7 +3,7 @@
 
 .SH NAME
 .PP
-bluerig \- a text editor.
+bluerig \- a terminal IDE.
 
 
 .SH SYNOPSIS
@@ -15,7 +15,7 @@ bluerig \- a text editor.
 .SH DESCRIPTION
 .PP
 \fBbluerig\fP
-is a console text editor. It continues
+is a terminal IDE. It continues
 \fBcooledit\fP,
 the editor by Paul Sheer, whose terminal version was developed for many years
 as the internal editor of GNU Midnight Commander; bluerig carries that editor on

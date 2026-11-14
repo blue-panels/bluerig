@@ -1,7 +1,7 @@
 This document
 =============
 
-This document is a guide how to develop bluerig, a console text editor,
+This document is a guide how to develop bluerig, a terminal IDE,
 a continuation of cooledit.  It's
 quite incomplete, but may be worth reading anyway.
 

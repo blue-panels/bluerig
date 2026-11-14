@@ -5,7 +5,7 @@ EAPI=8
 
 inherit meson optfeature
 
-DESCRIPTION="Console text editor, a continuation of cooledit"
+DESCRIPTION="Terminal IDE, a continuation of cooledit"
 HOMEPAGE="https://github.com/blue-panels/bluerig"
 SRC_URI="https://github.com/blue-panels/bluerig/releases/download/bluerig-${PV}/bluerig-${PV}.tar.gz"
 S="${WORKDIR}/bluerig-${PV}"
