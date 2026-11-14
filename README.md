@@ -3,6 +3,8 @@
 bluerig is a console text editor. It runs full screen in any terminal, from
 the Linux console to tmux and a remote session over ssh.
 
+![bluerig: a C file with the tree of its project, the README with its Preview, and the shell at the bottom](https://raw.githubusercontent.com/wiki/blue-panels/bluerig/assets/overview.gif)
+
 bluerig continues cooledit, the editor written by Paul Sheer, whose terminal
 version lived on for many years as the internal editor of GNU Midnight
 Commander. bluerig takes that editor with the fixes and features it gained
