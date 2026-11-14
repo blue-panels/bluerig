@@ -8,7 +8,7 @@ pkgdesc='Terminal IDE, a continuation of cooledit'
 arch=('x86_64' 'aarch64')
 url='https://github.com/blue-panels/bluerig'
 license=('GPL-3.0-or-later')
-makedepends=('meson' 'pkgconf' 'gettext' 'glib2' 'json-glib' 'slang' 'gpm' 'lua' 'libx11')
+makedepends=('meson' 'pkgconf' 'gettext' 'glib2' 'json-glib' 'slang' 'gpm' 'lua' 'libx11' 'check')
 options=('!emptydirs')
 source=("bluerig-${pkgver}.tar.gz::${url}/releases/download/bluerig-${pkgver}/bluerig-${pkgver}.tar.gz")
 # Filled in by packaging/prepare.sh from the release archive; SKIP when no
