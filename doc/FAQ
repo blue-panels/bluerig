@@ -75,11 +75,13 @@ Frequently Asked Questions
 
 1.1 What is bluerig?
 
-   bluerig is a console text editor, a continuation of cooledit by Paul
-   Sheer.  It has syntax highlighting, code
-   folding, an undo history browser, macros and a macro explorer,
-   ctags and etags navigation, spell checking, a user menu, multiple
-   windows, editor plugins and Lua scripting.
+   bluerig is a terminal IDE, a continuation of cooledit by Paul
+   Sheer.  Its editor has syntax highlighting, code folding, an undo
+   history browser, macros, ctags navigation, spell checking, a user
+   menu, multiple windows and Lua scripting, and works with language
+   servers.  bluerig -D opens a project with its tree, its build and
+   its debugger; bluerig -G opens a Git window, and bluerig -Q runs
+   the queries of PostgreSQL and MongoDB.
 
    The program and the package are called bluerig.  Run it as
 

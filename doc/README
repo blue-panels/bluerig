@@ -1,7 +1,7 @@
 The documentation of bluerig
 --------------------------
 
-bluerig is a console text editor, a continuation of cooledit.  The
+bluerig is a terminal IDE, a continuation of cooledit.  The
 top-level README.md says what it does and how to start it.
 
 This directory holds:

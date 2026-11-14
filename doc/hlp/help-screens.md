@@ -1,16 +1,17 @@
 # main <!-- help:notitle -->
 
 ```
-                      _
-   ___   ___    ___  | |  ___
-  / __| / _ \  / _ \ | | / _ \
- | (__ | (_) || (_) || ||  __/
-  \___| \___/  \___/ |_| \___|
+  _      _                     _
+ | |__  | | _   _   ___  _ __ (_)  __ _
+ | '_ \ | || | | | / _ \| '__|| | / _` |
+ | |_) || || |_| ||  __/| |   | || (_| |
+ |_.__/ |_| \__,_| \___||_|   |_| \__, |
+                                  |___/
   {{MC_VERSION:32}}
 ```
- a console text editor, a continuation of cooledit
+ a terminal IDE, a continuation of cooledit
 
-This is the main help screen of **bluerig**, a console text editor.
+This is the main help screen of **bluerig**, a terminal IDE.
 
 To learn how to use the interactive help, just press [Enter](#how-to-use-help). You may want to go directly to the help [contents](#contents), or to the chapter on [the editor](#internal-file-editor).
 

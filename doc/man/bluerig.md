@@ -5,7 +5,7 @@ date: September 2026
 <!-- help:topics "Topics:" -->
 # NAME <!-- help:skip -->
 
-bluerig - a text editor.
+bluerig - a terminal IDE.
 
 # SYNOPSIS <!-- help:skip -->
 
@@ -15,7 +15,7 @@ bluerig - a text editor.
 # DESCRIPTION
 
 **bluerig**
-is a console text editor. It continues
+is a terminal IDE. It continues
 **cooledit**,
 the editor by Paul Sheer, whose terminal version was developed for many years
 as the internal editor of GNU Midnight Commander; bluerig carries that editor on

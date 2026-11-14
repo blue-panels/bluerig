@@ -4,7 +4,7 @@ pkgbase=bluerig
 pkgname=(bluerig bluerig-lua)
 pkgver=@VERSION@
 pkgrel=1
-pkgdesc='Console text editor, a continuation of cooledit'
+pkgdesc='Terminal IDE, a continuation of cooledit'
 arch=('x86_64' 'aarch64')
 url='https://github.com/blue-panels/bluerig'
 license=('GPL-3.0-or-later')
@@ -29,7 +29,7 @@ check() {
 }
 
 package_bluerig() {
-  pkgdesc='Console text editor, a continuation of cooledit'
+  pkgdesc='Terminal IDE, a continuation of cooledit'
   depends=('glib2' 'slang' 'gpm')
   optdepends=('bluerig-lua: the Lua runtime and the editor scripts'
               'libx11: keyboard modifiers under X'
@@ -55,7 +55,7 @@ package_bluerig() {
 }
 
 package_bluerig-lua() {
-  pkgdesc='Lua runtime and scripts for the bluerig text editor'
+  pkgdesc='Lua runtime and scripts for bluerig'
   depends=("bluerig=${pkgver}-${pkgrel}" 'glib2' 'lua')
 
   meson install -C build --destdir "${pkgdir}"

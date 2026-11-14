@@ -26,18 +26,19 @@ Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: bluerig-lua
 Suggests: libx11-6, libaspell15 | libhunspell-1.7-0, universal-ctags, mongodb-mongosh, mongolsp, libpq5
-Description: console text editor, a continuation of cooledit
- bluerig is a console text editor that continues cooledit by Paul Sheer.  It
- has syntax highlighting, code folding, an
- undo history browser, keyboard macros with a macro explorer, ctags and
- etags navigation, spell checking, a user menu, multiple windows, skins and
- editable key bindings.
+Description: terminal IDE, a continuation of cooledit
+ bluerig is a terminal IDE that continues cooledit by Paul Sheer.  Its editor
+ has syntax highlighting, code folding, an undo history browser, keyboard
+ macros, a user menu, multiple windows, skins and editable key bindings, and
+ works with language servers for completion, documentation and diagnostics.
  .
- Spell checking uses aspell or hunspell, whichever is installed; the
- library is loaded at run time.
+ bluerig -D opens the project of a directory: its tree, its build with
+ meson, cmake or make, and its debugger, gdb or a debug adapter.
+ bluerig -G opens a Git window on a work tree, and bluerig -Q runs the
+ queries of a file in PostgreSQL, by libpq, or in MongoDB, by mongosh.
  .
- bluerig -Q runs the queries of a file in MongoDB, by mongosh, or in
- PostgreSQL, by libpq, which is loaded at run time too.
+ Spell checking uses aspell or hunspell, whichever is installed; libpq and
+ the spell checker are loaded at run time.
  .
  The bluerig-lua package adds the Lua runtime, which runs editor scripts.
 
@@ -45,7 +46,7 @@ Package: bluerig-lua
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
          bluerig (= ${binary:Version})
-Description: Lua runtime and scripts for the bluerig text editor
+Description: Lua runtime and scripts for bluerig
  The Lua runtime plugin that bluerig loads at run time, and the editor
  scripts that come with it, such as inserting the date and time, sorting
  the selection, formatting a paragraph, drawing a table or inserting the
