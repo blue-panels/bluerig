@@ -516,8 +516,10 @@ jobs:
           meson compile -C build
           meson install -C build --destdir "$(pwd)/stage"
 
-          # The Lua runtime is a required part of the package.
-          ls stage/opt/bluerig/lib/bluerig/runtime-plugins/*.so
+          # The Lua runtime is a required part of the package; meson names the
+          # modules .dylib on macOS, .so elsewhere.
+          find stage/opt/bluerig/lib/bluerig/runtime-plugins -type f \
+              \( -name '*.so' -o -name '*.dylib' \) | grep .
 
       - name: Bundle and verify runtime dependencies
         run: |
@@ -537,9 +539,15 @@ jobs:
             -i /System/Library
             -x "$stage_prefix/bin/bluerig"
           )
+          # The modules: the Lua runtime and the plugins of the editor, the
+          # debugger, the terminal and the others, all of them linked with GLib.
+          modules=(
+            "$stage_prefix/lib/bluerig/runtime-plugins"
+            "$stage_prefix/lib/bluerig/plugins"
+          )
           while IFS= read -r -d '' plugin; do
               bundle_args+=(-x "$plugin")
-          done < <(find "$stage_prefix/lib/bluerig/runtime-plugins" -name '*.so' -type f -print0)
+          done < <(find "${modules[@]}" -type f \( -name '*.so' -o -name '*.dylib' \) -print0)
           if ! dylibbundler "${bundle_args[@]}" > dylibbundler.log 2>&1; then
               tail -n 200 dylibbundler.log
               exit 1
@@ -574,10 +582,11 @@ jobs:
           done < <(find "$stage_prefix" -type f -print0)
 
           add_rpath "$stage_prefix/bin/bluerig" '@loader_path/../lib'
-          # lib/bluerig/runtime-plugins/*.so: the bundled libraries are two up.
+          # lib/bluerig/runtime-plugins and lib/bluerig/plugins: the bundled
+          # libraries are two up.
           while IFS= read -r -d '' plugin; do
               add_rpath "$plugin" '@loader_path/../..'
-          done < <(find "$stage_prefix/lib/bluerig/runtime-plugins" -name '*.so' -type f -print0)
+          done < <(find "${modules[@]}" -type f \( -name '*.so' -o -name '*.dylib' \) -print0)
           while IFS= read -r -d '' library; do
               add_rpath "$library" '@loader_path'
           done < <(find "$bundled_libs" -maxdepth 1 -name '*.dylib' -type f -print0)
