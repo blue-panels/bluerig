@@ -20,6 +20,8 @@ is a terminal IDE. It continues
 the editor by Paul Sheer, whose terminal version was developed for many years
 as the internal editor of GNU Midnight Commander; bluerig carries that editor on
 as a program of its own.
+**brg**
+is a shorter name of the same program.
 
 It edits several files at once, each in a window of its own, and it can edit
 binary files. It has block copy, move, delete, cut and paste; key for key

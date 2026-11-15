@@ -43,7 +43,8 @@ bluerig -Q queries.sql     # queries of a database
 bluerig -G ~/src/project   # the Git window of a work tree
 ```
 
-`bluerig --help` lists all the options.
+`brg` is a shorter name of the same program. `bluerig --help` lists all the
+options.
 
 ## Building
 
