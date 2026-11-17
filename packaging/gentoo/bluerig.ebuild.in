@@ -1,19 +1,21 @@
-# Copyright 2026 Ilia Maslakov
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-inherit meson optfeature
+LUA_COMPAT=( lua5-4 )
+
+inherit lua-single meson optfeature
 
 DESCRIPTION="Terminal IDE, a continuation of cooledit"
 HOMEPAGE="https://github.com/blue-panels/bluerig"
 SRC_URI="https://github.com/blue-panels/bluerig/releases/download/bluerig-${PV}/bluerig-${PV}.tar.gz"
-S="${WORKDIR}/bluerig-${PV}"
 
-LICENSE="GPL-3+"
+LICENSE="GPL-3+ LGPL-2.1+ LGPL-3+ BSD MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 IUSE="+gpm +lua +slang test X"
+REQUIRED_USE="lua? ( ${LUA_REQUIRED_USE} )"
 RESTRICT="!test? ( test )"
 
 COMMON_DEPEND="
@@ -22,7 +24,7 @@ COMMON_DEPEND="
 	slang? ( sys-libs/slang )
 	!slang? ( sys-libs/ncurses:0= )
 	gpm? ( sys-libs/gpm )
-	lua? ( dev-lang/lua:0= )
+	lua? ( ${LUA_DEPS} )
 	X? ( x11-libs/libX11 )
 "
 RDEPEND="${COMMON_DEPEND}"
@@ -35,11 +37,17 @@ BDEPEND="
 	virtual/pkgconfig
 "
 
+DOCS=( CHANGELOG.md README.md )
+
+pkg_setup() {
+	use lua && lua-single_pkg_setup
+}
+
 src_configure() {
 	local emesonargs=(
 		-Dscreen="$(usex slang slang ncurses)"
-		-Dplugins_dir="/usr/$(get_libdir)/bluerig/plugins"
-		-Druntime_plugins_dir="/usr/$(get_libdir)/bluerig/runtime-plugins"
+		-Dplugins_dir="${EPREFIX}/usr/$(get_libdir)/bluerig/plugins"
+		-Druntime_plugins_dir="${EPREFIX}/usr/$(get_libdir)/bluerig/runtime-plugins"
 		$(meson_feature gpm)
 		$(meson_feature lua)
 		$(meson_feature test tests)
@@ -48,8 +56,6 @@ src_configure() {
 	)
 	meson_src_configure
 }
-
-DOCS=( CHANGELOG.md README.md )
 
 pkg_postinst() {
 	optfeature "spell checking" app-text/aspell app-text/hunspell
