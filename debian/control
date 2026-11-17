@@ -25,7 +25,7 @@ Architecture: any
 Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: bluerig-lua
-Suggests: libx11-6, libaspell15 | libhunspell-1.7-0, universal-ctags, mongodb-mongosh, mongolsp, libpq5
+Suggests: libx11-6, libaspell15 | libhunspell-1.7-0, universal-ctags, libpq5
 Description: terminal IDE, a continuation of cooledit
  bluerig is a terminal IDE that continues cooledit by Paul Sheer.  Its editor
  has syntax highlighting, code folding, an undo history browser, keyboard
