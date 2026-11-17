@@ -168,11 +168,15 @@ cp dist/bluerig-X.Y.Z.tar.gz packaging/arch/
 cd packaging/arch && makepkg -si
 ```
 
-Gentoo.  Copy `packaging/gentoo` into a personal overlay as `app-editors/bluerig`,
-together with the generated ebuild, and run `ebuild ... manifest`.  It is a
-single package; Lua, gpm, X11 and the screen library are USE flags:
+Gentoo.  The package is `app-editors/bluerig` in the GURU repository, and the
+ebuild there is the generated one.  To try one locally, copy `packaging/gentoo`
+into a personal overlay as `app-editors/bluerig`, together with the generated
+ebuild, and run `ebuild ... manifest`.  It is a single package; Lua, gpm, X11
+and the screen library are USE flags.  Lua comes through the `lua-single`
+eclass and only Lua 5.4 is allowed, so the Lua target has to be chosen for it:
 
 ```sh
+echo 'app-editors/bluerig LUA_SINGLE_TARGET: -* lua5-4' >> /etc/portage/package.use/bluerig
 emerge app-editors/bluerig
 ```
 
