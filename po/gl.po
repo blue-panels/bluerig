@@ -16,21 +16,22 @@ msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: https://github.com/blue-panels/bluerig/issues\n"
 "POT-Creation-Date: 2026-09-29 13:14+0200\n"
-"PO-Revision-Date: 2026-09-25 22:53+0000\n"
-"Last-Translator: GitHub webhook <noreply-webhook-github@weblate.org>\n"
-"Language-Team: Galician <https://translate.codeberg.org/projects/mc6/mc6/gl/"
-">\n"
+"PO-Revision-Date: 2026-11-17 17:44+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: Galician <https://translate.codeberg.org/projects/bluerig/"
+"bluerig/gl/>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.9.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 #: lib/charsets.c:70
 msgid "No translation"
-msgstr ""
+msgstr "Sen tradución"
 
 #: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
@@ -311,9 +312,8 @@ msgid "Select to line end"
 msgstr "Escoller o idioma"
 
 #: lib/keybind.c:128
-#, fuzzy
 msgid "Sort order..."
-msgstr "Ordenar"
+msgstr "Ordenar…"
 
 #: lib/keybind.c:129
 #, fuzzy
@@ -862,6 +862,9 @@ msgid ""
 "%s\n"
 "Default skin has been loaded"
 msgstr ""
+"Non é posíbel empregar o tema «%s» con compatibilidade para 256 cores:\n"
+"%s\n"
+"Cargouse o tema predeterminado."
 
 #: lib/skin/common.c:182
 #, c-format
@@ -1615,9 +1618,8 @@ msgid "Spell backend is unavailable."
 msgstr ""
 
 #: src/plugins/ctags/ctags-config.c:146
-#, fuzzy
 msgid "Ctags Configuration"
-msgstr "&Configuración..."
+msgstr "Configuración de Ctags"
 
 #: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
@@ -1678,35 +1680,30 @@ msgid "No word at cursor."
 msgstr ""
 
 #: src/plugins/ctags/ctags-plugin.c:649
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a known symbol."
-msgstr "«%s» non é unha ligazón simbólica"
+msgstr "«%s» non é un símbolo coñecido."
 
 #: src/plugins/ctags/ctags-plugin.c:662
-#, fuzzy
 msgid "Failed to create temporary file."
-msgstr "Non foi posíbel gardar o ficheiro"
+msgstr "Produciuse un fallo ao crear o ficheiro temporal."
 
 #: src/plugins/ctags/ctags-plugin.c:672
-#, fuzzy
 msgid "Failed to open temporary file."
-msgstr "Non foi posíbel gardar o ficheiro"
+msgstr "Produciuse un fallo ao abrir o ficheiro temporal."
 
 #: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
 #: src/plugins/ctags/ctags-plugin.c:727
-#, fuzzy
 msgid "Failed to run grep."
-msgstr ""
-"Non foi posíbel executar:\n"
-"%s\n"
+msgstr "Produciuse un fallo ao executar grep."
 
 #: src/plugins/ctags/ctags-plugin.c:772
-#, fuzzy, c-format
+#, c-format
 msgid "No references found for '%s'."
-msgstr "Non se atopan entradas apropiadas en %s"
+msgstr "Non se atopan referencias para «%s»"
 
 #: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
@@ -1785,9 +1782,9 @@ msgid "Project root directory to index:"
 msgstr "Directorio do perfil raíz:"
 
 #: src/plugins/ctags/ctags-plugin.c:1444
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create index in %s"
-msgstr "Non foi posíbel crear a acción «%s»!"
+msgstr "Produciuse un fallo ao crear o índice en %s"
 
 #: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
@@ -2099,9 +2096,8 @@ msgid "Language:"
 msgstr "Idioma"
 
 #: src/plugins/spell/spell.c:1752
-#, fuzzy
 msgid "&Select..."
-msgstr "Seleccionar"
+msgstr "&Seleccionar…"
 
 #: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
@@ -2549,9 +2545,8 @@ msgid "&Redo"
 msgstr "&Refacer"
 
 #: src/editor/editmenu.c:259
-#, fuzzy
 msgid "Undo &History..."
-msgstr "&Historial de ordes"
+msgstr "Desfacer o &historial…"
 
 #: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
@@ -3368,9 +3363,8 @@ msgid "unspecified"
 msgstr ""
 
 #: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
-#, fuzzy
 msgid "Lua scripts"
-msgstr "Engadidos e scripts VFS"
+msgstr "Scripts de Lua"
 
 #: src/manage_plugins.c:361
 msgid "This script has no entry file."
@@ -3403,9 +3397,8 @@ msgid "&Settings"
 msgstr "A&Plicar"
 
 #: src/manage_plugins.c:593
-#, fuzzy
 msgid "Lua action failed"
-msgstr "Produciuse un fallo na lectura"
+msgstr "Produciuse un fallo na acción de Lua"
 
 #: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
@@ -3548,9 +3541,8 @@ msgid "Runtime plugins:"
 msgstr ""
 
 #: src/textconf.c:224 src/textconf.c:243
-#, fuzzy
 msgid "Lua scripts:"
-msgstr "Engadidos e scripts VFS"
+msgstr "Scripts de Lua:"
 
 #: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
