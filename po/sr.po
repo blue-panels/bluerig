@@ -14,17 +14,18 @@ msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: https://github.com/blue-panels/bluerig/issues\n"
 "POT-Creation-Date: 2026-09-29 13:14+0200\n"
-"PO-Revision-Date: 2026-09-25 22:53+0000\n"
-"Last-Translator: GitHub webhook <noreply-webhook-github@weblate.org>\n"
-"Language-Team: Serbian <https://translate.codeberg.org/projects/mc6/mc6/sr/"
-">\n"
+"PO-Revision-Date: 2026-11-17 17:44+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: Serbian <https://translate.codeberg.org/projects/bluerig/"
+"bluerig/sr/>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.9.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 #: lib/charsets.c:70
@@ -77,46 +78,43 @@ msgstr "Copyright (C) 1996-%zu Задужбина за слободни софт
 
 #: lib/keybind.c:71
 msgid "Half page up"
-msgstr ""
+msgstr "Пола странице навише"
 
 #: lib/keybind.c:72
-#, fuzzy
 msgid "Half page down"
-msgstr "Page Down"
+msgstr "Пола странице наниже"
 
 #: lib/keybind.c:73
 msgid "Go to top"
-msgstr ""
+msgstr "Иди на врх"
 
 #: lib/keybind.c:74
 msgid "Go to bottom"
-msgstr ""
+msgstr "Иди на дно"
 
 #: lib/keybind.c:75
-#, fuzzy
 msgid "Top of screen"
-msgstr "Смени приказ преко &целог екрана"
+msgstr "Врх екрана"
 
 #: lib/keybind.c:76
 msgid "Bottom of screen"
-msgstr ""
+msgstr "Дно екрана"
 
 #: lib/keybind.c:77
 msgid "Word left"
-msgstr ""
+msgstr "Реч лево"
 
 #: lib/keybind.c:78
 msgid "Word right"
-msgstr ""
+msgstr "Реч десно"
 
 #: lib/keybind.c:79
-#, fuzzy
 msgid "Copy file(s)"
-msgstr "Упореди &датотеке"
+msgstr "Копирај датотеку(е)"
 
 #: lib/keybind.c:80
 msgid "Move/rename file(s)"
-msgstr ""
+msgstr "Премести/преименуј датотеку(е)"
 
 #: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
 #: src/editor/editmacros.c:866
@@ -125,229 +123,195 @@ msgstr "Delete"
 
 #: lib/keybind.c:86
 msgid "Main menu"
-msgstr ""
+msgstr "Главни мени"
 
 #: lib/keybind.c:87
-#, fuzzy
 msgid "User-defined menu"
-msgstr "Кориснички &задат:"
+msgstr "Кориснички дефинисан мени"
 
 #: lib/keybind.c:88
-#, fuzzy
 msgid "Edit user menu"
-msgstr "Кориснички мени"
+msgstr "Уреди кориснички мени"
 
 #: lib/keybind.c:90
-#, fuzzy
 msgid "Search next"
-msgstr "Претрага је завршена"
+msgstr "Тражи следеће"
 
 #: lib/keybind.c:92
-#, fuzzy
 msgid "Replace next"
-msgstr "Замени"
+msgstr "Замени следеће"
 
 #: lib/keybind.c:93
 msgid "Show help"
-msgstr ""
+msgstr "Прикажи помоћ"
 
 #: lib/keybind.c:94
-#, fuzzy
 msgid "Terminal"
-msgstr "Опције терминала"
+msgstr "Терминал"
 
 #: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Уређивање датотеке"
 
 #: lib/keybind.c:96
-#, fuzzy
 msgid "Edit new file"
-msgstr "Уређивање датотеке"
+msgstr "Уреди нову датотеку"
 
 #: lib/keybind.c:97
-#, fuzzy
 msgid "Select charset"
-msgstr "&Сви скупови знакова"
+msgstr "Изабери скуп знакова"
 
 #: lib/keybind.c:98
-#, fuzzy
 msgid "Command history"
-msgstr "Историја &наредби"
+msgstr "Историја наредби"
 
 #: lib/keybind.c:99
 msgid "Next in history"
-msgstr ""
+msgstr "Следеће у историји"
 
 #: lib/keybind.c:100
 msgid "Previous in history"
-msgstr ""
+msgstr "Претходно у историји"
 
 #: lib/keybind.c:101
 msgid "Auto-complete"
-msgstr ""
+msgstr "Аутоматска допуна"
 
 #: lib/keybind.c:103
-#, fuzzy
 msgid "Save as..."
-msgstr "Сачувај &као..."
+msgstr "Сачувај као..."
 
 #: lib/keybind.c:104
-#, fuzzy
 msgid "Go to line"
 msgstr "Иди на линију"
 
 #: lib/keybind.c:105
-#, fuzzy
 msgid "Refresh screen"
-msgstr "&Освежи екран"
+msgstr "Освежи екран"
 
 #: lib/keybind.c:106
-#, fuzzy
 msgid "Suspend to shell"
-msgstr "Подешавања су сачувана у %s"
+msgstr "Суспендуј у љуску"
 
 #: lib/keybind.c:107
 msgid "List open screens"
-msgstr ""
+msgstr "Списак отворених екрана"
 
 #: lib/keybind.c:108
-#, fuzzy
 msgid "Next screen"
-msgstr "&Освежи екран"
+msgstr "Следећи екран"
 
 #: lib/keybind.c:109
-#, fuzzy
 msgid "Previous screen"
-msgstr "&Претходно"
+msgstr "Претходни екран"
 
 #: lib/keybind.c:110
-#, fuzzy
 msgid "Next file"
-msgstr "Убаци датотеку"
+msgstr "Следећа датотека"
 
 #: lib/keybind.c:111
-#, fuzzy
 msgid "Previous file"
-msgstr "&Претходно"
+msgstr "Претходна датотека"
 
 #: lib/keybind.c:112
-#, fuzzy
 msgid "Delete to line start"
-msgstr "&Промени стање линије"
+msgstr "Обриши до почетка линије"
 
 #: lib/keybind.c:113
-#, fuzzy
 msgid "Delete to line end"
-msgstr "Delete на нум. т."
+msgstr "Обриши до краја линије"
 
 #: lib/keybind.c:114
 msgid "Delete to word start"
-msgstr ""
+msgstr "Обриши до почетка речи"
 
 #: lib/keybind.c:115
-#, fuzzy
 msgid "Delete to word end"
-msgstr "Delete на нум. т."
+msgstr "Обриши до краја речи"
 
 #: lib/keybind.c:116
-#, fuzzy
 msgid "Cut to clipboard"
-msgstr "&Исеци у датотеку клипборда"
+msgstr "Исеци у клипборд"
 
 #: lib/keybind.c:117
-#, fuzzy
 msgid "Copy to clipboard"
-msgstr "Копирај у &датотеку клипборда"
+msgstr "Копирај у клипборд"
 
 #: lib/keybind.c:118
-#, fuzzy
 msgid "Paste from clipboard"
-msgstr "&Убаци из датотеке клипборда"
+msgstr "Убаци из клипборда"
 
 #: lib/keybind.c:119
-#, fuzzy
 msgid "Toggle selection"
-msgstr "У &избору"
+msgstr "Смени избор"
 
 #: lib/keybind.c:120
-#, fuzzy
 msgid "Select left"
-msgstr "Бирање"
+msgstr "Изабери лево"
 
 #: lib/keybind.c:121
-#, fuzzy
 msgid "Select right"
-msgstr "Бирање"
+msgstr "Изабери десно"
 
 #: lib/keybind.c:122
-#, fuzzy
 msgid "Select up"
-msgstr "Изабери &групу"
+msgstr "Изабери горе"
 
 #: lib/keybind.c:123
-#, fuzzy
 msgid "Select down"
-msgstr "Бирање"
+msgstr "Изабери доле"
 
 #: lib/keybind.c:124
 msgid "Select to word start"
-msgstr ""
+msgstr "Изабери до почетка речи"
 
 #: lib/keybind.c:125
-#, fuzzy
 msgid "Select to word end"
-msgstr "Изаберите начин поређења:"
+msgstr "Изабери до краја речи"
 
 #: lib/keybind.c:126
-#, fuzzy
 msgid "Select to line start"
-msgstr "&Промени стање линије"
+msgstr "Изабери до почетка реда"
 
 #: lib/keybind.c:127
-#, fuzzy
 msgid "Select to line end"
-msgstr "Изабери језик"
+msgstr "Изабери до краја реда"
 
 #: lib/keybind.c:128
-#, fuzzy
 msgid "Sort order..."
-msgstr "Поредак &сортирања..."
+msgstr "Поредак сортирања..."
 
 #: lib/keybind.c:129
-#, fuzzy
 msgid "General options"
-msgstr "Опције панела"
+msgstr "Опште опције"
 
 #: lib/keybind.c:130
-#, fuzzy
 msgid "Learn terminal keys"
-msgstr "Учење тастера"
+msgstr "Учење тастера терминала"
 
 #: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
-msgstr ""
+msgstr "Тастерске пречице"
 
 #: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
-msgstr ""
+msgstr "Детектор тастера"
 
 #: lib/keybind.c:133
 msgid "Manage plugins"
-msgstr ""
+msgstr "Управљање плагиновима"
 
 #: lib/keybind.c:134
-#, fuzzy
 msgid "Set bookmark"
-msgstr "&Следећи обележивач"
+msgstr "Постави обележивач"
 
 #: lib/keybind.c:135
 msgid "Quit program"
-msgstr ""
+msgstr "Изађи из програма"
 
 #: lib/keybind.c:136
 msgid "Extended key prefix"
-msgstr ""
+msgstr "Префикс проширених тастера"
 
 #: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 #, fuzzy
@@ -355,388 +319,336 @@ msgid "Find declaration"
 msgstr "&Нађи декларацију"
 
 #: lib/keybind.c:139
-#, fuzzy
 msgid "Appearance settings"
-msgstr "Изглед"
+msgstr "Подешавања изгледа"
 
 #: lib/keybind.c:140
-#, fuzzy
 msgid "Save setup"
-msgstr "&Сачувај подешавања"
+msgstr "Сачувај подешавања"
 
 #: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
-msgstr ""
+msgstr "Повуци (налепи бафер обрисаног)"
 
 #: lib/keybind.c:151
 msgid "Help index"
-msgstr ""
+msgstr "Садржај помоћи"
 
 #: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
-msgstr ""
+msgstr "Иди назад"
 
 #: lib/keybind.c:153
 msgid "Next link"
-msgstr ""
+msgstr "Следећа веза"
 
 #: lib/keybind.c:154
-#, fuzzy
 msgid "Previous link"
-msgstr "&Претходно"
+msgstr "Претходна веза"
 
 #: lib/keybind.c:155
-#, fuzzy
 msgid "Next node"
-msgstr "Слободних чворова:"
+msgstr "Следећи чвор"
 
 #: lib/keybind.c:156
-#, fuzzy
 msgid "Previous node"
-msgstr "&Претходно"
+msgstr "Претходни режим"
 
 #: lib/keybind.c:165
 msgid "Scroll up"
-msgstr ""
+msgstr "Скролуј навише"
 
 #: lib/keybind.c:166
 msgid "Scroll down"
-msgstr ""
+msgstr "Скролуј наниже"
 
 #: lib/keybind.c:167
-#, fuzzy
 msgid "Deselect all"
-msgstr "Одбирање"
+msgstr "Од-одабери све"
 
 #: lib/keybind.c:168
-#, fuzzy
 msgid "Select page up"
-msgstr "Изабери &групу"
+msgstr "Изабери страницу навише"
 
 #: lib/keybind.c:169
-#, fuzzy
 msgid "Select page down"
-msgstr "Изабери језик"
+msgstr "Изабери страницу наниже"
 
 #: lib/keybind.c:171
-#, fuzzy
 msgid "Close editor"
-msgstr "Затвори датотеку"
+msgstr "Затвори уређивач"
 
 #: lib/keybind.c:175
 msgid "Paragraph up"
-msgstr ""
+msgstr "Пасус навише"
 
 #: lib/keybind.c:176
 msgid "Paragraph down"
-msgstr ""
+msgstr "Пасус наниже"
 
 #: lib/keybind.c:177
-#, fuzzy
 msgid "Open file in editor"
-msgstr "Уређивање датотеке проширења"
+msgstr "Отвори датотеку у уређивачу"
 
 #: lib/keybind.c:178
-#, fuzzy
 msgid "Select word"
-msgstr "Бирање"
+msgstr "Изабери реч"
 
 #: lib/keybind.c:179
-#, fuzzy
 msgid "Select line"
-msgstr "Изабери језик"
+msgstr "Изабери линију"
 
 #: lib/keybind.c:180
-#, fuzzy
 msgid "Select all"
-msgstr "Бирање"
+msgstr "Изабери све"
 
 #: lib/keybind.c:181
-#, fuzzy
 msgid "Column selection mode"
-msgstr "У &избору"
+msgstr "Режим избора колоне"
 
 #: lib/keybind.c:182
-#, fuzzy
 msgid "Save selected block"
-msgstr "Сачувај блок"
+msgstr "Сачувај изабрани блок"
 
 #: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Убаци датотеку"
 
 #: lib/keybind.c:184
-#, fuzzy
 msgid "Toggle insert/overwrite"
-msgstr "&Смени уметање/преписивање"
+msgstr "Смени уметање/преписивање"
 
 #: lib/keybind.c:185
-#, fuzzy
 msgid "Insert date/time (Lua action)"
-msgstr "Убаци &датум/време"
+msgstr "Убаци датум/време (Lua акција)"
 
 #: lib/keybind.c:186
-#, fuzzy
 msgid "Delete line"
-msgstr "Брисање"
+msgstr "Обриши линију"
 
 #: lib/keybind.c:187
-#, fuzzy
 msgid "Mail file"
-msgstr "дато1 дато2"
+msgstr "Пошаљи датотеку мејлом"
 
 #: lib/keybind.c:188
-#, fuzzy
 msgid "Undo history"
-msgstr "Историја &наредби"
+msgstr "Историја опозива"
 
 #: lib/keybind.c:189
-#, fuzzy
 msgid "Format paragraph (Lua action)"
-msgstr "&Форматирај пасус"
+msgstr "Форматирај пасус (Lua акција)"
 
 #: lib/keybind.c:190
-#, fuzzy
 msgid "Match bracket"
-msgstr "Лева угласта заграда"
+msgstr "Нађи заграду"
 
 #: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
-msgstr ""
+msgstr "Сортирај избор (Lua акција)"
 
 #: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
-msgstr ""
+msgstr "Убаци излаз наредбе (Lua акција)"
 
 #: lib/keybind.c:193
 msgid "Start macro recording"
-msgstr ""
+msgstr "Почни снимање макроа"
 
 #: lib/keybind.c:194
 msgid "Stop macro recording"
-msgstr ""
+msgstr "Прекини снимање макроа"
 
 #: lib/keybind.c:195
 msgid "Toggle macro recording"
-msgstr ""
+msgstr "Смени снимање макроа"
 
 #: lib/keybind.c:196
 msgid "Macro explorer"
-msgstr ""
+msgstr "Прегледач макроа"
 
 #: lib/keybind.c:197
-#, fuzzy
 msgid "Repeat last macro"
-msgstr "Понови последње наредбе"
+msgstr "Понови последњи макро"
 
 #: lib/keybind.c:198
-#, fuzzy
 msgid "Spell check"
-msgstr "Провери &правопис"
+msgstr "Провери правопис"
 
 #: lib/keybind.c:199
-#, fuzzy
 msgid "Spell check current word"
-msgstr "Провери &правопис"
+msgstr "Провери правопис текуће речи"
 
 #: lib/keybind.c:200
-#, fuzzy
 msgid "Select spell language"
-msgstr "Изабери језик"
+msgstr "Изабери језик за проверу правописа"
 
 #: lib/keybind.c:201
-#, fuzzy
 msgid "Clear all bookmarks"
-msgstr "Обриши све &обележиваче"
+msgstr "Обриши све обележиваче"
 
 #: lib/keybind.c:202
-#, fuzzy
 msgid "Next bookmark"
-msgstr "&Следећи обележивач"
+msgstr "Следећи обележивач"
 
 #: lib/keybind.c:203
-#, fuzzy
 msgid "Previous bookmark"
-msgstr "&Претходни обележивач"
+msgstr "Претходни обележивач"
 
 #: lib/keybind.c:204
 msgid "Toggle code fold"
-msgstr ""
+msgstr "Смени замотавање кода"
 
 #: lib/keybind.c:205
-#, fuzzy
 msgid "Unfold all"
-msgstr "&Тражи све"
+msgstr "Одмотај све"
 
 #: lib/keybind.c:206
-#, fuzzy
 msgid "Toggle line filter"
-msgstr "&Промени стање линије"
+msgstr "Промени филтер линије"
 
 #: lib/keybind.c:207
 msgid "Filter by selection or word"
-msgstr ""
+msgstr "Филтрирај према избору или речи"
 
 #: lib/keybind.c:208
-#, fuzzy
 msgid "Select to file start"
-msgstr "Измене датотеке су изгубљене"
+msgstr "Изабери до почетка датотеке"
 
 #: lib/keybind.c:209
-#, fuzzy
 msgid "Select to file end"
-msgstr "Изаберите начин поређења:"
+msgstr "Изабери до краја датотеке"
 
 #: lib/keybind.c:210
-#, fuzzy
 msgid "Select to page start"
-msgstr "Изаберите начин поређења:"
+msgstr "Изабери до почетка странице"
 
 #: lib/keybind.c:211
-#, fuzzy
 msgid "Select to page end"
-msgstr "Изаберите начин поређења:"
+msgstr "Изабери до краја странице"
 
 #: lib/keybind.c:212
-#, fuzzy
 msgid "Select scroll up"
-msgstr "Изабери &групу"
+msgstr "Изабери скролујући навише"
 
 #: lib/keybind.c:213
 msgid "Select scroll down"
-msgstr ""
+msgstr "Изабери скролујући наниже"
 
 #: lib/keybind.c:214
-#, fuzzy
 msgid "Select paragraph up"
-msgstr "Изабери &групу"
+msgstr "Изабери пасус навише"
 
 #: lib/keybind.c:215
 msgid "Select paragraph down"
-msgstr ""
+msgstr "Изабери пасус наниже"
 
 #: lib/keybind.c:216
-#, fuzzy
 msgid "Column select page up"
-msgstr "&Одизабери групу"
+msgstr "Колонски изабери страницу навише"
 
 #: lib/keybind.c:217
 msgid "Column select page down"
-msgstr ""
+msgstr "Колонски изабери страницу наниже"
 
 #: lib/keybind.c:218
 msgid "Column select left"
-msgstr ""
+msgstr "Колонски изабери налево"
 
 #: lib/keybind.c:219
 msgid "Column select right"
-msgstr ""
+msgstr "Колонски изабери надесно"
 
 #: lib/keybind.c:220
-#, fuzzy
 msgid "Column select up"
-msgstr "&Одизабери групу"
+msgstr "Колонски изабери навише"
 
 #: lib/keybind.c:221
-#, fuzzy
 msgid "Column select down"
-msgstr "У &избору"
+msgstr "Колонски изабери наниже"
 
 #: lib/keybind.c:222
-#, fuzzy
 msgid "Column select scroll up"
-msgstr "&Одизабери групу"
+msgstr "Колонски изабери скролујући навише"
 
 #: lib/keybind.c:223
 msgid "Column select scroll down"
-msgstr ""
+msgstr "Колонски изабери скролујући наниже"
 
 #: lib/keybind.c:224
-#, fuzzy
 msgid "Column select paragraph up"
-msgstr "&Форматирај пасус"
+msgstr "Колонски изабери пасус навише"
 
 #: lib/keybind.c:225
 msgid "Column select paragraph down"
-msgstr ""
+msgstr "Колонски изабери пасус наниже"
 
 #: lib/keybind.c:226
 msgid "Shift block left"
-msgstr ""
+msgstr "Помери блок налево"
 
 #: lib/keybind.c:227
 msgid "Shift block right"
-msgstr ""
+msgstr "Помери блок надесно"
 
 #: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
-msgstr ""
+msgstr "Убаци дословни знак (Lua акција)"
 
 #: lib/keybind.c:229
-#, fuzzy
 msgid "Toggle visible tabs/spaces"
-msgstr "&Видљиви размаци на крају"
+msgstr "Смени видљивост табова/размака"
 
 #: lib/keybind.c:230
 msgid "Toggle control characters"
-msgstr ""
+msgstr "Смени контролне знаке"
 
 #: lib/keybind.c:231
-#, fuzzy
 msgid "Toggle syntax highlighting"
-msgstr "Смени &истицање синтаксе"
+msgstr "Смени истицање синтаксе"
 
 #: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Изаберите истицање синтаксе"
 
 #: lib/keybind.c:233
-#, fuzzy
 msgid "Toggle right margin"
-msgstr "Смени &десну маргину"
+msgstr "Смени десну маргину"
 
 #: lib/keybind.c:234
-#, fuzzy
 msgid "Save mode options"
-msgstr "Опције панела"
+msgstr "Сачувај опције режима"
 
 #: lib/keybind.c:235
-#, fuzzy
 msgid "About editor"
-msgstr "Са уграђеним уређивачем"
+msgstr "О уређивачу"
 
 #: lib/keybind.c:237
-#, fuzzy
 msgid "Execute script"
-msgstr "Прво &извршне"
+msgstr "Изврши скрипт"
 
 #: lib/keybind.c:238
 msgid "Move window"
-msgstr ""
+msgstr "Премести прозор"
 
 #: lib/keybind.c:239
-#, fuzzy
 msgid "Resize window"
-msgstr "Промени &величину"
+msgstr "Промени величину прозора"
 
 #: lib/keybind.c:240
-#, fuzzy
 msgid "Toggle fullscreen"
-msgstr "Смени приказ преко &целог екрана"
+msgstr "Смени приказ преко целог екрана"
 
 #: lib/keybind.c:241
-#, fuzzy
 msgid "Window list"
-msgstr "&Прозор"
+msgstr "Листа прозора"
 
 #: lib/keybind.c:242
 msgid "Next window"
-msgstr ""
+msgstr "Следећи прозор"
 
 #: lib/keybind.c:243
-#, fuzzy
 msgid "Previous window"
-msgstr "&Претходно"
+msgstr "Претходни прозор"
 
 #: lib/lock.c:240
 #, c-format
@@ -1645,18 +1557,16 @@ msgid "Spell backend is unavailable."
 msgstr ""
 
 #: src/plugins/ctags/ctags-config.c:146
-#, fuzzy
 msgid "Ctags Configuration"
-msgstr "&Подешавања..."
+msgstr "Подешавања Ctags-а"
 
 #: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr ""
 
 #: src/plugins/ctags/ctags-config.c:155
-#, fuzzy
 msgid "Command line options:"
-msgstr "Подешавање опција"
+msgstr "Опције командне линије:"
 
 #: src/plugins/ctags/ctags-config.c:163
 #, fuzzy
@@ -1668,11 +1578,9 @@ msgid "Auto-discover tags file in parent directories"
 msgstr ""
 
 #: src/plugins/ctags/ctags-plugin.c:358
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot jump to %s:%ld."
-msgstr ""
-"Не могу се променити дозволе\n"
-"%sn%s"
+msgstr "Не може се скочити на %s:%ld."
 
 #: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
 #: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
@@ -1710,35 +1618,30 @@ msgid "No word at cursor."
 msgstr ""
 
 #: src/plugins/ctags/ctags-plugin.c:649
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a known symbol."
-msgstr "„%s“ није симболичка веза"
+msgstr "„%s“ није познати симбол."
 
 #: src/plugins/ctags/ctags-plugin.c:662
-#, fuzzy
 msgid "Failed to create temporary file."
-msgstr "Не може се креирати привремена diff датотека"
+msgstr "Не може се креирати привремена датотека."
 
 #: src/plugins/ctags/ctags-plugin.c:672
-#, fuzzy
 msgid "Failed to open temporary file."
-msgstr "Не може се сачувати у датотеку"
+msgstr "Не може се отворити привремена датотека."
 
 #: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
 #: src/plugins/ctags/ctags-plugin.c:727
-#, fuzzy
 msgid "Failed to run grep."
-msgstr ""
-"Не може се покренути:\n"
-"%s\n"
+msgstr "Не може се покренути grep."
 
 #: src/plugins/ctags/ctags-plugin.c:772
-#, fuzzy, c-format
+#, c-format
 msgid "No references found for '%s'."
-msgstr "Одговарајући уноси у %s нису пронађени"
+msgstr "Нису пронађене референце за „%s“."
 
 #: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
@@ -1786,9 +1689,9 @@ msgid "No members found for '%s'."
 msgstr ""
 
 #: src/plugins/ctags/ctags-plugin.c:1339
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load tags file: %s"
-msgstr "Неуспешно читање података са стандардног излаза подређеног процеса"
+msgstr "Неуспешно учитавање tags датотеке: %s"
 
 #: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
@@ -1803,9 +1706,9 @@ msgstr ""
 "%s"
 
 #: src/plugins/ctags/ctags-plugin.c:1401
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot rename %s to %s: %s"
-msgstr "Не може се превести из %s у %s"
+msgstr "Не може се преименовати %s у %s: %s"
 
 #: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
@@ -1817,9 +1720,9 @@ msgid "Project root directory to index:"
 msgstr "Корени директоријум профила:"
 
 #: src/plugins/ctags/ctags-plugin.c:1444
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create index in %s"
-msgstr "Не може се креирати догађај „%s“!"
+msgstr "Не може се креирати догађај „%s“"
 
 #: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
@@ -1879,9 +1782,8 @@ msgid "Search file"
 msgstr "Претрага је завршена"
 
 #: src/plugins/ctags/ctags-plugin.c:1647
-#, fuzzy
 msgid "Symbols in current file"
-msgstr "Датотека симвезе:"
+msgstr "Симболи у текућој датотеци"
 
 #: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
@@ -1942,9 +1844,8 @@ msgid "&Search symbol"
 msgstr "&Тражи"
 
 #: src/plugins/ctags/ctags-plugin.c:1957
-#, fuzzy
 msgid "S&ymbols in file"
-msgstr "Датотека симвезе:"
+msgstr "С&имболи у датотеци"
 
 #: src/plugins/ctags/ctags-plugin.c:1958
 #, fuzzy
@@ -2127,14 +2028,12 @@ msgid "Engine"
 msgstr ""
 
 #: src/plugins/spell/spell.c:1749
-#, fuzzy
 msgid "Language:"
-msgstr "Језик"
+msgstr "Језик:"
 
 #: src/plugins/spell/spell.c:1752
-#, fuzzy
 msgid "&Select..."
-msgstr "Бирање"
+msgstr "&Изабери..."
 
 #: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
@@ -2486,9 +2385,9 @@ msgid "insert %d"
 msgstr "Insert"
 
 #: src/editor/editcmd.c:2826
-#, fuzzy, c-format
+#, c-format
 msgid "delete %d"
-msgstr "Обрисати %s?"
+msgstr "обрисати %d"
 
 #: src/editor/editcmd.c:2829
 #, fuzzy
@@ -2529,9 +2428,9 @@ msgid "Repeat times:"
 msgstr "Интервали понављања:"
 
 #: src/editor/editmacros.c:708
-#, fuzzy, c-format
+#, c-format
 msgid "Delete macro %s?"
-msgstr "Обриши макро"
+msgstr "Обрисати макро %s?"
 
 #: src/editor/editmacros.c:711
 msgid "Delete macro"
@@ -3311,9 +3210,8 @@ msgid "&Capture key"
 msgstr ""
 
 #: src/keybind_dialog.c:128
-#, fuzzy
 msgid "&Main"
-msgstr "&Мејл..."
+msgstr "&Главно"
 
 #: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
@@ -3333,9 +3231,8 @@ msgid "&Input"
 msgstr ""
 
 #: src/keybind_dialog.c:134
-#, fuzzy
 msgid "&Listbox"
-msgstr "&Листај..."
+msgstr "&Листа"
 
 #: src/keybind_dialog.c:135
 msgid "&Radio"
@@ -3428,9 +3325,8 @@ msgid "unspecified"
 msgstr ""
 
 #: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
-#, fuzzy
 msgid "Lua scripts"
-msgstr "VFS додаци и скриптови:"
+msgstr "Lua скриптови"
 
 #: src/manage_plugins.c:361
 msgid "This script has no entry file."
@@ -3608,9 +3504,8 @@ msgid "Runtime plugins:"
 msgstr ""
 
 #: src/textconf.c:224 src/textconf.c:243
-#, fuzzy
 msgid "Lua scripts:"
-msgstr "VFS додаци и скриптови:"
+msgstr "Lua скриптови:"
 
 #: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
