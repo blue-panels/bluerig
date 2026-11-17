@@ -76,6 +76,7 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 %doc README.md CHANGELOG.md
 %doc doc/LUA_API_REFERENCE.md doc/LUA_PLUGINS.md doc/lua-api.json
 %{_bindir}/bluerig
+%{_bindir}/brg
 # Owned here so that the directory does not depend on the lua subpackage.
 %dir %{_datadir}/bluerig/
 %{_datadir}/bluerig/charsets

@@ -1,4 +1,5 @@
 usr/bin/bluerig
+usr/bin/brg
 usr/lib/bluerig/plugins/
 etc/bluerig/
 usr/share/doc/bluerig/LUA_API_REFERENCE.md

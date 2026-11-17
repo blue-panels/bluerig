@@ -128,6 +128,8 @@ bluerig = executable('bluerig',
   export_dynamic: have_gmodule,
   install: true,
 )
+# brg, the short name of the same program
+install_symlink('brg', pointing_to: 'bluerig', install_dir: bindir)
 
 # the help of the editor plugins, installed beside the help of the editor so
 # that a dialog of a plugin can name its own file
