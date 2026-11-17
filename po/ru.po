@@ -36,10 +36,11 @@ msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: https://github.com/blue-panels/bluerig/issues\n"
 "POT-Creation-Date: 2026-09-29 13:14+0200\n"
-"PO-Revision-Date: 2026-09-25 22:53+0000\n"
-"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
-"Language-Team: Russian <https://translate.codeberg.org/projects/mc6/mc6/ru/"
-">\n"
+"PO-Revision-Date: 2026-11-17 17:44+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/bluerig/"
+"bluerig/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +48,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 2026.9.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 #: lib/charsets.c:70
@@ -3320,14 +3321,12 @@ msgid "unspecified"
 msgstr "не указано"
 
 #: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
-#, fuzzy
 msgid "Lua scripts"
-msgstr "Скрипты Lua:"
+msgstr "Скрипты Lua"
 
 #: src/manage_plugins.c:361
-#, fuzzy
 msgid "This script has no entry file."
-msgstr "У этого плагина нет настроек."
+msgstr "У этого скрипта нет входного файла."
 
 #: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
@@ -3338,14 +3337,12 @@ msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
 #: src/manage_plugins.c:417
-#, fuzzy
 msgid "This script has no settings."
-msgstr "У этого плагина нет настроек."
+msgstr "У этого скрипта нет настроек."
 
 #: src/manage_plugins.c:444
-#, fuzzy
 msgid "No global or user Lua scripts were found."
-msgstr "Глобальные или пользовательские скрипты редактора Lua не найдены."
+msgstr "Глобальные или пользовательские скрипты Lua не найдены."
 
 #: src/manage_plugins.c:445
 #, fuzzy
@@ -3353,9 +3350,8 @@ msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr "Среда Lua отключена. Включите движок Lua и перезапустите MC."
 
 #: src/manage_plugins.c:511
-#, fuzzy
 msgid "&Settings"
-msgstr "Настройки ВФС"
+msgstr "&Настройки"
 
 #: src/manage_plugins.c:593
 msgid "Lua action failed"
