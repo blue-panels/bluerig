@@ -161,9 +161,6 @@ include swig.syntax
 file ..\*\\.(?i:php)[0-9]?$ PHP\sProgram
 include php.syntax
 
-file ..\*\\.ij[xs]$ J\sFile
-include j.syntax
-
 file ..\*\\.(?i:java?|groovy|Jenkinsfile)$ Java\sProgram
 include java.syntax
 
@@ -360,14 +357,8 @@ include mermaid.syntax
 file ..\*\\.proto$ Protobuf\sFile
 include protobuf.syntax
 
-file ..\*\\.(?i:yab)$ Yabasic\s(Yet\sAnother\sBASIC)
-include yabasic.syntax
-
 file ..\*\\.(?i:cbl|cob)$ Cobol\sProgram
 include cobol.syntax
-
-file ..\*\\.kt$ Kotliin\sSource
-include kotlin.syntax
 
 file ..\*\\.swift$ Swift\sProgram
 include swift.syntax
