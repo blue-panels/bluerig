@@ -6,3 +6,11 @@
 # 0x80 to 0xBF instead, so it would lose 0xC4 to 0xFF, and Cyrillic, Greek and
 # everything else outside Latin-1 would stop matching.
 bluerig: national-encoding [usr/share/bluerig/syntax/*.syntax]
+
+# The help window reads the files in help/ at run time: they are data of the
+# program, not documentation for /usr/share/doc. The two README.txt describe
+# the format of the skin and syntax files beside them, for whoever copies one
+# of those to edit it.
+bluerig: package-contains-documentation-outside-usr-share-doc [usr/share/bluerig/help/*]
+bluerig: package-contains-documentation-outside-usr-share-doc [usr/share/bluerig/skins/README.txt]
+bluerig: package-contains-documentation-outside-usr-share-doc [usr/share/bluerig/syntax/README.txt]
