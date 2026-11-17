@@ -25,484 +25,641 @@ msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: https://github.com/blue-panels/bluerig/issues\n"
 "POT-Creation-Date: 2026-09-29 13:14+0200\n"
-"PO-Revision-Date: 2026-09-25 22:53+0000\n"
-"Last-Translator: yeager <user-6596@noreply.codeberg.org>\n"
-"Language-Team: Swedish <https://translate.codeberg.org/projects/mc6/mc6/sv/"
-">\n"
+"PO-Revision-Date: 2026-11-17 17:44+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: Swedish <https://translate.codeberg.org/projects/bluerig/"
+"bluerig/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.9.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr "Ingen översättning"
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "Varning: kan inte läsa in listan över teckenkodningar"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7-bitars ASCII"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "Kan inte översätta från %s till %s"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "Händelsesystemet är redan initierat"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "Misslyckades med att initiera händelsesystemet"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "Händelsesystemet är inte initierat"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "Kontrollera indata! Vissa parametrar är NULL!"
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "Kan inte skapa gruppen '%s' för händelser!"
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "Kan inte skapa händelsen '%s'!"
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr "Copyright (C) 1996-%zu the Free Software Foundation"
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr "En halv sida upp"
 
+#: lib/keybind.c:72
 msgid "Half page down"
 msgstr "En halv sida ned"
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr "Gå till början"
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr "Gå till slutet"
 
+#: lib/keybind.c:75
 msgid "Top of screen"
 msgstr "Skärmens överkant"
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr "Skärmens nederkant"
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr "Ett ord åt vänster"
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr "Ett ord åt höger"
 
+#: lib/keybind.c:79
 msgid "Copy file(s)"
 msgstr "Kopiera filer"
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr "Flytta/byt namn på filer"
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Ta bort"
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr "Huvudmeny"
 
+#: lib/keybind.c:87
 msgid "User-defined menu"
 msgstr "Användardefinierad meny"
 
+#: lib/keybind.c:88
 msgid "Edit user menu"
 msgstr "Redigera användarmeny"
 
+#: lib/keybind.c:90
 msgid "Search next"
 msgstr "Sök nästa"
 
+#: lib/keybind.c:92
 msgid "Replace next"
 msgstr "Ersätt nästa"
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr "Visa hjälp"
 
+#: lib/keybind.c:94
 msgid "Terminal"
 msgstr "Terminal"
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Redigera fil"
 
+#: lib/keybind.c:96
 msgid "Edit new file"
 msgstr "Redigera ny fil"
 
+#: lib/keybind.c:97
 msgid "Select charset"
 msgstr "Välj teckenkodning"
 
+#: lib/keybind.c:98
 msgid "Command history"
 msgstr "Kommandohistorik"
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr "Nästa i historiken"
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr "Föregående i historiken"
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr "Komplettera automatiskt"
 
+#: lib/keybind.c:103
 msgid "Save as..."
 msgstr "Spara som..."
 
+#: lib/keybind.c:104
 msgid "Go to line"
 msgstr "Gå till rad"
 
+#: lib/keybind.c:105
 msgid "Refresh screen"
 msgstr "Uppdatera skärmen"
 
+#: lib/keybind.c:106
 msgid "Suspend to shell"
 msgstr "Pausa och gå till skalet"
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr "Lista öppna skärmar"
 
+#: lib/keybind.c:108
 msgid "Next screen"
 msgstr "Nästa skärm"
 
+#: lib/keybind.c:109
 msgid "Previous screen"
 msgstr "Föregående skärm"
 
+#: lib/keybind.c:110
 msgid "Next file"
 msgstr "Nästa fil"
 
+#: lib/keybind.c:111
 msgid "Previous file"
 msgstr "Föregående fil"
 
+#: lib/keybind.c:112
 msgid "Delete to line start"
 msgstr "Radera till radens början"
 
+#: lib/keybind.c:113
 msgid "Delete to line end"
 msgstr "Radera till radens slut"
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr "Radera till ordets början"
 
+#: lib/keybind.c:115
 msgid "Delete to word end"
 msgstr "Radera till ordets slut"
 
+#: lib/keybind.c:116
 msgid "Cut to clipboard"
 msgstr "Klipp ut till urklipp"
 
+#: lib/keybind.c:117
 msgid "Copy to clipboard"
 msgstr "Kopiera till urklipp"
 
+#: lib/keybind.c:118
 msgid "Paste from clipboard"
 msgstr "Klistra in från urklipp"
 
+#: lib/keybind.c:119
 msgid "Toggle selection"
 msgstr "Växla markering"
 
+#: lib/keybind.c:120
 msgid "Select left"
 msgstr "Markera åt vänster"
 
+#: lib/keybind.c:121
 msgid "Select right"
 msgstr "Markera åt höger"
 
+#: lib/keybind.c:122
 msgid "Select up"
 msgstr "Markera uppåt"
 
+#: lib/keybind.c:123
 msgid "Select down"
 msgstr "Markera nedåt"
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr "Markera till ordets början"
 
+#: lib/keybind.c:125
 msgid "Select to word end"
 msgstr "Markera till ordets slut"
 
+#: lib/keybind.c:126
 msgid "Select to line start"
 msgstr "Markera till radens början"
 
+#: lib/keybind.c:127
 msgid "Select to line end"
 msgstr "Markera till radens slut"
 
+#: lib/keybind.c:128
 msgid "Sort order..."
 msgstr "Sorteringsordning..."
 
+#: lib/keybind.c:129
 msgid "General options"
 msgstr "Allmänna inställningar"
 
+#: lib/keybind.c:130
 msgid "Learn terminal keys"
 msgstr "Lär in terminaltangenter"
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr "Tangentbindningar"
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr "Tangentavläsare"
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr "Hantera insticksmoduler"
 
+#: lib/keybind.c:134
 msgid "Set bookmark"
 msgstr "Sätt bokmärke"
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr "Avsluta programmet"
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr "Prefix för utökade tangenter"
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 msgid "Find declaration"
 msgstr "Sök deklaration"
 
+#: lib/keybind.c:139
 msgid "Appearance settings"
 msgstr "Utseendeinställningar"
 
+#: lib/keybind.c:140
 msgid "Save setup"
 msgstr "Spara inställningar"
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr "Klistra in raderad text"
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr "Hjälpindex"
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr "Gå tillbaka"
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr "Nästa länk"
 
+#: lib/keybind.c:154
 msgid "Previous link"
 msgstr "Föregående länk"
 
+#: lib/keybind.c:155
 msgid "Next node"
 msgstr "Nästa nod"
 
+#: lib/keybind.c:156
 msgid "Previous node"
 msgstr "Föregående nod"
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr "Rulla uppåt"
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr "Rulla nedåt"
 
+#: lib/keybind.c:167
 msgid "Deselect all"
 msgstr "Avmarkera allt"
 
+#: lib/keybind.c:168
 msgid "Select page up"
 msgstr "Markera en sida uppåt"
 
+#: lib/keybind.c:169
 msgid "Select page down"
 msgstr "Markera en sida nedåt"
 
+#: lib/keybind.c:171
 msgid "Close editor"
 msgstr "Stäng redigeraren"
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr "Ett stycke uppåt"
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr "Ett stycke nedåt"
 
+#: lib/keybind.c:177
 msgid "Open file in editor"
 msgstr "Öppna fil i redigeraren"
 
+#: lib/keybind.c:178
 msgid "Select word"
 msgstr "Markera ord"
 
+#: lib/keybind.c:179
 msgid "Select line"
 msgstr "Markera rad"
 
+#: lib/keybind.c:180
 msgid "Select all"
 msgstr "Markera allt"
 
+#: lib/keybind.c:181
 msgid "Column selection mode"
 msgstr "Kolumnmarkeringsläge"
 
+#: lib/keybind.c:182
 msgid "Save selected block"
 msgstr "Spara markerat block"
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Infoga fil"
 
+#: lib/keybind.c:184
 msgid "Toggle insert/overwrite"
 msgstr "Växla infognings-/överskrivningsläge"
 
+#: lib/keybind.c:185
 msgid "Insert date/time (Lua action)"
 msgstr "Infoga datum/tid (Lua-åtgärd)"
 
+#: lib/keybind.c:186
 msgid "Delete line"
 msgstr "Radera rad"
 
+#: lib/keybind.c:187
 msgid "Mail file"
 msgstr "Skicka fil med e-post"
 
+#: lib/keybind.c:188
 msgid "Undo history"
 msgstr "Ångringshistorik"
 
+#: lib/keybind.c:189
 msgid "Format paragraph (Lua action)"
 msgstr "Formatera stycke (Lua-åtgärd)"
 
+#: lib/keybind.c:190
 msgid "Match bracket"
 msgstr "Hitta matchande parentes"
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr "Sortera markering (Lua-åtgärd)"
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr "Infoga kommandoutdata (Lua-åtgärd)"
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr "Starta makroinspelning"
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr "Stoppa makroinspelning"
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr "Växla makroinspelning"
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr "Makrohanterare"
 
+#: lib/keybind.c:197
 msgid "Repeat last macro"
 msgstr "Upprepa senaste makrot"
 
+#: lib/keybind.c:198
 msgid "Spell check"
 msgstr "Stavningskontroll"
 
+#: lib/keybind.c:199
 msgid "Spell check current word"
 msgstr "Stavningskontrollera aktuellt ord"
 
+#: lib/keybind.c:200
 msgid "Select spell language"
 msgstr "Välj språk för stavningskontroll"
 
+#: lib/keybind.c:201
 msgid "Clear all bookmarks"
 msgstr "Rensa alla bokmärken"
 
+#: lib/keybind.c:202
 msgid "Next bookmark"
 msgstr "Nästa bokmärke"
 
+#: lib/keybind.c:203
 msgid "Previous bookmark"
 msgstr "Föregående bokmärke"
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr "Vik in/ut kod"
 
+#: lib/keybind.c:205
 msgid "Unfold all"
 msgstr "Vik ut allt"
 
+#: lib/keybind.c:206
 msgid "Toggle line filter"
 msgstr "Växla radfilter"
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr "Filtrera efter markering eller ord"
 
+#: lib/keybind.c:208
 msgid "Select to file start"
 msgstr "Markera till filens början"
 
+#: lib/keybind.c:209
 msgid "Select to file end"
 msgstr "Markera till filens slut"
 
+#: lib/keybind.c:210
 msgid "Select to page start"
 msgstr "Markera till sidans början"
 
+#: lib/keybind.c:211
 msgid "Select to page end"
 msgstr "Markera till sidans slut"
 
+#: lib/keybind.c:212
 msgid "Select scroll up"
 msgstr "Markera och rulla uppåt"
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr "Markera och rulla nedåt"
 
+#: lib/keybind.c:214
 msgid "Select paragraph up"
 msgstr "Markera ett stycke uppåt"
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr "Markera ett stycke nedåt"
 
+#: lib/keybind.c:216
 msgid "Column select page up"
 msgstr "Kolumnmarkera en sida uppåt"
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr "Kolumnmarkera en sida nedåt"
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr "Kolumnmarkera åt vänster"
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr "Kolumnmarkera åt höger"
 
+#: lib/keybind.c:220
 msgid "Column select up"
 msgstr "Kolumnmarkera uppåt"
 
+#: lib/keybind.c:221
 msgid "Column select down"
 msgstr "Kolumnmarkera nedåt"
 
+#: lib/keybind.c:222
 msgid "Column select scroll up"
 msgstr "Kolumnmarkera och rulla uppåt"
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr "Kolumnmarkera och rulla nedåt"
 
+#: lib/keybind.c:224
 msgid "Column select paragraph up"
 msgstr "Kolumnmarkera ett stycke uppåt"
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr "Kolumnmarkera ett stycke nedåt"
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr "Flytta block åt vänster"
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr "Flytta block åt höger"
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr "Infoga bokstavligt tecken (Lua-åtgärd)"
 
+#: lib/keybind.c:229
 msgid "Toggle visible tabs/spaces"
 msgstr "Växla visning av tabbar/mellanslag"
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr "Växla visning av styrtecken"
 
+#: lib/keybind.c:231
 msgid "Toggle syntax highlighting"
 msgstr "Växla syntaxmarkering"
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Välj syntaxmarkering"
 
+#: lib/keybind.c:233
 msgid "Toggle right margin"
 msgstr "Växla högermarginal"
 
+#: lib/keybind.c:234
 msgid "Save mode options"
 msgstr "Spara lägesinställningar"
 
+#: lib/keybind.c:235
 msgid "About editor"
 msgstr "Om redigeraren"
 
+#: lib/keybind.c:237
 msgid "Execute script"
 msgstr "Kör skript"
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr "Flytta fönster"
 
+#: lib/keybind.c:239
 msgid "Resize window"
 msgstr "Ändra fönsterstorlek"
 
+#: lib/keybind.c:240
 msgid "Toggle fullscreen"
 msgstr "Växla helskärmsläge"
 
+#: lib/keybind.c:241
 msgid "Window list"
 msgstr "Fönsterlista"
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr "Nästa fönster"
 
+#: lib/keybind.c:243
 msgid "Previous window"
 msgstr "Föregående fönster"
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -513,22 +670,28 @@ msgstr ""
 "Användare: %s\n"
 "Process-ID: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "Fil låst"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "&Överta lås"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "&Ignorera lås"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "Kan inte skapa katalogen %s"
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "ALLVARLIGT FEL: inte en katalog:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
@@ -536,12 +699,15 @@ msgstr ""
 "Talet är utanför tillåtet område (ska vara i området för en byte, 0 <= n <= "
 "0xFF, uttryckt hexadecimalt)"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "Otillåtet tecken"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "Omatchat citattecken"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
@@ -550,34 +716,44 @@ msgstr ""
 "Det hexadecimala mönstret är fel vid position %d:\n"
 "%s."
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "Söksträng ej funnen"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "Ej implementerat än"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr "Antalet ersättningssymboler matchar inte antalet funna symboler"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "Otillåtet symbolnummer %d"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "Reguljärt uttrycksfel"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "No&rmal"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "Re&guljärt uttryck"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "He&xadecimal"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "&Jokertecken"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -586,6 +762,7 @@ msgstr ""
 "Temat '%s' kan inte tolkas.\n"
 "Förinställt tema har laddats"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -596,6 +773,7 @@ msgstr ""
 "%s\n"
 "Förinställt tema har laddats"
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -606,6 +784,7 @@ msgstr ""
 "%s\n"
 "Standardtemat har lästs in"
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -614,6 +793,7 @@ msgstr ""
 "Temat '%s' kan inte laddas in.\n"
 "Förinställt tema har laddats"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -627,6 +807,7 @@ msgstr ""
 "en *-256color- eller *-direct256-variant. Använd kommandot ’toe -a’\n"
 "för att lista alla tillgängliga varianter på ditt system.\n"
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
@@ -636,6 +817,7 @@ msgstr ""
 "med stöd för breda tecken och ABI 6 eller senare.\n"
 "Uppgradera ditt system.\n"
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -647,9 +829,11 @@ msgstr ""
 "till en variant av typen *-direct256, *-direct16 eller *-direct.\n"
 "Kommandot 'toe -a' listar alla tillgängliga varianter på ditt system.\n"
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "Fullfärg stöds inte i den här versionen av slang."
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -663,289 +847,384 @@ msgstr ""
 "Kommandot 'toe -a' listar alla tillgängliga varianter på ditt system.\n"
 "Du kan även ange COLORTERM=truecolor.\n"
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "Escape"
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "Funktionstangent 1"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "Funktionstangent 2"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "Funktionstangent 3"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "Funktionstangent 4"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "Funktionstangent 5"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "Funktionstangent 6"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "Funktionstangent 7"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "Funktionstangent 8"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "Funktionstangent 9"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "Funktionstangent 10"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "Funktionstangent 11"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "Funktionstangent 12"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "Funktionstangent 13"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "Funktionstangent 14"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "Funktionstangent 15"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "Funktionstangent 16"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "Funktionstangent 17"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "Funktionstangent 18"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "Funktionstangent 19"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "Funktionstangent 20"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Komplettera/M-tab"
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "Bakåttab/S-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Backsteg"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "Uppåtpil"
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "Nedåtpil"
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "Vänsterpil"
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "Högerpil"
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Infoga"
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "Hem"
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "End"
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Sida upp"
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Sida ned"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "/ på num tang"
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "* på num tang"
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "- på num tang"
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "+ på num tang"
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "Vänsterpil, num tang"
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "Högerpil, num tang"
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "Uppåtpil, num tang"
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "Nedåtpil, num tang"
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "Home, num tang"
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "End, num tang"
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "Page Down, num tang"
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "Page Up, num tang"
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "Insert, num tang"
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "Delete, num tang"
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "Enter, num tang"
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "Funktionstangent 21"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "Funktionstangent 22"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "Funktionstangent 23"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "Funktionstangent 24"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "A1-tangenten"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "C1-tangenten"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "Asterisk"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "Minus"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "Plus"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "Punkt"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "Mindre än"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "Större än"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "Lika med"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "Komma"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "Apostrof"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "Kolon"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "Semikolon"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "Utropstecken"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "Frågetecken"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "Et-tecken"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "Dollartecken"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "Citationstecken"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "Procenttecken"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "Cirkumflex"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "Tilde"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "Grav accent"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "Understreck"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "Understreck"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "Vertikalstreck"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "Vänster parentes"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "Höger parentes"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "Vänster hakparentes"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "Höger hakparentes"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "Vänster klammerparentes"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "Höger klammerparentes"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "Retur"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "Tabulator"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "Mellanslag"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "Snedstreck"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "Omvänt snedstreck"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "Brädgård"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "Snabel-a"
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ctrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr "Höger Alt"
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Skift"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
@@ -954,6 +1233,7 @@ msgstr ""
 "\n"
 "Det går inte att skapa ett rör för SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
@@ -962,6 +1242,7 @@ msgstr ""
 "\n"
 "Det går inte att konfigurera skrivänden på SIGWINCH-röret: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
@@ -970,6 +1251,7 @@ msgstr ""
 "\n"
 "Det går inte att konfigurera läsänden på SIGWINCH-röret: %s (%d)\n"
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -978,39 +1260,51 @@ msgstr ""
 "Skärmstorleken %d×%d stöds inte.\n"
 "Kontrollera miljövariabeln TERM.\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "Miljövariabeln TERM är inte angiven!\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr "Kan inte kontrollera SIGWINCH-röret"
 
+#: lib/util.c:254
 msgid "B"
 msgstr "B"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "kB"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "KiB"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "MB"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "MiB"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "GB"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "GiB"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "Kan inte skapa rörbeskrivare"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "Kan inte skapa rörströmmar"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
@@ -1019,9 +1313,11 @@ msgstr ""
 "Oväntat fel i select() under läsning av data från en barnprocess:\n"
 "%s"
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr "Det går inte att stänga rörbeskrivaren (p == NULL)"
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
@@ -1030,9 +1326,11 @@ msgstr ""
 "Oväntat fel i waitpid():\n"
 "%s"
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "Ändringar i filen gick förlorade"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
@@ -1041,21 +1339,28 @@ msgstr ""
 "Det går inte att skapa en tillfällig katalog %s: %s.\n"
 "Temporära filer kommer inte att skapas\n"
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "Tryck valfri tangent för att fortsätta..."
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "Internt fel:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "Skärmar"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "Historik"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr "Klistra in"
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
@@ -1063,111 +1368,165 @@ msgstr ""
 "Urklipp innehåller mer än 2 kB text.\n"
 "Klistra in den?"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "&Ja"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "&Nej"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "DialogTitle|Rensa historik"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "Vill du rensa denna historik?"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "&OK"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "&Avbryt"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "Fel"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr "%s (%d)"
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "&Avbryt"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr "< Fördefinierat >"
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr "Teman"
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr "Tema:"
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr "&Skuggor"
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr "Utseende"
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "Visa den aktuella versionen"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "Skriv ut datakatalog"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr "Skriv ut extra information om använda datakataloger"
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "Skriv ut configure-alternativ"
 
+#: src/args.c:140
 msgid "Disables Lua support"
 msgstr "Inaktiverar Lua-stöd"
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "Tvinga fram xtermfinesser"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "Stäng av stöd för X11"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "Försöker använda ett åldrat sätt att läsa av muspekaren"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "Stäng av musstödet i textversionen"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "Försöker använda termcap istället för terminfo"
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "Att köra på långsamma terminaler"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "Använd '+', '-' och '|' för att rita"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr "Läs in tangentbindningar från angiven fil"
 
+#: src/args.c:223
 msgid "<file>"
 msgstr "<fil>"
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr "Läs inte in tangentbindningar från fil, använd standardvärden"
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "Begäran att köra i svartvitt"
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "Begär att få köra i färgläge"
 
+#: src/args.c:272
 #, fuzzy
 msgid "Use the specified skin"
 msgstr "Visa mc med specificerat tema"
 
+#: src/args.c:273
 msgid "<string>"
 msgstr "<sträng>"
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr "[+radnr] fil1[:radnr] [fil2[:radnr]...]"
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1178,266 +1537,372 @@ msgstr ""
 "Skicka alla felrapporter (inklusive utdata från '%s -V')\n"
 "som ärenden på %s\n"
 
+#: src/args.c:478
 msgid "Main options"
 msgstr "Huvudalternativ"
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr "Terminalalternativ"
 
+#: src/args.c:492
 msgid "Color options"
 msgstr "Färgalternativ"
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr "Argumenttolkningsfel!"
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr "Stavning"
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr "Stavningsmotorn är inte tillgänglig."
 
+#: src/plugins/ctags/ctags-config.c:146
 msgid "Ctags Configuration"
 msgstr "Ctags-inställningar"
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr "Körbar fil för Ctags:"
 
+#: src/plugins/ctags/ctags-config.c:155
 msgid "Command line options:"
 msgstr "Kommandoradsflaggor:"
 
+#: src/plugins/ctags/ctags-config.c:163
 msgid "Case sensitive filter"
 msgstr "Skiftlägeskänsligt filter"
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr "Hitta taggfil automatiskt i överordnade kataloger"
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr "Kan inte gå till %s:%ld."
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr "Ctags"
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr "Symbolen ”%s” hittades inte i något inläst förråd."
 
+#: src/plugins/ctags/ctags-plugin.c:538
 msgid "Go to Declaration"
 msgstr "Gå till deklaration"
 
+#: src/plugins/ctags/ctags-plugin.c:591
 msgid "Find Declaration"
 msgstr "Sök deklaration"
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr "Inget ord vid markören."
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, c-format
 msgid "'%s' is not a known symbol."
 msgstr "”%s” är ingen känd symbol."
 
+#: src/plugins/ctags/ctags-plugin.c:662
 msgid "Failed to create temporary file."
 msgstr "Kunde inte skapa temporär fil."
 
+#: src/plugins/ctags/ctags-plugin.c:672
 msgid "Failed to open temporary file."
 msgstr "Kunde inte öppna temporär fil."
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr "Inga indexerade filer hittades."
 
+#: src/plugins/ctags/ctags-plugin.c:727
 msgid "Failed to run grep."
 msgstr "Kunde inte köra grep."
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, c-format
 msgid "No references found for '%s'."
 msgstr "Inga referenser hittades för ”%s”."
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr "Sök referenser"
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr "Inget förråd är inläst."
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 msgid "Search Symbol"
 msgstr "Sök symbol"
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr "Ingen fil är öppen."
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr "Inga taggar hittades för den aktuella filen."
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr "Symboler i aktuell fil"
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr "Inga filer matchar ”%s”."
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 msgid "Search File"
 msgstr "Sök fil"
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 msgid "Complete Symbol"
 msgstr "Komplettera symbol"
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr "Inga medlemmar hittades för ”%s”."
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, c-format
 msgid "Failed to load tags file: %s"
 msgstr "Kunde inte läsa in taggfil: %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr "Läste in %u symboler från %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, c-format
 msgid "Cannot create temp file: %s"
 msgstr "Kan inte skapa temporär fil: %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr "Kan inte byta namn på %s till %s: %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr "Ctags: Skapa index"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Project root directory to index:"
 msgstr "Projektets rotkatalog att indexera:"
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, c-format
 msgid "Failed to create index in %s"
 msgstr "Kunde inte skapa index i %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr "Indexerade: %u symboler"
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, c-format
 msgid "Reindex failed for %s"
 msgstr "Omindexering misslyckades för %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr "Omindexerade: %u symboler"
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr "Navigeringshistoriken är tom."
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 msgid "Navigation History"
 msgstr "Navigeringshistorik"
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 msgid "Go to declaration"
 msgstr "Gå till deklaration"
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr "Sök referenser"
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 msgid "Complete symbol"
 msgstr "Komplettera symbol"
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 msgid "Navigation history"
 msgstr "Navigeringshistorik"
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr "Gå framåt"
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 msgid "Search symbol"
 msgstr "Sök symbol"
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 msgid "Search file"
 msgstr "Sök fil"
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 msgid "Symbols in current file"
 msgstr "Symboler i aktuell fil"
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr "Medlemmar i klass/struktur"
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 msgid "Load tags file"
 msgstr "Läs in taggfil"
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr "Hantera förråd"
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 msgid "Reindex repository"
 msgstr "Indexera om förråd"
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 msgid "Configuration"
 msgstr "Inställningar"
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 msgid "Go to &declaration"
 msgstr "Gå till &deklaration"
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr "&Hitta deklaration"
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr "Sök &referenser"
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 msgid "Navigation &history"
 msgstr "Navigerings&historik"
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr "Gå &tillbaka"
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr "Gå &framåt"
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr "&Medlemmar i klass/struktur"
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 msgid "&Search symbol"
 msgstr "&Sök symbol"
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 msgid "S&ymbols in file"
 msgstr "S&ymboler i fil"
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 msgid "&Complete symbol"
 msgstr "&Komplettera symbol"
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr "Inga matchande symboler hittades."
 
+#: src/plugins/ctags/ctags-ui.c:328
 msgid "Select symbol"
 msgstr "Välj symbol"
 
+#: src/plugins/ctags/ctags-ui.c:411
 msgid "Symbol name:"
 msgstr "Symbolnamn:"
 
+#: src/plugins/ctags/ctags-ui.c:420
 msgid "File name or path:"
 msgstr "Filnamn eller sökväg:"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr "Medlemmar i klass/struktur"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr "Namn på omfång (klass, struktur, namnrymd):"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Load Tags File"
 msgstr "Läs in taggfil"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr "Sökväg till taggfil:"
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr "Hantera taggförråd"
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr "(okänd)"
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "S&täng"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr "Inga referenser hittades."
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr "Medlemmar"
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "Varning"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
@@ -1445,33 +1910,45 @@ msgstr ""
 "Nuvarande text har modifierats utan att sparas.\n"
 "Fortsätt kastar bort dessa ändringar."
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "F&ortsätt"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr "&Lägg till ord"
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "&Ersätt"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "&Hoppa över"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "Språk"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr "Felstavad"
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr "Kontrollera ord"
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "Föreslå"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr "(inga förslag)"
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
@@ -1479,6 +1956,7 @@ msgstr ""
 "Biblioteket hunspell är inte installerat.\n"
 "Installera det och en ordlista för språket du skriver på."
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
@@ -1486,9 +1964,12 @@ msgstr ""
 "Biblioteket aspell är inte installerat.\n"
 "Installera det och en ordlista för språket du skriver på."
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr "ingen"
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1499,6 +1980,7 @@ msgstr ""
 "Installerade: %s\n"
 "Installera en ordlista och ange sedan dess namn under Språk."
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1509,6 +1991,7 @@ msgstr ""
 "Installerade: %s\n"
 "Installera en ordlista och ange sedan dess namn under Språk."
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
@@ -1516,40 +1999,52 @@ msgstr ""
 "Stavningskontrollen är avstängd.\n"
 "Ange ett språk i stavningsmodulens inställningar för att aktivera den."
 
+#: src/plugins/spell/spell.c:1638
 msgid "Add word"
 msgstr "Lägg till ord"
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr "Ord att lägga till i ordlistan:"
 
+#: src/plugins/spell/spell.c:1738
 msgid "Aspell"
 msgstr "Aspell"
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr "Hunspell"
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr "Motor"
 
+#: src/plugins/spell/spell.c:1749
 msgid "Language:"
 msgstr "Språk:"
 
+#: src/plugins/spell/spell.c:1752
 msgid "&Select..."
 msgstr "&Välj..."
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr "Stavningsmodulens inställningar"
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "Välj språk"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr "Läser in: %3d%%"
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "Laddar..."
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
@@ -1558,13 +2053,16 @@ msgstr ""
 "Kan inte öppna\n"
 "%s"
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "Ladda fil"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr "Fel vid läsning av %s"
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
@@ -1573,6 +2071,7 @@ msgstr ""
 "Kan inte läsa filstatus för\n"
 "%s"
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
@@ -1581,6 +2080,7 @@ msgstr ""
 "%s\n"
 "är inte en vanlig fil"
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
@@ -1589,10 +2089,12 @@ msgstr ""
 "Filen \"%s\" är för stor.\n"
 "Öppna ändå?"
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr "Fel vid läsning från rör: %s"
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
@@ -1601,9 +2103,11 @@ msgstr ""
 "Kan inte öppna rör för läsning\n"
 "%s"
 
+#: src/editor/edit.c:4992
 msgid "Undo"
 msgstr "Ångra"
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
@@ -1611,6 +2115,7 @@ msgstr ""
 "Ångringshistoriken är inte tillgänglig.\n"
 "Ändringsloggen skrevs över efter en stor ändring."
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
@@ -1618,9 +2123,11 @@ msgstr ""
 "Du saknar skrivrättigheter för denna fil.\n"
 "Ange sudo-lösenord för att spara som root:"
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr "Spara med sudo"
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
@@ -1628,19 +2135,24 @@ msgstr ""
 "Kan inte spara med sudo.\n"
 "Fel lösenord eller sudo är inte konfigurerat."
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "Försök &igen"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr "Filen har hårda länkar. Koppla loss innan den sparas?"
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr "Filen har modifierats av något annat under tiden. Spara ändå?"
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr "Fel vid skrivning till rör: %s"
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1651,30 +2163,40 @@ msgstr ""
 "%s\n"
 "för skrivning"
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr "Filen som du sparar slutar inte med en radmatning."
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "&Ändra inte"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "&Unix-format (LF)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "&Windows/DOS-format (CR LF)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "&Macintosh-format (CR)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "Ange filnamn:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "Ändra radbrytningar till:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "Spara som"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
@@ -1683,21 +2205,27 @@ msgstr ""
 "Det går inte att skapa en katalog\n"
 "%s"
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "S&nabbspara"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "&Säker lagring"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr "&Gör säkerhetskopior med följande filnamnstillägg:"
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr "Kontrollera &POSIX-radslut"
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "Inställningar för att spara filer"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1708,52 +2236,69 @@ msgstr ""
 "%s:\n"
 "inte en vanlig fil"
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "En fil med detta namn finns redan"
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "&Skriv över"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "Kan inte spara fil"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "Bekräfta att filen ska sparas: ”%s”"
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "Spara fil"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "&Spara"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "Ladda"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "Redigera syntaxfil"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "Vilken syntaxfil vill du redigera?"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "&Användarens"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "&Systemets"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "Menyredigering"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "Vilken menyfil vill du redigera?"
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "&Lokal"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[Namnlös]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
@@ -1762,9 +2307,11 @@ msgstr ""
 "Filen %s har ändrats.\n"
 "Spara innan nedstängning?"
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "Stäng fil"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
@@ -1773,462 +2320,615 @@ msgstr ""
 "%s håller på att stängas ner.\n"
 "Spara modifierade filen %s?"
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "Avsluta"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "Denna funktion är inte implementerad"
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "Kan inte spara till fil"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "Gå till rad"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr "Ange rad:"
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "Spara block"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr "Det går inte att spara block"
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "Kan inte infoga fil"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "mail -s <ämne> -c <kopia> <till>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr "Till"
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "Ämne"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "Kopior till"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "E-post"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "Avbryt"
 
+#: src/editor/editcmd.c:2820
 #, c-format
 msgid "insert %d"
 msgstr "infoga %d"
 
+#: src/editor/editcmd.c:2826
 #, c-format
 msgid "delete %d"
 msgstr "radera %d"
 
+#: src/editor/editcmd.c:2829
 msgid "replace"
 msgstr "ersätt"
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr "Inget att ångra."
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 msgid "Undo History"
 msgstr "Ångringshistorik"
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "Samlar in kompletteringar"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "Namnlös"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "Spara makro"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "Tryck på ny snabbtangent för makro:"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "Repetera senaste kommandon"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "Repetitioner:"
 
+#: src/editor/editmacros.c:708
 #, c-format
 msgid "Delete macro %s?"
 msgstr "Ta bort makrot %s?"
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "Ta bort makro"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr "Makrohanterare"
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr "Inga makron inspelade"
 
+#: src/editor/editmacros.c:865
 msgid "Run"
 msgstr "Kör"
 
+#: src/editor/editmacros.c:868
 msgid "Close"
 msgstr "Stäng"
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "&Öppna fil..."
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "&Ny"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr "&Historik…"
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "Spa&ra som..."
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "&Infoga fil..."
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "&Kopiera till fil..."
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "Användar&meny..."
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr "&Om..."
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "&Avsluta"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "&Ångra"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "&Gör om"
 
+#: src/editor/editmenu.c:259
 msgid "Undo &History..."
 msgstr "Ångrings&historik..."
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr "&Växla infoga/överskr"
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "Vä&xla markering"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "&Markera kolumner"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "Markera &allt"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "Avmarke&ra"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "&Kopiera"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "&Flytta"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "&Ta bort"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "Ko&piera till urklippsfil"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "K&lipp ut till urklippsfil"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "Kl&istra in från urklippsfil"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "&Början"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "&Slutet"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "&Sök..."
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "Sök &igen"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "&Ersätt..."
 
+#: src/editor/editmenu.c:293
 msgid "Toggle &line filter"
 msgstr "Växla &radfilter"
 
+#: src/editor/editmenu.c:294
 msgid "Filter by &word"
 msgstr "Filtrera efter &ord"
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr "&Växla bokmärke"
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "&Nästa bokmärke"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "&Föreg bokmärke"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr "&Rensa bokmärken"
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "&Gå till rad..."
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr "Växla &radnummer"
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr "Till &matchande parentes"
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr "Växla s&yntaxmarkering"
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr "Växla &höger marginal"
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr "Växla &styrtecken"
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "&Teckenkodning..."
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr "&Vik in/ut block"
 
+#: src/editor/editmenu.c:324
 msgid "&Unfold all"
 msgstr "Vik &ut allt"
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "Rita &om skärmen"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr "&Börja/sluta spela in makro"
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr "Makro&hanterare..."
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr "Spela in/repetera &ändringar"
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "Fl&ytta"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "&Ändra storlek"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr "&Växla fullskärm"
 
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "&Nästa"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "&Föregående"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr "&Lista..."
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr "&Allmänt..."
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "S&ätt att spara..."
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "Sy&ntaxmarkering..."
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr "&Utseende..."
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr "Lär in &tangenter..."
 
+#: src/editor/editmenu.c:374
 msgid "Key &bindings..."
 msgstr "Tangent&bindningar..."
 
+#: src/editor/editmenu.c:375
 #, fuzzy
 msgid "Key s&niffer..."
 msgstr "Tangent&avläsare..."
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "&Hantera insticksmoduler..."
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr "In&sticksmodulinfo..."
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr "&Lua-skript..."
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "S&yntaxfil"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "&Menyfil"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "&Spara inställningar"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr "(inga insticksmoduler inlästa)"
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "&Fil"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "R&edigera"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "&Sök"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "&Kommando"
 
+#: src/editor/editmenu.c:553
 msgid "&Navigate"
 msgstr "&Navigera"
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr "F&önster"
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr "In&sticksmoduler"
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "&Alternativ"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 msgid "Lua action"
 msgstr "Lua-åtgärd"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 msgid "Action failed"
 msgstr "Åtgärden misslyckades"
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr "I&ngen"
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr "&Dynamisk styckeindelning"
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr "&Skrivmaskinsradbrytning"
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "Radbrytning"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr "Tabulering"
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "Falska &halva tabbar"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "&Backsteg genom tabbar"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "F&yll tabbar med blanksteg"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr "Tabbredd:"
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "Andra alternativ"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "Retur gör automatiska &indrag"
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "Fr&åga innan sparande"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "Spara fil&position"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr "Synliga avslutande &blanksteg"
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr "Synliga &tabulatorer"
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr "&Visa styrtecken"
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "Synta&xmarkering"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr "&Markör efter infogat block"
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr "Fast ma&rkering"
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr "Mar&kör bortom radslut"
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr "&Gruppera ångra"
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr "Radbrytning vid längd:"
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "Redigerarinställningar"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr "Ange söksträng:"
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr "&Skiftlägeskänsligt"
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "&Bakåt"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr "&I markerat"
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr "&Hela ord"
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr "Alla te&ckenkodningar"
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "Hi&tta alla"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr "Fil&ter"
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "Sök"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr "Söker %s: %3d%%"
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "Söker efter %s"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr "Ange ersättningssträng:"
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "Ersätt"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr "Ersätt med:"
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "A&lla"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "Bekräfta ersättning"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr "%ld ersättningar gjordes"
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr "Insticksmodul"
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
@@ -2237,73 +2937,98 @@ msgstr ""
 "En användarvänlig textredigerare\n"
 "skriven för %s."
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "Om"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr "Insticksmodulinfo"
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr "Inga insticksmoduler är inlästa."
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr "Den valda körmiljön saknar konfigurationsfunktion."
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr "Den valda insticksmodulen saknar konfigurationsfunktion."
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "Öppna filer"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "Redigera: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr "ButtonBar|Hjälp"
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr "ButtonBar|Spara"
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "ButtonBar|Marker"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "ButtonBar|Ersätt"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "ButtonBar|Kopier"
 
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "ButtonBar|Flytta"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr "ButtonBar|Sök"
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "ButtonBar|TaBort"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "ButtonBar|DraNer"
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr "ButtonBar|Avslut"
 
+#: src/editor/fold.c:478
 #, c-format
 msgid "Filtering %s: %3d%%"
 msgstr "Filtrerar %s: %3d%%"
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "Filter"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr "Inga rader matchar"
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr "< Auto >"
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr "< Läs om aktuell syntax >"
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -2312,13 +3037,16 @@ msgstr ""
 "Det går inte att öppna filen\n"
 "%s"
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "Läs in syntaxfil"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "Fel i filen %s på rad %d"
 
+#: src/execute.c:240
 #, fuzzy
 msgid ""
 "Not an xterm;\n"
@@ -2327,48 +3055,62 @@ msgstr ""
 "Varken xterm eller Linux-konsol;\n"
 "terminalen kan inte visas."
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr "Skriv \"exit\" för att återgå till %s"
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "Formatfel i hjälpfilen\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "Internt fel: Länkarea-start i en länkarea"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr "Noden %s i hjälpfilen kan inte hittas"
 
+#: src/help.c:1487
 msgid "See also"
 msgstr "Se även"
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "Hjälp"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr "ButtonBar|Index"
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "ButtonBar|Föreg"
 
+#: src/key_learn.c:138
 msgid "Function keys"
 msgstr "Funktionstangenter"
 
+#: src/key_learn.c:139
 msgid "Arrows / Navigation"
 msgstr "Piltangenter / Navigering"
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr "Special"
 
+#: src/key_learn.c:312
 msgid "Learn key"
 msgstr "Lär in tangent"
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr "Tryck på %s och vänta..."
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
@@ -2377,9 +3119,11 @@ msgstr ""
 "Sekvensen %s är redan tilldelad %s.\n"
 "Tilldela den till %s i stället?"
 
+#: src/key_learn.c:354
 msgid "Conflict"
 msgstr "Konflikt"
 
+#: src/key_learn.c:420
 #, c-format
 msgid ""
 "Cannot accept this key.\n"
@@ -2388,28 +3132,37 @@ msgstr ""
 "Kan inte godta denna tangent.\n"
 "Du tryckte på: %s"
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr "Lär in terminal [%s]"
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 msgid "&Ctrl"
 msgstr "&Ctrl"
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr "&Alt"
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 msgid "&Shift"
 msgstr "&Skift"
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 msgid "Edit &term file"
 msgstr "Redigera &term-fil"
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr "(okänd)"
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr "(ingen)"
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
@@ -2419,70 +3172,92 @@ msgstr ""
 "\n"
 "Vänta tills detta meddelande försvinner."
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr "Kortkommando:"
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr "Åtgärd:"
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr "Rådata:"
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr "Tangentkod:"
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr "&Läs av tangent"
 
+#: src/keybind_dialog.c:128
 msgid "&Main"
 msgstr "&Huvudläge"
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr "&Ctrl-X + ..."
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr "&Dialog"
 
+#: src/keybind_dialog.c:133
 msgid "&Menu"
 msgstr "&Meny"
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr "&Inmatning"
 
+#: src/keybind_dialog.c:134
 msgid "&Listbox"
 msgstr "&Listruta"
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr "&Radioknapp"
 
+#: src/keybind_dialog.c:135
 msgid "&Help"
 msgstr "&Hjälp"
 
+#: src/keybind_dialog.c:139
 msgid "&Editor"
 msgstr "&Redigerare"
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr "&Gränssnittskomponenter"
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr "Tangent"
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr "Okänd sekvens: %s"
 
+#: src/keybind_dialog.c:629
 msgid "Assign key"
 msgstr "Tilldela tangent"
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr "Tangent:"
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr "Ange kortkommando"
 
+#: src/keybind_dialog.c:895
 msgid "Press new shortcut..."
 msgstr "Tryck på nytt kortkommando..."
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
@@ -2491,12 +3266,15 @@ msgstr ""
 "%s är redan bundet till %s.\n"
 "Tilldela ändå?"
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 msgid "&Back"
 msgstr "&Tillbaka"
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 msgid "Edit &keymap file"
 msgstr "Redigera &tangentbindningsfil"
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2505,9 +3283,11 @@ msgstr ""
 "Körning misslyckades:\n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "Hemkatalogsökvägen är inte absolut"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2518,188 +3298,238 @@ msgstr ""
 "Misslyckades under stängning:\n"
 "%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr "ospecificerad"
 
-#, fuzzy
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 msgid "Lua scripts"
-msgstr "Lua-skript:"
+msgstr "Lua-skript"
 
-#, fuzzy
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
-msgstr "Denna insticksmodul saknar inställningar."
+msgstr "Det här skriptet har ingen startfil."
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr "Lua"
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 msgid "Unknown error"
 msgstr "Okänt fel"
 
-#, fuzzy
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
-msgstr "Denna insticksmodul saknar inställningar."
+msgstr "Det här skriptet har inga inställningar."
 
-#, fuzzy
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
-msgstr ""
-"Inga globala eller användarspecifika Lua-skript för redigeraren hittades."
+msgstr "Inga globala eller användarspecifika Lua-skript hittades."
 
+#: src/manage_plugins.c:445
 #, fuzzy
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr "Lua-körmiljön är inaktiverad. Aktivera Lua-motorn och starta om MC."
 
-#, fuzzy
+#: src/manage_plugins.c:511
 msgid "&Settings"
-msgstr "VFS-inställningar"
+msgstr "&Inställningar"
 
+#: src/manage_plugins.c:593
 msgid "Lua action failed"
 msgstr "Lua-åtgärden misslyckades"
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr "Det valda skriptet saknar körbara åtgärder."
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr "Kör Lua-åtgärd"
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr "(inaktiverad, inte inläst)"
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr "Hantera insticksmoduler"
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr "Denna insticksmodul saknar inställningar."
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr "Inga insticksmoduler inlästa."
 
+#: src/runtime-host.c:1931
 msgid "Runtime errors"
 msgstr "Körfel"
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "Välj teckenkodning"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "-  < Ingen översättning >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "Inställningar"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr "Inställningar sparade till %s"
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr "Inställningar kunde inte sparas till %s"
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "Med valfritt stöd för subshell"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr "Med musstöd på xterm och Linux-konsol"
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr "Med musstöd på xterm"
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr "Med stöd för X11-händelser"
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr "Med stöd för internationalisering"
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr "   baserad på GNU Midnight Commander.\n"
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr "Byggd med GLib %d.%d.%d (med hjälp av GLib %u.%u.%u)\n"
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr "Byggd med S-Lang"
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr " och terminfo-databasen (med S-Lang %s)\n"
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr "Byggd med %s"
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr " (använder %s)\n"
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "Datatyper:"
 
+#: src/textconf.c:202
 msgid "directory not found"
 msgstr "katalogen hittades inte"
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr "Hemkatalog:"
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr "Profilrotkatalog:"
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "Systemdata"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "Konfigurationskatalog:"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "Datakatalog:"
 
+#: src/textconf.c:218 src/textconf.c:257
 msgid "Editor plugins:"
 msgstr "Redigerarinsticksmoduler:"
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr "Körmiljöinsticksmoduler:"
 
+#: src/textconf.c:224 src/textconf.c:243
 msgid "Lua scripts:"
 msgstr "Lua-skript:"
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr "Lua-moduler:"
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "Användardata"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "Cachekatalog:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "Felsök"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "FEL:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "Sant:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "Falskt:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr "Det går inte att skapa en tillfällig diff-fil"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr "Kunde inte anropa programmet"
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr "Kan inte skapa temporär kommandofil"
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "Parameter"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr "Varning - ignorerar fil"
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2708,16 +3538,20 @@ msgstr ""
 "Fil %s ägs varken av dig eller root, eller är skrivbar för alla.\n"
 "Att använda den kan äventyra din säkerhet"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr "Kan inte köra kommandon på filsystem som inte är lokala"
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr "Inga passande poster hittades i %s"
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "Användarmeny"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"

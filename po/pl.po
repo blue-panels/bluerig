@@ -27,562 +27,718 @@ msgstr ""
 "X-Generator: Weblate 2026.9.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr "Bez tłumaczenia"
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "Ostrzeżenie: nie można wczytać listy stron kodowych"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7-bitowe ASCII"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "Nie można przetłumaczyć z %s na %s"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "System zdarzeń został już zainicjowany"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "Zainicjowanie systemu zdarzeń się nie powiodło"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "System zdarzeń nie został zainicjowany"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "Proszę sprawdzić dane wejściowe. Niektóre parametry są PUSTE."
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "Nie można utworzyć grupy „%s” dla zdarzeń."
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "Nie można utworzyć zdarzenia „%s”."
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr "Copyright © 1996-%zu Free Software Foundation"
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr ""
 
+#: lib/keybind.c:72
 #, fuzzy
 msgid "Half page down"
 msgstr "Page Down"
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr ""
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr ""
 
+#: lib/keybind.c:75
 #, fuzzy
 msgid "Top of screen"
 msgstr "&Przełącz pełny ekran"
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr ""
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr ""
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr ""
 
+#: lib/keybind.c:79
 #, fuzzy
 msgid "Copy file(s)"
 msgstr "P&orównaj pliki"
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr ""
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Delete"
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr ""
 
+#: lib/keybind.c:87
 #, fuzzy
 msgid "User-defined menu"
 msgstr "Określony przez &użytkownika:"
 
+#: lib/keybind.c:88
 #, fuzzy
 msgid "Edit user menu"
 msgstr "Menu użytkownika"
 
+#: lib/keybind.c:90
 #, fuzzy
 msgid "Search next"
 msgstr "Ukończono wyszukiwanie"
 
+#: lib/keybind.c:92
 #, fuzzy
 msgid "Replace next"
 msgstr "Zastąp"
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr ""
 
+#: lib/keybind.c:94
 #, fuzzy
 msgid "Terminal"
 msgstr "Opcje terminala"
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Modyfikacja pliku"
 
+#: lib/keybind.c:96
 #, fuzzy
 msgid "Edit new file"
 msgstr "Modyfikacja pliku"
 
+#: lib/keybind.c:97
 #, fuzzy
 msgid "Select charset"
 msgstr "W&szystkie zestawy znaków"
 
+#: lib/keybind.c:98
 #, fuzzy
 msgid "Command history"
 msgstr "&Historia poleceń"
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr ""
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr ""
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr ""
 
+#: lib/keybind.c:103
 #, fuzzy
 msgid "Save as..."
 msgstr "Z&apisz jako…"
 
+#: lib/keybind.c:104
 #, fuzzy
 msgid "Go to line"
 msgstr "Przejście do wiersza"
 
+#: lib/keybind.c:105
 #, fuzzy
 msgid "Refresh screen"
 msgstr "Odśwież ek&ran"
 
+#: lib/keybind.c:106
 #, fuzzy
 msgid "Suspend to shell"
 msgstr "Ustawienia zapisano do %s"
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr ""
 
+#: lib/keybind.c:108
 #, fuzzy
 msgid "Next screen"
 msgstr "Odśwież ek&ran"
 
+#: lib/keybind.c:109
 #, fuzzy
 msgid "Previous screen"
 msgstr "&Poprzednie"
 
+#: lib/keybind.c:110
 #, fuzzy
 msgid "Next file"
 msgstr "Wstaw plik"
 
+#: lib/keybind.c:111
 #, fuzzy
 msgid "Previous file"
 msgstr "&Poprzednie"
 
+#: lib/keybind.c:112
 #, fuzzy
 msgid "Delete to line start"
 msgstr "Przełącz sta&n wiersza"
 
+#: lib/keybind.c:113
 #, fuzzy
 msgid "Delete to line end"
 msgstr "Delete na klaw. numer."
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr ""
 
+#: lib/keybind.c:115
 #, fuzzy
 msgid "Delete to word end"
 msgstr "Delete na klaw. numer."
 
+#: lib/keybind.c:116
 #, fuzzy
 msgid "Cut to clipboard"
 msgstr "Wytnij do pliku s&chowka"
 
+#: lib/keybind.c:117
 #, fuzzy
 msgid "Copy to clipboard"
 msgstr "Sk&opiuj do pliku schowka"
 
+#: lib/keybind.c:118
 #, fuzzy
 msgid "Paste from clipboard"
 msgstr "&Wklej z pliku schowka"
 
+#: lib/keybind.c:119
 #, fuzzy
 msgid "Toggle selection"
 msgstr "W wy&branych"
 
+#: lib/keybind.c:120
 #, fuzzy
 msgid "Select left"
 msgstr "Wybierz"
 
+#: lib/keybind.c:121
 #, fuzzy
 msgid "Select right"
 msgstr "Wybierz"
 
+#: lib/keybind.c:122
 #, fuzzy
 msgid "Select up"
 msgstr "&Zaznacz grupę"
 
+#: lib/keybind.c:123
 #, fuzzy
 msgid "Select down"
 msgstr "Wybierz"
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr ""
 
+#: lib/keybind.c:125
 #, fuzzy
 msgid "Select to word end"
 msgstr "Metoda porównywania:"
 
+#: lib/keybind.c:126
 #, fuzzy
 msgid "Select to line start"
 msgstr "Przełącz sta&n wiersza"
 
+#: lib/keybind.c:127
 #, fuzzy
 msgid "Select to line end"
 msgstr "Wybierz język"
 
+#: lib/keybind.c:128
 #, fuzzy
 msgid "Sort order..."
 msgstr "Porządek s&ortowania…"
 
+#: lib/keybind.c:129
 #, fuzzy
 msgid "General options"
 msgstr "Opcje panelu"
 
+#: lib/keybind.c:130
 #, fuzzy
 msgid "Learn terminal keys"
 msgstr "Określenie klawiszy"
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr ""
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr ""
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr ""
 
+#: lib/keybind.c:134
 #, fuzzy
 msgid "Set bookmark"
 msgstr "Następna &zakładka"
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr ""
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr ""
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 #, fuzzy
 msgid "Find declaration"
 msgstr "&Znajdź deklarację"
 
+#: lib/keybind.c:139
 #, fuzzy
 msgid "Appearance settings"
 msgstr "Wygląd"
 
+#: lib/keybind.c:140
 #, fuzzy
 msgid "Save setup"
 msgstr "Zapisz u&stawienia"
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr ""
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr ""
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr ""
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr ""
 
+#: lib/keybind.c:154
 #, fuzzy
 msgid "Previous link"
 msgstr "&Poprzednie"
 
+#: lib/keybind.c:155
 #, fuzzy
 msgid "Next node"
 msgstr "Wolne węzły:"
 
+#: lib/keybind.c:156
 #, fuzzy
 msgid "Previous node"
 msgstr "&Poprzednie"
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr ""
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr ""
 
+#: lib/keybind.c:167
 #, fuzzy
 msgid "Deselect all"
 msgstr "Odznacz"
 
+#: lib/keybind.c:168
 #, fuzzy
 msgid "Select page up"
 msgstr "&Zaznacz grupę"
 
+#: lib/keybind.c:169
 #, fuzzy
 msgid "Select page down"
 msgstr "Wybierz język"
 
+#: lib/keybind.c:171
 #, fuzzy
 msgid "Close editor"
 msgstr "Zamknięcie pliku"
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr ""
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr ""
 
+#: lib/keybind.c:177
 #, fuzzy
 msgid "Open file in editor"
 msgstr "Modyfikacja pliku rozszerzeń"
 
+#: lib/keybind.c:178
 #, fuzzy
 msgid "Select word"
 msgstr "Wybierz"
 
+#: lib/keybind.c:179
 #, fuzzy
 msgid "Select line"
 msgstr "Wybierz język"
 
+#: lib/keybind.c:180
 #, fuzzy
 msgid "Select all"
 msgstr "Wybierz"
 
+#: lib/keybind.c:181
 #, fuzzy
 msgid "Column selection mode"
 msgstr "W wy&branych"
 
+#: lib/keybind.c:182
 #, fuzzy
 msgid "Save selected block"
 msgstr "Zapisz blok"
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Wstaw plik"
 
+#: lib/keybind.c:184
 #, fuzzy
 msgid "Toggle insert/overwrite"
 msgstr "P&rzełącz wst/nad"
 
+#: lib/keybind.c:185
 #, fuzzy
 msgid "Insert date/time (Lua action)"
 msgstr "Wstaw &datę/godzinę"
 
+#: lib/keybind.c:186
 #, fuzzy
 msgid "Delete line"
 msgstr "Usuwanie"
 
+#: lib/keybind.c:187
 #, fuzzy
 msgid "Mail file"
 msgstr "plik1 plik2"
 
+#: lib/keybind.c:188
 #, fuzzy
 msgid "Undo history"
 msgstr "&Historia poleceń"
 
+#: lib/keybind.c:189
 #, fuzzy
 msgid "Format paragraph (Lua action)"
 msgstr "S&formatuj akapit"
 
+#: lib/keybind.c:190
 #, fuzzy
 msgid "Match bracket"
 msgstr "Lewy nawias"
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr ""
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr ""
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr ""
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr ""
 
+#: lib/keybind.c:197
 #, fuzzy
 msgid "Repeat last macro"
 msgstr "Powtarza ostatnie polecenia"
 
+#: lib/keybind.c:198
 #, fuzzy
 msgid "Spell check"
 msgstr "Spr&awdzanie pisowni"
 
+#: lib/keybind.c:199
 #, fuzzy
 msgid "Spell check current word"
 msgstr "Spr&awdzanie pisowni"
 
+#: lib/keybind.c:200
 #, fuzzy
 msgid "Select spell language"
 msgstr "Wybierz język"
 
+#: lib/keybind.c:201
 #, fuzzy
 msgid "Clear all bookmarks"
 msgstr "&Wyczyść zakładki"
 
+#: lib/keybind.c:202
 #, fuzzy
 msgid "Next bookmark"
 msgstr "Następna &zakładka"
 
+#: lib/keybind.c:203
 #, fuzzy
 msgid "Previous bookmark"
 msgstr "Poprzedn&ia zakładka"
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr ""
 
+#: lib/keybind.c:205
 #, fuzzy
 msgid "Unfold all"
 msgstr "&Znajdź wszystkie"
 
+#: lib/keybind.c:206
 #, fuzzy
 msgid "Toggle line filter"
 msgstr "Przełącz sta&n wiersza"
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr ""
 
+#: lib/keybind.c:208
 #, fuzzy
 msgid "Select to file start"
 msgstr "Utracono zmiany w pliku"
 
+#: lib/keybind.c:209
 #, fuzzy
 msgid "Select to file end"
 msgstr "Metoda porównywania:"
 
+#: lib/keybind.c:210
 #, fuzzy
 msgid "Select to page start"
 msgstr "Metoda porównywania:"
 
+#: lib/keybind.c:211
 #, fuzzy
 msgid "Select to page end"
 msgstr "Metoda porównywania:"
 
+#: lib/keybind.c:212
 #, fuzzy
 msgid "Select scroll up"
 msgstr "&Zaznacz grupę"
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr ""
 
+#: lib/keybind.c:214
 #, fuzzy
 msgid "Select paragraph up"
 msgstr "&Zaznacz grupę"
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:216
 #, fuzzy
 msgid "Column select page up"
 msgstr "Odz&nacz grupę"
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr ""
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr ""
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr ""
 
+#: lib/keybind.c:220
 #, fuzzy
 msgid "Column select up"
 msgstr "Odz&nacz grupę"
 
+#: lib/keybind.c:221
 #, fuzzy
 msgid "Column select down"
 msgstr "W wy&branych"
 
+#: lib/keybind.c:222
 #, fuzzy
 msgid "Column select scroll up"
 msgstr "Odz&nacz grupę"
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr ""
 
+#: lib/keybind.c:224
 #, fuzzy
 msgid "Column select paragraph up"
 msgstr "S&formatuj akapit"
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr ""
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr ""
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:229
 #, fuzzy
 msgid "Toggle visible tabs/spaces"
 msgstr "&Widoczne spacje kończące"
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr ""
 
+#: lib/keybind.c:231
 #, fuzzy
 msgid "Toggle syntax highlighting"
 msgstr "Przełącz w&yróżnianie składni"
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Wybór wyróżniania składni"
 
+#: lib/keybind.c:233
 #, fuzzy
 msgid "Toggle right margin"
 msgstr "Przełącz prawy &margines"
 
+#: lib/keybind.c:234
 #, fuzzy
 msgid "Save mode options"
 msgstr "Opcje panelu"
 
+#: lib/keybind.c:235
 #, fuzzy
 msgid "About editor"
 msgstr "Z wbudowanym edytorem"
 
+#: lib/keybind.c:237
 #, fuzzy
 msgid "Execute script"
 msgstr "Najpierw &pliki wykonywalne"
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr ""
 
+#: lib/keybind.c:239
 #, fuzzy
 msgid "Resize window"
 msgstr "Zmień &rozmiar"
 
+#: lib/keybind.c:240
 #, fuzzy
 msgid "Toggle fullscreen"
 msgstr "&Przełącz pełny ekran"
 
+#: lib/keybind.c:241
 #, fuzzy
 msgid "Window list"
 msgstr "&Okno"
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr ""
 
+#: lib/keybind.c:243
 #, fuzzy
 msgid "Previous window"
 msgstr "&Poprzednie"
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -593,22 +749,28 @@ msgstr ""
 "Użytkownik: %s\n"
 "Identyfikator procesu: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "Zablokowany plik"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "&Ustaw blokadę"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "Z&ignoruj blokadę"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "Nie można utworzyć katalogu %s"
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "KRYTYCZNE: nie jest katalogiem:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
@@ -616,12 +778,15 @@ msgstr ""
 "Liczba jest poza zakresem (powinna być w zakresie bajtów, 0 <= n <= 0xFF, "
 "wyrażone szesnastkowo)"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "Nieprawidłowy znak"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "Niepasujący cudzysłów"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
@@ -630,35 +795,45 @@ msgstr ""
 "Błąd wzoru szesnastkowego w miejscu %d:\n"
 "%s."
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "Nie odnaleziono wyszukiwanego napisu"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "Jeszcze nie zaimplementowane"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr ""
 "Liczba tokenów zastąpienia nie jest równa liczbie odnalezionych tokenów"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "Nieprawidłowy token o numerze %d"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "Błąd wyrażenia regularnego"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "&Zwykły"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "Wyrażenie re&gularne"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "&Szesnastkowo"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "&Wyszuk. wieloznaczników"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -667,6 +842,7 @@ msgstr ""
 "Nie można przetworzyć skórki „%s”.\n"
 "Wczytano domyślną"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -677,6 +853,7 @@ msgstr ""
 "%s\n"
 "Wczytano domyślną"
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -687,6 +864,7 @@ msgstr ""
 "%s\n"
 "Wczytano domyślną"
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -695,6 +873,7 @@ msgstr ""
 "Nie można wczytać skórki „%s”.\n"
 "Wczytano domyślną"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -708,6 +887,7 @@ msgstr ""
 "pomocą wariantu *-256color lub *-direct256. Polecenie „toe -a”\n"
 "wyświetli listę wszystkich dostępnych wariantów w systemie.\n"
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
@@ -717,6 +897,7 @@ msgstr ""
 "lub nowszej z obsługą szerokich znaków i ABI 6 lub wyższego.\n"
 "Proszę zaktualizować system.\n"
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -729,9 +910,11 @@ msgstr ""
 "Polecenie „toe -a” wyświetli listę wszystkich dostępnych wariantów\n"
 "w systemie.\n"
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "Kolory 24-bitowe nie są obsługiwane w tej wersji biblioteki S-Lang."
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -746,289 +929,384 @@ msgstr ""
 "w systemie.\n"
 "Zamiast tego można ustawić COLORTERM=truecolor.\n"
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "Escape"
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "1 klaw. funkcyjny"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "2 klaw. funkcyjny"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "3 klaw. funkcyjny"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "4 klaw. funkcyjny"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "5 klaw. funkcyjny"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "6 klaw. funkcyjny"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "7 klaw. funkcyjny"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "8 klaw. funkcyjny"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "9 klaw. funkcyjny"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "10 klaw. funkcyjny"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "11 klaw. funkcyjny"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "12 klaw. funkcyjny"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "13 klaw. funkcyjny"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "14 klaw. funkcyjny"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "15 klaw. funkcyjny"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "16 klaw. funkcyjny"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "17 klaw. funkcyjny"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "18 klaw. funkcyjny"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "19 klaw. funkcyjny"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "20 klaw. funkcyjny"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Uzupełnianie/M-tab"
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "BackTab/S-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Backspace"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "Strzałka w górę"
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "Strzałka w dół"
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "Strzałka w lewo"
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "Strzałka w prawo"
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Insert"
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "Home"
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "Klawisz End"
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Page Up"
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Page Down"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "/ na klaw. numer."
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "* na klaw. numer."
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "- na klaw. numer."
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "+ na klaw. numer."
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "Strzałka w lewo na klaw. numer."
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "Strzałka w prawo na klaw. numer."
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "Strzałka w górę na klaw. numer."
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "Strzałka w dół na klaw. numer."
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "Home na klaw. numer."
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "End na klaw. numer."
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "Page Down na klaw. numer."
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "Page Up na klaw. numer."
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "Insert na klaw. numer."
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "Delete na klaw. numer."
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "Enter na klaw. numer."
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "21 klaw. funkcyjny"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "22 klaw. funkcyjny"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "23 klaw. funkcyjny"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "24 klaw. funkcyjny"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "Klawisz A1"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "Klawisz C1"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "Gwiazdka"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "Minus"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "Plus"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "Kropka"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "Mniej niż"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "Więcej niż"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "Znak równości"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "Przecinek"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "Apostrof"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "Dwukropek"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "Średnik"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "Wykrzyknik"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "Znak zapytania"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "Et"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "Znak dolara"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "Cudzysłów"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "Znak procenta"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "Kareta"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "Tylda"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "Prim"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "Podkreślenie"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "Przekreślenie"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "Potok"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "Lewy nawias okrągły"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "Prawy nawias okrągły"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "Lewy nawias"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "Prawy nawias"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "Lewy nawias klamrowy"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "Prawy nawias klamrowy"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "Enter"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "Klawisz Tab"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "Klawisz spacji"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "Klawisz ukośnika"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "Klawisz odwrotnego ukośnika"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "Znak liczby #"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "Znak at"
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ctrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr ""
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Shift"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
@@ -1037,6 +1315,7 @@ msgstr ""
 "\n"
 "Nie można utworzyć potoku dla SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
@@ -1045,6 +1324,7 @@ msgstr ""
 "\n"
 "Nie można skonfigurować końca zapisu potoku SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
@@ -1053,6 +1333,7 @@ msgstr ""
 "\n"
 "Nie można skonfigurować końca odczytu potoku SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -1061,39 +1342,51 @@ msgstr ""
 "Rozmiar ekranu %d×%d nie jest obsługiwany.\n"
 "Proszę sprawdzić zmienną środowiskową TERM.\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "Zmienna środowiskowa TERM nie jest ustawiona.\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr "Nie można sprawdzić potoku SIGWINCH"
 
+#: lib/util.c:254
 msgid "B"
 msgstr "B"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "kB"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "KiB"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "MB"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "MiB"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "GB"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "GiB"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "Nie można utworzyć deskryptora potoku"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "Nie można utworzyć strumieni potoku"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
@@ -1103,9 +1396,11 @@ msgstr ""
 "potomnego:\n"
 "%s"
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr "Nie można zamknąć deskryptora potoku (p == NULL)"
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
@@ -1114,9 +1409,11 @@ msgstr ""
 "Nieoczekiwany błąd w waitpid():\n"
 "%s"
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "Utracono zmiany w pliku"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
@@ -1125,134 +1422,195 @@ msgstr ""
 "Nie można utworzyć katalogu tymczasowego %s: %s.\n"
 "Pliki tymczasowe nie zostaną utworzone\n"
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "Naciśnięcie dowolnego klawisza kontynuuje…"
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "Błąd wewnętrzny:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "Ekrany"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "Historia"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr ""
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
 msgstr ""
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "&Tak"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "&Nie"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "Czyszczenie historii"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "Wyczyścić tę historię?"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "&OK"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "&Anuluj"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "Błąd"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr "%s (%d)"
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "&Przerwij"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr "< Domyślna >"
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr "Skórki"
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr "Skórka:"
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr "&Cienie"
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr "Wygląd"
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "Wyświetla bieżącą wersję"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "Wyświetla katalog danych"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr "Wyświetla rozszerzone informacje o używanych katalogach danych"
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "Wyświetla opcje konfiguracji"
 
+#: src/args.c:140
 #, fuzzy
 msgid "Disables Lua support"
 msgstr "Wyłącza obsługę X11"
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "Wymusza funkcje programu xterm"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "Wyłącza obsługę X11"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "Próbuje użyć poprzedniej metody śledzenia wyróżnienia myszy"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "Wyłącza obsługę myszy w trybie tekstowym"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "Próbuje użyć termcap zamiast terminfo"
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "Aby uruchomić na powolnych terminalach"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "Używa prostych znaków do rysowania"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr "Wczytuje definicje skrótów klawiszowych z podanego pliku"
 
+#: src/args.c:223
 msgid "<file>"
 msgstr "<plik>"
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr ""
 "Bez wczytywania definicji skrótów klawiszowych z podanego pliku, użycie "
 "domyślnych"
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "Żąda uruchomienia w trybie czarno-białym"
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "Żąda uruchomienia w trybie kolorowym"
 
+#: src/args.c:272
 #, fuzzy
 msgid "Use the specified skin"
 msgstr "Wyświetla program mc za pomocą podanej skórki"
 
+#: src/args.c:273
 msgid "<string>"
 msgstr "<ciąg>"
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr "[+nr-wiersza] plik1[:nr-wiersza] [plik2[:nr-wiersza]…]"
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1264,303 +1622,409 @@ msgstr ""
 "z wyjściem polecenia „%s -V”) jako zgłoszenia na stronie\n"
 "%s\n"
 
+#: src/args.c:478
 msgid "Main options"
 msgstr "Główne opcje"
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr "Opcje terminala"
 
+#: src/args.c:492
 msgid "Color options"
 msgstr "Opcje kolorów"
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr "Błąd podczas przetwarzania parametrów."
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr ""
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:146
 #, fuzzy
 msgid "Ctags Configuration"
 msgstr "&Konfiguracja…"
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:155
 #, fuzzy
 msgid "Command line options:"
 msgstr "Konfiguracja"
 
+#: src/plugins/ctags/ctags-config.c:163
 #, fuzzy
 msgid "Case sensitive filter"
 msgstr "&Rozróż. wielkości"
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, fuzzy, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr ""
 "Nie można wykonać chmod\n"
 "%sn%s"
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:538
 #, fuzzy
 msgid "Go to Declaration"
 msgstr "Następna de&klaracja"
 
+#: src/plugins/ctags/ctags-plugin.c:591
 #, fuzzy
 msgid "Find Declaration"
 msgstr "&Znajdź deklarację"
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, fuzzy, c-format
 msgid "'%s' is not a known symbol."
 msgstr "„%s” nie jest dowiązaniem symbolicznym"
 
+#: src/plugins/ctags/ctags-plugin.c:662
 #, fuzzy
 msgid "Failed to create temporary file."
 msgstr "Nie można utworzyć tymczasowego pliku różnicy"
 
+#: src/plugins/ctags/ctags-plugin.c:672
 #, fuzzy
 msgid "Failed to open temporary file."
 msgstr "Nie można zapisać do pliku"
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:727
 #, fuzzy
 msgid "Failed to run grep."
 msgstr ""
 "Wykonanie się nie powiodło:\n"
 "%s\n"
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, fuzzy, c-format
 msgid "No references found for '%s'."
 msgstr "Nie odnaleziono odpowiednich wpisów w %s"
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Search Symbol"
 msgstr "Ukończono wyszukiwanie"
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "Search File"
 msgstr "Ukończono wyszukiwanie"
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 #, fuzzy
 msgid "Complete Symbol"
 msgstr "Uzupełnianie: wyśw. wszystkic&h"
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, fuzzy, c-format
 msgid "Failed to load tags file: %s"
 msgstr "Odczytanie danych z potomnego standardowego wyjścia się nie powiodło"
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, fuzzy, c-format
 msgid "Cannot create temp file: %s"
 msgstr ""
 "Nie można utworzyć pliku docelowego\n"
 "%s"
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr "Nie można przetłumaczyć z %s na %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 #, fuzzy
 msgid "Project root directory to index:"
 msgstr "Główny katalog profilu:"
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, fuzzy, c-format
 msgid "Failed to create index in %s"
 msgstr "Nie można utworzyć zdarzenia „%s”."
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, fuzzy, c-format
 msgid "Reindex failed for %s"
 msgstr "Odczytanie się nie powiodło"
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 #, fuzzy
 msgid "Navigation History"
 msgstr "Nawigacja"
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 #, fuzzy
 msgid "Go to declaration"
 msgstr "Następna de&klaracja"
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 #, fuzzy
 msgid "Complete symbol"
 msgstr "Uzupełnianie: wyśw. wszystkic&h"
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 #, fuzzy
 msgid "Navigation history"
 msgstr "Nawigacja"
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 #, fuzzy
 msgid "Search symbol"
 msgstr "Ukończono wyszukiwanie"
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 #, fuzzy
 msgid "Search file"
 msgstr "Ukończono wyszukiwanie"
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 #, fuzzy
 msgid "Symbols in current file"
 msgstr "Nazwa dowiązania symbolicznego:"
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 #, fuzzy
 msgid "Load tags file"
 msgstr "Wczytaj plik składni"
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 #, fuzzy
 msgid "Reindex repository"
 msgstr "Zindeksowany katalog"
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 #, fuzzy
 msgid "Configuration"
 msgstr "Potwierdzenia"
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 #, fuzzy
 msgid "Go to &declaration"
 msgstr "Następna de&klaracja"
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr "&Znajdź deklarację"
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 #, fuzzy
 msgid "Navigation &history"
 msgstr "Nawigacja"
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 #, fuzzy
 msgid "&Search symbol"
 msgstr "Wy&szukaj"
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 #, fuzzy
 msgid "S&ymbols in file"
 msgstr "Nazwa dowiązania symbolicznego:"
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 #, fuzzy
 msgid "&Complete symbol"
 msgstr "Uzupełnianie: wyśw. wszystkic&h"
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:328
 #, fuzzy
 msgid "Select symbol"
 msgstr "Wybierz"
 
+#: src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Symbol name:"
 msgstr "Nazwa dowiązania symbolicznego:"
 
+#: src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "File name or path:"
 msgstr "Nazwa pliku:"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:439
 #, fuzzy
 msgid "Load Tags File"
 msgstr "Wczytaj plik"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "&Zamknij"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr ""
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
@@ -1568,46 +2032,62 @@ msgstr ""
 "Bieżący tekst zmodyfikowano bez zapisania pliku.\n"
 "Kontynuacja spowoduje ich odrzucenie."
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "K&ontynuuj"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr "&Dodaj słowo"
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "&Zastąp"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "&Pomiń"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "Język"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr "Błędna pisownia"
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr "Sprawdź słowo"
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "Sugestia"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1615,6 +2095,7 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1622,49 +2103,62 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1638
 #, fuzzy
 msgid "Add word"
 msgstr "&Dodaj słowo"
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1738
 #, fuzzy
 msgid "Aspell"
 msgstr "Błędna pisownia"
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1749
 #, fuzzy
 msgid "Language:"
 msgstr "Język"
 
+#: src/plugins/spell/spell.c:1752
 #, fuzzy
 msgid "&Select..."
 msgstr "Wybierz"
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "Wybierz język"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr "Wczytywanie: %3d%%"
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "Wczytywanie…"
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
@@ -1673,13 +2167,16 @@ msgstr ""
 "Nie można otworzyć\n"
 "%s"
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "Wczytaj plik"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr "Błąd podczas odczytywania %s"
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
@@ -1688,6 +2185,7 @@ msgstr ""
 "Nie można wykonać polecenia stat\n"
 "%s"
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
@@ -1696,6 +2194,7 @@ msgstr ""
 "%s\n"
 "nie jest zwykłym plikiem"
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
@@ -1704,10 +2203,12 @@ msgstr ""
 "Plik „%s” jest za duży.\n"
 "Otworzyć go mimo to?"
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr "Błąd podczas odczytywania potoku: %s"
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
@@ -1716,41 +2217,51 @@ msgstr ""
 "Nie można otworzyć potoku do odczytania\n"
 "%s"
 
+#: src/editor/edit.c:4992
 #, fuzzy
 msgid "Undo"
 msgstr "Co&fnij"
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
 msgstr ""
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
 msgstr ""
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr ""
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
 msgstr ""
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "P&onów"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr "Plik ma twarde dowiązania. Odłączyć przez zapisaniem?"
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr "Plik został zmodyfikowany przez inny program. Zapisać mimo to?"
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr "Błąd podczas zapisywania do potoku: %s"
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1761,30 +2272,40 @@ msgstr ""
 "%s\n"
 "do zapisywania"
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr "Zapisywany plik nie kończy się nowym wierszem."
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "Bez &zmiany"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "Format &UNIX (LF)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "Format &Windows/DOS (CR LF)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "Format &Macintosh (CR)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "Nazwa pliku:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "Zmiana łamania wierszy na:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "Zapisz jako"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
@@ -1793,21 +2314,27 @@ msgstr ""
 "Nie można utworzyć katalogu\n"
 "%s"
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "Szybki &zapis"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "Bezpieczny zapi&s"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr "&Wykonaj kopie zapasowe za pomocą tego rozszerzenia:"
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr "Sprawdź nowe wiersze &POSIX"
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "Modyfikuj tryb zapisu"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1818,52 +2345,69 @@ msgstr ""
 "%s:\n"
 "nie jest zwykłym plikiem"
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "Plik o tej nazwie już istnieje."
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "&Zastąp"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "Nie można zapisać pliku"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "Proszę potwierdzić zapis pliku: „%s”"
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "Zapisz plik"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "Zapi&sz"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "Wczytaj"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "Modyfikacja pliku składni"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "Który plik składni zmodyfikować?"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "&Użytkownik"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "&Systemowe"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "Modyfikacja menu"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "Który plik menu zmodyfikować? "
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "&Lokalne"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[BezNazwy]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
@@ -1872,9 +2416,11 @@ msgstr ""
 "Plik %s został zmodyfikowany.\n"
 "Zapisać przed zamknięciem?"
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "Zamknięcie pliku"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
@@ -1883,474 +2429,627 @@ msgstr ""
 "Program %s jest wyłączany.\n"
 "Zapisać zmodyfikowany plik %s?"
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "Zakończ"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "Ta funkcja nie jest zaimplementowana."
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "Nie można zapisać do pliku"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "Przejście do wiersza"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr "Wiersz:"
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "Zapisz blok"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr "Nie można zapisać bloku"
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "Nie można wstawić pliku"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "mail -s <temat> -c <cc> <do>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr "Do"
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "Tytuł"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "Kopie do"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "Poczta"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "Anuluj"
 
+#: src/editor/editcmd.c:2820
 #, fuzzy, c-format
 msgid "insert %d"
 msgstr "Insert"
 
+#: src/editor/editcmd.c:2826
 #, fuzzy, c-format
 msgid "delete %d"
 msgstr "Usunąć %s?"
 
+#: src/editor/editcmd.c:2829
 #, fuzzy
 msgid "replace"
 msgstr "Zastąp"
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr ""
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 #, fuzzy
 msgid "Undo History"
 msgstr "Historia"
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "Zbierz uzupełnianie"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "BezNazwy"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "Zapisz makro"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "Proszę nacisnąć nowy skrót makra:"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "Powtarza ostatnie polecenia"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "Czas powtórzeń:"
 
+#: src/editor/editmacros.c:708
 #, fuzzy, c-format
 msgid "Delete macro %s?"
 msgstr "Usuń makro"
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "Usuń makro"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr ""
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr ""
 
+#: src/editor/editmacros.c:865
 #, fuzzy
 msgid "Run"
 msgstr "rosyjski"
 
+#: src/editor/editmacros.c:868
 #, fuzzy
 msgid "Close"
 msgstr "&Zamknij"
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "&Otwórz plik…"
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "&Nowy"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr "&Historia…"
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "Z&apisz jako…"
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "Wstaw pl&ik…"
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "Skopiu&j do pliku…"
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "Menu &użytkownika…"
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr "O &programie…"
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "&Zakończ"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "Co&fnij"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "&Ponów"
 
+#: src/editor/editmenu.c:259
 #, fuzzy
 msgid "Undo &History..."
 msgstr "&Historia…"
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr "P&rzełącz wst/nad"
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "&Przełącz zaznaczenie"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "Zaznacz kolu&mny"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "Zazn&acz wszystko"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "O&dznacz"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "&Skopiuj"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "Prze&nieś"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "&Usuń"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "Sk&opiuj do pliku schowka"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "Wytnij do pliku s&chowka"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "&Wklej z pliku schowka"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "Począ&tek"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "Koni&ec"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "Wy&szukaj…"
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "Wyszuka&j ponownie"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "&Zastąp…"
 
+#: src/editor/editmenu.c:293
 #, fuzzy
 msgid "Toggle &line filter"
 msgstr "Przełącz sta&n wiersza"
 
+#: src/editor/editmenu.c:294
 #, fuzzy
 msgid "Filter by &word"
 msgstr "&zapisywanie przez właśc."
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr "Przełącz za&kładkę"
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "Następna &zakładka"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "Poprzedn&ia zakładka"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr "&Wyczyść zakładki"
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "&Przejdź do wiersza…"
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr "Przełącz sta&n wiersza"
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr "Prze&jdź do pasującego nawiasu"
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr "Przełącz w&yróżnianie składni"
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr "Przełącz prawy &margines"
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr ""
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "Kodowan&ie…"
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr ""
 
+#: src/editor/editmenu.c:324
 #, fuzzy
 msgid "&Unfold all"
 msgstr "&Znajdź wszystkie"
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "Odśwież ek&ran"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr "Roz&pocznij/zatrzymaj nagrywanie makra"
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr ""
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr "N&agraj/powtórz działania"
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "Prze&nieś"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "Zmień &rozmiar"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr "&Przełącz pełny ekran"
 
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "&Następne"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "&Poprzednie"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr "&Lista…"
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr "&Ogólne…"
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "&Tryb zapisu…"
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "Wyróżnianie &elementów składni…"
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr "W&ygląd…"
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr "Określ &klawisze…"
 
+#: src/editor/editmenu.c:374
 #, fuzzy
 msgid "Key &bindings..."
 msgstr "&Kodowanie…"
 
+#: src/editor/editmenu.c:375
 #, fuzzy
 msgid "Key s&niffer..."
 msgstr "&Kodowanie…"
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "Opcje &panelu…"
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr ""
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr ""
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "Plik &składni"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "Plik &menu"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "Zapisz u&stawienia"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr ""
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "&Plik"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "&Edycja"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "Wy&szukaj"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "Pole&cenie"
 
+#: src/editor/editmenu.c:553
 #, fuzzy
 msgid "&Navigate"
 msgstr "Nawigacja"
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr "&Okno"
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr ""
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "&Opcje"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Lua action"
 msgstr "Tabulacja"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Action failed"
 msgstr "Odczytanie się nie powiodło"
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr "&Brak"
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr "&Dynamiczne akapity"
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr "&Maszyna do pisania"
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "Tryb zawijania"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr "Tabulacja"
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "&Połówki tabulacji"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "&Backspace przez tabulacje"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "Wypełnianie tabulacji &spacjami"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr "Rozmiar tabulacji:"
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "Inne opcje"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "A&utomatyczne wcięcia"
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "Potwierdzenie przed zapisanie&m"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "Zapisanie po&zycji pliku"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr "&Widoczne spacje kończące"
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr "Widoczne &tabulacje"
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr ""
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "&Wyróżnianie elementów składni"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr "K&ursor po wstawionym bloku"
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr "Trwałe zaznaczen&ie"
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr "Kursor &poza końcem wiersza"
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr "&Grupowe cofnięcie"
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr "Punkt łamania wiersza:"
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "Opcje edytora"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr "Wyszukiwany napis:"
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr "Rozróżniani&e wielkości"
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "&Wstecz"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr "W wy&branych"
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr "&Całe słowa"
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr "W&szystkie zestawy znaków"
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "&Znajdź wszystkie"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr ""
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "Wyszukiwanie"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr "Wyszukiwanie %s: %3d%%"
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "Wyszukiwanie %s"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr "Zastępujący napis:"
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "Zastąp"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr "Zastąpienie napisem:"
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "&Wszystkie"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "Potwierdź zastąpienie"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr "Wykonano %ld zastąpień"
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr ""
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
@@ -2359,73 +3058,98 @@ msgstr ""
 "Łatwy w obsłudze edytor tekstu,\n"
 "napisany dla programu %s."
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "O programie"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr ""
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr ""
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "Otwarcie plików"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "Edycja: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr "Pomoc"
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr "Zapisz"
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "Zazncz"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "Zastąp"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "Kopiuj"
 
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "Przen"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr "Szukaj"
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "Usuń"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "WDół"
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr "Kończ"
 
+#: src/editor/fold.c:478
 #, fuzzy, c-format
 msgid "Filtering %s: %3d%%"
 msgstr "Wyszukiwanie %s: %3d%%"
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "Filtr"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr ""
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr "< Automatycznie >"
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr "< Ponownie wczytaj składnię >"
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -2434,13 +3158,16 @@ msgstr ""
 "Nie można otworzyć pliku\n"
 "%s"
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "Wczytaj plik składni"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "Błąd w pliku %s w wierszu %d"
 
+#: src/execute.c:240
 #, fuzzy
 msgid ""
 "Not an xterm;\n"
@@ -2449,61 +3176,77 @@ msgstr ""
 "Podpowłoka może być przełączana tylko\n"
 "na konsoli xterm lub Linux."
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr "Wpisanie „exit” powróci do programu %s"
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "Błąd formatu pliku pomocy\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "Błąd wewnętrzny: zagnieżdżony początek obszaru odsyłacza"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr "Nie można odnaleźć węzła %s w pliku pomocy"
 
+#: src/help.c:1487
 msgid "See also"
 msgstr ""
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "Pomoc"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr "Indeks"
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "Poprz"
 
+#: src/key_learn.c:138
 #, fuzzy
 msgid "Function keys"
 msgstr "1 klaw. funkcyjny"
 
+#: src/key_learn.c:139
 #, fuzzy
 msgid "Arrows / Navigation"
 msgstr "Nawigacja"
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr ""
 
+#: src/key_learn.c:312
 #, fuzzy
 msgid "Learn key"
 msgstr "Określenie klawiszy"
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr ""
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
 "Reassign to %s?"
 msgstr ""
 
+#: src/key_learn.c:354
 #, fuzzy
 msgid "Conflict"
 msgstr "Potwierdzenia"
 
+#: src/key_learn.c:420
 #, fuzzy, c-format
 msgid ""
 "Cannot accept this key.\n"
@@ -2512,122 +3255,156 @@ msgstr ""
 "Nie można zaakceptować tego klawisza.\n"
 "Wprowadzono „%s”"
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr ""
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 #, fuzzy
 msgid "&Ctrl"
 msgstr "Ctrl"
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr ""
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 #, fuzzy
 msgid "&Shift"
 msgstr "Shift"
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 #, fuzzy
 msgid "Edit &term file"
 msgstr "Modyfikuj plik &menu"
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr ""
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr ""
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
 "Wait until this message disappears."
 msgstr ""
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr ""
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr ""
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr ""
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr ""
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr ""
 
+#: src/keybind_dialog.c:128
 #, fuzzy
 msgid "&Main"
 msgstr "Po&czta…"
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr ""
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr ""
 
+#: src/keybind_dialog.c:133
 #, fuzzy
 msgid "&Menu"
 msgstr "Plik &menu"
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr ""
 
+#: src/keybind_dialog.c:134
 #, fuzzy
 msgid "&Listbox"
 msgstr "&Lista…"
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 #, fuzzy
 msgid "&Help"
 msgstr "Pomoc"
 
+#: src/keybind_dialog.c:139
 #, fuzzy
 msgid "&Editor"
 msgstr "&Edycja"
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr ""
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr ""
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr ""
 
+#: src/keybind_dialog.c:629
 #, fuzzy
 msgid "Assign key"
 msgstr "Klawisz A1"
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr ""
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr ""
 
+#: src/keybind_dialog.c:895
 #, fuzzy
 msgid "Press new shortcut..."
 msgstr "Naciśnięcie dowolnego klawisza kontynuuje…"
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
 "Reassign anyway?"
 msgstr ""
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 #, fuzzy
 msgid "&Back"
 msgstr "&Wstecz"
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 #, fuzzy
 msgid "Edit &keymap file"
 msgstr "Modyfikuj plik &menu"
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2636,9 +3413,11 @@ msgstr ""
 "Wykonanie się nie powiodło:\n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "Ścieżka do katalogu domowego nie jest bezwzględna"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2649,190 +3428,246 @@ msgstr ""
 "Niepowodzenie podczas zamykania:\n"
 "%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr ""
 
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 #, fuzzy
 msgid "Lua scripts"
 msgstr "Wtyczki i skrypty VFS:"
 
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 #, fuzzy
 msgid "Unknown error"
 msgstr "Nieznany błąd procesu potomnego"
 
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
 msgstr ""
 
+#: src/manage_plugins.c:445
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr ""
 
+#: src/manage_plugins.c:511
 #, fuzzy
 msgid "&Settings"
 msgstr "U&staw"
 
+#: src/manage_plugins.c:593
 #, fuzzy
 msgid "Lua action failed"
 msgstr "Odczytanie się nie powiodło"
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr ""
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr ""
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr ""
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr ""
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr ""
 
+#: src/runtime-host.c:1931
 #, fuzzy
 msgid "Runtime errors"
 msgstr "undelfs: błąd"
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "Wybór strony kodowej"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "—  < Bez tłumaczenia >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "Ustawienia"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr "Ustawienia zapisano do %s"
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr "Nie można zapisać ustawień do %s"
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "Z opcjonalną obsługą podpowłoki"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr "Z obsługą myszy w xterm i konsoli Linuksa"
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr "Z obsługą myszy w xterm"
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr "Z obsługą zdarzeń X11"
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr "Z obsługą wielu języków"
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr ""
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr ""
 "Zbudowano za pomocą biblioteki GLib %d.%d.%d (używanie GLib %u.%u.%u)\n"
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr "Zbudowano za pomocą biblioteki S-Lang"
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr " i bazy danych terminfo (używanie S-Lang %s)\n"
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr "Zbudowano za pomocą biblioteki %s"
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr " (używanie %s)\n"
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "Typy danych:"
 
+#: src/textconf.c:202
 #, fuzzy
 msgid "directory not found"
 msgstr "Nie odnaleziono wyszukiwanego napisu"
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr "Katalog domowy:"
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr "Główny katalog profilu:"
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "Dane systemu"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "Katalog konfiguracji:"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "Katalog danych:"
 
+#: src/textconf.c:218 src/textconf.c:257
 #, fuzzy
 msgid "Editor plugins:"
 msgstr "Opcje edytora"
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr ""
 
+#: src/textconf.c:224 src/textconf.c:243
 #, fuzzy
 msgid "Lua scripts:"
 msgstr "Wtyczki i skrypty VFS:"
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr ""
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "Dane użytkownika"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "Katalog pamięci podręcznej:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "Debugowanie"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "BŁĄD:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "Prawda:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "Fałsz:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr "Nie można utworzyć tymczasowego pliku różnicy"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr "Błąd podczas wywoływania programu"
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr "Nie można utworzyć tymczasowego pliku polecenia"
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "Parametr"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr "Ostrzeżenie - ignorowanie pliku"
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2841,16 +3676,20 @@ msgstr ""
 "Właścicielem pliku %s jest root i jest on zapisywalny przez\n"
 "wszystkich. Użycie go może negatywnie wpłynąć na bezpieczeństwo"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr "Polecenia można wykonywać tylko na lokalnym systemie plików"
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr "Nie odnaleziono odpowiednich wpisów w %s"
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "Menu użytkownika"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"

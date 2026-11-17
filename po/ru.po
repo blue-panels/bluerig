@@ -36,10 +36,11 @@ msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: https://github.com/blue-panels/bluerig/issues\n"
 "POT-Creation-Date: 2026-09-29 13:14+0200\n"
-"PO-Revision-Date: 2026-09-25 22:53+0000\n"
-"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
-"Language-Team: Russian <https://translate.codeberg.org/projects/mc6/mc6/ru/"
-">\n"
+"PO-Revision-Date: 2026-11-17 17:44+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/bluerig/"
+"bluerig/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,478 +48,631 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 2026.9.1\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr "Без перевода"
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "Внимание: не удалось загрузить список кодировок"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7-битный ASCII"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "Не удалось перекодировать из %s в %s"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "Система событий уже инициализирована"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "Сбой инициализации системы событий"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "Система событий не инициализирована"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "Проверьте входные данные! Некоторые параметры равны NULL!"
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "Не удаётся создать группу событий \"%s\"!"
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "Не удаётся создать событие \"%s\"!"
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr "Авторское право (C) 1996-%zu Фонд свободного программного обеспечения"
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr "Полстраницы вверх"
 
+#: lib/keybind.c:72
 msgid "Half page down"
 msgstr "Полстраницы вниз"
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr "В начало"
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr "В конец"
 
+#: lib/keybind.c:75
 msgid "Top of screen"
 msgstr "Начало экрана"
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr "Низ экрана"
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr "Слово влево"
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr "Слово вправо"
 
+#: lib/keybind.c:79
 msgid "Copy file(s)"
 msgstr "Копировать файл(ы)"
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr "Переместить/переименовать файл(ы)"
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Клавиша Delete   "
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr "Главное меню"
 
+#: lib/keybind.c:87
 msgid "User-defined menu"
 msgstr "Меню пользователя"
 
+#: lib/keybind.c:88
 msgid "Edit user menu"
 msgstr "Правка меню пользователя"
 
+#: lib/keybind.c:90
 msgid "Search next"
 msgstr "Искать далее"
 
+#: lib/keybind.c:92
 msgid "Replace next"
 msgstr "Заменить далее"
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr "Показать справку"
 
+#: lib/keybind.c:94
 msgid "Terminal"
 msgstr "Терминал"
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Редактировать файл"
 
+#: lib/keybind.c:96
 msgid "Edit new file"
 msgstr "Редактировать новый файл"
 
+#: lib/keybind.c:97
 msgid "Select charset"
 msgstr "Выбор кодировки"
 
+#: lib/keybind.c:98
 msgid "Command history"
 msgstr "История команд"
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr "Следующий в истории"
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr "Предыдущий в истории"
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr "Автодополнение"
 
+#: lib/keybind.c:103
 msgid "Save as..."
 msgstr "Сохранить как..."
 
+#: lib/keybind.c:104
 msgid "Go to line"
 msgstr "Перейти к строке"
 
+#: lib/keybind.c:105
 msgid "Refresh screen"
 msgstr "Обновить экран"
 
+#: lib/keybind.c:106
 msgid "Suspend to shell"
 msgstr "Приостановить в оболочку"
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr "Список открытых экранов"
 
+#: lib/keybind.c:108
 msgid "Next screen"
 msgstr "Следующий экран"
 
+#: lib/keybind.c:109
 msgid "Previous screen"
 msgstr "Предыдущий экран"
 
+#: lib/keybind.c:110
 msgid "Next file"
 msgstr "Следующий файл"
 
+#: lib/keybind.c:111
 msgid "Previous file"
 msgstr "Предыдущий файл"
 
+#: lib/keybind.c:112
 msgid "Delete to line start"
 msgstr "Удалить до начала строки"
 
+#: lib/keybind.c:113
 msgid "Delete to line end"
 msgstr "Удалить до конца строки"
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr "Удалить до начала слова"
 
+#: lib/keybind.c:115
 msgid "Delete to word end"
 msgstr "Удалить до конца слова"
 
+#: lib/keybind.c:116
 msgid "Cut to clipboard"
 msgstr "Вырезать в буфер обмена"
 
+#: lib/keybind.c:117
 msgid "Copy to clipboard"
 msgstr "Копировать в буфер обмена"
 
+#: lib/keybind.c:118
 msgid "Paste from clipboard"
 msgstr "Вставить из буфера обмена"
 
+#: lib/keybind.c:119
 msgid "Toggle selection"
 msgstr "Переключить выделение"
 
+#: lib/keybind.c:120
 msgid "Select left"
 msgstr "Выделить влево"
 
+#: lib/keybind.c:121
 msgid "Select right"
 msgstr "Выделить вправо"
 
+#: lib/keybind.c:122
 msgid "Select up"
 msgstr "Выделить вверх"
 
+#: lib/keybind.c:123
 msgid "Select down"
 msgstr "Выделить вниз"
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr "Выделить до начала слова"
 
+#: lib/keybind.c:125
 msgid "Select to word end"
 msgstr "Выделить до конца слова"
 
+#: lib/keybind.c:126
 msgid "Select to line start"
 msgstr "Выделить до начала строки"
 
+#: lib/keybind.c:127
 msgid "Select to line end"
 msgstr "Выделить до конца строки"
 
+#: lib/keybind.c:128
 msgid "Sort order..."
 msgstr "Порядок сортировки..."
 
+#: lib/keybind.c:129
 msgid "General options"
 msgstr "Общие настройки"
 
+#: lib/keybind.c:130
 msgid "Learn terminal keys"
 msgstr "Изучение клавиш терминала"
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr "Привязки клавиш"
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr "Анализатор клавиш"
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr "Управление плагинами"
 
+#: lib/keybind.c:134
 msgid "Set bookmark"
 msgstr "Установить закладку"
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr "Выйти из программы"
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr "Префикс расширенных клавиш"
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 msgid "Find declaration"
 msgstr "Найти определение"
 
+#: lib/keybind.c:139
 msgid "Appearance settings"
 msgstr "Настройки оформления"
 
+#: lib/keybind.c:140
 msgid "Save setup"
 msgstr "Сохранить настройки"
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr "Вставить (из буфера удаления)"
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr "Указатель справки"
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr "Назад"
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr "Следующая ссылка"
 
+#: lib/keybind.c:154
 msgid "Previous link"
 msgstr "Предыдущая ссылка"
 
+#: lib/keybind.c:155
 msgid "Next node"
 msgstr "Следующий узел"
 
+#: lib/keybind.c:156
 msgid "Previous node"
 msgstr "Предыдущий узел"
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr "Прокрутить вверх"
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr "Прокрутить вниз"
 
+#: lib/keybind.c:167
 msgid "Deselect all"
 msgstr "Снять всё выделение"
 
+#: lib/keybind.c:168
 msgid "Select page up"
 msgstr "Выделить страницу вверх"
 
+#: lib/keybind.c:169
 msgid "Select page down"
 msgstr "Выделить страницу вниз"
 
+#: lib/keybind.c:171
 msgid "Close editor"
 msgstr "Закрыть редактор"
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr "Абзац вверх"
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr "Абзац вниз"
 
+#: lib/keybind.c:177
 msgid "Open file in editor"
 msgstr "Открыть файл в редакторе"
 
+#: lib/keybind.c:178
 msgid "Select word"
 msgstr "Выделить слово"
 
+#: lib/keybind.c:179
 msgid "Select line"
 msgstr "Выделить строку"
 
+#: lib/keybind.c:180
 msgid "Select all"
 msgstr "Выделить всё"
 
+#: lib/keybind.c:181
 msgid "Column selection mode"
 msgstr "Режим выделения столбцов"
 
+#: lib/keybind.c:182
 msgid "Save selected block"
 msgstr "Сохранить выделенный блок"
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Вставить файл"
 
+#: lib/keybind.c:184
 msgid "Toggle insert/overwrite"
 msgstr "Переключить вставку/замену"
 
+#: lib/keybind.c:185
 msgid "Insert date/time (Lua action)"
 msgstr "Вставить дату/время (действие Lua)"
 
+#: lib/keybind.c:186
 msgid "Delete line"
 msgstr "Удалить строку"
 
+#: lib/keybind.c:187
 msgid "Mail file"
 msgstr "Отправить файл по почте"
 
+#: lib/keybind.c:188
 msgid "Undo history"
 msgstr "История отмен"
 
+#: lib/keybind.c:189
 msgid "Format paragraph (Lua action)"
 msgstr "Форматировать абзац (действие Lua)"
 
+#: lib/keybind.c:190
 msgid "Match bracket"
 msgstr "Сопоставить скобку"
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr "Сортировать выделение (действие Lua)"
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr "Вставить вывод команды (действие Lua)"
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr "Начать запись макроса"
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr "Остановить запись макроса"
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr "Переключить запись макроса"
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr "Обозреватель макросов"
 
+#: lib/keybind.c:197
 msgid "Repeat last macro"
 msgstr "Повторить последний макрос"
 
+#: lib/keybind.c:198
 msgid "Spell check"
 msgstr "Проверка орфографии"
 
+#: lib/keybind.c:199
 msgid "Spell check current word"
 msgstr "Проверить текущее слово"
 
+#: lib/keybind.c:200
 msgid "Select spell language"
 msgstr "Выбрать язык проверки орфографии"
 
+#: lib/keybind.c:201
 msgid "Clear all bookmarks"
 msgstr "Убрать все закладки"
 
+#: lib/keybind.c:202
 msgid "Next bookmark"
 msgstr "Следующая закладка"
 
+#: lib/keybind.c:203
 msgid "Previous bookmark"
 msgstr "Предыдущая закладка"
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr "Переключить сворачивание кода"
 
+#: lib/keybind.c:205
 msgid "Unfold all"
 msgstr "Развернуть всё"
 
+#: lib/keybind.c:206
 msgid "Toggle line filter"
 msgstr "Переключить фильтр строк"
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr "Фильтр по выделению или слову"
 
+#: lib/keybind.c:208
 msgid "Select to file start"
 msgstr "Выделить до начала файла"
 
+#: lib/keybind.c:209
 msgid "Select to file end"
 msgstr "Выделить до конца файла"
 
+#: lib/keybind.c:210
 msgid "Select to page start"
 msgstr "Выделить до начала страницы"
 
+#: lib/keybind.c:211
 msgid "Select to page end"
 msgstr "Выделить до конца страницы"
 
+#: lib/keybind.c:212
 msgid "Select scroll up"
 msgstr "Выделить с прокруткой вверх"
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr "Выделить с прокруткой вниз"
 
+#: lib/keybind.c:214
 msgid "Select paragraph up"
 msgstr "Выделить абзац вверх"
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr "Выделить абзац вниз"
 
+#: lib/keybind.c:216
 msgid "Column select page up"
 msgstr "Выделение столбцов: страница вверх"
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr "Выделение столбцов: страница вниз"
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr "Выделение столбцов: влево"
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr "Выделение столбцов: вправо"
 
+#: lib/keybind.c:220
 msgid "Column select up"
 msgstr "Выделение столбцов: вверх"
 
+#: lib/keybind.c:221
 msgid "Column select down"
 msgstr "Выделение столбцов: вниз"
 
+#: lib/keybind.c:222
 msgid "Column select scroll up"
 msgstr "Выделение столбцов: прокрутка вверх"
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr "Выделение столбцов: прокрутка вниз"
 
+#: lib/keybind.c:224
 msgid "Column select paragraph up"
 msgstr "Выделение столбцов: абзац вверх"
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr "Выделение столбцов: абзац вниз"
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr "Сдвинуть блок влево"
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr "Сдвинуть блок вправо"
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr "Вставить литеральный символ (действие Lua)"
 
+#: lib/keybind.c:229
 msgid "Toggle visible tabs/spaces"
 msgstr "Переключить видимость табуляций/пробелов"
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr "Переключить управляющие символы"
 
+#: lib/keybind.c:231
 msgid "Toggle syntax highlighting"
 msgstr "Переключить подсветку синтаксиса"
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Выбор подсветки синтаксиса"
 
+#: lib/keybind.c:233
 msgid "Toggle right margin"
 msgstr "Переключить правую границу"
 
+#: lib/keybind.c:234
 msgid "Save mode options"
 msgstr "Настройки режима сохранения"
 
+#: lib/keybind.c:235
 msgid "About editor"
 msgstr "О редакторе"
 
+#: lib/keybind.c:237
 msgid "Execute script"
 msgstr "Выполнить скрипт"
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr "Переместить окно"
 
+#: lib/keybind.c:239
 msgid "Resize window"
 msgstr "Изменить размер окна"
 
+#: lib/keybind.c:240
 msgid "Toggle fullscreen"
 msgstr "Переключить полноэкранный режим"
 
-msgid "Toggle sticky windows"
-msgstr "Переключить липкие окна"
-
+#: lib/keybind.c:241
 msgid "Window list"
 msgstr "Список окон"
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr "Следующее окно"
 
+#: lib/keybind.c:243
 msgid "Previous window"
 msgstr "Предыдущее окно"
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -529,22 +683,28 @@ msgstr ""
 "Пользователь: %s\n"
 "Идентификатор процесса: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "Файл заблокирован"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "З&ахватить замок"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "Игн&орировать замок"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "Не удалось создать каталог \"%s\""
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "ОШИБКА: не является каталогом:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
@@ -552,12 +712,15 @@ msgstr ""
 "Число вне диапазона (должно быть в диапазоне байтов, 0 <= n <= 0xFF, "
 "шестнадцатеричное)"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "Ошибочный символ"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "Несогласованный символ кавычек"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
@@ -566,35 +729,45 @@ msgstr ""
 "Ошибка шестнадцатеричного шаблона на позиции %d:\n"
 "%s."
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "Искомая строка не найдена"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "Пока не реализовано"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr ""
 "Количество шаблонных полей не соответствует количеству полей для замены"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "Неправильный шаблон цели %d"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "Ошибка в регулярном выражении"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "О&бычный"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "&Регулярное выражение"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "Шестнад&цатеричный"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "По &шаблону"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -603,6 +776,7 @@ msgstr ""
 "Не удалось разобрать скин \"%s\".\n"
 "Используется скин по умолчанию"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -613,6 +787,7 @@ msgstr ""
 "%s\n"
 "Используется скин по умолчанию"
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -623,6 +798,7 @@ msgstr ""
 "%s\n"
 "Используется скин по умолчанию"
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -631,6 +807,7 @@ msgstr ""
 "Не удалось загрузить скин \"%s\".\n"
 "Используется скин по умолчанию"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -644,6 +821,7 @@ msgstr ""
 "варианты *-256color или *-direct256. Используйте команду\n"
 "\"toe -a\" для показа списка всех доступных вариантов в вашей системе.\n"
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
@@ -653,6 +831,7 @@ msgstr ""
 "библиотеки ncurses с поддержкой широких символов и ABI 6 или выше.\n"
 "Пожалуйста, обновите вашу систему.\n"
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -666,9 +845,11 @@ msgstr ""
 "команду \"toe -a\", чтобы отобразить список всех доступных вариантов в вашей "
 "системе.\n"
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "True Color не поддерживается в этой версии slang."
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -684,289 +865,384 @@ msgstr ""
 "системе.\n"
 "В качестве альтернативы вы можете установить COLORTERM=truecolor.\n"
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "Клавиша Esc "
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "Функциональная 1"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "Функциональная 2"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "Функциональная 3"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "Функциональная 4"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "Функциональная 5"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "Функциональная 6"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "Функциональная 7"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "Функциональная 8"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "Функциональная 9"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "Функциональная 10"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "Функциональная 11"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "Функциональная 12"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "Функциональная 13"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "Функциональная 14"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "Функциональная 15"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "Функциональная 16"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "Функциональная 17"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "Функциональная 18"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "Функциональная 19"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "Функциональная 20"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Завершение/M-tab "
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "Обратная таб./S-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Клавиша Backspace"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "Стрелка вверх    "
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "Стрелка вниз     "
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "Стрелка влево    "
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "Стрелка вправо   "
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Клавиша Insert   "
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "Клавиша Home     "
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "Клавиша End      "
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Клавиша Page Up  "
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Клавиша Page Down"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "/ доп.клавиатуры "
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "* доп.клавиатуры "
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "- доп.клавиатуры "
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "+ доп.клавиатуры "
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "Left доп.клавиатуры"
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "Right доп.клавиатуры"
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "Up доп.клавиатуры"
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "Down доп.клавиатуры"
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "Home доп.клавиатуры"
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "End доп.клавиатуры"
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "Page Down доп.клавиатуры"
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "Page Up доп.клавиатуры"
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "Insert доп.клавиатуры"
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "Delete доп.клавиатуры"
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "Enter доп.клавиатуры"
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "Функциональная 21"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "Функциональная 22"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "Функциональная 23"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "Функциональная 24"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "Клавиша A1"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "Клавиша C1"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "Звёздочка"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "Минус"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "Плюс"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "Точка"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "Меньше"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "Больше"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "Равно"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "Запятая"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "Апостроф"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "Двоеточие"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "Точка с запятой"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "Восклицательный знак"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "Вопросительный знак"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "Амперсанд"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "Знак доллара"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "Знак цитирования"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "Знак процента"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "Каретка"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "Тильда"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "Обратный апостроф"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "Подчёркивание"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "Подчёркивание"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "Прямая черта"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "Левая скобка"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "Правая скобка"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "Левая квадратная скобка"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "Правая квадратная скобка"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "Левая фигурная скобка"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "Правая фигурная скобка"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "Ввод"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "Клавиша TAB"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "Пробел"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "Знак деления (слэш)"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "Клавиша Backspace"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "Знак номера"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "Знак \"собака\""
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ctrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr "RAlt"
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Shift"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
@@ -975,6 +1251,7 @@ msgstr ""
 "\n"
 "Не удалось создать канал для SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
@@ -983,6 +1260,7 @@ msgstr ""
 "\n"
 "Не удалось настроить конец записи канала SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
@@ -991,6 +1269,7 @@ msgstr ""
 "\n"
 "Не удалось настроить конец чтения канала SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -999,39 +1278,51 @@ msgstr ""
 "Размер экрана %dx%d не поддерживается.\n"
 "Проверьте переменную окружения TERM.\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "Переменная среды TERM не определена!\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr "Не удаётся проверить канал SIGWINCH"
 
+#: lib/util.c:254
 msgid "B"
 msgstr "Б"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "кБ"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "КиБ"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "МБ"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "МиБ"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "ГБ"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "ГиБ"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "Не удалось создать дескриптор канала"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "Не удалось создать потоки канала"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
@@ -1040,9 +1331,11 @@ msgstr ""
 "Неожиданная ошибка в select() при чтении данных из дочернего процесса:\n"
 "%s"
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr "Не удалось закрыть дескриптор канала (p == NULL)"
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
@@ -1051,9 +1344,11 @@ msgstr ""
 "Неожиданная ошибка в waitpid():\n"
 "%s"
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "Изменения файла потеряны"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
@@ -1062,21 +1357,28 @@ msgstr ""
 "Не удаётся создать временный каталог %s: %s.\n"
 "Временные файлы не будут созданы\n"
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "Для продолжения нажмите любую клавишу..."
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "Внутренняя ошибка:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "Экраны"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "История"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr "Вставить"
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
@@ -1084,112 +1386,166 @@ msgstr ""
 "В буфере обмена более 2 КБ текста.\n"
 "Вставить его?"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "&Да"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "&Нет"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "Очистка истории"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "Хотите очистить эту историю?"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "&Хорошо"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "&Отмена"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "Ошибка"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr "%s (%d)"
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "&Прервать"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr "< По умолчанию >"
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr "Скины"
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr "Скин:"
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr "&Тени"
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr "Оформление"
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "Показать текущую версию"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "Распечатать имя каталога для данных"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr "Показ расширенной информации об используемых каталогах"
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "Распечатать параметры конфигурации"
 
+#: src/args.c:140
 msgid "Disables Lua support"
 msgstr "Отключает поддержку Lua"
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "Подразумевать свойства xterm"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "Отключить поддержку X11"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "Пытаться использовать старый способ отслеживания мыши"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "Отключить поддержку мыши в текстовой версии"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "Пытаться использовать termcap вместо terminfo"
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "Подразумевать медленный терминал"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "Использовать псевдографику для рисования"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr "Чтение определений привязок клавиш из указанного файла"
 
+#: src/args.c:223
 msgid "<file>"
 msgstr "<файл>"
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr ""
 "Не загружать привязки клавиш из файла, использовать привязки по умолчанию"
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "Принудительно установить черно-белый режим"
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "Принудительно установить цветной режим"
 
+#: src/args.c:272
 #, fuzzy
 msgid "Use the specified skin"
 msgstr "Показать mc с указанным скином"
 
+#: src/args.c:273
 msgid "<string>"
 msgstr "<строка>"
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr "[+номер_строки] файл1[:номер_строки] [файл1[:номер_строки]...]"
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1200,266 +1556,372 @@ msgstr ""
 "Пожалуйста, посылайте любые отчёты об ошибках (включая вывод \"%s -V\")\n"
 "в виде тикетов на %s\n"
 
+#: src/args.c:478
 msgid "Main options"
 msgstr "Основные настройки"
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr "Настройки терминала"
 
+#: src/args.c:492
 msgid "Color options"
 msgstr "Цветовые настройки"
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr "Ошибка разбора аргументов!"
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr "Орфография"
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr "Модуль проверки орфографии недоступен."
 
+#: src/plugins/ctags/ctags-config.c:146
 msgid "Ctags Configuration"
 msgstr "Настройка Ctags"
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr "Исполняемый файл Ctags:"
 
+#: src/plugins/ctags/ctags-config.c:155
 msgid "Command line options:"
 msgstr "Параметры командной строки:"
 
+#: src/plugins/ctags/ctags-config.c:163
 msgid "Case sensitive filter"
 msgstr "Фильтр с учётом регистра"
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr "Автоматически искать файл тегов в родительских каталогах"
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr "Не удаётся перейти к %s:%ld."
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr "Ctags"
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr "Символ \"%s\" не найден ни в одном загруженном репозитории."
 
+#: src/plugins/ctags/ctags-plugin.c:538
 msgid "Go to Declaration"
 msgstr "Перейти к определению"
 
+#: src/plugins/ctags/ctags-plugin.c:591
 msgid "Find Declaration"
 msgstr "Найти определение"
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr "Под курсором нет слова."
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, c-format
 msgid "'%s' is not a known symbol."
 msgstr "\"%s\" не является известным символом."
 
+#: src/plugins/ctags/ctags-plugin.c:662
 msgid "Failed to create temporary file."
 msgstr "Не удалось создать временный файл."
 
+#: src/plugins/ctags/ctags-plugin.c:672
 msgid "Failed to open temporary file."
 msgstr "Не удалось открыть временный файл."
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr "Проиндексированные файлы не найдены."
 
+#: src/plugins/ctags/ctags-plugin.c:727
 msgid "Failed to run grep."
 msgstr "Не удалось запустить grep."
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, c-format
 msgid "No references found for '%s'."
 msgstr "Для \"%s\" не найдено ссылок."
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr "Найти ссылки"
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr "Репозиторий не загружен."
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 msgid "Search Symbol"
 msgstr "Поиск символа"
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr "Файл не открыт."
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr "Для текущего файла теги не найдены."
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr "Символы в текущем файле"
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr "Нет файлов, соответствующих \"%s\"."
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 msgid "Search File"
 msgstr "Найти файл"
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 msgid "Complete Symbol"
 msgstr "Дополнение символа"
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr "Для \"%s\" члены не найдены."
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, c-format
 msgid "Failed to load tags file: %s"
 msgstr "Не удалось загрузить файл тегов: %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr "Загружено %u символов из %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, c-format
 msgid "Cannot create temp file: %s"
 msgstr "Не удаётся создать временный файл: %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr "Не удаётся переименовать %s в %s: %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr "Ctags: создать индекс"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Project root directory to index:"
 msgstr "Корневой каталог проекта для индексации:"
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, c-format
 msgid "Failed to create index in %s"
 msgstr "Не удалось создать индекс в %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr "Проиндексировано: %u символов"
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, c-format
 msgid "Reindex failed for %s"
 msgstr "Сбой переиндексации для %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr "Переиндексировано: %u символов"
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr "История навигации пуста."
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 msgid "Navigation History"
 msgstr "История навигации"
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 msgid "Go to declaration"
 msgstr "Перейти к определению"
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr "Найти ссылки"
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 msgid "Complete symbol"
 msgstr "Дополнить символ"
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 msgid "Navigation history"
 msgstr "История навигации"
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr "Вперёд"
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 msgid "Search symbol"
 msgstr "Поиск символа"
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 msgid "Search file"
 msgstr "Найти файл"
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 msgid "Symbols in current file"
 msgstr "Символы в текущем файле"
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr "Члены класса/структуры"
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 msgid "Load tags file"
 msgstr "Загрузить файл тегов"
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr "Управление репозиториями"
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 msgid "Reindex repository"
 msgstr "Переиндексировать репозиторий"
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 msgid "Configuration"
 msgstr "Настройка"
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 msgid "Go to &declaration"
 msgstr "Перейти к &определению"
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr "Перейти к опре&делению"
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr "Найти &ссылки"
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 msgid "Navigation &history"
 msgstr "&История навигации"
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr "&Назад"
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr "Вперё&д"
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr "&Члены класса/структуры"
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 msgid "&Search symbol"
 msgstr "&Поиск символа"
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 msgid "S&ymbols in file"
 msgstr "С&имволы в файле"
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 msgid "&Complete symbol"
 msgstr "&Дополнить символ"
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr "Подходящие символы не найдены."
 
+#: src/plugins/ctags/ctags-ui.c:328
 msgid "Select symbol"
 msgstr "Выбрать символ"
 
+#: src/plugins/ctags/ctags-ui.c:411
 msgid "Symbol name:"
 msgstr "Имя символа:"
 
+#: src/plugins/ctags/ctags-ui.c:420
 msgid "File name or path:"
 msgstr "Имя файла или путь:"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr "Члены класса/структуры"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr "Имя области (класс, структура, пространство имён):"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Load Tags File"
 msgstr "Загрузить файл тегов"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr "Путь к файлу тегов:"
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr "Управление репозиториями тегов"
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr "(неизвестно)"
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "&Закрыть"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr "Ссылки не найдены."
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr "Члены"
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "Предупреждение"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
@@ -1467,33 +1929,45 @@ msgstr ""
 "Текущий текст был изменён и не сохранён.\n"
 "Продолжение операции приведёт к потере изменений."
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "П&родолжить"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr "&Добавить"
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "&Заменить"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "П&ропустить"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "Язык"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr "Слово с ошибкой"
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr "Проверка слова"
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "Советы"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr "(нет предложений)"
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
@@ -1501,6 +1975,7 @@ msgstr ""
 "Библиотека hunspell не установлена.\n"
 "Установите её и словарь для языка, на котором вы пишете."
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
@@ -1508,9 +1983,12 @@ msgstr ""
 "Библиотека aspell не установлена.\n"
 "Установите её и словарь для языка, на котором вы пишете."
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr "нет"
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1521,6 +1999,7 @@ msgstr ""
 "Установлено: %s\n"
 "Установите словарь, затем укажите в поле «Язык» его название."
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1531,6 +2010,7 @@ msgstr ""
 "Установлено: %s\n"
 "Установите словарь, затем укажите в поле «Язык» его название."
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
@@ -1538,40 +2018,52 @@ msgstr ""
 "Проверка орфографии отключена.\n"
 "Укажите язык в настройках плагина орфографии, чтобы включить её."
 
+#: src/plugins/spell/spell.c:1638
 msgid "Add word"
 msgstr "Добавить слово"
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr "Слово для добавления в словарь:"
 
+#: src/plugins/spell/spell.c:1738
 msgid "Aspell"
 msgstr "Aspell"
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr "Hunspell"
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr "Движок"
 
+#: src/plugins/spell/spell.c:1749
 msgid "Language:"
 msgstr "Язык:"
 
+#: src/plugins/spell/spell.c:1752
 msgid "&Select..."
 msgstr "&Выбрать..."
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr "Настройки плагина орфографии"
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "Выбор языка"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr "Загрузка: %3d%%"
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "Загрузка..."
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
@@ -1580,13 +2072,16 @@ msgstr ""
 "Не удаётся открыть\n"
 "%s"
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "Загрузка файла"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr "Ошибка чтения %s"
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
@@ -1595,6 +2090,7 @@ msgstr ""
 "Не удаётся получить свойства\n"
 "%s"
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
@@ -1603,6 +2099,7 @@ msgstr ""
 "%s\n"
 "не является обычным файлом"
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
@@ -1611,10 +2108,12 @@ msgstr ""
 "Файл \"%s\" слишком большой.\n"
 "Всё равно открыть?"
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr "Ошибка чтения из канала: %s"
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
@@ -1623,9 +2122,11 @@ msgstr ""
 "Не удаётся открыть канал для чтения\n"
 "%s"
 
+#: src/editor/edit.c:4992
 msgid "Undo"
 msgstr "Отменить"
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
@@ -1633,6 +2134,7 @@ msgstr ""
 "История отмен недоступна.\n"
 "Журнал изменений был перезаписан после большой правки."
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
@@ -1640,9 +2142,11 @@ msgstr ""
 "Нет прав на запись в этот файл.\n"
 "Введите пароль sudo для сохранения от имени root:"
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr "Сохранить через sudo"
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
@@ -1650,19 +2154,24 @@ msgstr ""
 "Не удаётся сохранить через sudo.\n"
 "Неверный пароль или sudo не настроен."
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "По&вторить"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr "Файл имеет жёсткие ссылки. Отсоединить перед сохранением?"
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr "Файл был изменён внешней программой. Сохранить поверх?"
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr "Ошибка записи в канал: %s"
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1673,30 +2182,40 @@ msgstr ""
 "%s\n"
 "для записи"
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr "Сохраняемый файл не имеет символа перевода строки в конце файла."
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "&Не изменять"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "Формат &UNIX (LF)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "Формат &Windows/DOS (CR LF)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "Формат &Macintosh (CR)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "Введите имя файла:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "Изменить окончания строк на:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "Сохранить как"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
@@ -1705,21 +2224,27 @@ msgstr ""
 "Не удаётся создать каталог\n"
 "%s"
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "&Быстрое сохранение"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "Бе&зопасное сохранение"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr "Д&елать резервные копии с расширением:"
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr "П&роверка перевода строки в конце файла"
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "Режим сохранения"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1730,52 +2255,69 @@ msgstr ""
 "%s:\n"
 "необычный файл"
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "Файл с таким именем уже существует"
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "Пе&реписать"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "Не удаётся сохранить файл"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "Подтверждаете запись файла \"%s\"?"
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "Сохранить файл"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "&Сохранить"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "Загрузить"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "Правка файла синтаксиса"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "Какой файл синтаксиса вы хотите изменить?"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "&Пользовательский"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "&Общесистемный"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "Правка файла меню"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "Какой файл меню вы хотите изменить?"
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "&Местный"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[Без имени]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
@@ -1784,9 +2326,11 @@ msgstr ""
 "Файл %s был изменён.\n"
 "Сохранить при выходе?"
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "Закрытие файла"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
@@ -1795,465 +2339,615 @@ msgstr ""
 "%s в процессе завершения.\n"
 "Сохранить изменённый файл %s?"
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "Выход"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "Эта функция не реализована"
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "Не удалось сохранить в файл"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "Перейти к строке"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr "Введите номер строки:"
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "Сохранить блок"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr "Не удаётся сохранить блок"
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "Не удалось вставить файл"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "mail -s <Тема> -c <Копии> <Кому>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr "Кому"
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "Тема"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "Отправить копии адресатам"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "Почта"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "Отмена"
 
+#: src/editor/editcmd.c:2820
 #, c-format
 msgid "insert %d"
 msgstr "вставка %d"
 
+#: src/editor/editcmd.c:2826
 #, c-format
 msgid "delete %d"
 msgstr "удаление %d"
 
+#: src/editor/editcmd.c:2829
 msgid "replace"
 msgstr "замена"
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr "Нечего отменять."
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 msgid "Undo History"
 msgstr "История отмен"
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "Поиск дополнений"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "Без имени"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "Сохранить макрос"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "Нажмите новую клавишу макроса:"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "Повторить последние команды"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "Количество повторов:"
 
+#: src/editor/editmacros.c:708
 #, c-format
 msgid "Delete macro %s?"
 msgstr "Удалить макрос %s?"
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "Удалить макрос"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr "Обозреватель макросов"
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr "Макросы не записаны"
 
+#: src/editor/editmacros.c:865
 msgid "Run"
 msgstr "Выполнить"
 
+#: src/editor/editmacros.c:868
 msgid "Close"
 msgstr "Закрыть"
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "&Открыть файл..."
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "&Новый"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr "&История..."
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "Сохранить &как..."
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "&Вставить файл..."
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "Копи&ровать в файл..."
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "&Меню пользователя..."
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr "О &программе..."
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "&Выход"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "&Отмена"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "В&ернуть"
 
+#: src/editor/editmenu.c:259
 msgid "Undo &History..."
 msgstr "&История отмен..."
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr "&Режим вставки/замены"
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "&Переключить в режим пометки"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "В&ыделить столбцы"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "О&тметить всё"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "Сн&ять отметку"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "&Копировать блок"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "Пере&местить блок"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "&Удалить"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "Коп&ировать в файл буфера обмена"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "Выре&зать в файл буфера обмена"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "&Вставить из файла буфера обмена"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "&Начало файла"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "Коне&ц файла"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "&Поиск..."
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "П&родолжить поиск"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "&Заменить..."
 
+#: src/editor/editmenu.c:293
 msgid "Toggle &line filter"
 msgstr "Переключить фильтр &строк"
 
+#: src/editor/editmenu.c:294
 msgid "Filter by &word"
 msgstr "Фильтр по &слову"
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr "&Установить/снять закладку"
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "&К следующей закладке"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "К пре&дыдущей закладке"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr "У&брать все закладки"
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "Перейти к &строке..."
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr "Отобразить/скрыть номера с&трок"
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr "Перейти к парной ско&бке"
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr "Включить/отключить подсветку с&интаксиса"
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr "Перек&лючить правое поле"
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr "Переключить &управляющие символы"
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "Выбор &кодировки..."
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr "&Свернуть / развернуть блок"
 
+#: src/editor/editmenu.c:324
 msgid "&Unfold all"
 msgstr "&Развернуть всё"
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "Пере&рисовать экран"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr "&Начать/закончить запись макроса"
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr "Обозреватель ма&кросов..."
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr "Записать/повторить &действия"
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "Пере&местить"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "Изменить &размер"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr "Окно во весь &экран"
 
-msgid "Toggle &sticky windows"
-msgstr "&Липкие окна"
-
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "&Следующее"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "&Предыдущее"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr "Сп&исок окон..."
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr "&Общие..."
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "Ре&жим сохранения..."
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "&Подсветка синтаксиса..."
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr "&Оформление..."
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr "Опре&деление клавиш..."
 
+#: src/editor/editmenu.c:374
 msgid "Key &bindings..."
 msgstr "&Привязки клавиш..."
 
+#: src/editor/editmenu.c:375
 #, fuzzy
 msgid "Key s&niffer..."
 msgstr "Анализатор &клавиш..."
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "&Управление плагинами..."
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr "Сведения о пла&гине..."
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr "Скрипты &Lua..."
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "Правка файла си&нтаксиса"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "Файл &меню"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "&Сохранить настройки"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr "(плагины не загружены)"
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "&Файл"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "&Правка"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "&Поиск"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "&Команда"
 
+#: src/editor/editmenu.c:553
 msgid "&Navigate"
 msgstr "&Навигация"
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr "&Окна"
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr "Пла&гины"
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "&Настройки"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 msgid "Lua action"
 msgstr "Действие Lua"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 msgid "Action failed"
 msgstr "Действие не выполнено"
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr "Не&т"
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr "&Динамический абзац"
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr "&Автоматический перенос"
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "Режим переноса строк"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr "Табуляция"
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "Имитиров&ать неполн. табуляцию"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "За&бой в обход табуляции"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "&Заполнять табуляцию пробелами"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr "Шаг табуляции:"
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "Прочие настройки"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "А&втоотступ \"Вводом\""
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "Подтверждать запись &файла"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "Сох&ранять позицию в файле"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr "Отображать проб&елы"
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr "Отображать таб&уляции"
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr "П&оказывать управляющие символы"
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "Подс&ветка синтаксиса"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr "Курсор &после вставленного блока"
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr "Посто&янные блоки"
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr "&Курсор за пределами строки"
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr "&Групповая отмена"
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr "Позиция переноса строк:"
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "Настройки редактора"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr "Введите строку для поиска:"
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr "С у&чётом регистра"
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "&Назад"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr "В в&ыделенном"
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr "&Слово целиком"
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr "&Все кодировки"
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "На&йти всё"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr "Филь&тр"
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "Поиск"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr "Ищется %s: %3d%%"
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "Ищется %s"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr "Введите текст для замены:"
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "Заменить"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr "Заменить на:"
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "&Все"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "Подтвердить замену"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr "Сделано подстановок: %ld"
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr "Плагин"
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
@@ -2262,81 +2956,98 @@ msgstr ""
 "Удобный текстовый редактор\n"
 "специально для %s."
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "О программе"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr "Сведения о плагине"
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr "Плагины не загружены."
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr "У выбранной среды выполнения нет обратного вызова настройки."
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr "У выбранного плагина нет обратного вызова настройки."
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "Открытые файлы"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "Правка: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr "Помощь"
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr "Сохран"
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "Блок"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "Замена"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "Копия"
 
-#: src/plugins/query/query.c
-msgid "ButtonBar|Run"
-msgstr "Пуск"
-
-#: src/plugins/query/query.c
-msgid "ButtonBar|Export"
-msgstr "Экспорт"
-
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "Переместить"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr "Поиск"
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "Удалить"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "МенюMC"
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr "Выход"
 
+#: src/editor/fold.c:478
 #, c-format
 msgid "Filtering %s: %3d%%"
 msgstr "Фильтрация %s: %3d%%"
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "Фильтр"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr "Нет подходящих строк"
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr "< Автоматически >"
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr "< Перезагрузить текущую подсветку >"
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -2345,13 +3056,16 @@ msgstr ""
 "Не удаётся открыть файл\n"
 "%s"
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "Загрузить файл синтаксиса"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "Ошибка в файле %s в строке %d"
 
+#: src/execute.c:240
 #, fuzzy
 msgid ""
 "Not an xterm;\n"
@@ -2360,48 +3074,62 @@ msgstr ""
 "Это не xterm или консоль Linux;\n"
 "терминал невозможно показать."
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr "Введите \"exit\" для возврата к %s"
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "Ошибка в формате файла помощи\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "Внутренняя ошибка: двойное начало области ссылки"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr "Не удалось найти узел %s в файле помощи"
 
+#: src/help.c:1487
 msgid "See also"
 msgstr "См. также"
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "Помощь"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr "Разделы"
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "Пред"
 
+#: src/key_learn.c:138
 msgid "Function keys"
 msgstr "Функциональные клавиши"
 
+#: src/key_learn.c:139
 msgid "Arrows / Navigation"
 msgstr "Стрелки / Навигация"
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr "Особое"
 
+#: src/key_learn.c:312
 msgid "Learn key"
 msgstr "Изучить клавишу"
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr "Нажмите %s и подождите..."
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
@@ -2410,9 +3138,11 @@ msgstr ""
 "Последовательность %s уже назначена на %s.\n"
 "Переназначить на %s?"
 
+#: src/key_learn.c:354
 msgid "Conflict"
 msgstr "Конфликт"
 
+#: src/key_learn.c:420
 #, c-format
 msgid ""
 "Cannot accept this key.\n"
@@ -2421,28 +3151,37 @@ msgstr ""
 "Не удаётся принять эту клавишу.\n"
 "Вы нажали: %s"
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr "Изучение терминала [%s]"
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 msgid "&Ctrl"
 msgstr "&Ctrl"
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr "&Alt"
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 msgid "&Shift"
 msgstr "&Shift"
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 msgid "Edit &term file"
 msgstr "Правка файла &терминала"
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr "(не распознано)"
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr "(нет)"
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
@@ -2452,70 +3191,92 @@ msgstr ""
 "\n"
 "Подождите, пока это сообщение исчезнет."
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr "Сочетание клавиш:"
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr "Действие:"
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr "Необработанное:"
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr "Код клавиши:"
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr "&Захватить клавишу"
 
+#: src/keybind_dialog.c:128
 msgid "&Main"
 msgstr "&Основное"
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr "&Ctrl-X + ..."
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr "&Диалог"
 
+#: src/keybind_dialog.c:133
 msgid "&Menu"
 msgstr "&Меню"
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr "&Ввод"
 
+#: src/keybind_dialog.c:134
 msgid "&Listbox"
 msgstr "&Список"
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr "&Переключатель"
 
+#: src/keybind_dialog.c:135
 msgid "&Help"
 msgstr "&Помощь"
 
+#: src/keybind_dialog.c:139
 msgid "&Editor"
 msgstr "&Редактор"
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr "&Виджеты"
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr "Клавиша"
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr "Неизвестная последовательность: %s"
 
+#: src/keybind_dialog.c:629
 msgid "Assign key"
 msgstr "Назначить клавишу"
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr "Клавиша:"
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr "Назначить сочетание клавиш"
 
+#: src/keybind_dialog.c:895
 msgid "Press new shortcut..."
 msgstr "Нажмите новое сочетание клавиш..."
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
@@ -2524,12 +3285,15 @@ msgstr ""
 "%s уже привязано к %s.\n"
 "Всё равно переназначить?"
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 msgid "&Back"
 msgstr "&Назад"
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 msgid "Edit &keymap file"
 msgstr "Правка файла &раскладки"
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2538,9 +3302,11 @@ msgstr ""
 "Сбой запуска:\n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "Путь домашнего каталога не является абсолютным"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2550,187 +3316,238 @@ msgstr ""
 "\n"
 "Сбой при закрытии:%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr "не указано"
 
-#, fuzzy
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 msgid "Lua scripts"
-msgstr "Скрипты Lua:"
+msgstr "Скрипты Lua"
 
-#, fuzzy
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
-msgstr "У этого плагина нет настроек."
+msgstr "У этого скрипта нет входного файла."
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr "Lua"
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
-#, fuzzy
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
-msgstr "У этого плагина нет настроек."
+msgstr "У этого скрипта нет настроек."
 
-#, fuzzy
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
-msgstr "Глобальные или пользовательские скрипты редактора Lua не найдены."
+msgstr "Глобальные или пользовательские скрипты Lua не найдены."
 
+#: src/manage_plugins.c:445
 #, fuzzy
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr "Среда Lua отключена. Включите движок Lua и перезапустите MC."
 
-#, fuzzy
+#: src/manage_plugins.c:511
 msgid "&Settings"
-msgstr "Настройки ВФС"
+msgstr "&Настройки"
 
+#: src/manage_plugins.c:593
 msgid "Lua action failed"
 msgstr "Действие Lua не выполнено"
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr "У выбранного скрипта нет действий для выполнения."
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr "Выполнить действие Lua"
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr "(отключено, не загружено)"
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr "Управление плагинами"
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr "У этого плагина нет настроек."
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr "Плагины не загружены."
 
+#: src/runtime-host.c:1931
 msgid "Runtime errors"
 msgstr "Ошибки времени выполнения"
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "Выбор кодировки"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "-  < Без перекодировки >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "Настройка"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr "Настройки сохранены в %s"
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr "Не удалось сохранить настройки в %s"
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "С опциональной поддержкой внутренней командной оболочки"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr "С поддержкой мыши в xterm и консоли Linux"
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr "С поддержкой мыши в xterm"
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr "С поддержкой событий X11"
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr "С поддержкой интернационализации"
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr "   на основе GNU Midnight Commander.\n"
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr "Собрано с GLib версии %d.%d.%d (используется GLib %u.%u.%u)\n"
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr "Собрано с S-Lang"
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr " и базой данных terminfo (используется S-Lang %s)\n"
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr "Собрано с %s"
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr " (используется %s)\n"
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "Типы данных:"
 
+#: src/textconf.c:202
 msgid "directory not found"
 msgstr "каталог не найден"
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr "Домашний каталог:"
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr "Корневой каталог профиля:"
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "Системные данные"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "Каталог с файлами настроек:"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "Каталог с файлами данных:"
 
+#: src/textconf.c:218 src/textconf.c:257
 msgid "Editor plugins:"
 msgstr "Плагины редактора:"
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr "Плагины среды выполнения:"
 
+#: src/textconf.c:224 src/textconf.c:243
 msgid "Lua scripts:"
 msgstr "Скрипты Lua:"
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr "Модули Lua:"
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "Пользовательские данные"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "Каталог с кэшируемыми данными:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "Отладка"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "ОШИБКА:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "Истина:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "Ложь:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr "Не удаётся создать временный файл различий"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr "Ошибка выполнения программы"
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr "Не удаётся создать временный командный файл"
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "Параметр"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr "Предупреждение - файл игнорируется"
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2739,1185 +3556,995 @@ msgstr ""
 "Файл %s в текущем каталоге не принадлежит ни root'у, ни Вам,\n"
 "или доступен другим на запись. Использование такого файла небезопасно"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr "Не удалось выполнить команды на нелокальных файловых системах"
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr "Не найдено подходящих элементов в %s"
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "Меню пользователя"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"
 "%s"
 msgstr "Не удаётся переименовать %s в %s: %s"
 
-#: src/plugins/query/query.c:110
-msgid "Run the selection, else the part between \"// ---\", else the file"
-msgstr "Выполнить выделение, иначе часть между \"// ---\", иначе весь файл"
+#~ msgid "Toggle sticky windows"
+#~ msgstr "Переключить липкие окна"
 
-#: src/plugins/query/query.c:111
-msgid "Run the whole file, even with a selection"
-msgstr "Выполнить весь файл, даже при выделении"
+#~ msgid "Toggle &sticky windows"
+#~ msgstr "&Липкие окна"
 
-#: src/plugins/query/query.c:112
-msgid "Stop the query"
-msgstr "Остановить запрос"
+#~ msgid "ButtonBar|Run"
+#~ msgstr "Пуск"
 
-#: src/plugins/query/query.c:113
-msgid "Put the version of the query of History into the file"
-msgstr "Вставить в файл версию запроса из истории"
+#~ msgid "ButtonBar|Export"
+#~ msgstr "Экспорт"
 
-#: src/plugins/query/query.c:114
-msgid "Compare the version of the query of History with the file"
-msgstr "Сравнить версию запроса из истории с файлом"
+#~ msgid "Run the selection, else the part between \"// ---\", else the file"
+#~ msgstr "Выполнить выделение, иначе часть между \"// ---\", иначе весь файл"
 
-#: src/plugins/query/query.c:115
-msgid "Roll the transaction of the session back"
-msgstr "Откатить транзакцию сеанса"
+#~ msgid "Run the whole file, even with a selection"
+#~ msgstr "Выполнить весь файл, даже при выделении"
 
-#: src/plugins/query/query.c:116
-msgid "Show or hide the schemas, the relations and their columns"
-msgstr "Показать или скрыть схемы, отношения и их столбцы"
+#~ msgid "Stop the query"
+#~ msgstr "Остановить запрос"
 
-#: src/plugins/query/query.c:118
-msgid "The rows of the relation of the node of Schema in Table"
-msgstr "Строки отношения узла схемы во вкладке Таблица"
+#~ msgid "Put the version of the query of History into the file"
+#~ msgstr "Вставить в файл версию запроса из истории"
 
-#: src/plugins/query/query.c:119
-msgid "Put the name of the node of Schema into the file"
-msgstr "Вставить в файл имя узла схемы"
+#~ msgid "Compare the version of the query of History with the file"
+#~ msgstr "Сравнить версию запроса из истории с файлом"
 
-#: src/plugins/query/query.c:120
-msgid "Read the schemas again"
-msgstr "Перечитать схемы"
+#~ msgid "Roll the transaction of the session back"
+#~ msgstr "Откатить транзакцию сеанса"
 
-#: src/plugins/query/query.c:122
-msgid ""
-"Put the query of the rows of the relation of the node of Schema into the file"
-msgstr "Вставить в файл запрос строк отношения узла схемы"
+#~ msgid "Show or hide the schemas, the relations and their columns"
+#~ msgstr "Показать или скрыть схемы, отношения и их столбцы"
 
-#: src/plugins/query/query.c:124
-msgid ""
-"Put the drop, commented, and the create of the node of Schema into the file"
-msgstr "Вставить в файл закомментированный DROP и CREATE узла схемы"
+#~ msgid "The rows of the relation of the node of Schema in Table"
+#~ msgstr "Строки отношения узла схемы во вкладке Таблица"
 
-#: src/plugins/query/query.c:125
-msgid "Write the query of the request of the paragraph or the selection by AI"
-msgstr "Написать с помощью ИИ запрос по просьбе из абзаца или выделения"
+#~ msgid "Put the name of the node of Schema into the file"
+#~ msgstr "Вставить в файл имя узла схемы"
 
-#: src/plugins/query/query.c:144 src/plugins/query/query-postgres.c:615
-#: src/plugins/query/query-postgres.c:621
-msgid "Output"
-msgstr "Вывод"
+#~ msgid "Read the schemas again"
+#~ msgstr "Перечитать схемы"
 
-#: src/plugins/query/query.c:145
-msgid "Table"
-msgstr "Таблица"
+#~ msgid ""
+#~ "Put the query of the rows of the relation of the node of Schema into the "
+#~ "file"
+#~ msgstr "Вставить в файл запрос строк отношения узла схемы"
 
-#: src/plugins/query/query.c:299
+#~ msgid ""
+#~ "Put the drop, commented, and the create of the node of Schema into the "
+#~ "file"
+#~ msgstr "Вставить в файл закомментированный DROP и CREATE узла схемы"
+
+#~ msgid ""
+#~ "Write the query of the request of the paragraph or the selection by AI"
+#~ msgstr "Написать с помощью ИИ запрос по просьбе из абзаца или выделения"
+
+#~ msgid "Output"
+#~ msgstr "Вывод"
+
+#~ msgid "Table"
+#~ msgstr "Таблица"
+
 #, c-format
-msgid ""
-"The script %s\n"
-"of the queries is a part of itself."
-msgstr ""
-"Скрипт запросов %s\n"
-"включает сам себя."
+#~ msgid ""
+#~ "The script %s\n"
+#~ "of the queries is a part of itself."
+#~ msgstr ""
+#~ "Скрипт запросов %s\n"
+#~ "включает сам себя."
 
-#: src/plugins/query/query.c:301
 #, c-format
-msgid ""
-"The script %s\n"
-"of the queries is not there:\n"
-"it is in %s,\n"
-"or in ~/.config/bluerig/query."
-msgstr ""
-"Скрипта запросов %s нет:\n"
-"он лежит в %s\n"
-"или в ~/.config/bluerig/query."
+#~ msgid ""
+#~ "The script %s\n"
+#~ "of the queries is not there:\n"
+#~ "it is in %s,\n"
+#~ "or in ~/.config/bluerig/query."
+#~ msgstr ""
+#~ "Скрипта запросов %s нет:\n"
+#~ "он лежит в %s\n"
+#~ "или в ~/.config/bluerig/query."
 
-#: src/plugins/query/query.c:597
 #, c-format
-msgid "%u run"
-msgid_plural "%u runs"
-msgstr[0] "%u запуск"
-msgstr[1] "%u запуска"
-msgstr[2] "%u запусков"
-msgstr[3] "%u запусков"
+#~ msgid "%u run"
+#~ msgid_plural "%u runs"
+#~ msgstr[0] "%u запуск"
+#~ msgstr[1] "%u запуска"
+#~ msgstr[2] "%u запусков"
+#~ msgstr[3] "%u запусков"
 
-#: src/plugins/query/query.c:598
-msgid "current"
-msgstr "текущая"
+#~ msgid "current"
+#~ msgstr "текущая"
 
-#: src/plugins/query/query.c:603 src/plugins/query/query-ai.c:329
-#: src/plugins/query/query-mongo.c:163 src/plugins/query/query-postgres.c:735
-msgid "stopped"
-msgstr "остановлен"
+#~ msgid "stopped"
+#~ msgstr "остановлен"
 
-#: src/plugins/query/query.c:605 src/plugins/query/query-mongo.c:167
 #, c-format
-msgid "exit %d"
-msgstr "код %d"
+#~ msgid "exit %d"
+#~ msgstr "код %d"
 
-#: src/plugins/query/query.c:622
-msgid "No file of queries in front.\n"
-msgstr "Впереди нет файла запросов.\n"
+#~ msgid "No file of queries in front.\n"
+#~ msgstr "Впереди нет файла запросов.\n"
 
-#: src/plugins/query/query.c:624
-msgid "No version yet: a run keeps the file as it is.\n"
-msgstr "Версий пока нет: запуск сохраняет файл как есть.\n"
+#~ msgid "No version yet: a run keeps the file as it is.\n"
+#~ msgstr "Версий пока нет: запуск сохраняет файл как есть.\n"
 
-#: src/plugins/query/query.c:654
 #, c-format
-msgid "History: %s"
-msgstr "История: %s"
+#~ msgid "History: %s"
+#~ msgstr "История: %s"
 
-#: src/plugins/query/query.c:831
 #, c-format
-msgid "lines %ld-%ld"
-msgstr "строки %ld-%ld"
+#~ msgid "lines %ld-%ld"
+#~ msgstr "строки %ld-%ld"
 
-#: src/plugins/query/query.c:833
 #, c-format
-msgid "line %ld"
-msgstr "строка %ld"
+#~ msgid "line %ld"
+#~ msgstr "строка %ld"
 
-#. the commands of the plugin, which act on the node of the cursor
-#: src/plugins/query/query.c:894 src/plugins/query/query.c:932
-#: src/plugins/query/query.c:1552 src/plugins/query/query.c:1571
-#: src/plugins/query/query.c:1759 src/plugins/query/query-ai.c:478
-#: src/plugins/query/query-ai.c:484 src/plugins/query/query-ai.c:505
-#: src/plugins/query/query-ai.c:525 src/plugins/query/query-tree.c:189
-#: src/plugins/query/query-tree.c:628
-msgid "Query"
-msgstr "Запрос"
+#~ msgid "Query"
+#~ msgstr "Запрос"
 
-#: src/plugins/query/query.c:894
-msgid "A query is running. Stop it?"
-msgstr "Выполняется запрос. Остановить его?"
+#~ msgid "A query is running. Stop it?"
+#~ msgstr "Выполняется запрос. Остановить его?"
 
-#: src/plugins/query/query.c:894 src/plugins/query/query.c:1759
-#: src/plugins/query/query-ai.c:485
-msgid "&Stop"
-msgstr "&Остановить"
+#~ msgid "&Stop"
+#~ msgstr "&Остановить"
 
-#: src/plugins/query/query.c:933 src/plugins/query/query-ai.c:526
-msgid "The selection is empty."
-msgstr "Выделение пусто."
+#~ msgid "The selection is empty."
+#~ msgstr "Выделение пусто."
 
-#: src/plugins/query/query.c:934
-msgid ""
-"The part of the file between the lines \"// ---\"\n"
-"around the cursor is empty."
-msgstr ""
-"Часть файла между строками \"// ---\"\n"
-"вокруг курсора пуста."
+#~ msgid ""
+#~ "The part of the file between the lines \"// ---\"\n"
+#~ "around the cursor is empty."
+#~ msgstr ""
+#~ "Часть файла между строками \"// ---\"\n"
+#~ "вокруг курсора пуста."
 
-#: src/plugins/query/query.c:936
-msgid "The file is empty."
-msgstr "Файл пуст."
+#~ msgid "The file is empty."
+#~ msgstr "Файл пуст."
 
-#: src/plugins/query/query.c:975 src/plugins/query/query.c:976
-msgid "Running...\n"
-msgstr "Выполняется...\n"
+#~ msgid "Running...\n"
+#~ msgstr "Выполняется...\n"
 
-#: src/plugins/query/query.c:1010
-msgid ""
-"The version was kept, not run: Enter puts it in the file, to run it there.\n"
-msgstr ""
-"Версия сохранена, но не выполнялась: Enter вставит её в файл, чтобы "
-"выполнить там.\n"
+#~ msgid ""
+#~ "The version was kept, not run: Enter puts it in the file, to run it "
+#~ "there.\n"
+#~ msgstr ""
+#~ "Версия сохранена, но не выполнялась: Enter вставит её в файл, чтобы "
+#~ "выполнить там.\n"
 
-#: src/plugins/query/query.c:1284
-msgid "The version is gone from the store.\n"
-msgstr "Версии больше нет в хранилище.\n"
+#~ msgid "The version is gone from the store.\n"
+#~ msgstr "Версии больше нет в хранилище.\n"
 
-#: src/plugins/query/query.c:1297
-msgid "The file of queries is not open.\n"
-msgstr "Файл запросов не открыт.\n"
+#~ msgid "The file of queries is not open.\n"
+#~ msgstr "Файл запросов не открыт.\n"
 
-#: src/plugins/query/query.c:1321
-msgid "What the file has cannot be kept as a version: it stays as it is.\n"
-msgstr "Содержимое файла нельзя сохранить как версию: он остаётся как есть.\n"
+#~ msgid "What the file has cannot be kept as a version: it stays as it is.\n"
+#~ msgstr ""
+#~ "Содержимое файла нельзя сохранить как версию: он остаётся как есть.\n"
 
-#: src/plugins/query/query.c:1339
 #, c-format
-msgid ""
-"The file is as it was at %s; what it had is the version \"current\" of "
-"History.\n"
-"Undo takes it back.\n"
-msgstr ""
-"Файл стал таким, как в %s; прежнее содержимое - версия \"текущая\" в "
-"истории.\n"
-"Undo вернёт его.\n"
+#~ msgid ""
+#~ "The file is as it was at %s; what it had is the version \"current\" of "
+#~ "History.\n"
+#~ "Undo takes it back.\n"
+#~ msgstr ""
+#~ "Файл стал таким, как в %s; прежнее содержимое - версия \"текущая\" в "
+#~ "истории.\n"
+#~ "Undo вернёт его.\n"
 
-#: src/plugins/query/query.c:1342
 #, c-format
-msgid ""
-"The file is as it was at %s; what it had is the version \"current\" of "
-"History, Enter on it brings it back.\n"
-msgstr ""
-"Файл стал таким, как в %s; прежнее содержимое - версия \"текущая\" в "
-"истории, Enter на ней вернёт его.\n"
+#~ msgid ""
+#~ "The file is as it was at %s; what it had is the version \"current\" of "
+#~ "History, Enter on it brings it back.\n"
+#~ msgstr ""
+#~ "Файл стал таким, как в %s; прежнее содержимое - версия \"текущая\" в "
+#~ "истории, Enter на ней вернёт его.\n"
 
-#: src/plugins/query/query.c:1347
 #, c-format
-msgid "The file is as it was at %s already.\n"
-msgstr "Файл уже такой, как в %s.\n"
+#~ msgid "The file is as it was at %s already.\n"
+#~ msgstr "Файл уже такой, как в %s.\n"
 
-#: src/plugins/query/query.c:1418
-msgid "The query has no version of the file to compare.\n"
-msgstr "У запроса нет версии файла для сравнения.\n"
+#~ msgid "The query has no version of the file to compare.\n"
+#~ msgstr "У запроса нет версии файла для сравнения.\n"
 
-#: src/plugins/query/query.c:1432
-msgid "The file cannot be compared now.\n"
-msgstr "Сейчас файл нельзя сравнить.\n"
+#~ msgid "The file cannot be compared now.\n"
+#~ msgstr "Сейчас файл нельзя сравнить.\n"
 
-#: src/plugins/query/query.c:1440
 #, c-format
-msgid "%s, now"
-msgstr "%s, сейчас"
+#~ msgid "%s, now"
+#~ msgstr "%s, сейчас"
 
-#: src/plugins/query/query.c:1450
-msgid "diff is not found.\n"
-msgstr "diff не найден.\n"
+#~ msgid "diff is not found.\n"
+#~ msgstr "diff не найден.\n"
 
-#: src/plugins/query/query.c:1452
 #, c-format
-msgid "The file is as it was at %s.\n"
-msgstr "Файл такой же, как в %s.\n"
+#~ msgid "The file is as it was at %s.\n"
+#~ msgstr "Файл такой же, как в %s.\n"
 
-#: src/plugins/query/query.c:1553
-msgid "The queries of this database have no transaction."
-msgstr "У запросов этой базы данных нет транзакций."
+#~ msgid "The queries of this database have no transaction."
+#~ msgstr "У запросов этой базы данных нет транзакций."
 
-#: src/plugins/query/query.c:1572
-msgid "The queries of this database have no schema shown."
-msgstr "Для запросов этой базы данных схема не показывается."
+#~ msgid "The queries of this database have no schema shown."
+#~ msgstr "Для запросов этой базы данных схема не показывается."
 
-#: src/plugins/query/query.c:1689
-msgid "No query run yet.\n"
-msgstr "Запросы ещё не выполнялись.\n"
+#~ msgid "No query run yet.\n"
+#~ msgstr "Запросы ещё не выполнялись.\n"
 
-#: src/plugins/query/query.c:1709
-msgid "&Query"
-msgstr "&Запрос"
+#~ msgid "&Query"
+#~ msgstr "&Запрос"
 
-#: src/plugins/query/query.c:1759
-msgid "Stop the query and quit?"
-msgstr "Остановить запрос и выйти?"
+#~ msgid "Stop the query and quit?"
+#~ msgstr "Остановить запрос и выйти?"
 
-#: src/plugins/query/query-ai.c:331
-msgid "exit code"
-msgstr "код возврата"
+#~ msgid "exit code"
+#~ msgstr "код возврата"
 
-#: src/plugins/query/query-ai.c:343
 #, c-format
-msgid ""
-"%s answered with no query, in no block ```: the file is left as it is.\n"
-msgstr "%s ответил без запроса в блоке ```: файл оставлен как есть.\n"
+#~ msgid ""
+#~ "%s answered with no query, in no block ```: the file is left as it is.\n"
+#~ msgstr "%s ответил без запроса в блоке ```: файл оставлен как есть.\n"
 
-#: src/plugins/query/query-ai.c:351
-msgid ""
-"The query is put in the file after the request and its query, not run: F5 "
-"runs it, Undo takes it back.\n"
-msgstr ""
-"Запрос вставлен в файл после просьбы и её запроса, но не выполнен: F5 "
-"выполнит его, Undo уберёт.\n"
+#~ msgid ""
+#~ "The query is put in the file after the request and its query, not run: F5 "
+#~ "runs it, Undo takes it back.\n"
+#~ msgstr ""
+#~ "Запрос вставлен в файл после просьбы и её запроса, но не выполнен: F5 "
+#~ "выполнит его, Undo уберёт.\n"
 
-#: src/plugins/query/query-ai.c:354
-msgid ""
-"The query is put in the file under the request, not run: F5 runs it, Undo "
-"takes it back.\n"
-msgstr ""
-"Запрос вставлен в файл под просьбой, но не выполнен: F5 выполнит его, Undo "
-"уберёт.\n"
+#~ msgid ""
+#~ "The query is put in the file under the request, not run: F5 runs it, Undo "
+#~ "takes it back.\n"
+#~ msgstr ""
+#~ "Запрос вставлен в файл под просьбой, но не выполнен: F5 выполнит его, "
+#~ "Undo уберёт.\n"
 
-#: src/plugins/query/query-ai.c:358
 #, c-format
-msgid ""
-"The request is no more where it was in the file: the query is here.\n"
-"\n"
-"%s\n"
-msgstr ""
-"Просьбы больше нет там, где она была в файле: запрос здесь.\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "The request is no more where it was in the file: the query is here.\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "Просьбы больше нет там, где она была в файле: запрос здесь.\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-ai.c:479
-msgid "AI writes no queries of this database."
-msgstr "ИИ не пишет запросы для этой базы данных."
+#~ msgid "AI writes no queries of this database."
+#~ msgstr "ИИ не пишет запросы для этой базы данных."
 
-#: src/plugins/query/query-ai.c:484
-msgid "AI is writing a query. Stop it?"
-msgstr "ИИ пишет запрос. Остановить?"
+#~ msgid "AI is writing a query. Stop it?"
+#~ msgstr "ИИ пишет запрос. Остановить?"
 
-#: src/plugins/query/query-ai.c:495
-msgid "AI is stopped.\n"
-msgstr "ИИ остановлен.\n"
+#~ msgid "AI is stopped.\n"
+#~ msgstr "ИИ остановлен.\n"
 
-#: src/plugins/query/query-ai.c:503 src/plugins/query/query-ai.c:610
 #, c-format
-msgid "%s is no command: claude, codex or a command line."
-msgstr "%s - не команда: нужен claude, codex или командная строка."
+#~ msgid "%s is no command: claude, codex or a command line."
+#~ msgstr "%s - не команда: нужен claude, codex или командная строка."
 
-#: src/plugins/query/query-ai.c:527
-msgid ""
-"The request to AI is the paragraph of the cursor, or the selection:\n"
-"the line of the cursor is empty."
-msgstr ""
-"Просьба к ИИ - абзац под курсором или выделение:\n"
-"строка курсора пуста."
+#~ msgid ""
+#~ "The request to AI is the paragraph of the cursor, or the selection:\n"
+#~ "the line of the cursor is empty."
+#~ msgstr ""
+#~ "Просьба к ИИ - абзац под курсором или выделение:\n"
+#~ "строка курсора пуста."
 
-#: src/plugins/query/query-ai.c:542
-msgid "AI is told of the database...\n"
-msgstr "ИИ получает сведения о базе данных...\n"
+#~ msgid "AI is told of the database...\n"
+#~ msgstr "ИИ получает сведения о базе данных...\n"
 
-#: src/plugins/query/query-ai.c:563
 #, c-format
-msgid "What AI is told of the database cannot be read: %s\n"
-msgstr "Не удалось прочитать сведения о базе данных для ИИ: %s\n"
+#~ msgid "What AI is told of the database cannot be read: %s\n"
+#~ msgstr "Не удалось прочитать сведения о базе данных для ИИ: %s\n"
 
-#: src/plugins/query/query-ai.c:588
 #, c-format
-msgid "%s is writing the query of the request... F6 stops it.\n"
-msgstr "%s пишет запрос по просьбе... F6 остановит.\n"
+#~ msgid "%s is writing the query of the request... F6 stops it.\n"
+#~ msgstr "%s пишет запрос по просьбе... F6 остановит.\n"
 
-#: src/plugins/query/query-ai.c:618
 #, c-format
-msgid "F6 writes the query of the request of the paragraph by AI, %s: %s\n"
-msgstr "F6 пишет с помощью ИИ запрос по просьбе из абзаца, %s: %s\n"
+#~ msgid "F6 writes the query of the request of the paragraph by AI, %s: %s\n"
+#~ msgstr "F6 пишет с помощью ИИ запрос по просьбе из абзаца, %s: %s\n"
 
-#: src/plugins/query/query-ai.c:620
-msgid "by default"
-msgstr "по умолчанию"
+#~ msgid "by default"
+#~ msgstr "по умолчанию"
 
-#: src/plugins/query/query-ai.c:623
 #, c-format
-msgid ""
-"%s is not found: F6, the queries written by AI, needs it, or another in "
-"[Query] ai of the configuration\n"
-msgstr ""
-"%s не найден: он нужен F6, запросам от ИИ, или другой в [Query] ai "
-"конфигурации\n"
+#~ msgid ""
+#~ "%s is not found: F6, the queries written by AI, needs it, or another in "
+#~ "[Query] ai of the configuration\n"
+#~ msgstr ""
+#~ "%s не найден: он нужен F6, запросам от ИИ, или другой в [Query] ai "
+#~ "конфигурации\n"
 
-#: src/plugins/query/query-mongo.c:99
 #, c-format
-msgid ""
-"no JSON: %s\n"
-"\n"
-msgstr ""
-"не JSON: %s\n"
-"\n"
+#~ msgid ""
+#~ "no JSON: %s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "не JSON: %s\n"
+#~ "\n"
 
-#: src/plugins/query/query-mongo.c:104
-msgid ""
-"no documents\n"
-"\n"
-msgstr ""
-"нет документов\n"
-"\n"
+#~ msgid ""
+#~ "no documents\n"
+#~ "\n"
+#~ msgstr ""
+#~ "нет документов\n"
+#~ "\n"
 
-#: src/plugins/query/query-mongo.c:106
 #, c-format
-msgid ""
-"the first %u of %u documents\n"
-"\n"
-"%s\n"
-msgstr ""
-"первые %u из %u документов\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "the first %u of %u documents\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "первые %u из %u документов\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-mongo.c:110
 #, c-format
-msgid ""
-"%u document\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"%u documents\n"
-"\n"
-"%s\n"
-msgstr[0] ""
-"%u документ\n"
-"\n"
-"%s\n"
-msgstr[1] ""
-"%u документа\n"
-"\n"
-"%s\n"
-msgstr[2] ""
-"%u документов\n"
-"\n"
-"%s\n"
-msgstr[3] ""
-"%u документов\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "%u document\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgid_plural ""
+#~ "%u documents\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[0] ""
+#~ "%u документ\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[1] ""
+#~ "%u документа\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[2] ""
+#~ "%u документов\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[3] ""
+#~ "%u документов\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-mongo.c:128
-msgid "printed"
-msgstr "напечатано"
+#~ msgid "printed"
+#~ msgstr "напечатано"
 
-#: src/plugins/query/query-mongo.c:130
-msgid "the value at the end"
-msgstr "значение в конце"
+#~ msgid "the value at the end"
+#~ msgstr "значение в конце"
 
-#: src/plugins/query/query-mongo.c:135
-msgid ""
-"No table: printjson () of an array or a cursor makes one, and a line \"// "
-"@table\" one of the value the query ends with.\n"
-msgstr ""
-"Таблицы нет: её делает printjson () массива или курсора, а строка \"// "
-"@table\" - таблицу значения, которым кончается запрос.\n"
+#~ msgid ""
+#~ "No table: printjson () of an array or a cursor makes one, and a line \"// "
+#~ "@table\" one of the value the query ends with.\n"
+#~ msgstr ""
+#~ "Таблицы нет: её делает printjson () массива или курсора, а строка \"// "
+#~ "@table\" - таблицу значения, которым кончается запрос.\n"
 
-#: src/plugins/query/query-mongo.c:159
 #, c-format
-msgid "limit %ld   "
-msgstr "предел %ld   "
+#~ msgid "limit %ld   "
+#~ msgstr "предел %ld   "
 
-#: src/plugins/query/query-mongo.c:161
-msgid "@limit: no find () or aggregate ([...]) to limit   "
-msgstr "@limit: нет find () или aggregate ([...]) для предела   "
+#~ msgid "@limit: no find () or aggregate ([...]) to limit   "
+#~ msgstr "@limit: нет find () или aggregate ([...]) для предела   "
 
-#: src/plugins/query/query-mongo.c:165
 #, c-format
-msgid "killed by signal %d"
-msgstr "убит сигналом %d"
+#~ msgid "killed by signal %d"
+#~ msgstr "убит сигналом %d"
 
-#: src/plugins/query/query-mongo.c:172
-msgid "... mongosh printed more than 8 MB: the rest is cut."
-msgstr "... mongosh вывел больше 8 МБ: остальное обрезано."
+#~ msgid "... mongosh printed more than 8 MB: the rest is cut."
+#~ msgstr "... mongosh вывел больше 8 МБ: остальное обрезано."
 
-#: src/plugins/query/query-mongo.c:228
-msgid "The query was stopped.\n"
-msgstr "Запрос остановлен.\n"
+#~ msgid "The query was stopped.\n"
+#~ msgstr "Запрос остановлен.\n"
 
-#: src/plugins/query/query-mongo.c:231
-msgid "The query ends with a cursor: .toArray() after it makes the table.\n"
-msgstr "Запрос кончается курсором: .toArray() после него сделает таблицу.\n"
+#~ msgid "The query ends with a cursor: .toArray() after it makes the table.\n"
+#~ msgstr "Запрос кончается курсором: .toArray() после него сделает таблицу.\n"
 
-#: src/plugins/query/query-mongo.c:234
-msgid "The query failed: Output tells why.\n"
-msgstr "Запрос не удался: причина во вкладке Вывод.\n"
+#~ msgid "The query failed: Output tells why.\n"
+#~ msgstr "Запрос не удался: причина во вкладке Вывод.\n"
 
-#: src/plugins/query/query-mongo.c:237
-msgid "mongosh printed more than 8 MB: no table of a part of it.\n"
-msgstr "mongosh вывел больше 8 МБ: таблицы из части вывода нет.\n"
+#~ msgid "mongosh printed more than 8 MB: no table of a part of it.\n"
+#~ msgstr "mongosh вывел больше 8 МБ: таблицы из части вывода нет.\n"
 
-#: src/plugins/query/query-mongo.c:240
-msgid ""
-"The query ends with no value for the table: printjson () and print () print, "
-"and have none.\n"
-msgstr ""
-"Запрос не кончается значением для таблицы: printjson () и print () печатают, "
-"но значения не дают.\n"
+#~ msgid ""
+#~ "The query ends with no value for the table: printjson () and print () "
+#~ "print, and have none.\n"
+#~ msgstr ""
+#~ "Запрос не кончается значением для таблицы: printjson () и print () "
+#~ "печатают, но значения не дают.\n"
 
-#: src/plugins/query/query-mongo.c:361 src/plugins/query/query-postgres.c:1185
 #, c-format
-msgid "Database: %s\n"
-msgstr "База данных: %s\n"
+#~ msgid "Database: %s\n"
+#~ msgstr "База данных: %s\n"
 
-#: src/plugins/query/query-mongo.c:366
-msgid "mongosh is not found: MC_MONGOSH or PATH should have it."
-msgstr "mongosh не найден: он должен быть в MC_MONGOSH или PATH."
+#~ msgid "mongosh is not found: MC_MONGOSH or PATH should have it."
+#~ msgstr "mongosh не найден: он должен быть в MC_MONGOSH или PATH."
 
-#: src/plugins/query/query-mongo.c:370 src/plugins/query/query-postgres.c:1203
 #, c-format
-msgid "%s is not found: no completion of the queries (%s)\n"
-msgstr "%s не найден: автодополнения запросов нет (%s)\n"
+#~ msgid "%s is not found: no completion of the queries (%s)\n"
+#~ msgstr "%s не найден: автодополнения запросов нет (%s)\n"
 
-#: src/plugins/query/query-mongo.c:377
 #, c-format
-msgid ""
-"use(\"%s\") is put at the top of the file: the language server\n"
-"completes the collections of that database.\n"
-"\n"
-msgstr ""
-"use(\"%s\") вставлен в начало файла: языковой сервер\n"
-"дополняет коллекции этой базы данных.\n"
-"\n"
+#~ msgid ""
+#~ "use(\"%s\") is put at the top of the file: the language server\n"
+#~ "completes the collections of that database.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "use(\"%s\") вставлен в начало файла: языковой сервер\n"
+#~ "дополняет коллекции этой базы данных.\n"
+#~ "\n"
 
-#: src/plugins/query/query-mongo.c:381
-msgid ""
-"F5 runs the selection, else the part between the lines \"// ---\"\n"
-"around the cursor, else the whole file; Ctrl-F5 the whole file.\n"
-"A line \"// @table\" in the query makes the tab Table of the\n"
-"documents it ends with.\n"
-msgstr ""
-"F5 выполняет выделение, иначе часть между строками \"// ---\"\n"
-"вокруг курсора, иначе весь файл; Ctrl-F5 - весь файл.\n"
-"Строка \"// @table\" в запросе делает вкладку Таблица из\n"
-"документов, которыми он кончается.\n"
+#~ msgid ""
+#~ "F5 runs the selection, else the part between the lines \"// ---\"\n"
+#~ "around the cursor, else the whole file; Ctrl-F5 the whole file.\n"
+#~ "A line \"// @table\" in the query makes the tab Table of the\n"
+#~ "documents it ends with.\n"
+#~ msgstr ""
+#~ "F5 выполняет выделение, иначе часть между строками \"// ---\"\n"
+#~ "вокруг курсора, иначе весь файл; Ctrl-F5 - весь файл.\n"
+#~ "Строка \"// @table\" в запросе делает вкладку Таблица из\n"
+#~ "документов, которыми он кончается.\n"
 
-#: src/plugins/query/query-mongo.c:447
-msgid "The query is longer than mongosh takes (128 KB).\n"
-msgstr "Запрос длиннее, чем принимает mongosh (128 КБ).\n"
+#~ msgid "The query is longer than mongosh takes (128 KB).\n"
+#~ msgstr "Запрос длиннее, чем принимает mongosh (128 КБ).\n"
 
-#: src/plugins/query/query-mongo-schema.c:123
-msgid "Collections"
-msgstr "Коллекции"
+#~ msgid "Collections"
+#~ msgstr "Коллекции"
 
-#: src/plugins/query/query-mongo-schema.c:124
-#: src/plugins/query/query-pg-schema.c:146
-msgid "Views"
-msgstr "Представления"
+#~ msgid "Views"
+#~ msgstr "Представления"
 
-#: src/plugins/query/query-mongo-schema.c:125
-msgid "Time series"
-msgstr "Временные ряды"
+#~ msgid "Time series"
+#~ msgstr "Временные ряды"
 
-#: src/plugins/query/query-mongo-schema.c:137
-msgid "Fields"
-msgstr "Поля"
+#~ msgid "Fields"
+#~ msgstr "Поля"
 
-#: src/plugins/query/query-mongo-schema.c:138
-#: src/plugins/query/query-pg-schema.c:158
-msgid "Indexes"
-msgstr "Индексы"
+#~ msgid "Indexes"
+#~ msgstr "Индексы"
 
-#: src/plugins/query/query-mongo-schema.c:139
-msgid "Validator"
-msgstr "Валидатор"
+#~ msgid "Validator"
+#~ msgstr "Валидатор"
 
-#: src/plugins/query/query-mongo-schema.c:140
-msgid "Pipeline"
-msgstr "Конвейер"
+#~ msgid "Pipeline"
+#~ msgstr "Конвейер"
 
-#: src/plugins/query/query-mongo-schema.c:247
-msgid "mongosh printed nothing of the schema."
-msgstr "mongosh ничего не вывел о схеме."
+#~ msgid "mongosh printed nothing of the schema."
+#~ msgstr "mongosh ничего не вывел о схеме."
 
-#: src/plugins/query/query-mongo-schema.c:358
 #, c-format
-msgid "on %s"
-msgstr "на %s"
+#~ msgid "on %s"
+#~ msgstr "на %s"
 
-#: src/plugins/query/query-mongo-schema.c:555
-msgid "mongosh failed."
-msgstr "mongosh завершился с ошибкой."
+#~ msgid "mongosh failed."
+#~ msgstr "mongosh завершился с ошибкой."
 
-#: src/plugins/query/query-mongo-schema.c:767
-msgid "F4 puts the DDL of a database or a collection."
-msgstr "F4 вставляет DDL базы данных или коллекции."
+#~ msgid "F4 puts the DDL of a database or a collection."
+#~ msgstr "F4 вставляет DDL базы данных или коллекции."
 
-#: src/plugins/query/query-postgres.c:232
-msgid "The query was stopped before it ran.\n"
-msgstr "Запрос остановлен до выполнения.\n"
+#~ msgid "The query was stopped before it ran.\n"
+#~ msgstr "Запрос остановлен до выполнения.\n"
 
-#: src/plugins/query/query-postgres.c:233
-msgid "The query was not run: there is no connection.\n"
-msgstr "Запрос не выполнен: нет подключения.\n"
+#~ msgid "The query was not run: there is no connection.\n"
+#~ msgstr "Запрос не выполнен: нет подключения.\n"
 
-#. the editor and the screen are UTF-8: the text of another encoding would be wrong
-#: src/plugins/query/query-postgres.c:251
 #, c-format
-msgid "The connection is not in UTF8 but in %s: it is closed."
-msgstr "Подключение не в UTF8, а в %s: оно закрыто."
+#~ msgid "The connection is not in UTF8 but in %s: it is closed."
+#~ msgstr "Подключение не в UTF8, а в %s: оно закрыто."
 
-#: src/plugins/query/query-postgres.c:255
-#: src/plugins/query/query-postgres.c:266
-#: src/plugins/query/query-postgres.c:337
-msgid "no connection"
-msgstr "нет подключения"
+#~ msgid "no connection"
+#~ msgstr "нет подключения"
 
-#: src/plugins/query/query-postgres.c:262
 #, c-format
-msgid "No connection to %s: %s"
-msgstr "Нет подключения к %s: %s"
+#~ msgid "No connection to %s: %s"
+#~ msgstr "Нет подключения к %s: %s"
 
-#: src/plugins/query/query-postgres.c:275
 #, c-format
-msgid "Connected to %s, PostgreSQL %d.%d."
-msgstr "Подключено к %s, PostgreSQL %d.%d."
+#~ msgid "Connected to %s, PostgreSQL %d.%d."
+#~ msgstr "Подключено к %s, PostgreSQL %d.%d."
 
-#: src/plugins/query/query-postgres.c:281
-msgid ""
-"It is a new connection: the transaction, the temporary tables, SET, the "
-"prepared\n"
-"statements and the locks of the one before are gone."
-msgstr ""
-"Это новое подключение: транзакция, временные таблицы, SET, подготовленные\n"
-"операторы и блокировки прежнего потеряны."
+#~ msgid ""
+#~ "It is a new connection: the transaction, the temporary tables, SET, the "
+#~ "prepared\n"
+#~ "statements and the locks of the one before are gone."
+#~ msgstr ""
+#~ "Это новое подключение: транзакция, временные таблицы, SET, "
+#~ "подготовленные\n"
+#~ "операторы и блокировки прежнего потеряны."
 
-#: src/plugins/query/query-postgres.c:338
-#: src/plugins/query/query-pg-schema.c:239
-msgid "libpq has no memory for a connection."
-msgstr "У libpq нет памяти для подключения."
+#~ msgid "libpq has no memory for a connection."
+#~ msgstr "У libpq нет памяти для подключения."
 
-#: src/plugins/query/query-postgres.c:472
 #, c-format
-msgid ""
-"incomplete, the command failed after %<PRId64> rows\n"
-"\n"
-"%s\n"
-msgstr ""
-"неполная, команда не удалась после %<PRId64> строк\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "incomplete, the command failed after %<PRId64> rows\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "неполная, команда не удалась после %<PRId64> строк\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-postgres.c:475
 #, c-format
-msgid ""
-"no rows\n"
-"\n"
-"%s\n"
-msgstr ""
-"нет строк\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "no rows\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "нет строк\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-postgres.c:477
 #, c-format
-msgid ""
-"the first %u of %<PRId64> rows\n"
-"\n"
-"%s\n"
-msgstr ""
-"первые %u из %<PRId64> строк\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "the first %u of %<PRId64> rows\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "первые %u из %<PRId64> строк\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-postgres.c:481
 #, c-format
-msgid ""
-"%u row\n"
-"\n"
-"%s\n"
-msgid_plural ""
-"%u rows\n"
-"\n"
-"%s\n"
-msgstr[0] ""
-"%u строка\n"
-"\n"
-"%s\n"
-msgstr[1] ""
-"%u строки\n"
-"\n"
-"%s\n"
-msgstr[2] ""
-"%u строк\n"
-"\n"
-"%s\n"
-msgstr[3] ""
-"%u строк\n"
-"\n"
-"%s\n"
+#~ msgid ""
+#~ "%u row\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgid_plural ""
+#~ "%u rows\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[0] ""
+#~ "%u строка\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[1] ""
+#~ "%u строки\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[2] ""
+#~ "%u строк\n"
+#~ "\n"
+#~ "%s\n"
+#~ msgstr[3] ""
+#~ "%u строк\n"
+#~ "\n"
+#~ "%s\n"
 
-#: src/plugins/query/query-postgres.c:556
 #, c-format
-msgid "at column %ld\n"
-msgstr "в столбце %ld\n"
+#~ msgid "at column %ld\n"
+#~ msgstr "в столбце %ld\n"
 
-#: src/plugins/query/query-postgres.c:558
 #, c-format
-msgid "at line %ld, column %ld\n"
-msgstr "в строке %ld, столбце %ld\n"
+#~ msgid "at line %ld, column %ld\n"
+#~ msgstr "в строке %ld, столбце %ld\n"
 
-#: src/plugins/query/query-postgres.c:620
-msgid "TX FAILED: ROLLBACK required"
-msgstr "СБОЙ ТРАНЗАКЦИИ: нужен ROLLBACK"
+#~ msgid "TX FAILED: ROLLBACK required"
+#~ msgstr "СБОЙ ТРАНЗАКЦИИ: нужен ROLLBACK"
 
-#: src/plugins/query/query-postgres.c:621
-msgid "TX FAILED"
-msgstr "СБОЙ ТРАНЗАКЦИИ"
+#~ msgid "TX FAILED"
+#~ msgstr "СБОЙ ТРАНЗАКЦИИ"
 
-#: src/plugins/query/query-postgres.c:679
-msgid "(nothing to run)\n"
-msgstr "(нечего выполнять)\n"
+#~ msgid "(nothing to run)\n"
+#~ msgstr "(нечего выполнять)\n"
 
-#: src/plugins/query/query-postgres.c:715
-msgid "The query ended before the cancel came.\n"
-msgstr "Запрос завершился раньше, чем пришла отмена.\n"
+#~ msgid "The query ended before the cancel came.\n"
+#~ msgstr "Запрос завершился раньше, чем пришла отмена.\n"
 
-#: src/plugins/query/query-postgres.c:724
-msgid ""
-"The connection is lost: the transaction, the temporary tables, SET, the "
-"prepared\n"
-"statements and the locks of the session are gone. F5 connects again."
-msgstr ""
-"Подключение потеряно: транзакция, временные таблицы, SET, подготовленные\n"
-"операторы и блокировки сеанса потеряны. F5 подключится снова."
+#~ msgid ""
+#~ "The connection is lost: the transaction, the temporary tables, SET, the "
+#~ "prepared\n"
+#~ "statements and the locks of the session are gone. F5 connects again."
+#~ msgstr ""
+#~ "Подключение потеряно: транзакция, временные таблицы, SET, подготовленные\n"
+#~ "операторы и блокировки сеанса потеряны. F5 подключится снова."
 
-#: src/plugins/query/query-postgres.c:737
-msgid "failed"
-msgstr "ошибка"
+#~ msgid "failed"
+#~ msgstr "ошибка"
 
-#: src/plugins/query/query-postgres.c:739
-msgid "done"
-msgstr "готово"
+#~ msgid "done"
+#~ msgstr "готово"
 
-#: src/plugins/query/query-postgres.c:745
-msgid "... more than 8 MB: the rest is cut."
-msgstr "... больше 8 МБ: остальное обрезано."
+#~ msgid "... more than 8 MB: the rest is cut."
+#~ msgstr "... больше 8 МБ: остальное обрезано."
 
-#: src/plugins/query/query-postgres.c:754
-msgid ""
-"No rows: a command that gives some, SELECT, ... RETURNING, makes a table.\n"
-msgstr ""
-"Строк нет: таблицу делает команда, которая их возвращает, SELECT, ... "
-"RETURNING.\n"
+#~ msgid ""
+#~ "No rows: a command that gives some, SELECT, ... RETURNING, makes a "
+#~ "table.\n"
+#~ msgstr ""
+#~ "Строк нет: таблицу делает команда, которая их возвращает, SELECT, ... "
+#~ "RETURNING.\n"
 
-#: src/plugins/query/query-postgres.c:796
-msgid "COPY FROM STDIN: bluerig -Q has nothing to send"
-msgstr "COPY FROM STDIN: bluerig -Q нечего отправить"
+#~ msgid "COPY FROM STDIN: bluerig -Q has nothing to send"
+#~ msgstr "COPY FROM STDIN: bluerig -Q нечего отправить"
 
-#: src/plugins/query/query-postgres.c:845
-msgid ""
-"It is a new connection: the transaction, the temporary tables, SET, the "
-"prepared\n"
-"statements and the locks of the one before are gone.\n"
-msgstr ""
-"Это новое подключение: транзакция, временные таблицы, SET, подготовленные\n"
-"операторы и блокировки прежнего потеряны.\n"
+#~ msgid ""
+#~ "It is a new connection: the transaction, the temporary tables, SET, the "
+#~ "prepared\n"
+#~ "statements and the locks of the one before are gone.\n"
+#~ msgstr ""
+#~ "Это новое подключение: транзакция, временные таблицы, SET, "
+#~ "подготовленные\n"
+#~ "операторы и блокировки прежнего потеряны.\n"
 
-#: src/plugins/query/query-postgres.c:884
 #, c-format
-msgid "The cancel could not be sent: %s"
-msgstr "Не удалось отправить отмену: %s"
+#~ msgid "The cancel could not be sent: %s"
+#~ msgstr "Не удалось отправить отмену: %s"
 
-#: src/plugins/query/query-postgres.c:983
-msgid "no memory"
-msgstr "нет памяти"
+#~ msgid "no memory"
+#~ msgstr "нет памяти"
 
-#: src/plugins/query/query-postgres.c:1013
-msgid "no cancel for this connection"
-msgstr "у этого подключения нет отмены"
+#~ msgid "no cancel for this connection"
+#~ msgstr "у этого подключения нет отмены"
 
-#: src/plugins/query/query-postgres.c:1187
-msgid "The query of the rows of the relation is put in the file.\n"
-msgstr "Запрос строк отношения вставлен в файл.\n"
+#~ msgid "The query of the rows of the relation is put in the file.\n"
+#~ msgstr "Запрос строк отношения вставлен в файл.\n"
 
-#: src/plugins/query/query-postgres.c:1195
-msgid ", rows one by one"
-msgstr ", строки по одной"
+#~ msgid ", rows one by one"
+#~ msgstr ", строки по одной"
 
-#: src/plugins/query/query-postgres.c:1209
-msgid ""
-"F5 runs the selection, else the whole file; Ctrl-F5 the whole file.\n"
-"\n"
-msgstr ""
-"F5 выполняет выделение, иначе весь файл; Ctrl-F5 - весь файл.\n"
-"\n"
+#~ msgid ""
+#~ "F5 runs the selection, else the whole file; Ctrl-F5 the whole file.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "F5 выполняет выделение, иначе весь файл; Ctrl-F5 - весь файл.\n"
+#~ "\n"
 
-#: src/plugins/query/query-postgres.c:1212
-#: src/plugins/query/query-postgres.c:1248
-#: src/plugins/query/query-postgres.c:1254
-msgid "Connecting...\n"
-msgstr "Подключение...\n"
+#~ msgid "Connecting...\n"
+#~ msgstr "Подключение...\n"
 
-#: src/plugins/query/query-postgres.c:1239
-msgid "no libpq"
-msgstr "нет libpq"
+#~ msgid "no libpq"
+#~ msgstr "нет libpq"
 
-#: src/plugins/query/query-postgres.c:1264
-msgid "Running... once the cancel before is sent.\n"
-msgstr "Выполнится... как только уйдёт прежняя отмена.\n"
+#~ msgid "Running... once the cancel before is sent.\n"
+#~ msgstr "Выполнится... как только уйдёт прежняя отмена.\n"
 
-#: src/plugins/query/query-postgres.c:1284
-msgid "The connection was stopped: F5 connects again."
-msgstr "Подключение остановлено: F5 подключится снова."
+#~ msgid "The connection was stopped: F5 connects again."
+#~ msgstr "Подключение остановлено: F5 подключится снова."
 
-#: src/plugins/query/query-postgres.c:1290
-msgid "The query was stopped before it ran."
-msgstr "Запрос остановлен до выполнения."
+#~ msgid "The query was stopped before it ran."
+#~ msgstr "Запрос остановлен до выполнения."
 
-#: src/plugins/query/query-postgres.c:1295
-msgid "Running... the cancel is sent.\n"
-msgstr "Выполняется... отмена отправлена.\n"
+#~ msgid "Running... the cancel is sent.\n"
+#~ msgstr "Выполняется... отмена отправлена.\n"
 
-#: src/plugins/query/query-pg-schema.c:146
-msgid "Tables"
-msgstr "Таблицы"
+#~ msgid "Tables"
+#~ msgstr "Таблицы"
 
-#: src/plugins/query/query-pg-schema.c:146
-msgid "Materialized views"
-msgstr "Материализованные представления"
+#~ msgid "Materialized views"
+#~ msgstr "Материализованные представления"
 
-#: src/plugins/query/query-pg-schema.c:147
-msgid "Foreign tables"
-msgstr "Внешние таблицы"
+#~ msgid "Foreign tables"
+#~ msgstr "Внешние таблицы"
 
-#: src/plugins/query/query-pg-schema.c:147
-msgid "Sequences"
-msgstr "Последовательности"
+#~ msgid "Sequences"
+#~ msgstr "Последовательности"
 
-#: src/plugins/query/query-pg-schema.c:147
-msgid "Functions"
-msgstr "Функции"
+#~ msgid "Functions"
+#~ msgstr "Функции"
 
-#: src/plugins/query/query-pg-schema.c:157
-msgid "Columns"
-msgstr "Столбцы"
+#~ msgid "Columns"
+#~ msgstr "Столбцы"
 
-#: src/plugins/query/query-pg-schema.c:157
-msgid "Keys"
-msgstr "Ключи"
+#~ msgid "Keys"
+#~ msgstr "Ключи"
 
-#: src/plugins/query/query-pg-schema.c:157
-msgid "Foreign keys"
-msgstr "Внешние ключи"
+#~ msgid "Foreign keys"
+#~ msgstr "Внешние ключи"
 
-#: src/plugins/query/query-pg-schema.c:158
-msgid "References"
-msgstr "Ссылки"
+#~ msgid "References"
+#~ msgstr "Ссылки"
 
-#: src/plugins/query/query-pg-schema.c:158
-msgid "Triggers"
-msgstr "Триггеры"
+#~ msgid "Triggers"
+#~ msgstr "Триггеры"
 
-#: src/plugins/query/query-pg-schema.c:196
 #, c-format
-msgid "No connection: %s"
-msgstr "Нет подключения: %s"
+#~ msgid "No connection: %s"
+#~ msgstr "Нет подключения: %s"
 
-#: src/plugins/query/query-pg-schema.c:785
-msgid "Partitions"
-msgstr "Секции"
+#~ msgid "Partitions"
+#~ msgstr "Секции"
 
-#: src/plugins/query/query-pg-schema.c:840
-msgid "[partitioned]"
-msgstr "[секционирована]"
+#~ msgid "[partitioned]"
+#~ msgstr "[секционирована]"
 
-#: src/plugins/query/query-pg-schema.c:875
-msgid "procedure"
-msgstr "процедура"
+#~ msgid "procedure"
+#~ msgstr "процедура"
 
-#: src/plugins/query/query-pg-schema.c:876
-msgid "aggregate"
-msgstr "агрегат"
+#~ msgid "aggregate"
+#~ msgstr "агрегат"
 
-#: src/plugins/query/query-pg-schema.c:1240
-msgid "It is no more: F4 has no DDL of it."
-msgstr "Его больше нет: у F4 нет его DDL."
+#~ msgid "It is no more: F4 has no DDL of it."
+#~ msgstr "Его больше нет: у F4 нет его DDL."
 
-#: src/plugins/query/query-pg-schema.c:1472
-msgid "F4 puts the DDL of a schema, a relation or a function."
-msgstr "F4 вставляет DDL схемы, отношения или функции."
+#~ msgid "F4 puts the DDL of a schema, a relation or a function."
+#~ msgstr "F4 вставляет DDL схемы, отношения или функции."
 
-#: src/plugins/query/query-pq.c:97
 #, c-format
-msgid "%s is not found: libpq5 should be installed"
-msgstr "%s не найдена: нужно установить libpq5"
+#~ msgid "%s is not found: libpq5 should be installed"
+#~ msgstr "%s не найдена: нужно установить libpq5"
 
-#: src/plugins/query/query-pq.c:124
 #, c-format
-msgid "%s lacks a function of libpq: %s"
-msgstr "В %s нет функции libpq: %s"
+#~ msgid "%s lacks a function of libpq: %s"
+#~ msgstr "В %s нет функции libpq: %s"
 
-#: src/plugins/query/query-tree.c:190
-msgid "DDL"
-msgstr "DDL"
+#~ msgid "DDL"
+#~ msgstr "DDL"
 
-#: src/plugins/query/query-tree.c:191
-msgid "Rows"
-msgstr "Строки"
+#~ msgid "Rows"
+#~ msgstr "Строки"
 
-#: src/plugins/query/query-tree.c:200
-msgid "Reconn"
-msgstr "Заново"
+#~ msgid "Reconn"
+#~ msgstr "Заново"
 
-#: src/plugins/query/query-tree.c:254
-msgid "The file of queries F3 was pressed in is no more: the query is here."
-msgstr "Файла запросов, в котором нажата F3, больше нет: запрос здесь."
+#~ msgid "The file of queries F3 was pressed in is no more: the query is here."
+#~ msgstr "Файла запросов, в котором нажата F3, больше нет: запрос здесь."
 
-#: src/plugins/query/query-tree.c:256
-msgid "The file of queries is being changed: the query is here."
-msgstr "Файл запросов сейчас меняется: запрос здесь."
+#~ msgid "The file of queries is being changed: the query is here."
+#~ msgstr "Файл запросов сейчас меняется: запрос здесь."
 
-#: src/plugins/query/query-tree.c:517 src/plugins/query/query-tree.c:743
-msgid "The DDL of F4 could not be read."
-msgstr "Не удалось прочитать DDL для F4."
+#~ msgid "The DDL of F4 could not be read."
+#~ msgstr "Не удалось прочитать DDL для F4."
 
-#: src/plugins/query/query-tree.c:546
-msgid "Schema"
-msgstr "Схема"
+#~ msgid "Schema"
+#~ msgstr "Схема"
 
-#: src/plugins/query/query-tree.c:560
-msgid "Reading..."
-msgstr "Чтение..."
+#~ msgid "Reading..."
+#~ msgstr "Чтение..."
 
-#: src/plugins/query/query-tree.c:629
-msgid "A query is running: its rows come once it ends."
-msgstr "Выполняется запрос: строки придут, когда он кончится."
+#~ msgid "A query is running: its rows come once it ends."
+#~ msgstr "Выполняется запрос: строки придут, когда он кончится."
 
-#: src/plugins/query/query-tree.c:658
-msgid "The query of F3 of before is put no more: that of this one is."
-msgstr "Запрос прежней F3 больше не вставляется: вставляется запрос этой."
+#~ msgid "The query of F3 of before is put no more: that of this one is."
+#~ msgstr "Запрос прежней F3 больше не вставляется: вставляется запрос этой."
 
-#: src/plugins/query/query-tree.c:697
-msgid "The columns could not be read: F3 puts no query."
-msgstr "Не удалось прочитать столбцы: F3 не вставляет запрос."
+#~ msgid "The columns could not be read: F3 puts no query."
+#~ msgstr "Не удалось прочитать столбцы: F3 не вставляет запрос."
 
-#: src/plugins/query/query-tree.c:721
-msgid "The DDL of F4 of before is put no more: that of this one is."
-msgstr "DDL прежней F4 больше не вставляется: вставляется DDL этой."
+#~ msgid "The DDL of F4 of before is put no more: that of this one is."
+#~ msgstr "DDL прежней F4 больше не вставляется: вставляется DDL этой."
 
-#: src/plugins/query/query-tree.c:745
-msgid "The file of queries F4 was pressed in is no more: the DDL is here."
-msgstr "Файла запросов, в котором нажата F4, больше нет: DDL здесь."
+#~ msgid "The file of queries F4 was pressed in is no more: the DDL is here."
+#~ msgstr "Файла запросов, в котором нажата F4, больше нет: DDL здесь."
 
-#: src/plugins/query/query-tree.c:748
-msgid "The file of queries is being changed: the DDL is here."
-msgstr "Файл запросов сейчас меняется: DDL здесь."
+#~ msgid "The file of queries is being changed: the DDL is here."
+#~ msgstr "Файл запросов сейчас меняется: DDL здесь."
 
-#: src/plugins/query/query.c
-msgid "Write all the rows of the query, or of the relation of Schema, to a file: CSV, JSON, SQL"
-msgstr "Записать все строки запроса или отношения Схемы в файл: CSV, JSON, SQL"
+#~ msgid ""
+#~ "Write all the rows of the query, or of the relation of Schema, to a file: "
+#~ "CSV, JSON, SQL"
+#~ msgstr ""
+#~ "Записать все строки запроса или отношения Схемы в файл: CSV, JSON, SQL"
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "Running, the rows written to %s...\n"
-msgstr "Выполняется, строки пишутся в %s...\n"
+#~ msgid "Running, the rows written to %s...\n"
+#~ msgstr "Выполняется, строки пишутся в %s...\n"
 
-#: src/plugins/query/query.c
-msgid "&Markdown"
-msgstr "&Markdown"
+#~ msgid "&Markdown"
+#~ msgstr "&Markdown"
 
-#: src/plugins/query/query.c
-msgid "File:"
-msgstr "Файл:"
+#~ msgid "File:"
+#~ msgstr "Файл:"
 
-#: src/plugins/query/query.c
-msgid "Rows a statement:"
-msgstr "Строк в операторе:"
+#~ msgid "Rows a statement:"
+#~ msgstr "Строк в операторе:"
 
-#: src/plugins/query/query.c
-msgid "Export the rows of the query"
-msgstr "Экспорт строк запроса"
+#~ msgid "Export the rows of the query"
+#~ msgstr "Экспорт строк запроса"
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "The file %s is there. Write over it?"
-msgstr "Файл %s уже есть. Перезаписать его?"
+#~ msgid "The file %s is there. Write over it?"
+#~ msgstr "Файл %s уже есть. Перезаписать его?"
 
-#: src/plugins/query/query.c
-msgid "Export"
-msgstr "Экспорт"
+#~ msgid "Export"
+#~ msgstr "Экспорт"
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "%<PRId64> row written to %s, %s."
-msgid_plural "%<PRId64> rows written to %s, %s."
-msgstr[0] "%<PRId64> строка записана в %s, %s."
-msgstr[1] "%<PRId64> строки записаны в %s, %s."
-msgstr[2] "%<PRId64> строк записано в %s, %s."
-msgstr[3] "%<PRId64> строк записано в %s, %s."
+#~ msgid "%<PRId64> row written to %s, %s."
+#~ msgid_plural "%<PRId64> rows written to %s, %s."
+#~ msgstr[0] "%<PRId64> строка записана в %s, %s."
+#~ msgstr[1] "%<PRId64> строки записаны в %s, %s."
+#~ msgstr[2] "%<PRId64> строк записано в %s, %s."
+#~ msgstr[3] "%<PRId64> строк записано в %s, %s."
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "Keys the first %d documents have not, no columns of the file, are left out: %s\n"
-msgstr "Ключи, которых нет в первых %d документах, не стали столбцами файла и пропущены: %s\n"
+#~ msgid ""
+#~ "Keys the first %d documents have not, no columns of the file, are left "
+#~ "out: %s\n"
+#~ msgstr ""
+#~ "Ключи, которых нет в первых %d документах, не стали столбцами файла и "
+#~ "пропущены: %s\n"
 
-#: src/plugins/query/query.c
-msgid "No file is written"
-msgstr "Файл не записан"
+#~ msgid "No file is written"
+#~ msgstr "Файл не записан"
 
-#: src/plugins/query/query.c
-msgid "the query was stopped"
-msgstr "запрос остановлен"
+#~ msgid "the query was stopped"
+#~ msgstr "запрос остановлен"
 
-#: src/plugins/query/query.c
-msgid "the query failed"
-msgstr "запрос не удался"
+#~ msgid "the query failed"
+#~ msgstr "запрос не удался"
 
-#: src/plugins/query/query.c
-msgid "The rows of the queries of this database are not exported."
-msgstr "Строки запросов этой базы данных не экспортируются."
+#~ msgid "The rows of the queries of this database are not exported."
+#~ msgstr "Строки запросов этой базы данных не экспортируются."
 
-#: src/plugins/query/query-mongo.c
 #, c-format
-msgid "mongosh printed no JSON: %s"
-msgstr "mongosh напечатал не JSON: %s"
+#~ msgid "mongosh printed no JSON: %s"
+#~ msgstr "mongosh напечатал не JSON: %s"
 
-#: src/plugins/query/query-mongo.c
-msgid ""
-"QueryExport writes the documents of a query that ends with find (), aggregate ()\n"
-"or toArray (): this one ends with none.\n"
-msgstr ""
-"QueryExport записывает документы запроса, который кончается find (), aggregate ()\n"
-"или toArray (): этот не кончается ни одним из них.\n"
+#~ msgid ""
+#~ "QueryExport writes the documents of a query that ends with find (), "
+#~ "aggregate ()\n"
+#~ "or toArray (): this one ends with none.\n"
+#~ msgstr ""
+#~ "QueryExport записывает документы запроса, который кончается find (), "
+#~ "aggregate ()\n"
+#~ "или toArray (): этот не кончается ни одним из них.\n"
 
-#: src/plugins/query/query-postgres.c
-msgid "the query gave no rows: a command that gives some, SELECT, ... RETURNING, is exported"
-msgstr "запрос не дал строк: экспортируется команда, которая их даёт, SELECT, ... RETURNING"
+#~ msgid ""
+#~ "the query gave no rows: a command that gives some, SELECT, ... RETURNING, "
+#~ "is exported"
+#~ msgstr ""
+#~ "запрос не дал строк: экспортируется команда, которая их даёт, SELECT, ... "
+#~ "RETURNING"
 
-#: src/plugins/query/query.c
-msgid "C&SV"
-msgstr "C&SV"
+#~ msgid "C&SV"
+#~ msgstr "C&SV"
 
-#: src/plugins/query/query.c
-msgid "S&QL"
-msgstr "S&QL"
+#~ msgid "S&QL"
+#~ msgstr "S&QL"
 
-#: src/plugins/query/query.c
-msgid "The names of the columns on the first &line"
-msgstr "Имена столбцов в первой &строке"
+#~ msgid "The names of the columns on the first &line"
+#~ msgstr "Имена столбцов в первой &строке"
 
-#: src/plugins/query/query.c
-msgid "Every value in quot&es, else those that need them"
-msgstr "Каждое значение в &кавычках, иначе только где нужно"
+#~ msgid "Every value in quot&es, else those that need them"
+#~ msgstr "Каждое значение в &кавычках, иначе только где нужно"
 
-#: src/plugins/query/query.c
-msgid "&JSON"
-msgstr "&JSON"
+#~ msgid "&JSON"
+#~ msgstr "&JSON"
 
-#: src/plugins/query/query.c
-msgid "&NDJSON"
-msgstr "&NDJSON"
+#~ msgid "&NDJSON"
+#~ msgstr "&NDJSON"
 
-#: src/plugins/query/query.c
-msgid "Delimiter:"
-msgstr "Разделитель:"
+#~ msgid "Delimiter:"
+#~ msgstr "Разделитель:"
 
-#: src/plugins/query/query.c
-msgid "NULL as the word N&ULL, else nothing"
-msgstr "NULL как слово N&ULL, иначе пусто"
+#~ msgid "NULL as the word N&ULL, else nothing"
+#~ msgstr "NULL как слово N&ULL, иначе пусто"
 
-#: src/plugins/query/query.c
-msgid "An array of objects, a row an object."
-msgstr "Массив объектов, строка - объект."
+#~ msgid "An array of objects, a row an object."
+#~ msgstr "Массив объектов, строка - объект."
 
-#: src/plugins/query/query.c
-msgid "&Indented: a key a line"
-msgstr "С &отступами: ключ на строку"
+#~ msgid "&Indented: a key a line"
+#~ msgstr "С &отступами: ключ на строку"
 
-#: src/plugins/query/query.c
-msgid "Table of the INSERT statements:"
-msgstr "Таблица операторов INSERT:"
+#~ msgid "Table of the INSERT statements:"
+#~ msgstr "Таблица операторов INSERT:"
 
-#: src/plugins/query/query.c
-msgid "CREATE &TABLE first, of the types of the columns"
-msgstr "Сначала CREATE &TABLE, по типам столбцов"
+#~ msgid "CREATE &TABLE first, of the types of the columns"
+#~ msgstr "Сначала CREATE &TABLE, по типам столбцов"
 
-#: src/plugins/query/query.c
-msgid "A table, each cell on one line."
-msgstr "Таблица, каждая ячейка в одну строку."
+#~ msgid "A table, each cell on one line."
+#~ msgstr "Таблица, каждая ячейка в одну строку."
 
-#: src/plugins/query/query.c
-msgid ""
-"An object a line, for jq, mongoimport and the like:\n"
-"nothing to choose."
-msgstr ""
-"Объект на строку, для jq, mongoimport и им подобных:\n"
-"настраивать нечего."
+#~ msgid ""
+#~ "An object a line, for jq, mongoimport and the like:\n"
+#~ "nothing to choose."
+#~ msgstr ""
+#~ "Объект на строку, для jq, mongoimport и им подобных:\n"
+#~ "настраивать нечего."
 
-#: src/plugins/query/query.c
-msgid "The delimiter is one character, not a quote, or \\t for a tab."
-msgstr "Разделитель - один символ, не кавычка, или \\t для табуляции."
+#~ msgid "The delimiter is one character, not a quote, or \\t for a tab."
+#~ msgstr "Разделитель - один символ, не кавычка, или \\t для табуляции."
 
-#: src/plugins/query/query.c
-msgid "Options"
-msgstr "Настройки"
+#~ msgid "Options"
+#~ msgstr "Настройки"
 
-#: src/plugins/query/query.c
-msgid "&Run"
-msgstr "&Выполнить"
+#~ msgid "&Run"
+#~ msgstr "&Выполнить"
 
-#: src/plugins/query/query.c
-msgid "Run the whole &file"
-msgstr "Выполнить весь &файл"
+#~ msgid "Run the whole &file"
+#~ msgstr "Выполнить весь &файл"
 
-#: src/plugins/query/query.c
-msgid "&Export the rows..."
-msgstr "&Экспорт строк..."
+#~ msgid "&Export the rows..."
+#~ msgstr "&Экспорт строк..."
 
-#: src/plugins/query/query.c
-msgid "Write the query by &AI"
-msgstr "Написать запрос с &ИИ"
+#~ msgid "Write the query by &AI"
+#~ msgstr "Написать запрос с &ИИ"
 
-#: src/plugins/query/query.c
-msgid "Roll &back"
-msgstr "Отк&атить"
+#~ msgid "Roll &back"
+#~ msgstr "Отк&атить"
 
-#: src/plugins/query/query.c
-msgid "S&chema"
-msgstr "С&хема"
+#~ msgid "S&chema"
+#~ msgstr "С&хема"
 
-#: src/plugins/query/query.c
-msgid "Read the schema a&gain"
-msgstr "Прочитать схему &заново"
+#~ msgid "Read the schema a&gain"
+#~ msgstr "Прочитать схему &заново"
 
-#: src/plugins/query/query.c
-msgid "The query has nothing but comments."
-msgstr "В запросе нет ничего, кроме комментариев."
+#~ msgid "The query has nothing but comments."
+#~ msgstr "В запросе нет ничего, кроме комментариев."
 
-#: src/plugins/query/query.c
-msgid "Only a query that ends with find () or aggregate ()\nis explained."
-msgstr "Объясняется только запрос, который кончается\nfind () или aggregate ()."
+#~ msgid ""
+#~ "Only a query that ends with find () or aggregate ()\n"
+#~ "is explained."
+#~ msgstr ""
+#~ "Объясняется только запрос, который кончается\n"
+#~ "find () или aggregate ()."
 
-#: src/plugins/query/query.c
-msgid "Only the rows of a SELECT, VALUES, TABLE or WITH\nare counted."
-msgstr "Считаются только строки SELECT, VALUES, TABLE\nили WITH."
+#~ msgid ""
+#~ "Only the rows of a SELECT, VALUES, TABLE or WITH\n"
+#~ "are counted."
+#~ msgstr ""
+#~ "Считаются только строки SELECT, VALUES, TABLE\n"
+#~ "или WITH."
 
-#: src/plugins/query/query.c
-msgid "The command failed."
-msgstr "Команда завершилась с ошибкой."
+#~ msgid "The command failed."
+#~ msgstr "Команда завершилась с ошибкой."
 
-#: src/plugins/query/query.c
-msgid "Select the text first."
-msgstr "Сначала выделите текст."
+#~ msgid "Select the text first."
+#~ msgstr "Сначала выделите текст."
 
-#: src/plugins/query/query.c
-msgid "EXPLAIN the query, ANALYZE a SELECT"
-msgstr "EXPLAIN запроса, ANALYZE для SELECT"
+#~ msgid "EXPLAIN the query, ANALYZE a SELECT"
+#~ msgstr "EXPLAIN запроса, ANALYZE для SELECT"
 
-#: src/plugins/query/query.c
-msgid "Explain the query, .explain (\"executionStats\")"
-msgstr "План запроса, .explain (\"executionStats\")"
+#~ msgid "Explain the query, .explain (\"executionStats\")"
+#~ msgstr "План запроса, .explain (\"executionStats\")"
 
-#: src/plugins/query/query.c
-msgid "Count the rows of the query"
-msgstr "Посчитать строки запроса"
+#~ msgid "Count the rows of the query"
+#~ msgstr "Посчитать строки запроса"
 
-#: src/plugins/query/query.c
-msgid "Put // @table before the line: a table of the result"
-msgstr "Вставить // @table перед строкой: результат таблицей"
+#~ msgid "Put // @table before the line: a table of the result"
+#~ msgstr "Вставить // @table перед строкой: результат таблицей"
 
-#: src/plugins/query/query.c
-msgid "Put // @limit 20 before the line: 20 documents"
-msgstr "Вставить // @limit 20 перед строкой: 20 документов"
+#~ msgid "Put // @limit 20 before the line: 20 documents"
+#~ msgstr "Вставить // @limit 20 перед строкой: 20 документов"
 
-#: src/plugins/query/query.c
-msgid "The selection in capitals"
-msgstr "Выделенное заглавными"
+#~ msgid "The selection in capitals"
+#~ msgstr "Выделенное заглавными"
 
-#: src/plugins/query/query.c
-msgid "The selection in small letters"
-msgstr "Выделенное строчными"
+#~ msgid "The selection in small letters"
+#~ msgstr "Выделенное строчными"
 
-#: src/plugins/query/query.c
-msgid "Edit this menu"
-msgstr "Править это меню"
+#~ msgid "Edit this menu"
+#~ msgstr "Править это меню"
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "No action %s in the menu."
-msgstr "В меню нет действия %s."
+#~ msgid "No action %s in the menu."
+#~ msgstr "В меню нет действия %s."
 
-#: src/plugins/query/query.c
-msgid "The rows of one query alone are counted:\nselect it, or part the queries by lines \"// ---\"."
-msgstr "Считаются строки только одного запроса:\nвыделите его или разделите запросы строками \"// ---\"."
+#~ msgid ""
+#~ "The rows of one query alone are counted:\n"
+#~ "select it, or part the queries by lines \"// ---\"."
+#~ msgstr ""
+#~ "Считаются строки только одного запроса:\n"
+#~ "выделите его или разделите запросы строками \"// ---\"."
 
-#: src/plugins/query/query.c
-msgid "A column selection is not taken: select whole lines."
-msgstr "Выделение колонкой не годится: выделите строки целиком."
+#~ msgid "A column selection is not taken: select whole lines."
+#~ msgstr "Выделение колонкой не годится: выделите строки целиком."
 
-#: src/plugins/query/query.c
-msgid "The command printed nothing: the query stays as it is."
-msgstr "Команда ничего не напечатала: запрос остаётся как есть."
+#~ msgid "The command printed nothing: the query stays as it is."
+#~ msgstr "Команда ничего не напечатала: запрос остаётся как есть."
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "No output \"%s\" in the menu: insert, replace, show or none."
-msgstr "В меню нет вывода \"%s\": insert, replace, show или none."
+#~ msgid "No output \"%s\" in the menu: insert, replace, show or none."
+#~ msgstr "В меню нет вывода \"%s\": insert, replace, show или none."
 
-#: src/plugins/query/query.c
 #, c-format
-msgid "The menu %s of the queries is not there:\nit is in the queries of bluerig, or in\n~/.config/bluerig/query."
-msgstr "Меню запросов %s не найдено:\nоно лежит в запросах bluerig или в\n~/.config/bluerig/query."
+#~ msgid ""
+#~ "The menu %s of the queries is not there:\n"
+#~ "it is in the queries of bluerig, or in\n"
+#~ "~/.config/bluerig/query."
+#~ msgstr ""
+#~ "Меню запросов %s не найдено:\n"
+#~ "оно лежит в запросах bluerig или в\n"
+#~ "~/.config/bluerig/query."

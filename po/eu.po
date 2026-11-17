@@ -24,561 +24,717 @@ msgstr ""
 "X-Generator: Weblate 2026.9.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr ""
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "Abisua: kode-orrialde zerrenda ezin zamatu"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7-biteko ASCII"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "Ezin itzuli %s(e)tik %s(e)ra"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "Gertaera sistema dagoeneko hasieratuta"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "Gertaera sistema hasieratzeak huts egin du"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "Gertaera sistema ez dago hasieratuta"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "Egiaztatu sarrera datuak! Parametroetako batzuk NULUAK dira!"
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "Ezin '%s' taldea gertaeratarako sortu!"
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "Ezin '%s' gertaera sortu!"
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr ""
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr ""
 
+#: lib/keybind.c:72
 #, fuzzy
 msgid "Half page down"
 msgstr "Orrian behera"
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr ""
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr ""
 
+#: lib/keybind.c:75
 #, fuzzy
 msgid "Top of screen"
 msgstr "&Txandakatu pantaila betea"
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr ""
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr ""
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr ""
 
+#: lib/keybind.c:79
 #, fuzzy
 msgid "Copy file(s)"
 msgstr "Fitxategiak al&deratu"
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr ""
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Ezabatu"
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr ""
 
+#: lib/keybind.c:87
 #, fuzzy
 msgid "User-defined menu"
 msgstr "&Erabiltzaileak definitutakoa:"
 
+#: lib/keybind.c:88
 #, fuzzy
 msgid "Edit user menu"
 msgstr "Erabiltzailearen menua"
 
+#: lib/keybind.c:90
 #, fuzzy
 msgid "Search next"
 msgstr "Bilaketa eginda"
 
+#: lib/keybind.c:92
 #, fuzzy
 msgid "Replace next"
 msgstr "Ordezkatu"
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr ""
 
+#: lib/keybind.c:94
 #, fuzzy
 msgid "Terminal"
 msgstr "Terminalaren aukerak"
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Editatu fitxategia"
 
+#: lib/keybind.c:96
 #, fuzzy
 msgid "Edit new file"
 msgstr "Editatu fitxategia"
 
+#: lib/keybind.c:97
 #, fuzzy
 msgid "Select charset"
 msgstr "&Karaktere-multzo guztiak"
 
+#: lib/keybind.c:98
 #, fuzzy
 msgid "Command history"
 msgstr "Ko&mandoen historia"
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr ""
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr ""
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr ""
 
+#: lib/keybind.c:103
 #, fuzzy
 msgid "Save as..."
 msgstr "Gorde &honela..."
 
+#: lib/keybind.c:104
 #, fuzzy
 msgid "Go to line"
 msgstr "Joan lerrora"
 
+#: lib/keybind.c:105
 #, fuzzy
 msgid "Refresh screen"
 msgstr "&Freskatu pantaila"
 
+#: lib/keybind.c:106
 #, fuzzy
 msgid "Suspend to shell"
 msgstr "Ezarpena %s-ra gordeta"
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr ""
 
+#: lib/keybind.c:108
 #, fuzzy
 msgid "Next screen"
 msgstr "&Freskatu pantaila"
 
+#: lib/keybind.c:109
 #, fuzzy
 msgid "Previous screen"
 msgstr "&Aurrekoa"
 
+#: lib/keybind.c:110
 #, fuzzy
 msgid "Next file"
 msgstr "Txertatu fitxategia"
 
+#: lib/keybind.c:111
 #, fuzzy
 msgid "Previous file"
 msgstr "&Aurrekoa"
 
+#: lib/keybind.c:112
 #, fuzzy
 msgid "Delete to line start"
 msgstr "&Txandakatu lerro egoera"
 
+#: lib/keybind.c:113
 #, fuzzy
 msgid "Delete to line end"
 msgstr "Ezabatu, zenbakizko teklatuan"
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr ""
 
+#: lib/keybind.c:115
 #, fuzzy
 msgid "Delete to word end"
 msgstr "Ezabatu, zenbakizko teklatuan"
 
+#: lib/keybind.c:116
 #, fuzzy
 msgid "Cut to clipboard"
 msgstr "&Ebaki klip-fitxategira"
 
+#: lib/keybind.c:117
 #, fuzzy
 msgid "Copy to clipboard"
 msgstr "Ko&piatu klip-fitxategira"
 
+#: lib/keybind.c:118
 #, fuzzy
 msgid "Paste from clipboard"
 msgstr "I&tsatsi klip-fitxategitik"
 
+#: lib/keybind.c:119
 #, fuzzy
 msgid "Toggle selection"
 msgstr "&Hautapenean"
 
+#: lib/keybind.c:120
 #, fuzzy
 msgid "Select left"
 msgstr "Hautatu"
 
+#: lib/keybind.c:121
 #, fuzzy
 msgid "Select right"
 msgstr "Hautatu"
 
+#: lib/keybind.c:122
 #, fuzzy
 msgid "Select up"
 msgstr "Hautatu ta&ldea"
 
+#: lib/keybind.c:123
 #, fuzzy
 msgid "Select down"
 msgstr "Hautatu"
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr ""
 
+#: lib/keybind.c:125
 #, fuzzy
 msgid "Select to word end"
 msgstr "Hautatu konparatzeko metodoa:"
 
+#: lib/keybind.c:126
 #, fuzzy
 msgid "Select to line start"
 msgstr "&Txandakatu lerro egoera"
 
+#: lib/keybind.c:127
 #, fuzzy
 msgid "Select to line end"
 msgstr "Hautatu hizkuntza"
 
+#: lib/keybind.c:128
 #, fuzzy
 msgid "Sort order..."
 msgstr "Sailkatzeko ordena"
 
+#: lib/keybind.c:129
 #, fuzzy
 msgid "General options"
 msgstr "Panelek aukerak"
 
+#: lib/keybind.c:130
 #, fuzzy
 msgid "Learn terminal keys"
 msgstr "Teklak ikasi"
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr ""
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr ""
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr ""
 
+#: lib/keybind.c:134
 #, fuzzy
 msgid "Set bookmark"
 msgstr "H&urrengo laster-marka"
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr ""
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr ""
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 #, fuzzy
 msgid "Find declaration"
 msgstr "&Aurkitu deklarazioa"
 
+#: lib/keybind.c:139
 #, fuzzy
 msgid "Appearance settings"
 msgstr "Itxura"
 
+#: lib/keybind.c:140
 #, fuzzy
 msgid "Save setup"
 msgstr "&Gorde konfigurazioa"
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr ""
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr ""
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr ""
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr ""
 
+#: lib/keybind.c:154
 #, fuzzy
 msgid "Previous link"
 msgstr "&Aurrekoa"
 
+#: lib/keybind.c:155
 #, fuzzy
 msgid "Next node"
 msgstr "Nodo askeak:"
 
+#: lib/keybind.c:156
 #, fuzzy
 msgid "Previous node"
 msgstr "&Aurrekoa"
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr ""
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr ""
 
+#: lib/keybind.c:167
 #, fuzzy
 msgid "Deselect all"
 msgstr "Hautua kendu"
 
+#: lib/keybind.c:168
 #, fuzzy
 msgid "Select page up"
 msgstr "Hautatu ta&ldea"
 
+#: lib/keybind.c:169
 #, fuzzy
 msgid "Select page down"
 msgstr "Hautatu hizkuntza"
 
+#: lib/keybind.c:171
 #, fuzzy
 msgid "Close editor"
 msgstr "Itxi fitxategia"
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr ""
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr ""
 
+#: lib/keybind.c:177
 #, fuzzy
 msgid "Open file in editor"
 msgstr "Editatu luzapen fitxategia"
 
+#: lib/keybind.c:178
 #, fuzzy
 msgid "Select word"
 msgstr "Hautatu"
 
+#: lib/keybind.c:179
 #, fuzzy
 msgid "Select line"
 msgstr "Hautatu hizkuntza"
 
+#: lib/keybind.c:180
 #, fuzzy
 msgid "Select all"
 msgstr "Hautatu"
 
+#: lib/keybind.c:181
 #, fuzzy
 msgid "Column selection mode"
 msgstr "&Hautapenean"
 
+#: lib/keybind.c:182
 #, fuzzy
 msgid "Save selected block"
 msgstr "Gorde blokea"
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Txertatu fitxategia"
 
+#: lib/keybind.c:184
 #, fuzzy
 msgid "Toggle insert/overwrite"
 msgstr "&Txandakatu txert/gainid"
 
+#: lib/keybind.c:185
 #, fuzzy
 msgid "Insert date/time (Lua action)"
 msgstr "Txertatu &data/ordua"
 
+#: lib/keybind.c:186
 #, fuzzy
 msgid "Delete line"
 msgstr "Ezabatzen"
 
+#: lib/keybind.c:187
 #, fuzzy
 msgid "Mail file"
 msgstr "file1 file2"
 
+#: lib/keybind.c:188
 #, fuzzy
 msgid "Undo history"
 msgstr "Ko&mandoen historia"
 
+#: lib/keybind.c:189
 #, fuzzy
 msgid "Format paragraph (Lua action)"
 msgstr "&Formatua paragrafoari"
 
+#: lib/keybind.c:190
 #, fuzzy
 msgid "Match bracket"
 msgstr "Ezker kortxete"
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr ""
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr ""
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr ""
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr ""
 
+#: lib/keybind.c:197
 #, fuzzy
 msgid "Repeat last macro"
 msgstr "Errepikatu azken komandoa"
 
+#: lib/keybind.c:198
 #, fuzzy
 msgid "Spell check"
 msgstr "&Ortografia aztertu"
 
+#: lib/keybind.c:199
 #, fuzzy
 msgid "Spell check current word"
 msgstr "&Ortografia aztertu"
 
+#: lib/keybind.c:200
 #, fuzzy
 msgid "Select spell language"
 msgstr "Hautatu hizkuntza"
 
+#: lib/keybind.c:201
 #, fuzzy
 msgid "Clear all bookmarks"
 msgstr "&Hustu liburu-markak"
 
+#: lib/keybind.c:202
 #, fuzzy
 msgid "Next bookmark"
 msgstr "H&urrengo laster-marka"
 
+#: lib/keybind.c:203
 #, fuzzy
 msgid "Previous bookmark"
 msgstr "&Aurreko laster-marka"
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr ""
 
+#: lib/keybind.c:205
 #, fuzzy
 msgid "Unfold all"
 msgstr "&Aurkitu dena"
 
+#: lib/keybind.c:206
 #, fuzzy
 msgid "Toggle line filter"
 msgstr "&Txandakatu lerro egoera"
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr ""
 
+#: lib/keybind.c:208
 #, fuzzy
 msgid "Select to file start"
 msgstr "Fitxategiko aldaketak galdu egin dira"
 
+#: lib/keybind.c:209
 #, fuzzy
 msgid "Select to file end"
 msgstr "Hautatu konparatzeko metodoa:"
 
+#: lib/keybind.c:210
 #, fuzzy
 msgid "Select to page start"
 msgstr "Hautatu konparatzeko metodoa:"
 
+#: lib/keybind.c:211
 #, fuzzy
 msgid "Select to page end"
 msgstr "Hautatu konparatzeko metodoa:"
 
+#: lib/keybind.c:212
 #, fuzzy
 msgid "Select scroll up"
 msgstr "Hautatu ta&ldea"
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr ""
 
+#: lib/keybind.c:214
 #, fuzzy
 msgid "Select paragraph up"
 msgstr "Hautatu ta&ldea"
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:216
 #, fuzzy
 msgid "Column select page up"
 msgstr "&Hautua kendu taldeari"
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr ""
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr ""
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr ""
 
+#: lib/keybind.c:220
 #, fuzzy
 msgid "Column select up"
 msgstr "&Hautua kendu taldeari"
 
+#: lib/keybind.c:221
 #, fuzzy
 msgid "Column select down"
 msgstr "&Hautapenean"
 
+#: lib/keybind.c:222
 #, fuzzy
 msgid "Column select scroll up"
 msgstr "&Hautua kendu taldeari"
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr ""
 
+#: lib/keybind.c:224
 #, fuzzy
 msgid "Column select paragraph up"
 msgstr "&Formatua paragrafoari"
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr ""
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr ""
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:229
 #, fuzzy
 msgid "Toggle visible tabs/spaces"
 msgstr "Zuriuneen aztarna &ikusgai"
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr ""
 
+#: lib/keybind.c:231
 #, fuzzy
 msgid "Toggle syntax highlighting"
 msgstr "Txandakatu sinta&xi nabarmentzea"
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Hautatu sintaxi nabarmentzea"
 
+#: lib/keybind.c:233
 #, fuzzy
 msgid "Toggle right margin"
 msgstr "T&xandakatu marka"
 
+#: lib/keybind.c:234
 #, fuzzy
 msgid "Save mode options"
 msgstr "Panelek aukerak"
 
+#: lib/keybind.c:235
 msgid "About editor"
 msgstr ""
 
+#: lib/keybind.c:237
 #, fuzzy
 msgid "Execute script"
 msgstr "Exekutagarria &lehenengo"
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr ""
 
+#: lib/keybind.c:239
 #, fuzzy
 msgid "Resize window"
 msgstr "&Handiera aldatu"
 
+#: lib/keybind.c:240
 #, fuzzy
 msgid "Toggle fullscreen"
 msgstr "&Txandakatu pantaila betea"
 
+#: lib/keybind.c:241
 #, fuzzy
 msgid "Window list"
 msgstr "&Leihoa"
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr ""
 
+#: lib/keybind.c:243
 #, fuzzy
 msgid "Previous window"
 msgstr "&Aurrekoa"
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -589,22 +745,28 @@ msgstr ""
 "Erabiltzailea: %s\n"
 "Prozesuaren ID: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "Fitxategia giltzatuta"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "&Jabetu giltzapeaz"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "J&aramonik ez giltzapeari"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "%s direktorioa ezin sortu"
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "LARRIA: ez da direktorioa:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
@@ -612,12 +774,15 @@ msgstr ""
 "Barruti kanpoko zenbakia (byte barrutian egon behar luke, 0 <= n <= 0xFF, "
 "hamaseitarrean adierazita)"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "Karaktere baliogabea"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "Itxi gabeko aipu karaktereak"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
@@ -626,34 +791,44 @@ msgstr ""
 "Hex eredu errorea %dkokapenean :\n"
 "%s."
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "Bilatutako katea ez da aurkitu"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "Oraindik inplementatu gabe"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr "Ordeztu beharreko token kopurua ez da aurkitutakoen kopuru berdina"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "Token zenbaki baliogabea %d"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "Adierazpen erregularraren akatsa"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "&Ohikoa"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "Adierazpen erre&gularra"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "Hama&seitarra"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "&Maskara bilaketa"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -662,6 +837,7 @@ msgstr ""
 "'%s' azalaren azterketa sintaktikoa ezin da egin.\n"
 "Azal lehenetsia zamatu da"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -672,6 +848,7 @@ msgstr ""
 "%s\n"
 "Lehenetsitako azala zamatu da"
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -679,6 +856,7 @@ msgid ""
 "Default skin has been loaded"
 msgstr ""
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -687,6 +865,7 @@ msgstr ""
 "'%s' azala ezin zamatu.\n"
 "Azal lehenetsia zamatu da"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -695,12 +874,14 @@ msgid ""
 "command to list all available variants on your system.\n"
 msgstr ""
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
 "Please upgrade your system.\n"
 msgstr ""
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -708,9 +889,11 @@ msgid ""
 "Use the 'toe -a' command to list all available variants on your system.\n"
 msgstr ""
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "Benetako-kolorea ez da onartzen slang bertsio honetan."
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -719,307 +902,405 @@ msgid ""
 "Alternatively, you can set COLORTERM=truecolor.\n"
 msgstr ""
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "Ihes"
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "1. funtzio tekla"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "2. funtzio tekla"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "3. funtzio tekla"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "4. funtzio tekla"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "5. funtzio tekla"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "6. funtzio tekla"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "7. funtzio tekla"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "8. funtzio tekla"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "9. funtzio tekla"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "10. funtzio tekla"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "11. funtzio tekla"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "12. funtzio tekla"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "13. funtzio tekla"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "14. funtzio tekla"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "15. funtzio tekla"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "16. funtzio tekla"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "17. funtzio tekla"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "18. funtzio tekla"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "19. funtzio tekla"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "20. funtzio tekla"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Osatzea/Alt-tab"
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "Atzera-Tab/Maius-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Atzera-tekla"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "Gora gezia"
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "Behera gezia"
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "Ezkerrera gezia"
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "Eskuinera gezia"
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Txertatu"
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "Etxea"
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "Bukaera tekla"
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Orrian gora"
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Orrian behera"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "/ zenbakizko teklatuan"
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "* zenbakizko teklatuan"
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "- zenbakizko teklatuan"
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "+ zenbakizko teklatuan"
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "Ezkerrera gezia, zenbakizko teklatuan"
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "Eskuinera gezia, zenbakizko teklatuan"
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "Gora gezia, zenbakizko teklatuan"
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "Behera gezia, zenbakizko teklatuan"
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "Hasi, zenbakizko teklatuan"
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "Bukaera, zenbakizko teklatuan"
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "Orrian behera, zenbakizko teklatuan"
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "Orrian gora, zenbakizko teklatuan"
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "Txertatu, zenbakizko teklatuan"
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "Ezabatu, zenbakizko teklatuan"
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "Sartu, zenbakizko teklatuan"
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "21. funtzio tekla"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "22. funtzio tekla"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "23. funtzio tekla"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "24. funtzio tekla"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "A1 tekla"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "C1 tekla"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "Asterisko"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "Ken"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "Gehi"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "Puntu"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "Txikiago baino"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "Haundiago baino"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "Berdin"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "Koma"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "Apostrofe"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "Bi puntu"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "Puntu eta koma"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "Harridura marka"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "Galdera marka"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "Eta-ikur"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "Dolarraren ikur"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "Komatxoak"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "Ehunekoaren ikurra"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "Zirkunflexu"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "Tilet"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "Apostrofo"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "Azpimarra"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "Azpimarra"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "Barra bertikal"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "Ezker parentesi"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "Eskuin parentesi"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "Ezker kortxete"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "Eskuin kortxete"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "Ezker giltza"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "Eskuin giltza"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "Sartu"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "Tabulatze tekla"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "Zuriune tekla"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "Barra tekla"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "alderantzizko barra tekla"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "Traol (# zenbaki ikurra)"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "A bildua"
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ktrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr ""
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Maius"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
 "Cannot create pipe for SIGWINCH: %s (%d)\n"
 msgstr ""
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
 "Cannot configure write end of SIGWINCH pipe: %s (%d)\n"
 msgstr ""
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
 "Cannot configure read end of SIGWINCH pipe: %s (%d)\n"
 msgstr ""
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -1028,39 +1309,51 @@ msgstr ""
 "%dx%d pantaila-neurria ez da onartzen.\n"
 "Egiaztatu TERM ingurune-aldagaia.\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "TERM ingurune-aldagaia ezarri gabe dago!\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr ""
 
+#: lib/util.c:254
 msgid "B"
 msgstr "B"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "kB"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "KiB"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "MB"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "MiB"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "GB"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "GiB"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "Ezin da sortu hodi deskriptorea"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "Ezin dira sortu hodiko isuriak"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
@@ -1069,9 +1362,11 @@ msgstr ""
 "Ustekabeko errorea select()-ean ume prozesutik datuak irakurtzean:\n"
 "%s"
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr ""
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
@@ -1080,141 +1375,204 @@ msgstr ""
 "Ustekabeko errorea waitpid()-en:\n"
 "%s"
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "Fitxategiko aldaketak galdu egin dira"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
 "Temporary files will not be created\n"
 msgstr ""
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "Sakatu edozein tekla jarraitzeko..."
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "Barne-errorea:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "Pantailak"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "Historia"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr ""
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
 msgstr ""
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "&Bai"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "E&z"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "Historia ezabatu"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "Historia hau ezabatu nahi duzu?"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "&Ados"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "&Utzi"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "Errorea"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr "%s (%d)"
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "&Abortatu"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr "< Lehenetsitakoa >"
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr "Azalak"
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr "Azala:"
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr ""
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr "Itxura"
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "Uneko bertsioa bistaratzen du"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "Inprimatu datu direktorioa"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr "Inprimatu info hedatua erabilitako data direktorioei buruz"
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "Inprimatu konfiguratzeko aukerak"
 
+#: src/args.c:140
 #, fuzzy
 msgid "Disables Lua support"
 msgstr "Ezgaitu X11 euskarria"
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "xterm eginbideak behartzen ditu"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "Ezgaitu X11 euskarria"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "Saiatzen da sagu-aztarnaren nabarmentze zahar bat erabiltzen"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "Testu-bertsioan sagu-euskarria desgaitzen du"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "Terminfo-ren ordez termcap erabiltzen saiatzen da "
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "Terminal moteletan exekutatzeko"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "Erabili karaktere grafikoak marrazteko"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr "Zamatu tekla elkarketen definizioak zehaztutako fitxategitik"
 
+#: src/args.c:223
 msgid "<file>"
 msgstr "<file>"
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr "Ez zamatu tekla loturak fitxategitik, erabili lehenetsitakoak"
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "Zuri-beltzean exekutatzea eskatzen du "
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "Kolore moduan exekutatzeko eskatzen du"
 
+#: src/args.c:272
 #, fuzzy
 msgid "Use the specified skin"
 msgstr "Erakutsi mc zehaztutako azalarekin"
 
+#: src/args.c:273
 msgid "<string>"
 msgstr "<string>"
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr "[+lerrozk] fitxtg1[:lerrozk] [fitxtg2[:lerrozk]...]"
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1222,300 +1580,406 @@ msgid ""
 "as tickets at %s\n"
 msgstr ""
 
+#: src/args.c:478
 msgid "Main options"
 msgstr "Aukera nagusiak"
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr "Terminalaren aukerak"
 
+#: src/args.c:492
 msgid "Color options"
 msgstr "Koloreen aukerak"
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr "Argumentuen azterketak akatsa!"
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr ""
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:146
 #, fuzzy
 msgid "Ctags Configuration"
 msgstr "&Konfigurazioa..."
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:155
 #, fuzzy
 msgid "Command line options:"
 msgstr "Konfiguratu aukerak"
 
+#: src/plugins/ctags/ctags-config.c:163
 #, fuzzy
 msgid "Case sensitive filter"
 msgstr "Berei&zi maius/minus"
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:538
 #, fuzzy
 msgid "Go to Declaration"
 msgstr "Au&rrera deklarazioruntz"
 
+#: src/plugins/ctags/ctags-plugin.c:591
 #, fuzzy
 msgid "Find Declaration"
 msgstr "&Aurkitu deklarazioa"
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, fuzzy, c-format
 msgid "'%s' is not a known symbol."
 msgstr "'%s' ez da esteka sinbolikoa"
 
+#: src/plugins/ctags/ctags-plugin.c:662
 #, fuzzy
 msgid "Failed to create temporary file."
 msgstr "fitxategira ezin gorde"
 
+#: src/plugins/ctags/ctags-plugin.c:672
 #, fuzzy
 msgid "Failed to open temporary file."
 msgstr "fitxategira ezin gorde"
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:727
 #, fuzzy
 msgid "Failed to run grep."
 msgstr ""
 "Exekutatzeak huts egin du:\n"
 "%s\n"
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, fuzzy, c-format
 msgid "No references found for '%s'."
 msgstr "%s-(e)n ez dira sarrera egokiak aurkitu"
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Search Symbol"
 msgstr "Bilaketa eginda"
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "Search File"
 msgstr "Bilaketa eginda"
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 #, fuzzy
 msgid "Complete Symbol"
 msgstr "&Osoa: erakutsi guztia"
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, fuzzy, c-format
 msgid "Failed to load tags file: %s"
 msgstr "fitxategira ezin gorde"
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, fuzzy, c-format
 msgid "Cannot create temp file: %s"
 msgstr ""
 "Fitxategia ezin gorde:\n"
 "%s"
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr "Ezin itzuli %s(e)tik %s(e)ra"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 #, fuzzy
 msgid "Project root directory to index:"
 msgstr "Profilen erro direktorioa:"
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, fuzzy, c-format
 msgid "Failed to create index in %s"
 msgstr "Ezin '%s' gertaera sortu!"
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, fuzzy, c-format
 msgid "Reindex failed for %s"
 msgstr "Irakurtzeak huts egin du"
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 #, fuzzy
 msgid "Navigation History"
 msgstr "Nabigazioa"
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 #, fuzzy
 msgid "Go to declaration"
 msgstr "Au&rrera deklarazioruntz"
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 #, fuzzy
 msgid "Complete symbol"
 msgstr "&Osoa: erakutsi guztia"
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 #, fuzzy
 msgid "Navigation history"
 msgstr "Nabigazioa"
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 #, fuzzy
 msgid "Search symbol"
 msgstr "Bilaketa eginda"
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 #, fuzzy
 msgid "Search file"
 msgstr "Bilaketa eginda"
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 #, fuzzy
 msgid "Symbols in current file"
 msgstr "Esteka sinbolikoaren fitxategi izena:"
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 #, fuzzy
 msgid "Load tags file"
 msgstr "Zamatu sintaxi fitxategia"
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 msgid "Reindex repository"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 #, fuzzy
 msgid "Configuration"
 msgstr "Berrespena"
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 #, fuzzy
 msgid "Go to &declaration"
 msgstr "Au&rrera deklarazioruntz"
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr "&Aurkitu deklarazioa"
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 #, fuzzy
 msgid "Navigation &history"
 msgstr "Nabigazioa"
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 #, fuzzy
 msgid "&Search symbol"
 msgstr "&Bilatu"
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 #, fuzzy
 msgid "S&ymbols in file"
 msgstr "Esteka sinbolikoaren fitxategi izena:"
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 #, fuzzy
 msgid "&Complete symbol"
 msgstr "&Osoa: erakutsi guztia"
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:328
 #, fuzzy
 msgid "Select symbol"
 msgstr "Hautatu"
 
+#: src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Symbol name:"
 msgstr "Esteka sinbolikoaren fitxategi izena:"
 
+#: src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "File name or path:"
 msgstr "Fitxategi izena:"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:439
 #, fuzzy
 msgid "Load Tags File"
 msgstr "Zamatu fitxategia"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "It&xi"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr ""
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "Abisua"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
@@ -1523,46 +1987,62 @@ msgstr ""
 "Uneko testua aldatu da baino ez da fitxategian gorde.\n"
 "Jarraitzeak aldaketa hauek baztertuko ditu."
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "&Jarraitu"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr "&Erantsi hitza"
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "&Ordeztu"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "&Saltatu"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "Hizkuntza"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr "gaizki idatzia"
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr "Aztertu hitza"
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "Iradoki"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1570,6 +2050,7 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1577,74 +2058,92 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1638
 #, fuzzy
 msgid "Add word"
 msgstr "&Erantsi hitza"
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1738
 #, fuzzy
 msgid "Aspell"
 msgstr "gaizki idatzia"
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1749
 #, fuzzy
 msgid "Language:"
 msgstr "Hizkuntza"
 
+#: src/plugins/spell/spell.c:1752
 #, fuzzy
 msgid "&Select..."
 msgstr "Hautatu"
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "Hautatu hizkuntza"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr "Zamatzen: %3d%%"
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "Zamatzen..."
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "Zamatu fitxategia"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr "Akatsa %s irakurtzerakoan"
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
 "is not a regular file"
 msgstr ""
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
@@ -1653,51 +2152,63 @@ msgstr ""
 "\"%s\" fitxategia handiegia da.\n"
 "Ireki hala ere?"
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr "Akatsa hoditik irakurtzerakoan: %s"
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:4992
 #, fuzzy
 msgid "Undo"
 msgstr "&Desegin"
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
 msgstr ""
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
 msgstr ""
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr ""
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
 msgstr ""
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "&Saiatu berriz"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr "Fitxategiak esteka-trinkoak dauzka. Deslotu gorde aurretik?"
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr "Fitxategia bitartean aldatu egin da. Gorde hala ere?"
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr "Akatsa hodira idazterakoan: %s"
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1705,51 +2216,67 @@ msgid ""
 "for writing"
 msgstr ""
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr "Gordetzen ari zaren fitxategia ez da amaitzen lerro-berri batekin."
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "&Ez aldatu"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "&Unix formatua (LF)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "&Windows/DOS formatua (CR LF)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "&Macintosh formatua (CR)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "Sartu fitxategi izena:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "Aldatu lerro hausturak hontara:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "Gorde honela"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
 "%s"
 msgstr ""
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "&Azker gordetzea"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "&Seguru gordetzea"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr "&Egin babes-kopiak ondoko luzapenarekin:"
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr "Egiaztatu &POSIX lerro berria"
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "Editatu gordetzeko modua"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1757,52 +2284,69 @@ msgid ""
 "not a regular file"
 msgstr ""
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "Fitxategi bat dago izen hori duena"
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "&Gainidatzi"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "Fitxategia ezin gorde"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "Berretsi gorde fitxategia: \"%s\""
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "Gorde fitxategia"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "&Gorde"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "Zamatu"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "Sintaxi fitxategia editatu"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "Zein sintaxi fitxategi editatu nahi duzu?"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "&Erabiltzailea"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "&Sistema osorako"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "Menua editatu"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "Zein menu fitxategi editatuko nahi duzu?"
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "&Lokala"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[Izengabe]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
@@ -1811,751 +2355,984 @@ msgstr ""
 "%s fitxategia aldatu egin da.\n"
 "Gorde itxi aurretik?"
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "Itxi fitxategia"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
 "Save modified file %s?"
 msgstr ""
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "Irten"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "Funtzio hau ez da inplementatu"
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "fitxategira ezin gorde"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "Joan lerrora"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr "Sartu lerroa:"
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "Gorde blokea"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr ""
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "Fitxategia ezin txertatu"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "posta -s <gaia> -c <kk> <nori>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr "Nori"
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "Gaia"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "Kopiak hona"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "Posta"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "Utzi"
 
+#: src/editor/editcmd.c:2820
 #, fuzzy, c-format
 msgid "insert %d"
 msgstr "Txertatu"
 
+#: src/editor/editcmd.c:2826
 #, fuzzy, c-format
 msgid "delete %d"
 msgstr "%s ezabatu?"
 
+#: src/editor/editcmd.c:2829
 #, fuzzy
 msgid "replace"
 msgstr "Ordezkatu"
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr ""
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 #, fuzzy
 msgid "Undo History"
 msgstr "Historia"
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "Osatzeak bildu"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "Izengabe"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "Gorde makroa"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "Sakatu makroaren laster-tekla berria:"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "Errepikatu azken komandoa"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "Zenbat aldiz errepikatu:"
 
+#: src/editor/editmacros.c:708
 #, fuzzy, c-format
 msgid "Delete macro %s?"
 msgstr "Ezabatu makroa"
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "Ezabatu makroa"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr ""
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr ""
 
+#: src/editor/editmacros.c:865
 #, fuzzy
 msgid "Run"
 msgstr "Errusiera"
 
+#: src/editor/editmacros.c:868
 #, fuzzy
 msgid "Close"
 msgstr "It&xi"
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "&Ireki fitxategia..."
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "&Berria"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr ""
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "Gorde &honela..."
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "&Txertatu fitxategia..."
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "&kopiatu fitxategira..."
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "&Erabiltzaile menua..."
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr "&Honi buruz..."
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "&Irten"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "&Desegin"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "&Berregin"
 
+#: src/editor/editmenu.c:259
 #, fuzzy
 msgid "Undo &History..."
 msgstr "Ko&mandoen historia"
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr "&Txandakatu txert/gainid"
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "T&xandakatu marka"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "&Markatu zutabeak"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "Markatu &guztiak"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "&Desmarkatu"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "&Kopiatu"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "&Mugitu"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "E&zabatu"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "Ko&piatu klip-fitxategira"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "&Ebaki klip-fitxategira"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "I&tsatsi klip-fitxategitik"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "&Hasiera"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "&Amaiera"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "&Bilatu..."
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "Bilatu berri&z"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "&Ordezkatu..."
 
+#: src/editor/editmenu.c:293
 #, fuzzy
 msgid "Toggle &line filter"
 msgstr "&Txandakatu lerro egoera"
 
+#: src/editor/editmenu.c:294
 #, fuzzy
 msgid "Filter by &word"
 msgstr "jabeak i&datzi"
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr "&Txandakatu laster-markak"
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "H&urrengo laster-marka"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "&Aurreko laster-marka"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr "&Hustu liburu-markak"
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "&Joan...lerrora"
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr "&Txandakatu lerro egoera"
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr "Joan kort&xete parekidera"
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr "Txandakatu sinta&xi nabarmentzea"
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr ""
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr ""
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "Ko&deketa..."
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr ""
 
+#: src/editor/editmenu.c:324
 #, fuzzy
 msgid "&Unfold all"
 msgstr "&Aurkitu dena"
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "&Freskatu pantaila"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr "&Hasi/Gelditu makro grabatzea"
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr ""
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr "Grabatu/Errepikatu &ekintzak"
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "&Lekuz aldatu"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "&Handiera aldatu"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr "&Txandakatu pantaila betea"
 
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "H&urrengoa"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "&Aurrekoa"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr "&Zerrenda..."
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr "&Orokorra..."
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "Gordetzeko &modua..."
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "Sintaxi &nabarmentzea..."
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr "&Itxura..."
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr "&Teklak ikasi..."
 
+#: src/editor/editmenu.c:374
 #, fuzzy
 msgid "Key &bindings..."
 msgstr "&Kodeketa..."
 
+#: src/editor/editmenu.c:375
 #, fuzzy
 msgid "Key s&niffer..."
 msgstr "&Kodeketa..."
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "&Panelen aukerak..."
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr ""
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr ""
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "Sinta&xi fitxategia"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "&Menu fitxategia"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "&Gorde konfigurazioa"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr ""
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "&Fitxategia"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "&Editatu"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "&Bilatu"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "&Komandoa"
 
+#: src/editor/editmenu.c:553
 #, fuzzy
 msgid "&Navigate"
 msgstr "Nabigazioa"
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr "&Leihoa"
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr ""
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "&Aukerak"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Lua action"
 msgstr "Tabulatzea"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Action failed"
 msgstr "Irakurtzeak huts egin du"
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr "Bat ere e&z"
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr "&Paragrafo dinamikoak"
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr "Idazteko &makinaren itzulbira"
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "Doipen-modua"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr "Tabulatzea"
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "&Itxuratu tabulatze erdiak"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "&Atzera-tekla tabulatzeekin"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "bete tabulatzeak &zuriuneekin"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr "Tabulatze tartea:"
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "Beste aukera batzuk"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "&Itzulera teklak koska automatikoki jartzen du"
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "Be&rretsi gorde aurretik"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "Gorde fitxategi &kokapena"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr "Zuriuneen aztarna &ikusgai"
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr "&Tab-ak ikusgai"
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr ""
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "sinta&xi nabarmentzea"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr "K&urtsorea txertatutako blokearen ondoren"
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr "&Hautaketa iraunkorra"
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr "Kurtsorea lerro amaieratik &harantzago"
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr "&Taldeka desegin"
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr "Itzulbiratutako lerroaren luzeera:"
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "Editorearen aukerak"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr "Sartu bilatzeko katea:"
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr "&Bereizi maius/minus"
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "&Atzera"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr "&Hautapenean"
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr "&Hitz osoak"
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr "&Karaktere-multzo guztiak"
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "&Aurkitu dena"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr ""
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "Bilatu"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr "%s bilatzen: %3d%%"
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "%s bilatzen"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr "Sartu ordezko katea:"
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "Ordezkatu"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr "Ordezkatu honekin:"
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "&Guztia"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "Berretsi ordezkapena"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr "%ld ordezkapen egin dira"
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr ""
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
 "written for the %s."
 msgstr ""
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "Honi buruz"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr ""
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr ""
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "Ireki fitxategiak"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "Editatu: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr "Laguntza"
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr "Gorde"
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "Marka"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "Ordezk"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "Kopiatu"
 
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "Mugitu"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr "Bilatu"
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "Ezabatu"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "Jaitsi"
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr "Irten"
 
+#: src/editor/fold.c:478
 #, fuzzy, c-format
 msgid "Filtering %s: %3d%%"
 msgstr "%s bilatzen: %3d%%"
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "Iragazi"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr ""
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr "< Auto >"
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr "< Birzamatu uneko sintaxia >"
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
 "%s"
 msgstr ""
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "Zamatu sintaxi fitxategia"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "Akatsa %s fitxategiaren %d lerroan"
 
+#: src/execute.c:240
 msgid ""
 "Not an xterm;\n"
 "the terminal cannot be shown."
 msgstr ""
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr ""
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "Laguntza fitxategiaren formatu akatsa\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "Barneko akatsa: Esteka eremuaren hasiera bikoitza"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr "Ezin aurkitu %s nodoa laguntza fitxategian"
 
+#: src/help.c:1487
 msgid "See also"
 msgstr ""
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "Laguntza"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr "Indizea"
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "Aurr"
 
+#: src/key_learn.c:138
 #, fuzzy
 msgid "Function keys"
 msgstr "1. funtzio tekla"
 
+#: src/key_learn.c:139
 #, fuzzy
 msgid "Arrows / Navigation"
 msgstr "Nabigazioa"
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr ""
 
+#: src/key_learn.c:312
 #, fuzzy
 msgid "Learn key"
 msgstr "Teklak ikasi"
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr ""
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
 "Reassign to %s?"
 msgstr ""
 
+#: src/key_learn.c:354
 #, fuzzy
 msgid "Conflict"
 msgstr "Berrespena"
 
+#: src/key_learn.c:420
 #, c-format
 msgid ""
 "Cannot accept this key.\n"
 "You pressed: %s"
 msgstr ""
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr ""
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 #, fuzzy
 msgid "&Ctrl"
 msgstr "Ktrl"
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr ""
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 #, fuzzy
 msgid "&Shift"
 msgstr "Maius"
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 #, fuzzy
 msgid "Edit &term file"
 msgstr "Editat&u menu fitxategia"
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr ""
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr ""
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
 "Wait until this message disappears."
 msgstr ""
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr ""
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr ""
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr ""
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr ""
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr ""
 
+#: src/keybind_dialog.c:128
 #, fuzzy
 msgid "&Main"
 msgstr "&Posta..."
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr ""
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr ""
 
+#: src/keybind_dialog.c:133
 #, fuzzy
 msgid "&Menu"
 msgstr "&Menu fitxategia"
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr ""
 
+#: src/keybind_dialog.c:134
 #, fuzzy
 msgid "&Listbox"
 msgstr "&Zerrenda..."
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 #, fuzzy
 msgid "&Help"
 msgstr "Laguntza"
 
+#: src/keybind_dialog.c:139
 #, fuzzy
 msgid "&Editor"
 msgstr "&Editatu"
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr ""
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr ""
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr ""
 
+#: src/keybind_dialog.c:629
 #, fuzzy
 msgid "Assign key"
 msgstr "A1 tekla"
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr ""
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr ""
 
+#: src/keybind_dialog.c:895
 #, fuzzy
 msgid "Press new shortcut..."
 msgstr "Sakatu edozein tekla jarraitzeko..."
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
 "Reassign anyway?"
 msgstr ""
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 #, fuzzy
 msgid "&Back"
 msgstr "&Atzera"
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 #, fuzzy
 msgid "Edit &keymap file"
 msgstr "Editat&u menu fitxategia"
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2564,9 +3341,11 @@ msgstr ""
 "Exekutatzeak huts egin du:\n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "Etxeko direktorioaren bide-izena ez da absolutua"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2577,191 +3356,247 @@ msgstr ""
 "Ixtean huts egin du:\n"
 "%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr ""
 
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 #, fuzzy
 msgid "Lua scripts"
 msgstr "VFS pluginak eta script-ak:"
 
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 #, fuzzy
 msgid "Unknown error"
 msgstr "Akats ezezaguna umean"
 
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
 msgstr ""
 
+#: src/manage_plugins.c:445
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr ""
 
+#: src/manage_plugins.c:511
 #, fuzzy
 msgid "&Settings"
 msgstr "&Ezarri"
 
+#: src/manage_plugins.c:593
 #, fuzzy
 msgid "Lua action failed"
 msgstr "Irakurtzeak huts egin du"
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr ""
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr ""
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr ""
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr ""
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr ""
 
+#: src/runtime-host.c:1931
 #, fuzzy
 msgid "Runtime errors"
 msgstr "undelfs: akatsa"
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "Hautatu kode-orrialdea"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "-  < Ez dago itzulpenik >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "Ezarpena"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr "Ezarpena %s-ra gordeta"
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr "Ezarpenak ezin gorde %s-ra"
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "Subshell euskarria desgaitzen du"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr ""
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr ""
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr ""
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr ""
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr ""
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr ""
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr ""
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr ""
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr ""
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr ""
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "Datu motak:"
 
+#: src/textconf.c:202
 #, fuzzy
 msgid "directory not found"
 msgstr "Bilatutako katea ez da aurkitu"
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr "Etxeko direktorioa:"
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr "Profilen erro direktorioa:"
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "Sistemaren datuak"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "Konfiguratu direktorioa:"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "Datuen direktorioa:"
 
+#: src/textconf.c:218 src/textconf.c:257
 #, fuzzy
 msgid "Editor plugins:"
 msgstr "Editorearen aukerak"
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr ""
 
+#: src/textconf.c:224 src/textconf.c:243
 #, fuzzy
 msgid "Lua scripts:"
 msgstr "VFS pluginak eta script-ak:"
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr ""
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "Erabiltzaile datuak"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "Cache direktorioa:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "Araztu"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "AKATSA:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "Egia:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "Gezurra:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr ""
 "Fitxategia ezin gorde:\n"
 "%s"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr "Akatsa programari deitzerakoan"
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr ""
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "Parametroa"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr "Abisua -- fitxategia ezikusten"
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2770,16 +3605,20 @@ msgstr ""
 "%s fitxategia ez da root-arena edo ez da zurea edo guztiek idatz\n"
 "dezake. Hori erabiltzeak zure segurtasuna arriskuan jarri dezake"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr "Komandoak ezin exekutatu bertakoa ez den fitxategi-sistema batean"
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr "%s-(e)n ez dira sarrera egokiak aurkitu"
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "Erabiltzailearen menua"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"
