@@ -24,472 +24,628 @@ msgstr ""
 "X-Generator: Weblate 2026.9.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr "Аударма жоқ"
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "Ескерту: кодтық беттер тізімін жүктеп алу мүмкін емес"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7-битті ASCII-таңбалары"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "%s форматынан %s форматына аудару мүмкін емес"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "Оқиғалар жүйесі бұрыннан инициализацияланған"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "Оқиғалар жүйесін инициализациялау сәтсіз аяқталды"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "Оқиғалар жүйесі инициализацияланбаған"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "Кіріс деректерін тексеріңіз! Кейбір параметрлер мәні NULL!"
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "Оқиғалар үшін '%s' тобын жасау мүмкін емес!"
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "'%s' оқиғасын жасау мүмкін емес!"
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr "Copyright (C) 1996-%zu Free Software Foundation"
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr ""
 
+#: lib/keybind.c:72
 msgid "Half page down"
 msgstr ""
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr ""
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr ""
 
+#: lib/keybind.c:75
 msgid "Top of screen"
 msgstr ""
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr ""
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr ""
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr ""
 
+#: lib/keybind.c:79
 msgid "Copy file(s)"
 msgstr ""
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr ""
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Өшіру"
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr ""
 
+#: lib/keybind.c:87
 msgid "User-defined menu"
 msgstr ""
 
+#: lib/keybind.c:88
 msgid "Edit user menu"
 msgstr ""
 
+#: lib/keybind.c:90
 msgid "Search next"
 msgstr ""
 
+#: lib/keybind.c:92
 msgid "Replace next"
 msgstr ""
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr ""
 
+#: lib/keybind.c:94
 msgid "Terminal"
 msgstr ""
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Файлды түзету"
 
+#: lib/keybind.c:96
 msgid "Edit new file"
 msgstr ""
 
+#: lib/keybind.c:97
 msgid "Select charset"
 msgstr ""
 
+#: lib/keybind.c:98
 msgid "Command history"
 msgstr ""
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr ""
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr ""
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr ""
 
+#: lib/keybind.c:103
 msgid "Save as..."
 msgstr ""
 
+#: lib/keybind.c:104
 msgid "Go to line"
 msgstr ""
 
+#: lib/keybind.c:105
 msgid "Refresh screen"
 msgstr ""
 
+#: lib/keybind.c:106
 msgid "Suspend to shell"
 msgstr ""
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr ""
 
+#: lib/keybind.c:108
 msgid "Next screen"
 msgstr ""
 
+#: lib/keybind.c:109
 msgid "Previous screen"
 msgstr ""
 
+#: lib/keybind.c:110
 msgid "Next file"
 msgstr ""
 
+#: lib/keybind.c:111
 msgid "Previous file"
 msgstr ""
 
+#: lib/keybind.c:112
 msgid "Delete to line start"
 msgstr ""
 
+#: lib/keybind.c:113
 msgid "Delete to line end"
 msgstr ""
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr ""
 
+#: lib/keybind.c:115
 msgid "Delete to word end"
 msgstr ""
 
+#: lib/keybind.c:116
 msgid "Cut to clipboard"
 msgstr ""
 
+#: lib/keybind.c:117
 msgid "Copy to clipboard"
 msgstr ""
 
+#: lib/keybind.c:118
 msgid "Paste from clipboard"
 msgstr ""
 
+#: lib/keybind.c:119
 msgid "Toggle selection"
 msgstr ""
 
+#: lib/keybind.c:120
 msgid "Select left"
 msgstr ""
 
+#: lib/keybind.c:121
 msgid "Select right"
 msgstr ""
 
+#: lib/keybind.c:122
 msgid "Select up"
 msgstr ""
 
+#: lib/keybind.c:123
 msgid "Select down"
 msgstr ""
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr ""
 
+#: lib/keybind.c:125
 msgid "Select to word end"
 msgstr ""
 
+#: lib/keybind.c:126
 msgid "Select to line start"
 msgstr ""
 
+#: lib/keybind.c:127
 msgid "Select to line end"
 msgstr ""
 
+#: lib/keybind.c:128
 msgid "Sort order..."
 msgstr ""
 
+#: lib/keybind.c:129
 msgid "General options"
 msgstr ""
 
+#: lib/keybind.c:130
 msgid "Learn terminal keys"
 msgstr ""
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr ""
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr ""
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr ""
 
+#: lib/keybind.c:134
 msgid "Set bookmark"
 msgstr ""
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr ""
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr ""
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 msgid "Find declaration"
 msgstr ""
 
+#: lib/keybind.c:139
 msgid "Appearance settings"
 msgstr ""
 
+#: lib/keybind.c:140
 msgid "Save setup"
 msgstr ""
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr ""
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr ""
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr ""
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr ""
 
+#: lib/keybind.c:154
 msgid "Previous link"
 msgstr ""
 
+#: lib/keybind.c:155
 msgid "Next node"
 msgstr ""
 
+#: lib/keybind.c:156
 msgid "Previous node"
 msgstr ""
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr ""
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr ""
 
+#: lib/keybind.c:167
 msgid "Deselect all"
 msgstr ""
 
+#: lib/keybind.c:168
 msgid "Select page up"
 msgstr ""
 
+#: lib/keybind.c:169
 msgid "Select page down"
 msgstr ""
 
+#: lib/keybind.c:171
 msgid "Close editor"
 msgstr ""
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr ""
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr ""
 
+#: lib/keybind.c:177
 msgid "Open file in editor"
 msgstr ""
 
+#: lib/keybind.c:178
 msgid "Select word"
 msgstr ""
 
+#: lib/keybind.c:179
 msgid "Select line"
 msgstr ""
 
+#: lib/keybind.c:180
 msgid "Select all"
 msgstr ""
 
+#: lib/keybind.c:181
 msgid "Column selection mode"
 msgstr ""
 
+#: lib/keybind.c:182
 msgid "Save selected block"
 msgstr ""
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Файлды кірістіру"
 
+#: lib/keybind.c:184
 msgid "Toggle insert/overwrite"
 msgstr ""
 
+#: lib/keybind.c:185
 msgid "Insert date/time (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:186
 msgid "Delete line"
 msgstr ""
 
+#: lib/keybind.c:187
 msgid "Mail file"
 msgstr ""
 
+#: lib/keybind.c:188
 msgid "Undo history"
 msgstr ""
 
+#: lib/keybind.c:189
 msgid "Format paragraph (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:190
 msgid "Match bracket"
 msgstr ""
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr ""
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr ""
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr ""
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr ""
 
+#: lib/keybind.c:197
 msgid "Repeat last macro"
 msgstr ""
 
+#: lib/keybind.c:198
 msgid "Spell check"
 msgstr ""
 
+#: lib/keybind.c:199
 msgid "Spell check current word"
 msgstr ""
 
+#: lib/keybind.c:200
 msgid "Select spell language"
 msgstr ""
 
+#: lib/keybind.c:201
 msgid "Clear all bookmarks"
 msgstr ""
 
+#: lib/keybind.c:202
 msgid "Next bookmark"
 msgstr ""
 
+#: lib/keybind.c:203
 msgid "Previous bookmark"
 msgstr ""
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr ""
 
+#: lib/keybind.c:205
 msgid "Unfold all"
 msgstr ""
 
+#: lib/keybind.c:206
 msgid "Toggle line filter"
 msgstr ""
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr ""
 
+#: lib/keybind.c:208
 msgid "Select to file start"
 msgstr ""
 
+#: lib/keybind.c:209
 msgid "Select to file end"
 msgstr ""
 
+#: lib/keybind.c:210
 msgid "Select to page start"
 msgstr ""
 
+#: lib/keybind.c:211
 msgid "Select to page end"
 msgstr ""
 
+#: lib/keybind.c:212
 msgid "Select scroll up"
 msgstr ""
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr ""
 
+#: lib/keybind.c:214
 msgid "Select paragraph up"
 msgstr ""
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:216
 msgid "Column select page up"
 msgstr ""
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr ""
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr ""
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr ""
 
+#: lib/keybind.c:220
 msgid "Column select up"
 msgstr ""
 
+#: lib/keybind.c:221
 msgid "Column select down"
 msgstr ""
 
+#: lib/keybind.c:222
 msgid "Column select scroll up"
 msgstr ""
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr ""
 
+#: lib/keybind.c:224
 msgid "Column select paragraph up"
 msgstr ""
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr ""
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr ""
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:229
 msgid "Toggle visible tabs/spaces"
 msgstr ""
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr ""
 
+#: lib/keybind.c:231
 msgid "Toggle syntax highlighting"
 msgstr ""
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Синтаксисті түрлі-түсті етуді таңдау"
 
+#: lib/keybind.c:233
 msgid "Toggle right margin"
 msgstr ""
 
+#: lib/keybind.c:234
 msgid "Save mode options"
 msgstr ""
 
+#: lib/keybind.c:235
 msgid "About editor"
 msgstr ""
 
+#: lib/keybind.c:237
 msgid "Execute script"
 msgstr ""
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr ""
 
+#: lib/keybind.c:239
 msgid "Resize window"
 msgstr ""
 
+#: lib/keybind.c:240
 msgid "Toggle fullscreen"
 msgstr ""
 
+#: lib/keybind.c:241
 msgid "Window list"
 msgstr ""
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr ""
 
+#: lib/keybind.c:243
 msgid "Previous window"
 msgstr ""
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -500,22 +656,28 @@ msgstr ""
 "Пайдаланушы: %s\n"
 "Процесс ID: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "Файл құлыпталған"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "Құлыпты &иелену"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "Құлыпты &елемеу"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "%s бумасын жасау мүмкін емес"
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "КРИТИКАЛЫҚ: бума емес:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
@@ -523,12 +685,15 @@ msgstr ""
 "Сан ауқымнан тыс (байт ауқымында болуы тиіс, 0 <= n <= 0xFF, он алтылық "
 "пішімде)"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "Жарамсыз таңба"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "Сәйкес келмейтін тырнақша таңбасы"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
@@ -537,34 +702,44 @@ msgstr ""
 "%d позициясында он алтылық үлгі қатесі:\n"
 "%s."
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "Іздеу жолы табылмады"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "Әлі іске асырылмаған"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr "Алмастыру токендерінің саны табылған токендер санына тең емес"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "Жарамсыз токен нөмірі %d"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "Тұрақты өрнек қатесі"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "Қа&лыпты"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "Тұрақты ө&рнек"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "Он алт&ылық"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "Мас&камен іздеу"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -573,6 +748,7 @@ msgstr ""
 "'%s' темасын талдау мүмкін емес.\n"
 "Бастапқы тема жүктелді"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -583,6 +759,7 @@ msgstr ""
 "%s\n"
 "Бастапқы тема жүктелді"
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -593,6 +770,7 @@ msgstr ""
 "%s\n"
 "Бастапқы тема жүктелді"
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -601,6 +779,7 @@ msgstr ""
 "'%s' темасын жүктеп алу мүмкін емес.\n"
 "Бастапқы тема жүктелді"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -614,6 +793,7 @@ msgstr ""
 "*-direct256 нұсқасын қолданып. Жүйеңізде қолжетімді барлық нұсқаларды\n"
 "тізімдеу үшін 'toe -a' командасын қолданыңыз.\n"
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
@@ -624,6 +804,7 @@ msgstr ""
 "қажет.\n"
 "Жүйеңізді жаңғыртыңыз.\n"
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -636,9 +817,11 @@ msgstr ""
 "Жүйеңіздегі қолжетімді барлық нұсқаларды тізімдеу үшін 'toe -a' командасын "
 "қолданыңыз.\n"
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "Бұл slang нұсқасында «true color» қолдалмайды."
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -653,289 +836,384 @@ msgstr ""
 "қолданыңыз.\n"
 "Сондай-ақ, COLORTERM=truecolor айнымалысын орнатуға болады.\n"
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "Escape"
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "Функц. перне 1"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "Функц. перне 2"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "Функц. перне 3"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "Функц. перне 4"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "Функц. перне 5"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "Функц. перне 6"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "Функц. перне 7"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "Функц. перне 8"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "Функц. перне 9"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "Функц. перне 10"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "Функц. перне 11"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "Функц. перне 12"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "Функц. перне 13"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "Функц. перне 14"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "Функц. перне 15"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "Функц. перне 16"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "Функц. перне 17"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "Функц. перне 18"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "Функц. перне 19"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "Функц. перне 20"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Толықтыру/M-tab"
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "BackTab/S-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Backspace"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "Жоғары бағдарша"
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "Төмен бағдарша"
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "Сол жақ бағдарша"
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "Оң жақ бағдарша"
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Кірістіру"
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "Home"
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "End пернесі"
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Page Up"
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Page Down"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "Цифр. пернет.-ғы /"
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "Цифр. пернет.-ғы *"
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "Цифр. пернет.-ғы -"
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "Цифр. пернет.-ғы +"
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "Сол жақ бағдарша (цифр.)"
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "Оң жақ бағдарша (цифр.)"
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "Жоғары бағдарша (цифр.)"
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "Төмен бағдарша (цифр.)"
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "Home (цифр.)"
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "End (цифр.)"
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "Page Down (цифр.)"
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "Page Up (цифр.)"
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "Кірістіру (цифр.)"
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "Өшіру (цифр.)"
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "Enter (цифр.)"
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "Функц. перне 21"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "Функц. перне 22"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "Функц. перне 23"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "Функц. перне 24"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "A1 пернесі"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "C1 пернесі"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "Жұлдызша"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "Минус"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "Плюс"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "Нүкте"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "Кіші"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "Үлкен"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "Тең"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "Үтір"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "Апостроф"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "Қос нүкте"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "Нүктелі үтір"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "Леп белгісі"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "Сұрақ белгісі"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "Амперсанд"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "Доллар таңбасы"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "Тырнақша"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "Пайыз таңбасы"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "Карет"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "Тильда"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "Штрих"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "Астын сызу"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "Сызықша"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "Тік сызық"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "Сол жақ жақша"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "Оң жақ жақша"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "Сол жақ тік жақша"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "Оң жақ тік жақша"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "Сол жақ жүйелі жақша"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "Оң жақ жүйелі жақша"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "Enter"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "Tab пернесі"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "Бос орын пернесі"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "Қиғаш сызық пернесі"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "Кері қиғаш сызық пернесі"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "Тор таңбасы #"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "Айқұлақ таңбасы"
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ctrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr ""
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Shift"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
@@ -944,6 +1222,7 @@ msgstr ""
 "\n"
 "SIGWINCH үшін арна жасау мүмкін емес: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
@@ -952,6 +1231,7 @@ msgstr ""
 "\n"
 "SIGWINCH арнасының жазу жағын баптау мүмкін емес: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
@@ -960,6 +1240,7 @@ msgstr ""
 "\n"
 "SIGWINCH арнасының оқу жағын баптау мүмкін емес: %s (%d)\n"
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -968,39 +1249,51 @@ msgstr ""
 "%dx%d экран өлшеміне қолдау көрсетілмейді.\n"
 "TERM орта айнымалысын тексеріңіз.\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "TERM орта айнымалысы орнатылмаған!\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr "SIGWINCH арнасын тексеру мүмкін емес"
 
+#: lib/util.c:254
 msgid "B"
 msgstr "Б"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "кБ"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "КиБ"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "МБ"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "МиБ"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "ГБ"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "ГиБ"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "Арна дескрипторын жасау мүмкін емес"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "Арна ағындарын жасау мүмкін емес"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
@@ -1010,9 +1303,11 @@ msgstr ""
 "туындады:\n"
 "%s"
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr "Арна дескрипторын жабу мүмкін емес (p == NULL)"
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
@@ -1021,9 +1316,11 @@ msgstr ""
 "waitpid() функциясында күтпеген қате туындады:\n"
 "%s"
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "Файлдағы өзгерістер жоғалды"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
@@ -1032,131 +1329,192 @@ msgstr ""
 "%s уақытша бумасын жасау мүмкін емес: %s.\n"
 "Уақытша файлдар жасалмайды\n"
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "Жалғастыру үшін кез келген пернені басыңыз..."
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "Ішкі қате:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "Экрандар"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "Тарих"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr ""
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
 msgstr ""
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "&Иә"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "&Жоқ"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "DialogTitle|Тарихты тазалау"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "Бұл тарихты тазалағыңыз келе ме?"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "&OK"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "Бас &тарту"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "Қате"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr "%s (%d)"
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "&Тоқтату"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr "< Бастапқы >"
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr "Темалар"
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr "Тема:"
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr "&Көлеңкелер"
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr "Сыртқы түрі"
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "Ағымдағы нұсқаны көрсетеді"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "Деректер бумасын шығару"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr "Қолданылатын деректер бумалары туралы кеңейтілген ақпаратты шығару"
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "Баптау опцияларын шығару"
 
+#: src/args.c:140
 msgid "Disables Lua support"
 msgstr ""
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "xterm мүмкіндіктерін мәжбүрлеп қолдану"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "X11 қолдауын сөндіру"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "Тышқанның ескі іздеу режимін қолданып көру"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "Мәтіндік нұсқада тышқан қолдауын сөндіру"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "terminfo орнына termcap қолданып көру"
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "Баяу терминалдарда жұмыс істеу үшін"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "Сызу үшін арнайы таңбаларды қолдану"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr "Пернелер тіркесімінің анықтамаларын көрсетілген файлдан жүктеу"
 
+#: src/args.c:223
 msgid "<file>"
 msgstr "<файл>"
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr "Пернелер тіркесімін файлдан жүктемей, бастапқы мәндерді қолдану"
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "Ақ-қара режимде жұмыс істеуді сұрау"
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "Түрлі-түсті режимде жұмыс істеуді сұрау"
 
+#: src/args.c:272
 #, fuzzy
 msgid "Use the specified skin"
 msgstr "mc-ны көрсетілген темамен іске қосу"
 
+#: src/args.c:273
 msgid "<string>"
 msgstr "<жол>"
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr "[+жол_нөмірі] файл1[:жол_нөмірі] [файл2[:жол_нөмірі]...]"
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1167,266 +1525,372 @@ msgstr ""
 "Қателер туралы есептерді (соның ішінде '%s -V' нәтижесін)\n"
 "мына адрес бойынша тикет ретінде жіберіңіз: %s\n"
 
+#: src/args.c:478
 msgid "Main options"
 msgstr "Негізгі опциялар"
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr "Терминал опциялары"
 
+#: src/args.c:492
 msgid "Color options"
 msgstr "Түс опциялары"
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr "Аргументтерді талдау қатесі!"
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr ""
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:146
 msgid "Ctags Configuration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:155
 msgid "Command line options:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:163
 msgid "Case sensitive filter"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:538
 msgid "Go to Declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:591
 msgid "Find Declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, c-format
 msgid "'%s' is not a known symbol."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:662
 msgid "Failed to create temporary file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:672
 msgid "Failed to open temporary file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:727
 msgid "Failed to run grep."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, c-format
 msgid "No references found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 msgid "Search Symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 msgid "Search File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 msgid "Complete Symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, c-format
 msgid "Failed to load tags file: %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, c-format
 msgid "Cannot create temp file: %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Project root directory to index:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, c-format
 msgid "Failed to create index in %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, c-format
 msgid "Reindex failed for %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 msgid "Navigation History"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 msgid "Go to declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 msgid "Complete symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 msgid "Navigation history"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 msgid "Search symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 msgid "Search file"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 msgid "Symbols in current file"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 msgid "Load tags file"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 msgid "Reindex repository"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 msgid "Configuration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 msgid "Go to &declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr "Анықтаманы &табу"
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 msgid "Navigation &history"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 msgid "&Search symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 msgid "S&ymbols in file"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 msgid "&Complete symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:328
 msgid "Select symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:411
 msgid "Symbol name:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:420
 msgid "File name or path:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Load Tags File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "&Жабу"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr ""
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "Ескерту"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
@@ -1434,46 +1898,62 @@ msgstr ""
 "Ағымдағы мәтін файлға сақталмай өзгертілді.\n"
 "Жалғастыру бұл өзгерістерді жояды."
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "Жал&ғастыру"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr "Сөзді &қосу"
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "&Алмастыру"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "Өткізіп &жіберу"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "Тіл"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr "Қате жазылған"
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr "Сөзді тексеру"
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "Ұсыну"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1481,6 +1961,7 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1488,45 +1969,58 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1638
 msgid "Add word"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1738
 msgid "Aspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1749
 msgid "Language:"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1752
 msgid "&Select..."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "Тілді таңдау"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr "Жүктелуде: %3d%%"
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "Жүктелуде..."
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
@@ -1535,13 +2029,16 @@ msgstr ""
 "Ашу мүмкін емес\n"
 "%s"
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "Файлды жүктеу"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr "%s оқу қатесі"
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
@@ -1550,6 +2047,7 @@ msgstr ""
 "Күйін алу мүмкін емес\n"
 "%s"
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
@@ -1558,6 +2056,7 @@ msgstr ""
 "%s\n"
 "кәдімгі файл емес"
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
@@ -1566,10 +2065,12 @@ msgstr ""
 "\"%s\" файлы тым үлкен.\n"
 "Сонда да ашу керек пе?"
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr "Арнадан оқу қатесі: %s"
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
@@ -1578,40 +2079,50 @@ msgstr ""
 "Оқу үшін арнаны ашу мүмкін емес\n"
 "%s"
 
+#: src/editor/edit.c:4992
 msgid "Undo"
 msgstr ""
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
 msgstr ""
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
 msgstr ""
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr ""
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
 msgstr ""
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "Қайта &көру"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr "Файлда қатаң сілтемелер бар. Сақтау алдында ажырату керек пе?"
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr "Файл осы уақыт ішінде өзгертілді. Сонда да сақтау керек пе?"
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr "Арнаға жазу қатесі: %s"
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1622,30 +2133,40 @@ msgstr ""
 "%s\n"
 "жазу үшін ашу мүмкін емес"
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr "Сақталатын файл жаңа жол таңбасымен аяқталмайды."
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "Өз&гертпеу"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "&Unix пішімі (LF)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "&Windows/DOS пішімі (CR LF)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "&Macintosh пішімі (CR)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "Файл атын енгізіңіз:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "Жол үзілістерін келесіге өзгерту:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "Қалай сақтау"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
@@ -1654,21 +2175,27 @@ msgstr ""
 "Буманы жасау мүмкін емес\n"
 "%s"
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "&Жылдам сақтау"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "&Қауіпсіз сақтау"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr "Келесі кеңейтіліммен &сақтық көшірме жасау:"
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr "&POSIX жаңа жолын тексеру"
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "Түзетудің сақтау режимі"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1678,52 +2205,69 @@ msgstr ""
 "%s\n"
 "сақтау мүмкін емес: кәдімгі файл емес"
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "Мұндай атпен файл бұрыннан бар"
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "Үстінен &жазу"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "Файлды сақтау мүмкін емес"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "Файлды сақтауды растау: \"%s\""
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "Файлды сақтау"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "&Сақтау"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "Жүктеу"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "Синтаксис файлын түзету"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "Қай синтаксис файлын түзеткіңіз келеді?"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "&Пайдаланушы"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "&Жүйелік"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "Мәзірді түзету"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "Қай мәзір файлын түзеткіңіз келеді?"
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "&Жергілікті"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[Атсыз]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
@@ -1732,9 +2276,11 @@ msgstr ""
 "%s файлы өзгертілді.\n"
 "Жабу алдында сақтау керек пе?"
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "Файлды жабу"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
@@ -1743,461 +2289,614 @@ msgstr ""
 "%s жұмысын аяқтауда.\n"
 "Өзгертілген %s файлын сақтау керек пе?"
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "Шығу"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "Бұл функция іске асырылмаған"
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "Файлға сақтау мүмкін емес"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "Жолға өту"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr "Жолды енгізіңіз:"
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "Блокты сақтау"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr "Блокты сақтау мүмкін емес"
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "Файлды кірістіру мүмкін емес"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "mail -s <тақырыбы> -c <көшірме> <кімге>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr "Кімге"
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "Тақырыбы"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "Көшірмелер"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "Пошта"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "Бас тарту"
 
+#: src/editor/editcmd.c:2820
 #, c-format
 msgid "insert %d"
 msgstr ""
 
+#: src/editor/editcmd.c:2826
 #, c-format
 msgid "delete %d"
 msgstr ""
 
+#: src/editor/editcmd.c:2829
 msgid "replace"
 msgstr ""
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr ""
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 msgid "Undo History"
 msgstr ""
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "Толықтыруларды жинау"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "Атсыз"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "Макросты сақтау"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "Макростың жаңа ыстық пернесін басыңыз:"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "Соңғы командаларды қайталау"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "Қайталау саны:"
 
+#: src/editor/editmacros.c:708
 #, c-format
 msgid "Delete macro %s?"
 msgstr ""
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "Макросты өшіру"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr ""
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr ""
 
+#: src/editor/editmacros.c:865
 msgid "Run"
 msgstr ""
 
+#: src/editor/editmacros.c:868
 msgid "Close"
 msgstr ""
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "Файлды &ашу..."
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "&Жаңа"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr "&Тарих..."
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "Қалай &сақтау..."
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "Файлды &кірістіру..."
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "Файлға &көшіру..."
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "&Пайдаланушы мәзірі..."
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr "Осы &туралы..."
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "&Шығу"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "&Болдырмау"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "&Қайталау"
 
+#: src/editor/editmenu.c:259
 msgid "Undo &History..."
 msgstr ""
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr "Кірістіру/Үстінен жазуды &ауыстыру"
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "Белгіні &ауыстыру"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "Бағандарды &белгілеу"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "&Барлығын белгілеу"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "Белгіні &алу"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "&Көшіру"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "&Жылжыту"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "&Өшіру"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "Clipfile-ға &көшіру"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "Clipfile-ға &қиып алу"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "Clipfile-дан &кірістіру"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "&Басына"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "&Соңына"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "&Іздеу..."
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "&Қайта іздеу"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "&Алмастыру..."
 
+#: src/editor/editmenu.c:293
 msgid "Toggle &line filter"
 msgstr ""
 
+#: src/editor/editmenu.c:294
 msgid "Filter by &word"
 msgstr ""
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr "Бетбелгіні &ауыстыру"
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "&Келесі бетбелгі"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "&Алдыңғы бетбелгі"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr "Бетбелгілерді &тазалау"
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "&Жолға өту..."
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr "Жол күйін &ауыстыру"
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr "Сәйкес &жақшаға өту"
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr "Синтаксисті &түрлі-түсті етуді ауыстыру"
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr "Оң &жақ жиекті ауыстыру"
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr ""
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "&Кодтау..."
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr ""
 
+#: src/editor/editmenu.c:324
 msgid "&Unfold all"
 msgstr ""
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "Экранды &жаңарту"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr "Макросты жазуды &бастау/тоқтату"
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr ""
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr "Әрекеттерді &жазу/қайталау"
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "&Жылжыту"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "Өлшемін &өзгерту"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr "Толық экранға &ауыстыру"
 
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "&Келесі"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "&Алдыңғы"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr "&Тізім..."
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr "&Жалпы..."
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "Сақтау &режимі..."
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "Синтаксисті &түрлі-түсті ету..."
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr "&Сыртқы түрі..."
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr "Пернелерді &үйрету..."
 
+#: src/editor/editmenu.c:374
 msgid "Key &bindings..."
 msgstr ""
 
+#: src/editor/editmenu.c:375
 msgid "Key s&niffer..."
 msgstr ""
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "&Панель опциялары..."
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr ""
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr ""
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "&Синтаксис файлы"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "&Мәзір файлы"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "Баптауды &сақтау"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr ""
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "&Файл"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "&Түзету"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "&Іздеу"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "&Команда"
 
+#: src/editor/editmenu.c:553
 msgid "&Navigate"
 msgstr ""
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr "&Терезе"
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr ""
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "&Опциялар"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 msgid "Lua action"
 msgstr ""
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 msgid "Action failed"
 msgstr ""
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr "&Жоқ"
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr "&Динамикалық параграфтау"
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr "&Жазу машинкасының тасымалдауы"
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "Тасымалдау режимі"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr "Табуляция"
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "&Жалған жартылай табтар"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "Табтар арқылы &Backspace қолдану"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "Табтарды &бос орындармен толтыру"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr "Таб аралығы:"
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "Басқа опциялар"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "&Return автоматты шегініс жасайды"
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "Сақтау алдында &растау"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "Файл &позициясын сақтау"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr "Көрінетін &соңғы бос орындар"
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr "Көрінетін &табтар"
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr ""
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "Синтаксисті &түрлі-түсті ету"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr "Кірістірілген блоктан кейінгі &курсор"
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr "Тұрақты &белгілеу"
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr "Жол соңынан &тыс курсор"
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr "&Топтық болдырмау"
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr "Тасымалдау жолының ұзындығы:"
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "Түзеткіш опциялары"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr "Іздеу жолын енгізіңіз:"
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr "Регистрді &ескеру"
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "&Кері бағытта"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr "&Белгіленгенде"
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr "&Толық сөздер"
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr "&Барлық кодтаулар"
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "Барлығын &табу"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr ""
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "Іздеу"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr "%s ізделуде: %3d%%"
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "%s ізделуде"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr "Алмастыру жолын енгізіңіз:"
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "Алмастыру"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr "Келесіге алмастыру:"
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "&Барлығы"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "Алмастыруды растау"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr "%ld алмастыру жасалды"
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr ""
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
@@ -2206,73 +2905,98 @@ msgstr ""
 "%s үшін жазылған\n"
 "пайдаланушыға ыңғайлы мәтін түзеткіші."
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "Туралы"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr ""
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr ""
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "Ашық файлдар"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "Түзету: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr "ButtonBar|Көмек"
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr "ButtonBar|Сақтау"
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "ButtonBar|Белгіл"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "ButtonBar|Алмаст"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "ButtonBar|Көшіру"
 
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "ButtonBar|Жылжыт"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr "ButtonBar|Іздеу"
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "ButtonBar|Өшіру"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "ButtonBar|Мәзір"
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr "ButtonBar|Шығу"
 
+#: src/editor/fold.c:478
 #, c-format
 msgid "Filtering %s: %3d%%"
 msgstr ""
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "Сүзгі"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr ""
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr "< Авто >"
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr "< Ағымдағы синтаксисті қайта жүктеу >"
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -2281,179 +3005,232 @@ msgstr ""
 "Файлды ашу мүмкін емес\n"
 "%s"
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "Синтаксис файлын жүктеу"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "%s файлының %d жолындағы қате"
 
+#: src/execute.c:240
 msgid ""
 "Not an xterm;\n"
 "the terminal cannot be shown."
 msgstr ""
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr "%s ортасына қайту үшін 'exit' енгізіңіз"
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "Көмек файлы пішімінің қатесі\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "Ішкі қате: Сілтеме аймағының қос басталуы"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr "Көмек файлында %s node-ы табылмады"
 
+#: src/help.c:1487
 msgid "See also"
 msgstr ""
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "Көмек"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr "ButtonBar|Индекс"
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "ButtonBar|Алдыңғы"
 
+#: src/key_learn.c:138
 msgid "Function keys"
 msgstr ""
 
+#: src/key_learn.c:139
 msgid "Arrows / Navigation"
 msgstr ""
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr ""
 
+#: src/key_learn.c:312
 msgid "Learn key"
 msgstr ""
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr ""
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
 "Reassign to %s?"
 msgstr ""
 
+#: src/key_learn.c:354
 msgid "Conflict"
 msgstr ""
 
+#: src/key_learn.c:420
 #, c-format
 msgid ""
 "Cannot accept this key.\n"
 "You pressed: %s"
 msgstr ""
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr ""
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 msgid "&Ctrl"
 msgstr ""
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr ""
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 msgid "&Shift"
 msgstr ""
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 msgid "Edit &term file"
 msgstr ""
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr ""
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr ""
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
 "Wait until this message disappears."
 msgstr ""
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr ""
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr ""
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr ""
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr ""
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr ""
 
+#: src/keybind_dialog.c:128
 msgid "&Main"
 msgstr ""
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr ""
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr ""
 
+#: src/keybind_dialog.c:133
 msgid "&Menu"
 msgstr ""
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr ""
 
+#: src/keybind_dialog.c:134
 msgid "&Listbox"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 msgid "&Help"
 msgstr ""
 
+#: src/keybind_dialog.c:139
 msgid "&Editor"
 msgstr ""
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr ""
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr ""
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr ""
 
+#: src/keybind_dialog.c:629
 msgid "Assign key"
 msgstr ""
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr ""
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr ""
 
+#: src/keybind_dialog.c:895
 msgid "Press new shortcut..."
 msgstr ""
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
 "Reassign anyway?"
 msgstr ""
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 msgid "&Back"
 msgstr ""
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 msgid "Edit &keymap file"
 msgstr ""
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2462,9 +3239,11 @@ msgstr ""
 "Іске қосу сәтсіз аяқталды:\n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "Үй бумасының жолы абсолютті емес"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2475,182 +3254,238 @@ msgstr ""
 "Жабу кезіндегі қате:\n"
 "%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr ""
 
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 msgid "Lua scripts"
 msgstr ""
 
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 msgid "Unknown error"
 msgstr ""
 
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
 msgstr ""
 
+#: src/manage_plugins.c:445
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr ""
 
+#: src/manage_plugins.c:511
 #, fuzzy
 msgid "&Settings"
 msgstr "&Орнату"
 
+#: src/manage_plugins.c:593
 msgid "Lua action failed"
 msgstr ""
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr ""
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr ""
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr ""
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr ""
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr ""
 
+#: src/runtime-host.c:1931
 msgid "Runtime errors"
 msgstr ""
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "Кодтық бетті таңдаңыз"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "-  < Аударма жоқ >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "Баптау"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr "Баптау %s файлына сақталды"
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr "Баптауды %s файлына сақтау мүмкін емес"
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "Ішкі түзеткіш және aspell қолдауымен"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr "xterm және Linux консолінде тышқанды қолдаумен"
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr "xterm-де тышқанды қолдаумен"
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr "X11 оқиғаларын қолдаумен"
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr "Халықаралықтандыру қолдауымен"
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr ""
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr "GLib %d.%d.%d нұсқасымен құрастырылған (GLib %u.%u.%u қолданылуда)\n"
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr "S-Lang-пен құрастырылған"
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr " және terminfo дерекқорымен (S-Lang %s қолданылуда)\n"
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr "%s нұсқасымен құрастырылған"
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr " (%s қолданылуда)\n"
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "Деректер түрлері:"
 
+#: src/textconf.c:202
 msgid "directory not found"
 msgstr ""
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr "Үй бумасы:"
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr "Профиль түбірлік бумасы:"
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "Жүйелік деректер"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "Баптау бумасы:"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "Деректер бумасы:"
 
+#: src/textconf.c:218 src/textconf.c:257
 msgid "Editor plugins:"
 msgstr ""
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr ""
 
+#: src/textconf.c:224 src/textconf.c:243
 msgid "Lua scripts:"
 msgstr ""
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr ""
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "Пайдаланушы деректері"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "Кэш бумасы:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "Жөндеу"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "ҚАТЕ:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "Ақиқат:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "Жалған:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr "Уақытша diff файлын жасау мүмкін емес"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr "Бағдарламаны шақыру қатесі"
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr "Уақытша команда файлын жасау мүмкін емес"
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "Параметр"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr "Ескерту — файл еленбейді"
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2660,16 +3495,20 @@ msgstr ""
 "адам жаза алады.\n"
 "Оны қолдану қауіпсіздігіңізге нұқсан келтіруі мүмкін"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr "Жергілікті емес файлдық жүйелерде командаларды орындау мүмкін емес"
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr "%s ішінде сәйкес келетін жазбалар табылмады"
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "Пайдаланушы мәзірі"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"

@@ -30,545 +30,701 @@ msgstr ""
 "X-Generator: Weblate 2026.9.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr ""
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "警告: コードページの一覧を読み込めません"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7 ビット ASCII"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "%s から %s へ変換することが出来ません"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "イベントシステムは初期化済みです"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "イベント システムの初期化に失敗しました"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "イベント システムが未初期化です"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "入力データを確認してください！パラメーターの一部はnullです！"
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "イベント用のグループ\"%s”を作成できません！"
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "イベント「%s」を作成できません！"
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr ""
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr ""
 
+#: lib/keybind.c:72
 #, fuzzy
 msgid "Half page down"
 msgstr "Page Down"
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr ""
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr ""
 
+#: lib/keybind.c:75
 msgid "Top of screen"
 msgstr ""
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr ""
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr ""
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr ""
 
+#: lib/keybind.c:79
 #, fuzzy
 msgid "Copy file(s)"
 msgstr "ファイルの比較(&O)"
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr ""
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Delete"
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr ""
 
+#: lib/keybind.c:87
 #, fuzzy
 msgid "User-defined menu"
 msgstr "ユーザ定義(&U):"
 
+#: lib/keybind.c:88
 #, fuzzy
 msgid "Edit user menu"
 msgstr "ユーザーのメニュー"
 
+#: lib/keybind.c:90
 #, fuzzy
 msgid "Search next"
 msgstr "検索終了"
 
+#: lib/keybind.c:92
 #, fuzzy
 msgid "Replace next"
 msgstr "置換"
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr ""
 
+#: lib/keybind.c:94
 msgid "Terminal"
 msgstr ""
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "ファイル編集"
 
+#: lib/keybind.c:96
 #, fuzzy
 msgid "Edit new file"
 msgstr "ファイル編集"
 
+#: lib/keybind.c:97
 #, fuzzy
 msgid "Select charset"
 msgstr "比較方法の選択"
 
+#: lib/keybind.c:98
 #, fuzzy
 msgid "Command history"
 msgstr "コマンド履歴(&H)"
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr ""
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr ""
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr ""
 
+#: lib/keybind.c:103
 #, fuzzy
 msgid "Save as..."
 msgstr "別名で保存(&A)..."
 
+#: lib/keybind.c:104
 #, fuzzy
 msgid "Go to line"
 msgstr "行移動"
 
+#: lib/keybind.c:105
 #, fuzzy
 msgid "Refresh screen"
 msgstr "再表示(&R)"
 
+#: lib/keybind.c:106
 msgid "Suspend to shell"
 msgstr ""
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr ""
 
+#: lib/keybind.c:108
 #, fuzzy
 msgid "Next screen"
 msgstr "再表示(&R)"
 
+#: lib/keybind.c:109
 #, fuzzy
 msgid "Previous screen"
 msgstr "前(&P)"
 
+#: lib/keybind.c:110
 #, fuzzy
 msgid "Next file"
 msgstr "ファイルの挿入"
 
+#: lib/keybind.c:111
 #, fuzzy
 msgid "Previous file"
 msgstr "前(&P)"
 
+#: lib/keybind.c:112
 #, fuzzy
 msgid "Delete to line start"
 msgstr "10キーの Delete"
 
+#: lib/keybind.c:113
 #, fuzzy
 msgid "Delete to line end"
 msgstr "10キーの Delete"
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr ""
 
+#: lib/keybind.c:115
 #, fuzzy
 msgid "Delete to word end"
 msgstr "10キーの Delete"
 
+#: lib/keybind.c:116
 #, fuzzy
 msgid "Cut to clipboard"
 msgstr "clipfile に切り取り(&C)"
 
+#: lib/keybind.c:117
 #, fuzzy
 msgid "Copy to clipboard"
 msgstr "クリップ ファイルにコピー(&P)"
 
+#: lib/keybind.c:118
 #, fuzzy
 msgid "Paste from clipboard"
 msgstr "clipfile に貼り付け(&S)"
 
+#: lib/keybind.c:119
 #, fuzzy
 msgid "Toggle selection"
 msgstr "選択の反転(&I)"
 
+#: lib/keybind.c:120
 #, fuzzy
 msgid "Select left"
 msgstr "選択"
 
+#: lib/keybind.c:121
 #, fuzzy
 msgid "Select right"
 msgstr "選択"
 
+#: lib/keybind.c:122
 #, fuzzy
 msgid "Select up"
 msgstr "グループの選択(&G)"
 
+#: lib/keybind.c:123
 #, fuzzy
 msgid "Select down"
 msgstr "選択"
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr ""
 
+#: lib/keybind.c:125
 #, fuzzy
 msgid "Select to word end"
 msgstr "比較方法の選択"
 
+#: lib/keybind.c:126
 msgid "Select to line start"
 msgstr ""
 
+#: lib/keybind.c:127
 #, fuzzy
 msgid "Select to line end"
 msgstr "言語を選択"
 
+#: lib/keybind.c:128
 #, fuzzy
 msgid "Sort order..."
 msgstr "並び変える"
 
+#: lib/keybind.c:129
 #, fuzzy
 msgid "General options"
 msgstr "パネル オプション"
 
+#: lib/keybind.c:130
 #, fuzzy
 msgid "Learn terminal keys"
 msgstr "キーの学習"
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr ""
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr ""
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr ""
 
+#: lib/keybind.c:134
 #, fuzzy
 msgid "Set bookmark"
 msgstr "次のブックマーク(&N)"
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr ""
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr ""
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 #, fuzzy
 msgid "Find declaration"
 msgstr "パッチを当てた後のrejectファイルを検索"
 
+#: lib/keybind.c:139
 msgid "Appearance settings"
 msgstr ""
 
+#: lib/keybind.c:140
 #, fuzzy
 msgid "Save setup"
 msgstr "設定保存(&S)"
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr ""
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr ""
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr ""
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr ""
 
+#: lib/keybind.c:154
 #, fuzzy
 msgid "Previous link"
 msgstr "前(&P)"
 
+#: lib/keybind.c:155
 #, fuzzy
 msgid "Next node"
 msgstr "空きノード:"
 
+#: lib/keybind.c:156
 #, fuzzy
 msgid "Previous node"
 msgstr "前(&P)"
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr ""
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr ""
 
+#: lib/keybind.c:167
 #, fuzzy
 msgid "Deselect all"
 msgstr "選択解除"
 
+#: lib/keybind.c:168
 #, fuzzy
 msgid "Select page up"
 msgstr "グループの選択(&G)"
 
+#: lib/keybind.c:169
 #, fuzzy
 msgid "Select page down"
 msgstr "言語を選択"
 
+#: lib/keybind.c:171
 #, fuzzy
 msgid "Close editor"
 msgstr "ファイルを閉じる"
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr ""
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr ""
 
+#: lib/keybind.c:177
 #, fuzzy
 msgid "Open file in editor"
 msgstr "拡張ファイルの編集"
 
+#: lib/keybind.c:178
 #, fuzzy
 msgid "Select word"
 msgstr "選択"
 
+#: lib/keybind.c:179
 #, fuzzy
 msgid "Select line"
 msgstr "言語を選択"
 
+#: lib/keybind.c:180
 #, fuzzy
 msgid "Select all"
 msgstr "選択"
 
+#: lib/keybind.c:181
 msgid "Column selection mode"
 msgstr ""
 
+#: lib/keybind.c:182
 #, fuzzy
 msgid "Save selected block"
 msgstr "ブロックの保存"
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "ファイルの挿入"
 
+#: lib/keybind.c:184
 msgid "Toggle insert/overwrite"
 msgstr ""
 
+#: lib/keybind.c:185
 #, fuzzy
 msgid "Insert date/time (Lua action)"
 msgstr "日時の挿入(&D)..."
 
+#: lib/keybind.c:186
 #, fuzzy
 msgid "Delete line"
 msgstr "Delete"
 
+#: lib/keybind.c:187
 #, fuzzy
 msgid "Mail file"
 msgstr "ファイルを読み込む"
 
+#: lib/keybind.c:188
 #, fuzzy
 msgid "Undo history"
 msgstr "コマンド履歴(&H)"
 
+#: lib/keybind.c:189
 msgid "Format paragraph (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:190
 #, fuzzy
 msgid "Match bracket"
 msgstr "左角カッコ"
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr ""
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr ""
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr ""
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr ""
 
+#: lib/keybind.c:197
 #, fuzzy
 msgid "Repeat last macro"
 msgstr "最後のコマンドを繰り返す"
 
+#: lib/keybind.c:198
 msgid "Spell check"
 msgstr ""
 
+#: lib/keybind.c:199
 msgid "Spell check current word"
 msgstr ""
 
+#: lib/keybind.c:200
 #, fuzzy
 msgid "Select spell language"
 msgstr "言語を選択"
 
+#: lib/keybind.c:201
 #, fuzzy
 msgid "Clear all bookmarks"
 msgstr "マークをクリア(&l)"
 
+#: lib/keybind.c:202
 #, fuzzy
 msgid "Next bookmark"
 msgstr "次のブックマーク(&N)"
 
+#: lib/keybind.c:203
 #, fuzzy
 msgid "Previous bookmark"
 msgstr "前のブックマーク(&P)"
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr ""
 
+#: lib/keybind.c:205
 #, fuzzy
 msgid "Unfold all"
 msgstr "すべて検索(&F)"
 
+#: lib/keybind.c:206
 msgid "Toggle line filter"
 msgstr ""
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr ""
 
+#: lib/keybind.c:208
 #, fuzzy
 msgid "Select to file start"
 msgstr "紛失したファイルに変更します"
 
+#: lib/keybind.c:209
 #, fuzzy
 msgid "Select to file end"
 msgstr "比較方法の選択"
 
+#: lib/keybind.c:210
 #, fuzzy
 msgid "Select to page start"
 msgstr "比較方法の選択"
 
+#: lib/keybind.c:211
 #, fuzzy
 msgid "Select to page end"
 msgstr "比較方法の選択"
 
+#: lib/keybind.c:212
 #, fuzzy
 msgid "Select scroll up"
 msgstr "グループの選択(&G)"
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr ""
 
+#: lib/keybind.c:214
 #, fuzzy
 msgid "Select paragraph up"
 msgstr "グループの選択(&G)"
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:216
 #, fuzzy
 msgid "Column select page up"
 msgstr "グループの選択解除(&N)"
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr ""
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr ""
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr ""
 
+#: lib/keybind.c:220
 #, fuzzy
 msgid "Column select up"
 msgstr "グループの選択解除(&N)"
 
+#: lib/keybind.c:221
 msgid "Column select down"
 msgstr ""
 
+#: lib/keybind.c:222
 #, fuzzy
 msgid "Column select scroll up"
 msgstr "グループの選択解除(&N)"
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr ""
 
+#: lib/keybind.c:224
 msgid "Column select paragraph up"
 msgstr ""
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr ""
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr ""
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:229
 msgid "Toggle visible tabs/spaces"
 msgstr ""
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr ""
 
+#: lib/keybind.c:231
 #, fuzzy
 msgid "Toggle syntax highlighting"
 msgstr "構文の強調表示を選択します"
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "構文の強調表示を選択します"
 
+#: lib/keybind.c:233
 #, fuzzy
 msgid "Toggle right margin"
 msgstr "マークの切り替え(&G)"
 
+#: lib/keybind.c:234
 #, fuzzy
 msgid "Save mode options"
 msgstr "パネル オプション"
 
+#: lib/keybind.c:235
 #, fuzzy
 msgid "About editor"
 msgstr "組込エディタを使用"
 
+#: lib/keybind.c:237
 msgid "Execute script"
 msgstr ""
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr ""
 
+#: lib/keybind.c:239
 #, fuzzy
 msgid "Resize window"
 msgstr "リサイズ(&R)"
 
+#: lib/keybind.c:240
 msgid "Toggle fullscreen"
 msgstr ""
 
+#: lib/keybind.c:241
 msgid "Window list"
 msgstr ""
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr ""
 
+#: lib/keybind.c:243
 #, fuzzy
 msgid "Previous window"
 msgstr "前(&P)"
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -579,68 +735,87 @@ msgstr ""
 "ユーザー: %s\n"
 "プロセス ID: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "ファイルがロックされています"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "ロックを取得(&G)"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "ロックを無視(&I)"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "ディレクトリー %s が作成できません"
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "致命的なエラー:ディレクトリではありません:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
 msgstr ""
 "範囲外の数（バイト範囲、0 <= n <= 0xff、16進数で表される必要があります）"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "不正な文字"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "クォート記号が閉じられていません"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
 "%s."
 msgstr ""
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "検索文字列が見つかりません"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "実装されていません"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr "置換するトークンの数が見付かったトークンの数と一致しません"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "トークン番号 %d が正しくありません"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "正規表現のエラー"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "通常(r)"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "正規表現(&g)"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "16進数(&x)"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "ワイルドカード検索(&d)"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -649,6 +824,7 @@ msgstr ""
 "スキン '%s' を正しくパースできません。\n"
 "デフォルトのスキンがロードされます。"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -656,6 +832,7 @@ msgid ""
 "Default skin has been loaded"
 msgstr ""
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -663,6 +840,7 @@ msgid ""
 "Default skin has been loaded"
 msgstr ""
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -671,6 +849,7 @@ msgstr ""
 "スキン '%s' をロードできませんでした。\n"
 "デフォルトのスキンがロードされます。"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -679,12 +858,14 @@ msgid ""
 "command to list all available variants on your system.\n"
 msgstr ""
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
 "Please upgrade your system.\n"
 msgstr ""
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -692,9 +873,11 @@ msgid ""
 "Use the 'toe -a' command to list all available variants on your system.\n"
 msgstr ""
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "このSlangの版でサポートされない色です。"
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -703,289 +886,384 @@ msgid ""
 "Alternatively, you can set COLORTERM=truecolor.\n"
 msgstr ""
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "エスケープ"
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "Function キー 1"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "Function キー 2"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "Function キー 3"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "Function キー 4"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "Function キー 5"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "Function キー 6"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "Function キー 7"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "Function キー 8"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "Function キー 9"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "Function キー 10"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "Function キー 11"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "Function キー 12"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "Function キー 13"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "Function キー 14"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "Function キー 15"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "Functionキー 16"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "Function キー 17"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "Function キー 18"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "Function キー 19"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "Function キー 20"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Completion/M-tab"
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "BackTab/S-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Backspace"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "上矢印"
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "下矢印"
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "左矢印"
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "右矢印"
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Insert キー"
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "HOME"
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "Endキー"
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Page Up"
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Page Down"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "10キーの/"
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "10キーの *"
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "10キーの -"
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "10キーの +"
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "10キーの 左矢印"
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "10キーの 右矢印"
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "10キーの 上矢印"
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "10キーの 下矢印"
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "10キーの Home"
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "10キーの End"
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "10キーの PageDown"
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "10キーの PageUp"
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "10キーの Insert"
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "10キーの Delete"
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "10キーの Enter"
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "Function キー21"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "Function キー 22"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "Function キー23"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "Function キー24"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "A1 キー"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "C1 キー"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "アスタリスク"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "マイナス"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "プラス"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "ドット"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "以下"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "以上"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "等しい"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "カンマ"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "アポストロフィ"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "コロン"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "セミコロン"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "感嘆符（！）"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "疑問符（？）"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "アンパサンド"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "＄"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "クォーテーションマーク"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "パーセント記号"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "キャレット"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "チルダ"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "プライム"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "下線"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "取り消し線"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "パイプ"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "左カッコ"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "右カッコ"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "左角カッコ"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "右角カッコ"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "左中カッコ"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "右中カッコ"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "エンター"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "タブ キー"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "スペース キー"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "スラッシュ キー"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "バックスラッシュ キー"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "番号記号 #"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "アットマーク"
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ctrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr ""
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Shift"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
@@ -994,18 +1272,21 @@ msgstr ""
 "\n"
 "SIGWINCH パイプを作成できません: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
 "Cannot configure write end of SIGWINCH pipe: %s (%d)\n"
 msgstr ""
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
 "Cannot configure read end of SIGWINCH pipe: %s (%d)\n"
 msgstr ""
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -1014,188 +1295,265 @@ msgstr ""
 "スクリーンサイズ %dx%d はサポートされていません\n"
 "TERM環境変数の値をチェックしてください\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "環境変数 TERM がセットされていません\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr "SIGWINCH パイプをチェックできません"
 
+#: lib/util.c:254
 msgid "B"
 msgstr "B"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "kB"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "KiB"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "MB"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "MiB"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "GB"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "GiB"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "パイプディスクリプタを作成できません"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "パイプストリームを作成できません"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
 "%s"
 msgstr ""
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr ""
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
 "%s"
 msgstr ""
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "紛失したファイルに変更します"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
 "Temporary files will not be created\n"
 msgstr ""
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "なにかキーを押せば続行します..."
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "内部エラー:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "スクリーン"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "履歴"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr ""
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
 msgstr ""
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "はい(&Y)"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "いいえ(&N)"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "DialogTitle |歴史のクリーンアップ"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "この履歴を消去しますか？"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "はい(&O)"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "キャンセル(&C)"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "エラー"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr ""
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "中断(&A)"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr ""
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr ""
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr ""
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr ""
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr ""
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "バージョンを表示"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "データディレクトリを印刷"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr ""
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "印刷設定オプション"
 
+#: src/args.c:140
 #, fuzzy
 msgid "Disables Lua support"
 msgstr "X11サポートを無効にします"
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "強制的に xterm 機能を使う"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "X11サポートを無効にします"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "古いハイライトマウストラッキングの利用を試みます"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "テキスト版でのマウスのサポートを無効化"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "terminfoの代わりにtermcapを試す"
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "遅い端末で実行"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "stickchars で描画"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr ""
 
+#: src/args.c:223
 msgid "<file>"
 msgstr ""
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr ""
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "白黒モードでの実行を要求"
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "カラーモードでの実行を要求"
 
+#: src/args.c:272
 msgid "Use the specified skin"
 msgstr ""
 
+#: src/args.c:273
 msgid "<string>"
 msgstr ""
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr ""
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1203,339 +1561,461 @@ msgid ""
 "as tickets at %s\n"
 msgstr ""
 
+#: src/args.c:478
 msgid "Main options"
 msgstr ""
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr ""
 
+#: src/args.c:492
 msgid "Color options"
 msgstr ""
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr ""
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr ""
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:146
 #, fuzzy
 msgid "Ctags Configuration"
 msgstr "設定(&C)..."
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:155
 #, fuzzy
 msgid "Command line options:"
 msgstr "設定オプション"
 
+#: src/plugins/ctags/ctags-config.c:163
 #, fuzzy
 msgid "Case sensitive filter"
 msgstr "大文字と小文字を区別(&C)"
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:538
 msgid "Go to Declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:591
 #, fuzzy
 msgid "Find Declaration"
 msgstr "パッチを当てた後のrejectファイルを検索"
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, c-format
 msgid "'%s' is not a known symbol."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:662
 #, fuzzy
 msgid "Failed to create temporary file."
 msgstr "一時コマンドファイルを作成できません"
 
+#: src/plugins/ctags/ctags-plugin.c:672
 #, fuzzy
 msgid "Failed to open temporary file."
 msgstr "ファイルの保存に失敗しました"
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:727
 #, fuzzy
 msgid "Failed to run grep."
 msgstr ""
 "実行に失敗しました: \n"
 "%s\n"
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, c-format
 msgid "No references found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Search Symbol"
 msgstr "検索終了"
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "Search File"
 msgstr "検索終了"
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 msgid "Complete Symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, fuzzy, c-format
 msgid "Failed to load tags file: %s"
 msgstr "ファイルの保存に失敗しました"
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, fuzzy, c-format
 msgid "Cannot create temp file: %s"
 msgstr "一時コマンドファイルを作成できません"
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr "%s から %s へ変換することが出来ません"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 #, fuzzy
 msgid "Project root directory to index:"
 msgstr "ディレクトリ \"%s\" を移動:"
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, fuzzy, c-format
 msgid "Failed to create index in %s"
 msgstr "イベント「%s」を作成できません！"
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, c-format
 msgid "Reindex failed for %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 #, fuzzy
 msgid "Navigation History"
 msgstr "ナビゲーション"
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 #, fuzzy
 msgid "Go to declaration"
 msgstr "ノード情報はありません"
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 msgid "Complete symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 #, fuzzy
 msgid "Navigation history"
 msgstr "ナビゲーション"
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 #, fuzzy
 msgid "Search symbol"
 msgstr "検索終了"
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 #, fuzzy
 msgid "Search file"
 msgstr "検索終了"
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 #, fuzzy
 msgid "Symbols in current file"
 msgstr "リンクファイル名:"
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 #, fuzzy
 msgid "Load tags file"
 msgstr "文法ファイルの読み込み"
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 #, fuzzy
 msgid "Reindex repository"
 msgstr "インデックス付きディレクトリ"
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 #, fuzzy
 msgid "Configuration"
 msgstr "確認"
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 msgid "Go to &declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 #, fuzzy
 msgid "Navigation &history"
 msgstr "ナビゲーション"
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 #, fuzzy
 msgid "&Search symbol"
 msgstr "検索(&S)"
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 #, fuzzy
 msgid "S&ymbols in file"
 msgstr "リンクファイル名:"
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 msgid "&Complete symbol"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:328
 #, fuzzy
 msgid "Select symbol"
 msgstr "選択"
 
+#: src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Symbol name:"
 msgstr "リンクファイル名:"
 
+#: src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "File name or path:"
 msgstr "ファイル名:"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:439
 #, fuzzy
 msgid "Load Tags File"
 msgstr "ファイルを読み込む"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "クローズ(&C)"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr ""
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "警告"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
 msgstr ""
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "続ける(&O)"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr ""
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "置換(&R)"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "スキップ(&S)"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "言語"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr ""
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr ""
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "提案"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1543,6 +2023,7 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1550,124 +2031,154 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1638
 #, fuzzy
 msgid "Add word"
 msgstr "新規追加(&A)"
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1738
 msgid "Aspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1749
 #, fuzzy
 msgid "Language:"
 msgstr "言語"
 
+#: src/plugins/spell/spell.c:1752
 #, fuzzy
 msgid "&Select..."
 msgstr "選択"
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "言語を選択"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr ""
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "読み込み中..."
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "ファイルを読み込む"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr ""
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
 "is not a regular file"
 msgstr ""
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
 "Open it anyway?"
 msgstr ""
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr ""
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:4992
 #, fuzzy
 msgid "Undo"
 msgstr "取り消し(&U)"
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
 msgstr ""
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
 msgstr ""
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr ""
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
 msgstr ""
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "再試行(&R)"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr ""
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr ""
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr ""
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1675,51 +2186,67 @@ msgid ""
 "for writing"
 msgstr ""
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr ""
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "変更しない(&D)"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "UNIX 形式(LF)(&U)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "Windows/DOS 形式(CR LF)(&W)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "Macintosh 形式(&M)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "ファイル名の入力:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "改行を以下に変更:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "別名で保存"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
 "%s"
 msgstr ""
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "直ちに保存(&Q)"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "安全に保存(&S)"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr ""
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr ""
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "保存モードの編集"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1727,607 +2254,804 @@ msgid ""
 "not a regular file"
 msgstr ""
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "この名称のファイルは既に存在します"
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "上書き(&O)"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "ファイルを保存できません"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "ファイル保存の確認: \"%s\""
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "ファイルの保存"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "保存(&S)"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "読み込み"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "文法ファイルを編集"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "どの構文ファイルを編集しますか？"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "ユーザ(&U)"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "システム全体(&S)"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "メニューの編集"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "どのメニューファイルを編集しますか？"
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "ローカル(&L)"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[名無し]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
 "Save before close?"
 msgstr ""
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "ファイルを閉じる"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
 "Save modified file %s?"
 msgstr ""
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "終了"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "この機能は実装されていません"
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "ファイルの保存に失敗しました"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "行移動"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr ""
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "ブロックの保存"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr "ブロックを保存できません"
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "ファイルの挿入ができません"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "mail -s <件名> -c <cc> <to>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr ""
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "件名"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "以下に複写"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "メール"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "キャンセル"
 
+#: src/editor/editcmd.c:2820
 #, fuzzy, c-format
 msgid "insert %d"
 msgstr "Insert キー"
 
+#: src/editor/editcmd.c:2826
 #, fuzzy, c-format
 msgid "delete %d"
 msgstr "%s を削除しますか?"
 
+#: src/editor/editcmd.c:2829
 #, fuzzy
 msgid "replace"
 msgstr "置換"
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr ""
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 #, fuzzy
 msgid "Undo History"
 msgstr "履歴"
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "補完を修正"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "名無し"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "マクロの保存"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "マクロの新規ホットキーを押下して下さい。"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "最後のコマンドを繰り返す"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "繰り返し回数:"
 
+#: src/editor/editmacros.c:708
 #, fuzzy, c-format
 msgid "Delete macro %s?"
 msgstr "マクロの削除"
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "マクロの削除"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr ""
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr ""
 
+#: src/editor/editmacros.c:865
 #, fuzzy
 msgid "Run"
 msgstr "実行しています"
 
+#: src/editor/editmacros.c:868
 #, fuzzy
 msgid "Close"
 msgstr "クローズ(&C)"
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "ファイルを開く(&O)..."
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "新規(&N)"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr "履歴(&H)"
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "別名で保存(&A)..."
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "ファイルの挿入(&I)..."
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "ファイルにコピー(&Y)..."
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "ユーザーのメニュー(&U)..."
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr ""
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "終了 (&Q)"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "取り消し(&U)"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "やり直し(&R)"
 
+#: src/editor/editmenu.c:259
 #, fuzzy
 msgid "Undo &History..."
 msgstr "履歴(&H)"
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr ""
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "マークの切り替え(&G)"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "カラムをマーク(&M)"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "すべてマークする(&A)"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "すべてマークを解除する(&K)"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "コピー(&Y)"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "移動(&V)"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "削除(&D)"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "クリップ ファイルにコピー(&P)"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "clipfile に切り取り(&C)"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "clipfile に貼り付け(&S)"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "開始(&B)"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "終了(&E)"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "検索(&S)..."
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "再検索(&A)"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "置換(&R)..."
 
+#: src/editor/editmenu.c:293
 msgid "Toggle &line filter"
 msgstr ""
 
+#: src/editor/editmenu.c:294
 #, fuzzy
 msgid "Filter by &word"
 msgstr "所有者書込み権限(&W)"
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr ""
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "次のブックマーク(&N)"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "前のブックマーク(&P)"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr ""
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "行移動(&G)..."
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr ""
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr ""
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr ""
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr ""
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr ""
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "エンコード(&I)"
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr ""
 
+#: src/editor/editmenu.c:324
 #, fuzzy
 msgid "&Unfold all"
 msgstr "すべて検索(&F)"
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "再表示(&R)"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr ""
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr ""
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr ""
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "移動(&M)"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "リサイズ(&R)"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr ""
 
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "次(&N)"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "前(&P)"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr ""
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr ""
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "モードの保存(&M)"
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "文法のハイライト(&H)..."
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr ""
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr ""
 
+#: src/editor/editmenu.c:374
 #, fuzzy
 msgid "Key &bindings..."
 msgstr "エンコード(&E)..."
 
+#: src/editor/editmenu.c:375
 #, fuzzy
 msgid "Key s&niffer..."
 msgstr "エンコード(&E)..."
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "パネルのオプション(&P)"
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr ""
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr ""
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "文法ファイル(&Y)"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "メニューのファイル(&M)"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "設定保存(&S)"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr ""
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "ファイル(&F)"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "編集(&E)"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "検索(&S)"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "コマンド(&C)"
 
+#: src/editor/editmenu.c:553
 #, fuzzy
 msgid "&Navigate"
 msgstr "ナビゲーション"
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr ""
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr ""
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "オプション(&O)"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Lua action"
 msgstr "ナビゲーション"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Action failed"
 msgstr "パイプの受け渡しに失敗しました"
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr ""
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr ""
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr ""
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "折り返し方法"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr ""
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "疑似半タブ(&F)"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "バックスペースでTABを一気に消去(&B)"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "タブを空白で埋める(&S)"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr ""
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "その他のオプション"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "リターンで自動的にインデント(&R)"
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "保存前に確認(&M)"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "ファイルの位置の保存(&P)"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr ""
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr ""
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr ""
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "文法ハイライト(&S)"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr ""
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr ""
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr ""
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr ""
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr ""
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "編集のオプション"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr ""
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr ""
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "後方(&B)"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr ""
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr ""
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr ""
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "すべて検索(&F)"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr ""
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "検索"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr ""
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "%sを検索中"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr ""
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "置換"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr ""
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "全部(&L)"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "置換の確認"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr ""
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr ""
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
 "written for the %s."
 msgstr ""
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "紹介"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr ""
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr ""
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "ファイルを開く"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "編集: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr ""
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr ""
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "ボタンバー|マーク"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "ボタンバー|交換"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "ボタンバー|コピー"
 
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "ボタンバー|移動"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr ""
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "ButtonBar |削除"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "ボタンバー | プルダウン "
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr ""
 
+#: src/editor/fold.c:478
 #, c-format
 msgid "Filtering %s: %3d%%"
 msgstr ""
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "フィルター"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr ""
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr ""
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr ""
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -2336,194 +3060,247 @@ msgstr ""
 "ファイル %s\n"
 "を開くことができません"
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "文法ファイルの読み込み"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "ファイル %s の %d 行目でエラーです"
 
+#: src/execute.c:240
 msgid ""
 "Not an xterm;\n"
 "the terminal cannot be shown."
 msgstr ""
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr ""
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "ヘルプファイルフォーマットエラー\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "内部バグ：リンク領域のダブルスタート"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr ""
 
+#: src/help.c:1487
 msgid "See also"
 msgstr ""
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "ヘルプ"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr ""
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "ボタンバー|前"
 
+#: src/key_learn.c:138
 #, fuzzy
 msgid "Function keys"
 msgstr "Function キー 1"
 
+#: src/key_learn.c:139
 #, fuzzy
 msgid "Arrows / Navigation"
 msgstr "ナビゲーション"
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr ""
 
+#: src/key_learn.c:312
 #, fuzzy
 msgid "Learn key"
 msgstr "キーの学習"
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr ""
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
 "Reassign to %s?"
 msgstr ""
 
+#: src/key_learn.c:354
 #, fuzzy
 msgid "Conflict"
 msgstr "確認"
 
+#: src/key_learn.c:420
 #, c-format
 msgid ""
 "Cannot accept this key.\n"
 "You pressed: %s"
 msgstr ""
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr ""
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 #, fuzzy
 msgid "&Ctrl"
 msgstr "Ctrl"
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr ""
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 #, fuzzy
 msgid "&Shift"
 msgstr "Shift"
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 #, fuzzy
 msgid "Edit &term file"
 msgstr "メニューファイル編集(&M)"
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr ""
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr ""
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
 "Wait until this message disappears."
 msgstr ""
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr ""
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr ""
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr ""
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr ""
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr ""
 
+#: src/keybind_dialog.c:128
 #, fuzzy
 msgid "&Main"
 msgstr "メール(&M)..."
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr ""
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr ""
 
+#: src/keybind_dialog.c:133
 #, fuzzy
 msgid "&Menu"
 msgstr "メニューのファイル(&M)"
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr ""
 
+#: src/keybind_dialog.c:134
 msgid "&Listbox"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 #, fuzzy
 msgid "&Help"
 msgstr "ヘルプ"
 
+#: src/keybind_dialog.c:139
 #, fuzzy
 msgid "&Editor"
 msgstr "編集(&E)"
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr ""
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr ""
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr ""
 
+#: src/keybind_dialog.c:629
 #, fuzzy
 msgid "Assign key"
 msgstr "A1 キー"
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr ""
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr ""
 
+#: src/keybind_dialog.c:895
 #, fuzzy
 msgid "Press new shortcut..."
 msgstr "なにかキーを押せば続行します..."
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
 "Reassign anyway?"
 msgstr ""
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 #, fuzzy
 msgid "&Back"
 msgstr "後方(&B)"
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 #, fuzzy
 msgid "Edit &keymap file"
 msgstr "メニューファイル編集(&M)"
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2532,9 +3309,11 @@ msgstr ""
 "実行に失敗しました: \n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "HOME ディレクトリが絶対パスではありません"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2545,186 +3324,242 @@ msgstr ""
 "ファイルクローズエラー: \n"
 "%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr ""
 
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 msgid "Lua scripts"
 msgstr ""
 
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 #, fuzzy
 msgid "Unknown error"
 msgstr "<不明なユーザ>"
 
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
 msgstr ""
 
+#: src/manage_plugins.c:445
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr ""
 
+#: src/manage_plugins.c:511
 #, fuzzy
 msgid "&Settings"
 msgstr "設定(&S)"
 
+#: src/manage_plugins.c:593
 msgid "Lua action failed"
 msgstr ""
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr ""
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr ""
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr ""
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr ""
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr ""
 
+#: src/runtime-host.c:1931
 #, fuzzy
 msgid "Runtime errors"
 msgstr "内部エラー:"
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "コードページの選択"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "-  < 翻訳がありません >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "セットアップ"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr ""
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr ""
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "オプションのサブシェルサポートを使用"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr ""
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr ""
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr ""
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr "国際化機能を利用する"
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr ""
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr ""
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr "S言語で構築されています"
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr ""
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr "%sで構築されています"
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr ""
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "データの種類"
 
+#: src/textconf.c:202
 #, fuzzy
 msgid "directory not found"
 msgstr "検索文字列が見つかりません"
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr ""
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr ""
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "システムのデータ"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "設定のディレクトリー"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "データのディレクトリー:"
 
+#: src/textconf.c:218 src/textconf.c:257
 #, fuzzy
 msgid "Editor plugins:"
 msgstr "編集のオプション"
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr ""
 
+#: src/textconf.c:224 src/textconf.c:243
 msgid "Lua scripts:"
 msgstr ""
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr ""
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "ユーザーのデータ"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "キャッシュのディレクトリー:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "デバッグ"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "エラー:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "真:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "偽:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr "一時コマンドファイルを作成できません"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr ""
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr "一時コマンドファイルを作成できません"
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "パラメーター"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr ""
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2733,16 +3568,20 @@ msgstr ""
 "ファイル %s は root やあなたの所有物ではないのに誰でも書き込み\n"
 "可能です.利用するとあなたのセキュリティを侵害する恐れがあります"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr ""
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr ""
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "ユーザーのメニュー"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"

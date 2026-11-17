@@ -33,561 +33,717 @@ msgstr ""
 "X-Generator: Weblate 2026.9.1\n"
 
 # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+#: lib/charsets.c:70
 msgid "No translation"
 msgstr ""
 
+#: lib/charsets.c:226
 msgid "Warning: cannot load codepages list"
 msgstr "Atenție: nu se poate încărca lista de coduri de pagină"
 
+#: lib/charsets.c:229
 msgid "7-bit ASCII"
 msgstr "7-bit ASCII"
 
+#: lib/charsets.c:331 lib/charsets.c:342
 #, c-format
 msgid "Cannot translate from %s to %s"
 msgstr "Nu pot face trecerea din %s în %s"
 
+#: lib/event/event.c:57
 msgid "Event system already initialized"
 msgstr "Sistemul de evenimente este deja inițializat"
 
+#: lib/event/event.c:66
 msgid "Failed to initialize event system"
 msgstr "A eșuat inițializarea sistemului de evenimente"
 
+#: lib/event/event.c:82
 msgid "Event system not initialized"
 msgstr "Sistemul de evenimente nu este inițializat"
 
+#: lib/event/manage.c:72
 msgid "Check input data! Some of parameters are NULL!"
 msgstr "Verifică datele de intrare! Unii parametri au valoarea NULL!"
 
+#: lib/event/manage.c:164
 #, c-format
 msgid "Unable to create group '%s' for events!"
 msgstr "Nu se poate crea grupul '%s' pentru evenimente!"
 
+#: lib/event/manage.c:189
 #, c-format
 msgid "Unable to create event '%s'!"
 msgstr "Nu se poate crea evenimentul '%s'!"
 
+#: lib/global.c:90
 #, c-format
 msgid "Copyright (C) 1996-%zu the Free Software Foundation"
 msgstr ""
 
+#: lib/keybind.c:71
 msgid "Half page up"
 msgstr ""
 
+#: lib/keybind.c:72
 #, fuzzy
 msgid "Half page down"
 msgstr "Page Down"
 
+#: lib/keybind.c:73
 msgid "Go to top"
 msgstr ""
 
+#: lib/keybind.c:74
 msgid "Go to bottom"
 msgstr ""
 
+#: lib/keybind.c:75
 #, fuzzy
 msgid "Top of screen"
 msgstr "Comu&tă pe tot ecranul"
 
+#: lib/keybind.c:76
 msgid "Bottom of screen"
 msgstr ""
 
+#: lib/keybind.c:77
 msgid "Word left"
 msgstr ""
 
+#: lib/keybind.c:78
 msgid "Word right"
 msgstr ""
 
+#: lib/keybind.c:79
 #, fuzzy
 msgid "Copy file(s)"
 msgstr "C&ompară fișiere"
 
+#: lib/keybind.c:80
 msgid "Move/rename file(s)"
 msgstr ""
 
+#: lib/keybind.c:81 lib/tty/key.c:135 lib/tty/key.c:168
+#: src/editor/editmacros.c:866
 msgid "Delete"
 msgstr "Delete"
 
+#: lib/keybind.c:86
 msgid "Main menu"
 msgstr ""
 
+#: lib/keybind.c:87
 #, fuzzy
 msgid "User-defined menu"
 msgstr "Definit de &utilizator:"
 
+#: lib/keybind.c:88
 #, fuzzy
 msgid "Edit user menu"
 msgstr "Meniu utilizator"
 
+#: lib/keybind.c:90
 #, fuzzy
 msgid "Search next"
 msgstr "Căutarea a fost efectuată"
 
+#: lib/keybind.c:92
 #, fuzzy
 msgid "Replace next"
 msgstr "Înlocuiește"
 
+#: lib/keybind.c:93
 msgid "Show help"
 msgstr ""
 
+#: lib/keybind.c:94
 #, fuzzy
 msgid "Terminal"
 msgstr "Opțiuni terminal"
 
+#: lib/keybind.c:95 src/editor/editmacros.c:867
 msgid "Edit file"
 msgstr "Editează fișier"
 
+#: lib/keybind.c:96
 #, fuzzy
 msgid "Edit new file"
 msgstr "Editează fișier"
 
+#: lib/keybind.c:97
 #, fuzzy
 msgid "Select charset"
 msgstr "To&ate seturile de caractere"
 
+#: lib/keybind.c:98
 #, fuzzy
 msgid "Command history"
 msgstr "&Istoric comenzi"
 
+#: lib/keybind.c:99
 msgid "Next in history"
 msgstr ""
 
+#: lib/keybind.c:100
 msgid "Previous in history"
 msgstr ""
 
+#: lib/keybind.c:101
 msgid "Auto-complete"
 msgstr ""
 
+#: lib/keybind.c:103
 #, fuzzy
 msgid "Save as..."
 msgstr "Salvează c&a..."
 
+#: lib/keybind.c:104
 #, fuzzy
 msgid "Go to line"
 msgstr "Mergi la linia"
 
+#: lib/keybind.c:105
 #, fuzzy
 msgid "Refresh screen"
 msgstr "&Reîmprospătare ecran"
 
+#: lib/keybind.c:106
 #, fuzzy
 msgid "Suspend to shell"
 msgstr "Configurația a fost salvată în %s"
 
+#: lib/keybind.c:107
 msgid "List open screens"
 msgstr ""
 
+#: lib/keybind.c:108
 #, fuzzy
 msgid "Next screen"
 msgstr "&Reîmprospătare ecran"
 
+#: lib/keybind.c:109
 #, fuzzy
 msgid "Previous screen"
 msgstr "&Precedentul"
 
+#: lib/keybind.c:110
 #, fuzzy
 msgid "Next file"
 msgstr "Inserează fișierul"
 
+#: lib/keybind.c:111
 #, fuzzy
 msgid "Previous file"
 msgstr "&Precedentul"
 
+#: lib/keybind.c:112
 #, fuzzy
 msgid "Delete to line start"
 msgstr "&Comută linia de stare"
 
+#: lib/keybind.c:113
 #, fuzzy
 msgid "Delete to line end"
 msgstr "Delete pe keypad"
 
+#: lib/keybind.c:114
 msgid "Delete to word start"
 msgstr ""
 
+#: lib/keybind.c:115
 #, fuzzy
 msgid "Delete to word end"
 msgstr "Delete pe keypad"
 
+#: lib/keybind.c:116
 #, fuzzy
 msgid "Cut to clipboard"
 msgstr "&Taie în fișierul clip"
 
+#: lib/keybind.c:117
 #, fuzzy
 msgid "Copy to clipboard"
 msgstr "Co&piază în fișierul clip"
 
+#: lib/keybind.c:118
 #, fuzzy
 msgid "Paste from clipboard"
 msgstr "Li&pește din fișierul clip"
 
+#: lib/keybind.c:119
 #, fuzzy
 msgid "Toggle selection"
 msgstr "În se&lecție"
 
+#: lib/keybind.c:120
 #, fuzzy
 msgid "Select left"
 msgstr "Selectează"
 
+#: lib/keybind.c:121
 #, fuzzy
 msgid "Select right"
 msgstr "Selectează"
 
+#: lib/keybind.c:122
 #, fuzzy
 msgid "Select up"
 msgstr "Selectează &grupul"
 
+#: lib/keybind.c:123
 #, fuzzy
 msgid "Select down"
 msgstr "Selectează"
 
+#: lib/keybind.c:124
 msgid "Select to word start"
 msgstr ""
 
+#: lib/keybind.c:125
 #, fuzzy
 msgid "Select to word end"
 msgstr "Alege metoda de comparare:"
 
+#: lib/keybind.c:126
 #, fuzzy
 msgid "Select to line start"
 msgstr "&Comută linia de stare"
 
+#: lib/keybind.c:127
 #, fuzzy
 msgid "Select to line end"
 msgstr "Selectează limba"
 
+#: lib/keybind.c:128
 #, fuzzy
 msgid "Sort order..."
 msgstr "&Ordinea de sortare..."
 
+#: lib/keybind.c:129
 #, fuzzy
 msgid "General options"
 msgstr "Opțiuni panou"
 
+#: lib/keybind.c:130
 #, fuzzy
 msgid "Learn terminal keys"
 msgstr "Învață tastele"
 
+#: lib/keybind.c:131 src/keybind_dialog.c:1081
 msgid "Key bindings"
 msgstr ""
 
+#: lib/keybind.c:132 src/key_sniffer.c:183 src/key_sniffer.c:217
 msgid "Key sniffer"
 msgstr ""
 
+#: lib/keybind.c:133
 msgid "Manage plugins"
 msgstr ""
 
+#: lib/keybind.c:134
 #, fuzzy
 msgid "Set bookmark"
 msgstr "Marcajul &următor"
 
+#: lib/keybind.c:135
 msgid "Quit program"
 msgstr ""
 
+#: lib/keybind.c:136
 msgid "Extended key prefix"
 msgstr ""
 
+#: lib/keybind.c:138 src/plugins/ctags/ctags-plugin.c:1639
 #, fuzzy
 msgid "Find declaration"
 msgstr "&Găsește declarația"
 
+#: lib/keybind.c:139
 #, fuzzy
 msgid "Appearance settings"
 msgstr "Aspect"
 
+#: lib/keybind.c:140
 #, fuzzy
 msgid "Save setup"
 msgstr "&Salvează setările"
 
+#: lib/keybind.c:148
 msgid "Yank (paste kill buffer)"
 msgstr ""
 
+#: lib/keybind.c:151
 msgid "Help index"
 msgstr ""
 
+#: lib/keybind.c:152 src/plugins/ctags/ctags-plugin.c:1643
 msgid "Go back"
 msgstr ""
 
+#: lib/keybind.c:153
 msgid "Next link"
 msgstr ""
 
+#: lib/keybind.c:154
 #, fuzzy
 msgid "Previous link"
 msgstr "&Precedentul"
 
+#: lib/keybind.c:155
 #, fuzzy
 msgid "Next node"
 msgstr "Noduri libere:"
 
+#: lib/keybind.c:156
 #, fuzzy
 msgid "Previous node"
 msgstr "&Precedentul"
 
+#: lib/keybind.c:165
 msgid "Scroll up"
 msgstr ""
 
+#: lib/keybind.c:166
 msgid "Scroll down"
 msgstr ""
 
+#: lib/keybind.c:167
 #, fuzzy
 msgid "Deselect all"
 msgstr "Deselectează"
 
+#: lib/keybind.c:168
 #, fuzzy
 msgid "Select page up"
 msgstr "Selectează &grupul"
 
+#: lib/keybind.c:169
 #, fuzzy
 msgid "Select page down"
 msgstr "Selectează limba"
 
+#: lib/keybind.c:171
 #, fuzzy
 msgid "Close editor"
 msgstr "Închide fișier"
 
+#: lib/keybind.c:175
 msgid "Paragraph up"
 msgstr ""
 
+#: lib/keybind.c:176
 msgid "Paragraph down"
 msgstr ""
 
+#: lib/keybind.c:177
 #, fuzzy
 msgid "Open file in editor"
 msgstr "Editează fișierul de extensii"
 
+#: lib/keybind.c:178
 #, fuzzy
 msgid "Select word"
 msgstr "Selectează"
 
+#: lib/keybind.c:179
 #, fuzzy
 msgid "Select line"
 msgstr "Selectează limba"
 
+#: lib/keybind.c:180
 #, fuzzy
 msgid "Select all"
 msgstr "Selectează"
 
+#: lib/keybind.c:181
 #, fuzzy
 msgid "Column selection mode"
 msgstr "În se&lecție"
 
+#: lib/keybind.c:182
 #, fuzzy
 msgid "Save selected block"
 msgstr "Salvează blocul"
 
+#: lib/keybind.c:183 src/editor/editcmd.c:2177
 msgid "Insert file"
 msgstr "Inserează fișierul"
 
+#: lib/keybind.c:184
 #, fuzzy
 msgid "Toggle insert/overwrite"
 msgstr "Comu&tă ins/supr"
 
+#: lib/keybind.c:185
 #, fuzzy
 msgid "Insert date/time (Lua action)"
 msgstr "Inserează &dată/timp"
 
+#: lib/keybind.c:186
 #, fuzzy
 msgid "Delete line"
 msgstr "Ștergere"
 
+#: lib/keybind.c:187
 #, fuzzy
 msgid "Mail file"
 msgstr "file1 file2"
 
+#: lib/keybind.c:188
 #, fuzzy
 msgid "Undo history"
 msgstr "&Istoric comenzi"
 
+#: lib/keybind.c:189
 #, fuzzy
 msgid "Format paragraph (Lua action)"
 msgstr "&Format paragraf"
 
+#: lib/keybind.c:190
 #, fuzzy
 msgid "Match bracket"
 msgstr "Paranteză dreaptă stânga"
 
+#: lib/keybind.c:191
 msgid "Sort selection (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:192
 msgid "Insert command output (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:193
 msgid "Start macro recording"
 msgstr ""
 
+#: lib/keybind.c:194
 msgid "Stop macro recording"
 msgstr ""
 
+#: lib/keybind.c:195
 msgid "Toggle macro recording"
 msgstr ""
 
+#: lib/keybind.c:196
 msgid "Macro explorer"
 msgstr ""
 
+#: lib/keybind.c:197
 #, fuzzy
 msgid "Repeat last macro"
 msgstr "Repetă ultimele comenzi"
 
+#: lib/keybind.c:198
 #, fuzzy
 msgid "Spell check"
 msgstr "Veri&ficare ortografică"
 
+#: lib/keybind.c:199
 #, fuzzy
 msgid "Spell check current word"
 msgstr "Veri&ficare ortografică"
 
+#: lib/keybind.c:200
 #, fuzzy
 msgid "Select spell language"
 msgstr "Selectează limba"
 
+#: lib/keybind.c:201
 #, fuzzy
 msgid "Clear all bookmarks"
 msgstr "Ște&rge marcaje"
 
+#: lib/keybind.c:202
 #, fuzzy
 msgid "Next bookmark"
 msgstr "Marcajul &următor"
 
+#: lib/keybind.c:203
 #, fuzzy
 msgid "Previous bookmark"
 msgstr "Marcajul &precedent"
 
+#: lib/keybind.c:204
 msgid "Toggle code fold"
 msgstr ""
 
+#: lib/keybind.c:205
 #, fuzzy
 msgid "Unfold all"
 msgstr "&Găsește tot"
 
+#: lib/keybind.c:206
 #, fuzzy
 msgid "Toggle line filter"
 msgstr "&Comută linia de stare"
 
+#: lib/keybind.c:207
 msgid "Filter by selection or word"
 msgstr ""
 
+#: lib/keybind.c:208
 #, fuzzy
 msgid "Select to file start"
 msgstr "S-au pierdut schimbările efectuate în fișier"
 
+#: lib/keybind.c:209
 #, fuzzy
 msgid "Select to file end"
 msgstr "Alege metoda de comparare:"
 
+#: lib/keybind.c:210
 #, fuzzy
 msgid "Select to page start"
 msgstr "Alege metoda de comparare:"
 
+#: lib/keybind.c:211
 #, fuzzy
 msgid "Select to page end"
 msgstr "Alege metoda de comparare:"
 
+#: lib/keybind.c:212
 #, fuzzy
 msgid "Select scroll up"
 msgstr "Selectează &grupul"
 
+#: lib/keybind.c:213
 msgid "Select scroll down"
 msgstr ""
 
+#: lib/keybind.c:214
 #, fuzzy
 msgid "Select paragraph up"
 msgstr "Selectează &grupul"
 
+#: lib/keybind.c:215
 msgid "Select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:216
 #, fuzzy
 msgid "Column select page up"
 msgstr "&De-selectează grupul"
 
+#: lib/keybind.c:217
 msgid "Column select page down"
 msgstr ""
 
+#: lib/keybind.c:218
 msgid "Column select left"
 msgstr ""
 
+#: lib/keybind.c:219
 msgid "Column select right"
 msgstr ""
 
+#: lib/keybind.c:220
 #, fuzzy
 msgid "Column select up"
 msgstr "&De-selectează grupul"
 
+#: lib/keybind.c:221
 #, fuzzy
 msgid "Column select down"
 msgstr "În se&lecție"
 
+#: lib/keybind.c:222
 #, fuzzy
 msgid "Column select scroll up"
 msgstr "&De-selectează grupul"
 
+#: lib/keybind.c:223
 msgid "Column select scroll down"
 msgstr ""
 
+#: lib/keybind.c:224
 #, fuzzy
 msgid "Column select paragraph up"
 msgstr "&Format paragraf"
 
+#: lib/keybind.c:225
 msgid "Column select paragraph down"
 msgstr ""
 
+#: lib/keybind.c:226
 msgid "Shift block left"
 msgstr ""
 
+#: lib/keybind.c:227
 msgid "Shift block right"
 msgstr ""
 
+#: lib/keybind.c:228
 msgid "Insert literal character (Lua action)"
 msgstr ""
 
+#: lib/keybind.c:229
 #, fuzzy
 msgid "Toggle visible tabs/spaces"
 msgstr "Spații la final &vizibile"
 
+#: lib/keybind.c:230
 msgid "Toggle control characters"
 msgstr ""
 
+#: lib/keybind.c:231
 #, fuzzy
 msgid "Toggle syntax highlighting"
 msgstr "Comută evidenţierea de sinta&xă"
 
+#: lib/keybind.c:232 src/editor/syntax.c:139
 msgid "Choose syntax highlighting"
 msgstr "Alege sintaxa de evidenţiere"
 
+#: lib/keybind.c:233
 #, fuzzy
 msgid "Toggle right margin"
 msgstr "Co&mută selecția"
 
+#: lib/keybind.c:234
 #, fuzzy
 msgid "Save mode options"
 msgstr "Opțiuni panou"
 
+#: lib/keybind.c:235
 msgid "About editor"
 msgstr ""
 
+#: lib/keybind.c:237
 #, fuzzy
 msgid "Execute script"
 msgstr "Mai întâ&i executabilele"
 
+#: lib/keybind.c:238
 msgid "Move window"
 msgstr ""
 
+#: lib/keybind.c:239
 #, fuzzy
 msgid "Resize window"
 msgstr "&Redimensionează"
 
+#: lib/keybind.c:240
 #, fuzzy
 msgid "Toggle fullscreen"
 msgstr "Comu&tă pe tot ecranul"
 
+#: lib/keybind.c:241
 #, fuzzy
 msgid "Window list"
 msgstr "Fe&reastră"
 
+#: lib/keybind.c:242
 msgid "Next window"
 msgstr ""
 
+#: lib/keybind.c:243
 #, fuzzy
 msgid "Previous window"
 msgstr "&Precedentul"
 
+#: lib/lock.c:240
 #, c-format
 msgid ""
 "File \"%s\" is already being edited.\n"
@@ -598,22 +754,28 @@ msgstr ""
 "Utilizator: %s\n"
 "ID proces: %d"
 
+#: lib/lock.c:244
 msgid "File locked"
 msgstr "Fișier blocat"
 
+#: lib/lock.c:244
 msgid "&Grab lock"
 msgstr "&Preia blocarea"
 
+#: lib/lock.c:245
 msgid "&Ignore lock"
 msgstr "&Ignoră blocarea"
 
+#: lib/mcconfig/paths.c:99
 #, c-format
 msgid "Cannot create %s directory"
 msgstr "Nu se poate crea dosarul %s"
 
+#: lib/mcconfig/paths.c:119
 msgid "FATAL: not a directory:"
 msgstr "FATAL: nu este un dosar:"
 
+#: lib/search/hex.c:195
 msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
@@ -621,12 +783,15 @@ msgstr ""
 "Număr în afara intervalului (ar trebui să fie în intervalul octet, 0 <= n <= "
 "0xFF, exprimat în hex)"
 
+#: lib/search/hex.c:198
 msgid "Invalid character"
 msgstr "Caracter nevalid"
 
+#: lib/search/hex.c:201
 msgid "Unmatched quotes character"
 msgstr "Caracterul ghilimelelor neîmperecheate"
 
+#: lib/search/hex.c:209
 #, c-format
 msgid ""
 "Hex pattern error at position %d:\n"
@@ -635,34 +800,44 @@ msgstr ""
 "Eroare model Hex la poziția %d\n"
 "%s."
 
+#: lib/search/lib.c:42
 msgid "Search string not found"
 msgstr "Șirul căutat nu a fost găsit"
 
+#: lib/search/lib.c:43
 msgid "Not implemented yet"
 msgstr "Nu este încă implementat"
 
+#: lib/search/lib.c:45
 msgid "Num of replace tokens not equal to num of found tokens"
 msgstr "Nr. jetoanelor de înlocuire nu este egal cu nr. jetoanelor găsite"
 
+#: lib/search/lib.c:46
 #, c-format
 msgid "Invalid token number %d"
 msgstr "Număr jeton nevalid %d"
 
+#: lib/search/regex.c:340 lib/search/regex.c:817
 msgid "Regular expression error"
 msgstr "Expresie regulată eronată"
 
+#: lib/search/search.c:53
 msgid "No&rmal"
 msgstr "No&rmal"
 
+#: lib/search/search.c:54
 msgid "Re&gular expression"
 msgstr "Expresie re&gulată"
 
+#: lib/search/search.c:55
 msgid "He&xadecimal"
 msgstr "He&xazecimal"
 
+#: lib/search/search.c:56
 msgid "Wil&dcard search"
 msgstr "Căutare me&tacaracter"
 
+#: lib/skin/common.c:128
 #, c-format
 msgid ""
 "Unable to parse '%s' skin.\n"
@@ -671,6 +846,7 @@ msgstr ""
 "Nu se poate interpreta tematica '%s'.\n"
 "A fost încărcată tematica implicită"
 
+#: lib/skin/common.c:138
 #, c-format
 msgid ""
 "Unable to use '%s' skin with true colors support:\n"
@@ -681,6 +857,7 @@ msgstr ""
 "%s\n"
 "Tema implicita a fost încărcata"
 
+#: lib/skin/common.c:149
 #, c-format
 msgid ""
 "Unable to use '%s' skin with 256 colors support:\n"
@@ -688,6 +865,7 @@ msgid ""
 "Default skin has been loaded"
 msgstr ""
 
+#: lib/skin/common.c:182
 #, c-format
 msgid ""
 "Unable to load '%s' skin.\n"
@@ -696,6 +874,7 @@ msgstr ""
 "Nu se poate încărca tematica '%s'.\n"
 "A fost încărcată tematica implicită"
 
+#: lib/tty/color-ncurses.c:233 lib/tty/color-slang.c:202
 msgid ""
 "\n"
 "If your terminal supports 256 colors, you need to set your TERM\n"
@@ -704,12 +883,14 @@ msgid ""
 "command to list all available variants on your system.\n"
 msgstr ""
 
+#: lib/tty/color-ncurses.c:250
 msgid ""
 "For true color support, you need version 6.1 or later of the ncurses\n"
 "library with wide character and ABI 6 or higher support.\n"
 "Please upgrade your system.\n"
 msgstr ""
 
+#: lib/tty/color-ncurses.c:261
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -717,9 +898,11 @@ msgid ""
 "Use the 'toe -a' command to list all available variants on your system.\n"
 msgstr ""
 
+#: lib/tty/color-slang.c:223
 msgid "True color not supported in this slang version."
 msgstr "CULORI REALE  nu sunt acceptate în această versiune slang."
 
+#: lib/tty/color-slang.c:235
 msgid ""
 "\n"
 "If your terminal supports true colors, you need to set your TERM\n"
@@ -728,289 +911,384 @@ msgid ""
 "Alternatively, you can set COLORTERM=truecolor.\n"
 msgstr ""
 
+#: lib/tty/key.c:104 lib/tty/key.c:165
 msgid "Escape"
 msgstr "Escape"
 
+#: lib/tty/key.c:107
 msgid "Function key 1"
 msgstr "Tasta funcț. 1"
 
+#: lib/tty/key.c:108
 msgid "Function key 2"
 msgstr "Tasta funcț. 2"
 
+#: lib/tty/key.c:109
 msgid "Function key 3"
 msgstr "Tasta funcț. 3"
 
+#: lib/tty/key.c:110
 msgid "Function key 4"
 msgstr "Tasta funcț. 4"
 
+#: lib/tty/key.c:111
 msgid "Function key 5"
 msgstr "Tasta funcț. 5"
 
+#: lib/tty/key.c:112
 msgid "Function key 6"
 msgstr "Tasta funcț. 6"
 
+#: lib/tty/key.c:113
 msgid "Function key 7"
 msgstr "Tasta funcț. 7"
 
+#: lib/tty/key.c:114
 msgid "Function key 8"
 msgstr "Tasta funcț. 8"
 
+#: lib/tty/key.c:115
 msgid "Function key 9"
 msgstr "Tasta funcț. 9"
 
+#: lib/tty/key.c:116
 msgid "Function key 10"
 msgstr "Tasta funcț. 10"
 
+#: lib/tty/key.c:117
 msgid "Function key 11"
 msgstr "Tasta funcț. 11"
 
+#: lib/tty/key.c:118
 msgid "Function key 12"
 msgstr "Tasta funcț. 12"
 
+#: lib/tty/key.c:119
 msgid "Function key 13"
 msgstr "Tasta funcț. 13"
 
+#: lib/tty/key.c:120
 msgid "Function key 14"
 msgstr "Tasta funcț. 14"
 
+#: lib/tty/key.c:121
 msgid "Function key 15"
 msgstr "Tasta funcț. 14"
 
+#: lib/tty/key.c:122
 msgid "Function key 16"
 msgstr "Tasta funcț. 16"
 
+#: lib/tty/key.c:123
 msgid "Function key 17"
 msgstr "Tasta funcț. 17"
 
+#: lib/tty/key.c:124
 msgid "Function key 18"
 msgstr "Tasta funcț. 18"
 
+#: lib/tty/key.c:125
 msgid "Function key 19"
 msgstr "Tasta funcț. 19"
 
+#: lib/tty/key.c:126
 msgid "Function key 20"
 msgstr "Tasta funcț. 20"
 
+#: lib/tty/key.c:127
 msgid "Completion/M-tab"
 msgstr "Completare/M-tab"
 
+#: lib/tty/key.c:128
 msgid "BackTab/S-tab"
 msgstr "BackTab/S-tab"
 
+#: lib/tty/key.c:129 lib/tty/key.c:166
 msgid "Backspace"
 msgstr "Backspace"
 
+#: lib/tty/key.c:130
 msgid "Up arrow"
 msgstr "Săgeată sus"
 
+#: lib/tty/key.c:131
 msgid "Down arrow"
 msgstr "Săgeată jos"
 
+#: lib/tty/key.c:132
 msgid "Left arrow"
 msgstr "Săgeată stânga"
 
+#: lib/tty/key.c:133
 msgid "Right arrow"
 msgstr "Săgeată dreapta"
 
+#: lib/tty/key.c:134 lib/tty/key.c:167
 msgid "Insert"
 msgstr "Insert"
 
+#: lib/tty/key.c:136
 msgid "Home"
 msgstr "Home"
 
+#: lib/tty/key.c:137
 msgid "End key"
 msgstr "Tasta End"
 
+#: lib/tty/key.c:138
 msgid "Page Up"
 msgstr "Page Up"
 
+#: lib/tty/key.c:139
 msgid "Page Down"
 msgstr "Page Down"
 
+#: lib/tty/key.c:140
 msgid "/ on keypad"
 msgstr "/ pe tastatura numerică"
 
+#: lib/tty/key.c:141
 msgid "* on keypad"
 msgstr "* pe keypad"
 
+#: lib/tty/key.c:142
 msgid "- on keypad"
 msgstr "- pe keypad"
 
+#: lib/tty/key.c:143
 msgid "+ on keypad"
 msgstr "+ pe keypad"
 
+#: lib/tty/key.c:146
 msgid "Left arrow keypad"
 msgstr "Săgeată stânga pe keypad"
 
+#: lib/tty/key.c:147
 msgid "Right arrow keypad"
 msgstr "Săgeată dreapta pe keypad"
 
+#: lib/tty/key.c:148
 msgid "Up arrow keypad"
 msgstr "Săgeată sus pe keypad"
 
+#: lib/tty/key.c:149
 msgid "Down arrow keypad"
 msgstr "Săgeată jos pe keypad"
 
+#: lib/tty/key.c:150
 msgid "Home on keypad"
 msgstr "Home pe keypad"
 
+#: lib/tty/key.c:151
 msgid "End on keypad"
 msgstr "End pe keypad"
 
+#: lib/tty/key.c:152
 msgid "Page Down keypad"
 msgstr "Page Down pe keypad"
 
+#: lib/tty/key.c:153
 msgid "Page Up keypad"
 msgstr "Page Up pe keypad"
 
+#: lib/tty/key.c:154
 msgid "Insert on keypad"
 msgstr "Insert pe keypad"
 
+#: lib/tty/key.c:155
 msgid "Delete on keypad"
 msgstr "Delete pe keypad"
 
+#: lib/tty/key.c:156
 msgid "Enter on keypad"
 msgstr "Enter pe keypad"
 
+#: lib/tty/key.c:157
 msgid "Function key 21"
 msgstr "Tasta funcț. 21"
 
+#: lib/tty/key.c:158
 msgid "Function key 22"
 msgstr "Tasta funcț. 22"
 
+#: lib/tty/key.c:159
 msgid "Function key 23"
 msgstr "Tasta funcț. 23"
 
+#: lib/tty/key.c:160
 msgid "Function key 24"
 msgstr "Tasta funcț. 24"
 
+#: lib/tty/key.c:161
 msgid "A1 key"
 msgstr "Tasta A1"
 
+#: lib/tty/key.c:162
 msgid "C1 key"
 msgstr "Tasta C1"
 
+#: lib/tty/key.c:169
 msgid "Asterisk"
 msgstr "Asterisc"
 
+#: lib/tty/key.c:170
 msgid "Minus"
 msgstr "Minus"
 
+#: lib/tty/key.c:171
 msgid "Plus"
 msgstr "Plus"
 
+#: lib/tty/key.c:172
 msgid "Dot"
 msgstr "Punct"
 
+#: lib/tty/key.c:173
 msgid "Less than"
 msgstr "Mai puțin decât"
 
+#: lib/tty/key.c:174
 msgid "Great than"
 msgstr "Mai mult decât"
 
+#: lib/tty/key.c:175
 msgid "Equal"
 msgstr "Egal"
 
+#: lib/tty/key.c:176
 msgid "Comma"
 msgstr "Virgulă"
 
+#: lib/tty/key.c:177
 msgid "Apostrophe"
 msgstr "Apostrof"
 
+#: lib/tty/key.c:178
 msgid "Colon"
 msgstr "Punct și virgulă"
 
+#: lib/tty/key.c:179
 msgid "Semicolon"
 msgstr "Punct și virgulă"
 
+#: lib/tty/key.c:180
 msgid "Exclamation mark"
 msgstr "Semn de exclamare"
 
+#: lib/tty/key.c:181
 msgid "Question mark"
 msgstr "Semn de întrebare"
 
+#: lib/tty/key.c:182
 msgid "Ampersand"
 msgstr "Semnul &&"
 
+#: lib/tty/key.c:183
 msgid "Dollar sign"
 msgstr "Semnul dollar"
 
+#: lib/tty/key.c:184
 msgid "Quotation mark"
 msgstr "Ghilimele"
 
+#: lib/tty/key.c:185
 msgid "Percent sign"
 msgstr "Semnul de procent"
 
+#: lib/tty/key.c:186
 msgid "Caret"
 msgstr "Cursor"
 
+#: lib/tty/key.c:187
 msgid "Tilda"
 msgstr "Tildă"
 
+#: lib/tty/key.c:188
 msgid "Prime"
 msgstr "Prim"
 
+#: lib/tty/key.c:189
 msgid "Underline"
 msgstr "Subliniere"
 
+#: lib/tty/key.c:190
 msgid "Understrike"
 msgstr "Liniuță de subliniere"
 
+#: lib/tty/key.c:191
 msgid "Pipe"
 msgstr "Pipe"
 
+#: lib/tty/key.c:192
 msgid "Left parenthesis"
 msgstr "Paranteză stânga"
 
+#: lib/tty/key.c:193
 msgid "Right parenthesis"
 msgstr "Paranteză dreapta"
 
+#: lib/tty/key.c:194
 msgid "Left bracket"
 msgstr "Paranteză dreaptă stânga"
 
+#: lib/tty/key.c:195
 msgid "Right bracket"
 msgstr "Paranteză dreaptă dreapta"
 
+#: lib/tty/key.c:196
 msgid "Left brace"
 msgstr "Acoladă stânga"
 
+#: lib/tty/key.c:197
 msgid "Right brace"
 msgstr "Acoladă dreapta"
 
+#: lib/tty/key.c:198
 msgid "Enter"
 msgstr "Enter"
 
+#: lib/tty/key.c:199
 msgid "Tab key"
 msgstr "Tasta Tab"
 
+#: lib/tty/key.c:200
 msgid "Space key"
 msgstr "Tasta spațiu"
 
+#: lib/tty/key.c:201
 msgid "Slash key"
 msgstr "Tasta slash"
 
+#: lib/tty/key.c:202
 msgid "Backslash key"
 msgstr "Tasta backslash"
 
+#: lib/tty/key.c:203 lib/tty/key.c:204
 msgid "Number sign #"
 msgstr "Semn #"
 
 #. TRANSLATORS: Please translate as in "at sign" (@).
+#: lib/tty/key.c:206
 msgid "At sign"
 msgstr "Semnul at"
 
+#: lib/tty/key.c:209 lib/tty/key.c:210
 msgid "Ctrl"
 msgstr "Ctrl"
 
+#: lib/tty/key.c:211 lib/tty/key.c:212
 msgid "Alt"
 msgstr "Alt"
 
+#: lib/tty/key.c:213
 msgid "RAlt"
 msgstr ""
 
+#: lib/tty/key.c:214
 msgid "Shift"
 msgstr "Shift"
 
+#: lib/tty/tty-internal.c:71
 #, c-format
 msgid ""
 "\n"
@@ -1019,6 +1297,7 @@ msgstr ""
 "\n"
 "Nu se poate crea conducta pentru SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:84
 #, c-format
 msgid ""
 "\n"
@@ -1027,6 +1306,7 @@ msgstr ""
 "\n"
 "Nu se poate configura capătul de scriere al conductei SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-internal.c:93
 #, c-format
 msgid ""
 "\n"
@@ -1035,6 +1315,7 @@ msgstr ""
 "\n"
 "Nu se poate configura capătul de citire al conductei SIGWINCH: %s (%d)\n"
 
+#: lib/tty/tty-slang.c:247
 #, c-format
 msgid ""
 "Screen size %dx%d is not supported.\n"
@@ -1043,39 +1324,51 @@ msgstr ""
 "Mărimea %dx%d a ecranului nu este suportată.\n"
 "Verificați variabila de mediu TERM.\n"
 
+#: lib/tty/tty.c:133
 msgid "The TERM environment variable is unset!\n"
 msgstr "Variabila de mediu TERM nu este setată!\n"
 
+#: lib/tty/tty.c:217
 msgid "Cannot check SIGWINCH pipe"
 msgstr "Nu se poate verifica conducta SIGWINCH"
 
+#: lib/util.c:254
 msgid "B"
 msgstr "B"
 
+#: lib/util.c:259
 msgid "kB"
 msgstr "kB"
 
+#: lib/util.c:259
 msgid "KiB"
 msgstr "KiB"
 
+#: lib/util.c:264
 msgid "MB"
 msgstr "MB"
 
+#: lib/util.c:264
 msgid "MiB"
 msgstr "MiB"
 
+#: lib/util.c:269
 msgid "GB"
 msgstr "GB"
 
+#: lib/util.c:269
 msgid "GiB"
 msgstr "GiB"
 
+#: lib/utilunix.c:486
 msgid "Cannot create pipe descriptor"
 msgstr "Nu pot crea descriptorul filtrului"
 
+#: lib/utilunix.c:499
 msgid "Cannot create pipe streams"
 msgstr "Nu pot crea fluxul filtrului"
 
+#: lib/utilunix.c:600
 #, c-format
 msgid ""
 "Unexpected error in select() reading data from a child process:\n"
@@ -1084,9 +1377,11 @@ msgstr ""
 "Eroare neașteptată în select() se accesează datele dintr-un proces copil :\n"
 "%s"
 
+#: lib/utilunix.c:678
 msgid "Cannot close pipe descriptor (p == NULL)"
 msgstr "Nu se poate închide descriptorul de țeavă (p == NULL)"
 
+#: lib/utilunix.c:694
 #, c-format
 msgid ""
 "Unexpected error in waitpid():\n"
@@ -1095,143 +1390,206 @@ msgstr ""
 "Eroare surpriza in waitpid():\n"
 "%s"
 
+#: lib/vfs/interface.c:175
 msgid "Changes to file lost"
 msgstr "S-au pierdut schimbările efectuate în fișier"
 
+#: lib/vfs/interface.c:776
 #, c-format
 msgid ""
 "Cannot create temporary directory %s: %s.\n"
 "Temporary files will not be created\n"
 msgstr ""
 
+#: lib/vfs/interface.c:780 src/execute.c:170
 msgid "Press any key to continue..."
 msgstr "Apăsați o tastă pentru a continua..."
 
+#: lib/vfs/utilvfs.c:176
 msgid "Internal error:"
 msgstr "Eroare internă:"
 
+#: lib/widget/dialog-switch.c:226
 msgid "Screens"
 msgstr "Ecrane"
 
+#: lib/widget/history.c:161 lib/widget/history.c:166 lib/widget/history.c:393
+#: lib/widget/history.c:407
 msgid "History"
 msgstr "Istoric"
 
+#: lib/widget/input.c:1041
 msgid "Paste"
 msgstr ""
 
+#: lib/widget/input.c:1041
 msgid ""
 "The clipboard holds more than 2 KB of text.\n"
 "Paste it?"
 msgstr ""
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:499 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:424 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:1851 src/editor/editmacros.c:711 src/key_learn.c:354
+#: src/keybind_dialog.c:968
 msgid "&Yes"
 msgstr "&Da"
 
+#: lib/widget/input.c:1042 lib/widget/listbox.c:500 src/editor/edit.c:392
+#: src/editor/editcmd.c:401 src/editor/editcmd.c:1845 src/editor/editcmd.c:1851
+#: src/editor/editmacros.c:711 src/key_learn.c:354 src/keybind_dialog.c:968
 msgid "&No"
 msgstr "&Nu"
 
 #. TRANSLATORS: no need to translate 'DialogTitle', it's just a context prefix
+#: lib/widget/listbox.c:498
 msgid "DialogTitle|History cleanup"
 msgstr "DialogTitle|Curățare istoric"
 
+#: lib/widget/listbox.c:499
 msgid "Do you want clean this history?"
 msgstr "Dorești curățarea acestui istoric?"
 
+#: lib/widget/quick.h:230 lib/widget/wtools.c:351
+#: src/plugins/ctags/ctags-config.c:174 src/plugins/ctags/ctags-ui.c:362
+#: src/plugins/ctags/ctags-ui.c:757 src/plugins/ctags/ctags-ui.c:884
+#: src/editor/editsearch.c:164 src/editor/editsearch.c:1092
+#: src/editor/editwidget.c:723 src/keybind_dialog.c:650
+#: src/keybind_dialog.c:655
 msgid "&OK"
 msgstr "&OK"
 
+#: lib/widget/quick.h:231 src/plugins/ctags/ctags-config.c:176
+#: src/plugins/ctags/ctags-ui.c:365 src/plugins/ctags/ctags-ui.c:760
+#: src/plugins/ctags/ctags-ui.c:887 src/plugins/etags/etags.c:371
+#: src/plugins/spell/spell.c:846 src/plugins/spell/spell.c:854
+#: src/editor/editcmd.c:297 src/editor/editcmd.c:401 src/editor/editcmd.c:424
+#: src/editor/editcmd.c:590 src/editor/editcmd.c:770 src/editor/editcmd.c:1313
+#: src/editor/editcmd.c:1394 src/editor/editcmd.c:1845
+#: src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
+#: src/editor/editsearch.c:167 src/editor/editsearch.c:856
+#: src/keybind_dialog.c:651 src/keybind_dialog.c:657
 msgid "&Cancel"
 msgstr "&Renunță"
 
+#: lib/widget/wtools.c:211 lib/widget/wtools.c:349
 msgid "Error"
 msgstr "Eroare"
 
+#: lib/widget/wtools.c:368
 #, c-format
 msgid "%s (%d)"
 msgstr "%s (%d)"
 
+#: lib/widget/wtools.c:592
 msgid "&Abort"
 msgstr "&Anulează"
 
+#: src/appearance.c:94
 msgid "< Default >"
 msgstr "< Implicit >"
 
+#: src/appearance.c:137
 msgid "Skins"
 msgstr "Tematici"
 
+#: src/appearance.c:235
 msgid "Skin:"
 msgstr "Tematică:"
 
+#: src/appearance.c:241
 msgid "&Shadows"
 msgstr "&Umbre"
 
+#: src/appearance.c:251
 msgid "Appearance"
 msgstr "Aspect"
 
+#: src/args.c:95
 msgid "Displays the current version"
 msgstr "Afișează versiunea curentă"
 
+#: src/args.c:106
 msgid "Print data directory"
 msgstr "Afișează dosarul de date"
 
+#: src/args.c:117
 msgid "Print extended info about used data directories"
 msgstr "Afișează informații extinse despre dosarele de date folosite"
 
+#: src/args.c:129
 msgid "Print configure options"
 msgstr "Afișează opțiunile de configurare"
 
+#: src/args.c:140
 #, fuzzy
 msgid "Disables Lua support"
 msgstr "Dezactivează suportul X11"
 
+#: src/args.c:157
 msgid "Forces xterm features"
 msgstr "Forțează facilitățile xterm"
 
+#: src/args.c:167
 msgid "Disable X11 support"
 msgstr "Dezactivează suportul X11"
 
+#: src/args.c:177
 msgid "Tries to use an old highlight mouse tracking"
 msgstr "Încearcă să folosească o determinare veche a evidențierii mausului"
 
+#: src/args.c:187
 msgid "Disable mouse support in text version"
 msgstr "Dezactivează suportul de mouse în versiunea text"
 
+#: src/args.c:193
 msgid "Tries to use termcap instead of terminfo"
 msgstr "Încearcă să utilizeze termcap în locul terminfo"
 
+#: src/args.c:202
 msgid "To run on slow terminals"
 msgstr "Pentru a rula pe terminale încete"
 
+#: src/args.c:212
 msgid "Use stickchars to draw"
 msgstr "Utilizează stickchars pentru afișare"
 
+#: src/args.c:222
 msgid "Load definitions of key bindings from specified file"
 msgstr "Încarcă definițiile de combinații de taste din fișierul specificat"
 
+#: src/args.c:223
 msgid "<file>"
 msgstr "<file>"
 
+#: src/args.c:232
 msgid "Don't load definitions of key bindings from file, use defaults"
 msgstr ""
 "Nu încarca definițiile de combinații de taste din fișier, folosește tastele "
 "implicite"
 
+#: src/args.c:252
 msgid "Requests to run in black and white"
 msgstr "Cerere de rulare în alb/negru"
 
+#: src/args.c:262
 msgid "Request to run in color mode"
 msgstr "Cerere de rulare în culori"
 
+#: src/args.c:272
 #, fuzzy
 msgid "Use the specified skin"
 msgstr "Arată mc cu tematica specificată"
 
+#: src/args.c:273
 msgid "<string>"
 msgstr "<string>"
 
+#: src/args.c:305
 msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
 msgstr "[+lineno] file1[:lineno] [file2[:lineno]...]"
 
+#: src/args.c:316
 #, c-format
 msgid ""
 "\n"
@@ -1239,301 +1597,407 @@ msgid ""
 "as tickets at %s\n"
 msgstr ""
 
+#: src/args.c:478
 msgid "Main options"
 msgstr "Opțiuni principale"
 
+#: src/args.c:485
 msgid "Terminal options"
 msgstr "Opțiuni terminal"
 
+#: src/args.c:492
 msgid "Color options"
 msgstr "Opțiuni culori"
 
+#: src/args.c:501
 msgid "Arguments parse error!"
 msgstr "Eroare de interpretare a argumentelor!"
 
+#: src/plugins/builtin-plugins.c:365 src/plugins/builtin-plugins.c:410
+#: src/plugins/spell/spell.c:1667 src/plugins/spell/spell.c:1748
+#: src/plugins/spell/spell.c:1812
 msgid "Spell"
 msgstr ""
 
+#: src/plugins/builtin-plugins.c:366 src/plugins/builtin-plugins.c:411
+#: src/plugins/spell/spell.c:1668
 msgid "Spell backend is unavailable."
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:146
 #, fuzzy
 msgid "Ctags Configuration"
 msgstr "&Configurare..."
 
+#: src/plugins/ctags/ctags-config.c:149
 msgid "Ctags executable:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-config.c:155
 #, fuzzy
 msgid "Command line options:"
 msgstr "Opțiuni de configurare"
 
+#: src/plugins/ctags/ctags-config.c:163
 #, fuzzy
 msgid "Case sensitive filter"
 msgstr "Sensibil la majus&cule"
 
+#: src/plugins/ctags/ctags-config.c:167
 msgid "Auto-discover tags file in parent directories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:358
 #, c-format
 msgid "Cannot jump to %s:%ld."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:359 src/plugins/ctags/ctags-plugin.c:527
+#: src/plugins/ctags/ctags-plugin.c:634 src/plugins/ctags/ctags-plugin.c:649
+#: src/plugins/ctags/ctags-plugin.c:662 src/plugins/ctags/ctags-plugin.c:672
+#: src/plugins/ctags/ctags-plugin.c:703 src/plugins/ctags/ctags-plugin.c:727
+#: src/plugins/ctags/ctags-plugin.c:772 src/plugins/ctags/ctags-plugin.c:817
+#: src/plugins/ctags/ctags-plugin.c:870 src/plugins/ctags/ctags-plugin.c:912
+#: src/plugins/ctags/ctags-plugin.c:960 src/plugins/ctags/ctags-plugin.c:1292
+#: src/plugins/ctags/ctags-plugin.c:1339 src/plugins/ctags/ctags-plugin.c:1345
+#: src/plugins/ctags/ctags-plugin.c:1374 src/plugins/ctags/ctags-plugin.c:1401
+#: src/plugins/ctags/ctags-plugin.c:1444 src/plugins/ctags/ctags-plugin.c:1458
+#: src/plugins/ctags/ctags-plugin.c:1475 src/plugins/ctags/ctags-plugin.c:1493
+#: src/plugins/ctags/ctags-plugin.c:1537 src/plugins/ctags/ctags-plugin.c:1664
+#: src/plugins/ctags/ctags-ui.c:309 src/plugins/ctags/ctags-ui.c:704
 msgid "Ctags"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:527
 #, c-format
 msgid "Symbol '%s' not found in any loaded repository."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:538
 #, fuzzy
 msgid "Go to Declaration"
 msgstr "Î&nainte către declarație"
 
+#: src/plugins/ctags/ctags-plugin.c:591
 #, fuzzy
 msgid "Find Declaration"
 msgstr "&Găsește declarația"
 
+#: src/plugins/ctags/ctags-plugin.c:634
 msgid "No word at cursor."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:649
 #, fuzzy, c-format
 msgid "'%s' is not a known symbol."
 msgstr "'%s' nu este o legătură simbolică"
 
+#: src/plugins/ctags/ctags-plugin.c:662
 #, fuzzy
 msgid "Failed to create temporary file."
 msgstr "Nu se poate salva în fișier"
 
+#: src/plugins/ctags/ctags-plugin.c:672
 #, fuzzy
 msgid "Failed to open temporary file."
 msgstr "Nu se poate salva în fișier"
 
+#: src/plugins/ctags/ctags-plugin.c:703
 msgid "No indexed files found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:727
 #, fuzzy
 msgid "Failed to run grep."
 msgstr ""
 "A eșuat executarea:\n"
 "%s\n"
 
+#: src/plugins/ctags/ctags-plugin.c:772
 #, fuzzy, c-format
 msgid "No references found for '%s'."
 msgstr "Nu au fost găsite înregistrări potrivite in %s"
 
+#: src/plugins/ctags/ctags-plugin.c:777 src/plugins/ctags/ctags-ui.c:737
 msgid "Find References"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:817
 msgid "No repository loaded."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:838 src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Search Symbol"
 msgstr "Căutarea a fost efectuată"
 
+#: src/plugins/ctags/ctags-plugin.c:870
 msgid "No file is open."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:912
 msgid "No tags found for the current file."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:917
 msgid "Symbols in Current File"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:960
 #, c-format
 msgid "No files matching '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:966 src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "Search File"
 msgstr "Căutarea a fost efectuată"
 
+#: src/plugins/ctags/ctags-plugin.c:1056
 #, fuzzy
 msgid "Complete Symbol"
 msgstr "Co&mplet: arată tot"
 
+#: src/plugins/ctags/ctags-plugin.c:1292
 #, c-format
 msgid "No members found for '%s'."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1339
 #, fuzzy, c-format
 msgid "Failed to load tags file: %s"
 msgstr "Nu se poate salva în fișier"
 
+#: src/plugins/ctags/ctags-plugin.c:1345
 #, c-format
 msgid "Loaded %u symbols from %s"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1374
 #, fuzzy, c-format
 msgid "Cannot create temp file: %s"
 msgstr ""
 "Nu se poate salva fișierul:\n"
 "%s"
 
+#: src/plugins/ctags/ctags-plugin.c:1401
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s: %s"
 msgstr "Nu pot face trecerea din %s în %s"
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 msgid "Ctags: Create Index"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1432
 #, fuzzy
 msgid "Project root directory to index:"
 msgstr "Director rădăcină:"
 
+#: src/plugins/ctags/ctags-plugin.c:1444
 #, fuzzy, c-format
 msgid "Failed to create index in %s"
 msgstr "Nu se poate crea evenimentul '%s'!"
 
+#: src/plugins/ctags/ctags-plugin.c:1458
 #, c-format
 msgid "Indexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1475
 #, fuzzy, c-format
 msgid "Reindex failed for %s"
 msgstr "Citirea a eșuat"
 
+#: src/plugins/ctags/ctags-plugin.c:1493
 #, c-format
 msgid "Reindexed: %u symbols"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1537
 msgid "Navigation history is empty."
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1541
 #, fuzzy
 msgid "Navigation History"
 msgstr "Navigare"
 
+#: src/plugins/ctags/ctags-plugin.c:1638
 #, fuzzy
 msgid "Go to declaration"
 msgstr "Î&nainte către declarație"
 
+#: src/plugins/ctags/ctags-plugin.c:1640
 msgid "Find references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1641
 #, fuzzy
 msgid "Complete symbol"
 msgstr "Co&mplet: arată tot"
 
+#: src/plugins/ctags/ctags-plugin.c:1642
 #, fuzzy
 msgid "Navigation history"
 msgstr "Navigare"
 
+#: src/plugins/ctags/ctags-plugin.c:1644
 msgid "Go forward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1645
 #, fuzzy
 msgid "Search symbol"
 msgstr "Căutarea a fost efectuată"
 
+#: src/plugins/ctags/ctags-plugin.c:1646
 #, fuzzy
 msgid "Search file"
 msgstr "Căutarea a fost efectuată"
 
+#: src/plugins/ctags/ctags-plugin.c:1647
 #, fuzzy
 msgid "Symbols in current file"
 msgstr "Numele legăturii simbolice:"
 
+#: src/plugins/ctags/ctags-plugin.c:1648
 msgid "Class/struct members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1649
 #, fuzzy
 msgid "Load tags file"
 msgstr "Încarcă fișier de sintaxă"
 
+#: src/plugins/ctags/ctags-plugin.c:1650
 msgid "Manage repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1651
 #, fuzzy
 msgid "Reindex repository"
 msgstr "Director indexat"
 
+#: src/plugins/ctags/ctags-plugin.c:1652
 #, fuzzy
 msgid "Configuration"
 msgstr "Confirmare"
 
+#: src/plugins/ctags/ctags-plugin.c:1947
 #, fuzzy
 msgid "Go to &declaration"
 msgstr "Î&nainte către declarație"
 
+#: src/plugins/ctags/ctags-plugin.c:1948
 msgid "&Find declaration"
 msgstr "&Găsește declarația"
 
+#: src/plugins/ctags/ctags-plugin.c:1949
 msgid "Find &references"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1951
 #, fuzzy
 msgid "Navigation &history"
 msgstr "Navigare"
 
+#: src/plugins/ctags/ctags-plugin.c:1952
 msgid "Go &back"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1953
 msgid "Go for&ward"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1955
 msgid "Class/struct &members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-plugin.c:1956
 #, fuzzy
 msgid "&Search symbol"
 msgstr "&Caută"
 
+#: src/plugins/ctags/ctags-plugin.c:1957
 #, fuzzy
 msgid "S&ymbols in file"
 msgstr "Numele legăturii simbolice:"
 
+#: src/plugins/ctags/ctags-plugin.c:1958
 #, fuzzy
 msgid "&Complete symbol"
 msgstr "Co&mplet: arată tot"
 
+#: src/plugins/ctags/ctags-ui.c:309
 msgid "No matching symbols found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:328
 #, fuzzy
 msgid "Select symbol"
 msgstr "Selectează"
 
+#: src/plugins/ctags/ctags-ui.c:411
 #, fuzzy
 msgid "Symbol name:"
 msgstr "Numele legăturii simbolice:"
 
+#: src/plugins/ctags/ctags-ui.c:420
 #, fuzzy
 msgid "File name or path:"
 msgstr "Nume de fișier:"
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Class/Struct Members"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:429
 msgid "Scope name (class, struct, namespace):"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:439
 #, fuzzy
 msgid "Load Tags File"
 msgstr "Încărcare fișier"
 
+#: src/plugins/ctags/ctags-ui.c:439
 msgid "Tags file path:"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:463
 msgid "Manage Tag Repositories"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:476
 msgid "(unknown)"
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:485 src/editor/editmenu.c:232
+#: src/key_learn.c:646 src/key_learn.c:656 src/key_sniffer.c:240
+#: src/keybind_dialog.c:1144 src/keybind_dialog.c:1157 src/manage_plugins.c:514
+#: src/manage_plugins.c:958
 msgid "&Close"
 msgstr "În&chide"
 
+#: src/plugins/ctags/ctags-ui.c:704
 msgid "No references found."
 msgstr ""
 
+#: src/plugins/ctags/ctags-ui.c:861
 msgid "Members"
 msgstr ""
 
+#: src/plugins/etags/etags.c:368 src/editor/edit.c:392 src/editor/editcmd.c:400
+#: src/editor/editcmd.c:422 src/editor/editcmd.c:588 src/editor/editcmd.c:768
+#: src/editor/editcmd.c:1312 src/editor/editcmd.c:2279
+#: src/editor/editcmd.c:2308 src/help.c:755 src/key_learn.c:420
+#: src/keybind_dialog.c:967
 msgid "Warning"
 msgstr "Atenție"
 
+#: src/plugins/etags/etags.c:369 src/editor/editcmd.c:2280
+#: src/editor/editcmd.c:2309
 msgid ""
 "Current text was modified without a file save.\n"
 "Continue discards these changes."
@@ -1541,46 +2005,62 @@ msgstr ""
 "Textul curent a fost modificat fără a se salva fișierul.\n"
 "Dacă se continuă schimbările vor fi pierdute."
 
+#: src/plugins/etags/etags.c:371 src/editor/editcmd.c:590
+#: src/editor/editcmd.c:770 src/editor/editcmd.c:2282 src/editor/editcmd.c:2311
 msgid "C&ontinue"
 msgstr "C&ontinuă"
 
+#: src/plugins/spell/spell.c:839
 msgid "&Add word"
 msgstr "&Adaugă cuvânt"
 
+#: src/plugins/spell/spell.c:843 src/editor/editsearch.c:853
 msgid "&Replace"
 msgstr "&Înlocuiește"
 
+#: src/plugins/spell/spell.c:845 src/plugins/spell/spell.c:853
+#: src/editor/editsearch.c:855
 msgid "&Skip"
 msgstr "&Sar"
 
+#: src/plugins/spell/spell.c:865
 msgid "Language"
 msgstr "Limbă"
 
+#: src/plugins/spell/spell.c:866
 msgid "Misspelled"
 msgstr "Scris greșit"
 
+#: src/plugins/spell/spell.c:874
 msgid "Check word"
 msgstr "Verifică cuvânt"
 
+#: src/plugins/spell/spell.c:881
 msgid "Suggest"
 msgstr "Sugerează"
 
+#: src/plugins/spell/spell.c:885
 msgid "(no suggestions)"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1194
 msgid ""
 "The hunspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1204
 msgid ""
 "The aspell library is not installed.\n"
 "Install it, and a dictionary for the language you write in."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1215 src/plugins/spell/spell.c:1359
+#: src/textconf.c:199
 msgid "none"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1251
 #, c-format
 msgid ""
 "Aspell has no dictionary for \"%s\".\n"
@@ -1588,6 +2068,7 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1368
 #, c-format
 msgid ""
 "Hunspell has no dictionary for \"%s\".\n"
@@ -1595,74 +2076,92 @@ msgid ""
 "Install a dictionary, then set Language to the name it goes by."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1534
 msgid ""
 "Spell checking is off.\n"
 "Set a language in the Spell plugin settings to turn it on."
 msgstr ""
 
+#: src/plugins/spell/spell.c:1638
 #, fuzzy
 msgid "Add word"
 msgstr "&Adaugă cuvânt"
 
+#: src/plugins/spell/spell.c:1638
 msgid "Word to add to the dictionary:"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1738
 #, fuzzy
 msgid "Aspell"
 msgstr "Scris greșit"
 
+#: src/plugins/spell/spell.c:1739
 msgid "Hunspell"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1744
 msgid "Engine"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1749
 #, fuzzy
 msgid "Language:"
 msgstr "Limbă"
 
+#: src/plugins/spell/spell.c:1752
 #, fuzzy
 msgid "&Select..."
 msgstr "Selectează"
 
+#: src/plugins/spell/spell.c:1761
 msgid "Spell plugin settings"
 msgstr ""
 
+#: src/plugins/spell/spell.c:1839
 msgid "Select language"
 msgstr "Selectează limba"
 
+#: src/editor/edit.c:197
 #, c-format
 msgid "Loading: %3d%%"
 msgstr "Se încarcă: %3d%%"
 
+#: src/editor/edit.c:200
 msgid "Loading..."
 msgstr "Se încarcă..."
 
+#: src/editor/edit.c:237 src/editor/edit.c:346
 #, c-format
 msgid ""
 "Cannot open\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:245
 msgid "Load file"
 msgstr "Încărcare fișier"
 
+#: src/editor/edit.c:253
 #, c-format
 msgid "Error reading %s"
 msgstr "Eroare la citirea %s"
 
+#: src/editor/edit.c:357
 #, c-format
 msgid ""
 "Cannot stat\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:365
 #, c-format
 msgid ""
 "%s\n"
 "is not a regular file"
 msgstr ""
 
+#: src/editor/edit.c:390
 #, c-format
 msgid ""
 "File \"%s\" is too large.\n"
@@ -1671,51 +2170,63 @@ msgstr ""
 "Fișierul \"%s\" este prea mare.\n"
 "Îl deschizi oricum?"
 
+#: src/editor/edit.c:2438
 #, c-format
 msgid "Error reading from pipe: %s"
 msgstr "Eroare la citirea din pipe: %s"
 
+#: src/editor/edit.c:2444 src/editor/editcmd.c:495
 #, c-format
 msgid ""
 "Cannot open pipe for reading\n"
 "%s"
 msgstr ""
 
+#: src/editor/edit.c:4992
 #, fuzzy
 msgid "Undo"
 msgstr "An&ulează"
 
+#: src/editor/edit.c:4993 src/editor/editcmd.c:2930
 msgid ""
 "Undo history is not available.\n"
 "The change log was overwritten after a large edit."
 msgstr ""
 
+#: src/editor/editcmd.c:231
 msgid ""
 "No write permissions for this file.\n"
 "Enter sudo password to save as root:"
 msgstr ""
 
+#: src/editor/editcmd.c:242 src/editor/editcmd.c:294
 msgid "Save with sudo"
 msgstr ""
 
+#: src/editor/editcmd.c:295
 msgid ""
 "Cannot save with sudo.\n"
 "Wrong password or sudo is not configured."
 msgstr ""
 
+#: src/editor/editcmd.c:297
 msgid "&Retry"
 msgstr "&Reîncearcă"
 
+#: src/editor/editcmd.c:400
 msgid "File has hard-links. Detach before saving?"
 msgstr "Fișierul are hard-links. Desprinzi înainte de a salva?"
 
+#: src/editor/editcmd.c:423
 msgid "The file has been modified in the meantime. Save anyway?"
 msgstr "Fișierul a fost modificat între timp. Salvezi oricum?"
 
+#: src/editor/editcmd.c:487
 #, c-format
 msgid "Error writing to pipe: %s"
 msgstr "Eroare la scrierea în pipe: %s"
 
+#: src/editor/editcmd.c:534
 #, c-format
 msgid ""
 "Cannot open file\n"
@@ -1723,51 +2234,67 @@ msgid ""
 "for writing"
 msgstr ""
 
+#: src/editor/editcmd.c:589
 msgid "The file you are saving does not end with a newline."
 msgstr "Fișierul pe care îl salvezi nu se termină cu o linie nouă."
 
+#: src/editor/editcmd.c:604
 msgid "&Do not change"
 msgstr "&Nu schimba"
 
+#: src/editor/editcmd.c:605
 msgid "&Unix format (LF)"
 msgstr "Format &Unix (LF)"
 
+#: src/editor/editcmd.c:606
 msgid "&Windows/DOS format (CR LF)"
 msgstr "Format &Windows/DOS (CR LF)"
 
+#: src/editor/editcmd.c:607
 msgid "&Macintosh format (CR)"
 msgstr "Format &Macintosh (CR)"
 
+#: src/editor/editcmd.c:611 src/editor/editcmd.c:1416 src/editor/editcmd.c:2146
+#: src/editor/editcmd.c:2177
 msgid "Enter file name:"
 msgstr "Introdu numele de fișier:"
 
+#: src/editor/editcmd.c:615
 msgid "Change line breaks to:"
 msgstr "Schimbă finalul de linie în:"
 
+#: src/editor/editcmd.c:625
 msgid "Save As"
 msgstr "Salvează ca"
 
+#: src/editor/editcmd.c:1111
 #, c-format
 msgid ""
 "Cannot create directory\n"
 "%s"
 msgstr ""
 
+#: src/editor/editcmd.c:1213
 msgid "&Quick save"
 msgstr "Salvare &rapidă"
 
+#: src/editor/editcmd.c:1214
 msgid "&Safe save"
 msgstr "&Salvare sigură"
 
+#: src/editor/editcmd.c:1215
 msgid "&Do backups with following extension:"
 msgstr "&Fă copii de siguranță cu următoarea extensie:"
 
+#: src/editor/editcmd.c:1226
 msgid "Check &POSIX new line"
 msgstr "Verificare &POSIX pentru o noua linie"
 
+#: src/editor/editcmd.c:1235
 msgid "Edit Save Mode"
 msgstr "Editare mod salvare"
 
+#: src/editor/editcmd.c:1297
 #, c-format
 msgid ""
 "Cannot save\n"
@@ -1775,52 +2302,69 @@ msgid ""
 "not a regular file"
 msgstr ""
 
+#: src/editor/editcmd.c:1312
 msgid "A file already exists with this name"
 msgstr "Deja există un fișier cu acest nume"
 
+#: src/editor/editcmd.c:1313
 msgid "&Overwrite"
 msgstr "S&uprascrie"
 
+#: src/editor/editcmd.c:1357
 msgid "Cannot save file"
 msgstr "Nu se poate salva fișierul"
 
+#: src/editor/editcmd.c:1392
 #, c-format
 msgid "Confirm save file: \"%s\""
 msgstr "Confirmă salvarea fișierului: \"%s\""
 
+#: src/editor/editcmd.c:1394
 msgid "Save file"
 msgstr "Salvează fișier"
 
+#: src/editor/editcmd.c:1394 src/editor/editmenu.c:235 src/key_learn.c:644
+#: src/key_learn.c:651 src/keybind_dialog.c:1141 src/keybind_dialog.c:1149
 msgid "&Save"
 msgstr "&Salvează"
 
+#: src/editor/editcmd.c:1416
 msgid "Load"
 msgstr "Încarcă"
 
+#: src/editor/editcmd.c:1503
 msgid "Syntax file edit"
 msgstr "Editare fișier sintaxă"
 
+#: src/editor/editcmd.c:1503
 msgid "Which syntax file you want to edit?"
 msgstr "Ce fișier de sintaxă dorești să editezi?"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&User"
 msgstr "&Utilizator"
 
+#: src/editor/editcmd.c:1504 src/editor/editcmd.c:1559
 msgid "&System wide"
 msgstr "În tot &sistemul"
 
+#: src/editor/editcmd.c:1558
 msgid "Menu edit"
 msgstr "Editare meniu"
 
+#: src/editor/editcmd.c:1558
 msgid "Which menu file do you want to edit?"
 msgstr "Ce fișier de meniu dorești să editezi?"
 
+#: src/editor/editcmd.c:1559
 msgid "&Local"
 msgstr "&Local"
 
+#: src/editor/editcmd.c:1838 src/editor/editwidget.c:1217
 msgid "[NoName]"
 msgstr "[FărăNume]"
 
+#: src/editor/editcmd.c:1844
 #, c-format
 msgid ""
 "File %s was modified.\n"
@@ -1829,569 +2373,752 @@ msgstr ""
 "Fișierul %s a fost modificat.\n"
 "Salvezi înainte de închidere?"
 
+#: src/editor/editcmd.c:1845
 msgid "Close file"
 msgstr "Închide fișier"
 
+#: src/editor/editcmd.c:1849
 #, c-format
 msgid ""
 "%s is being shut down.\n"
 "Save modified file %s?"
 msgstr ""
 
+#: src/editor/editcmd.c:1851
 msgid "Quit"
 msgstr "Ieși"
 
+#: src/editor/editcmd.c:2023
 msgid "This function is not implemented"
 msgstr "Această funcție nu este implementată"
 
+#: src/editor/editcmd.c:2038 src/editor/editcmd.c:2062
 msgid "Unable to save to file"
 msgstr "Nu se poate salva în fișier"
 
+#: src/editor/editcmd.c:2106
 msgid "Goto line"
 msgstr "Mergi la linia"
 
+#: src/editor/editcmd.c:2106
 msgid "Enter line:"
 msgstr "Introdu linia:"
 
+#: src/editor/editcmd.c:2146
 msgid "Save block"
 msgstr "Salvează blocul"
 
+#: src/editor/editcmd.c:2156
 msgid "Cannot save block"
 msgstr ""
 
+#: src/editor/editcmd.c:2192
 msgid "Cannot insert file"
 msgstr "Nu se poate insera fișierul"
 
+#: src/editor/editcmd.c:2230
 msgid "mail -s <subject> -c <cc> <to>"
 msgstr "mail -s <subiect> -c <cc> <către>"
 
+#: src/editor/editcmd.c:2231
 msgid "To"
 msgstr "Către"
 
+#: src/editor/editcmd.c:2233
 msgid "Subject"
 msgstr "Subiect"
 
+#: src/editor/editcmd.c:2235
 msgid "Copies to"
 msgstr "Copie către"
 
+#: src/editor/editcmd.c:2245
 msgid "Mail"
 msgstr "Mail"
 
+#: src/editor/editcmd.c:2360
 msgid "Cancel"
 msgstr "Renunță"
 
+#: src/editor/editcmd.c:2820
 #, fuzzy, c-format
 msgid "insert %d"
 msgstr "Insert"
 
+#: src/editor/editcmd.c:2826
 #, fuzzy, c-format
 msgid "delete %d"
 msgstr "Șterge %s?"
 
+#: src/editor/editcmd.c:2829
 #, fuzzy
 msgid "replace"
 msgstr "Înlocuiește"
 
+#: src/editor/editcmd.c:2932
 msgid "Nothing to undo."
 msgstr ""
 
+#: src/editor/editcmd.c:2935 src/editor/editcmd.c:2941
 #, fuzzy
 msgid "Undo History"
 msgstr "Istoric"
 
+#: src/editor/editcomplete.c:245
 msgid "Collect completions"
 msgstr "Colecționează completări"
 
+#: src/editor/editdraw.c:306 src/editor/editwidget.c:1164
 msgid "NoName"
 msgstr "FărăNume"
 
+#: src/editor/editmacros.c:156
 msgid "Save macro"
 msgstr "Salvează macro"
 
+#: src/editor/editmacros.c:156
 msgid "Press the macro's new hotkey:"
 msgstr "Apasă noua combinație de taste pentru macro:"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat last commands"
 msgstr "Repetă ultimele comenzi"
 
+#: src/editor/editmacros.c:328
 msgid "Repeat times:"
 msgstr "Număr de repetări:"
 
+#: src/editor/editmacros.c:708
 #, fuzzy, c-format
 msgid "Delete macro %s?"
 msgstr "Șterge macro"
 
+#: src/editor/editmacros.c:711
 msgid "Delete macro"
 msgstr "Șterge macro"
 
+#: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
 msgstr ""
 
+#: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr ""
 
+#: src/editor/editmacros.c:865
 #, fuzzy
 msgid "Run"
 msgstr "rusă"
 
+#: src/editor/editmacros.c:868
 #, fuzzy
 msgid "Close"
 msgstr "În&chide"
 
+#: src/editor/editmenu.c:230
 msgid "&Open file..."
 msgstr "D&eschide fișier..."
 
+#: src/editor/editmenu.c:231
 msgid "&New"
 msgstr "&Nou"
 
+#: src/editor/editmenu.c:233
 msgid "&History..."
 msgstr "&Istoric..."
 
+#: src/editor/editmenu.c:236
 msgid "Save &as..."
 msgstr "Salvează c&a..."
 
+#: src/editor/editmenu.c:238
 msgid "&Insert file..."
 msgstr "&Inserează fișier..."
 
+#: src/editor/editmenu.c:239
 msgid "Cop&y to file..."
 msgstr "Co&piază în fișier..."
 
+#: src/editor/editmenu.c:241
 msgid "&User menu..."
 msgstr "Meniu &utilizator..."
 
+#: src/editor/editmenu.c:243
 msgid "A&bout..."
 msgstr "Des&pre..."
 
+#: src/editor/editmenu.c:245
 msgid "&Quit"
 msgstr "&Ieșire"
 
+#: src/editor/editmenu.c:257
 msgid "&Undo"
 msgstr "An&ulează"
 
+#: src/editor/editmenu.c:258
 msgid "&Redo"
 msgstr "&Refă"
 
+#: src/editor/editmenu.c:259
 #, fuzzy
 msgid "Undo &History..."
 msgstr "&Istoric..."
 
+#: src/editor/editmenu.c:262
 msgid "&Toggle ins/overw"
 msgstr "Comu&tă ins/supr"
 
+#: src/editor/editmenu.c:264
 msgid "To&ggle mark"
 msgstr "Co&mută selecția"
 
+#: src/editor/editmenu.c:265
 msgid "&Mark columns"
 msgstr "Selectează coloa&ne"
 
+#: src/editor/editmenu.c:266
 msgid "Mark &all"
 msgstr "Selecte&ază tot"
 
+#: src/editor/editmenu.c:267
 msgid "Unmar&k"
 msgstr "Deselectează"
 
+#: src/editor/editmenu.c:269
 msgid "Cop&y"
 msgstr "C&opiază"
 
+#: src/editor/editmenu.c:270
 msgid "Mo&ve"
 msgstr "Mu&tă"
 
+#: src/editor/editmenu.c:271
 msgid "&Delete"
 msgstr "Ş&terge"
 
+#: src/editor/editmenu.c:273
 msgid "Co&py to clipfile"
 msgstr "Co&piază în fișierul clip"
 
+#: src/editor/editmenu.c:274
 msgid "&Cut to clipfile"
 msgstr "&Taie în fișierul clip"
 
+#: src/editor/editmenu.c:275
 msgid "Pa&ste from clipfile"
 msgstr "Li&pește din fișierul clip"
 
+#: src/editor/editmenu.c:277
 msgid "&Beginning"
 msgstr "În&ceput"
 
+#: src/editor/editmenu.c:278
 msgid "&End"
 msgstr "Sfârşi&t"
 
+#: src/editor/editmenu.c:290
 msgid "&Search..."
 msgstr "&Caută..."
 
+#: src/editor/editmenu.c:291
 msgid "Search &again"
 msgstr "C&aută din nou"
 
+#: src/editor/editmenu.c:292
 msgid "&Replace..."
 msgstr "În&locuire..."
 
+#: src/editor/editmenu.c:293
 #, fuzzy
 msgid "Toggle &line filter"
 msgstr "&Comută linia de stare"
 
+#: src/editor/editmenu.c:294
 #, fuzzy
 msgid "Filter by &word"
 msgstr "&scrie de către proprietar"
 
+#: src/editor/editmenu.c:296
 msgid "&Toggle bookmark"
 msgstr "&Comută marcaj"
 
+#: src/editor/editmenu.c:297
 msgid "&Next bookmark"
 msgstr "Marcajul &următor"
 
+#: src/editor/editmenu.c:298
 msgid "&Prev bookmark"
 msgstr "Marcajul &precedent"
 
+#: src/editor/editmenu.c:299
 msgid "&Flush bookmarks"
 msgstr "Ște&rge marcaje"
 
+#: src/editor/editmenu.c:311
 msgid "&Go to line..."
 msgstr "Mer&gi la linia..."
 
+#: src/editor/editmenu.c:312
 msgid "&Toggle line state"
 msgstr "&Comută linia de stare"
 
+#: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
 msgstr "Mergi la &paranteza pereche"
 
+#: src/editor/editmenu.c:316
 msgid "Toggle s&yntax highlighting"
 msgstr "Comută evidenţierea de sinta&xă"
 
+#: src/editor/editmenu.c:317
 msgid "Togg&le right margin"
 msgstr ""
 
+#: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
 msgstr ""
 
+#: src/editor/editmenu.c:321
 msgid "Encod&ing..."
 msgstr "Codif&icare"
 
+#: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
 msgstr ""
 
+#: src/editor/editmenu.c:324
 #, fuzzy
 msgid "&Unfold all"
 msgstr "&Găsește tot"
 
+#: src/editor/editmenu.c:326
 msgid "&Refresh screen"
 msgstr "&Reîmprospătare ecran"
 
+#: src/editor/editmenu.c:329
 msgid "&Start/Stop record macro"
 msgstr "&Start/stop înregistrare macro"
 
+#: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
 msgstr ""
 
+#: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
 msgstr "Înregistrare/Repetare &acțiuni"
 
+#: src/editor/editmenu.c:348
 msgid "&Move"
 msgstr "&Mută"
 
+#: src/editor/editmenu.c:349
 msgid "&Resize"
 msgstr "&Redimensionează"
 
+#: src/editor/editmenu.c:351
 msgid "&Toggle fullscreen"
 msgstr "Comu&tă pe tot ecranul"
 
+#: src/editor/editmenu.c:353
 msgid "&Next"
 msgstr "&Următorul"
 
+#: src/editor/editmenu.c:354
 msgid "&Previous"
 msgstr "&Precedentul"
 
+#: src/editor/editmenu.c:355
 msgid "&List..."
 msgstr "&Listă..."
 
+#: src/editor/editmenu.c:367
 msgid "&General..."
 msgstr "&General..."
 
+#: src/editor/editmenu.c:368
 msgid "Save &mode..."
 msgstr "&Mod salvare..."
 
+#: src/editor/editmenu.c:370
 msgid "Syntax &highlighting..."
 msgstr "Evidențiere de s&intaxă..."
 
+#: src/editor/editmenu.c:371
 msgid "&Appearance..."
 msgstr "&Aspect..."
 
+#: src/editor/editmenu.c:373
 msgid "Learn &keys..."
 msgstr "Învață &taste..."
 
+#: src/editor/editmenu.c:374
 #, fuzzy
 msgid "Key &bindings..."
 msgstr "Codificar&e"
 
+#: src/editor/editmenu.c:375
 #, fuzzy
 msgid "Key s&niffer..."
 msgstr "Codificar&e"
 
+#: src/editor/editmenu.c:377
 #, fuzzy
 msgid "Manage &plugins..."
 msgstr "Opțiuni &panou..."
 
+#: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
 msgstr ""
 
+#: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
 msgstr ""
 
+#: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "Fișier de s&intaxă"
 
+#: src/editor/editmenu.c:384
 #, fuzzy
 msgid "M&enu file"
 msgstr "Fișier de &meniu"
 
+#: src/editor/editmenu.c:386
 msgid "&Save setup"
 msgstr "&Salvează setările"
 
+#: src/editor/editmenu.c:422
 msgid "(no plugins loaded)"
 msgstr ""
 
+#: src/editor/editmenu.c:524
 msgid "&File"
 msgstr "&Fișier"
 
+#: src/editor/editmenu.c:530
 msgid "&Edit"
 msgstr "&Editare"
 
+#: src/editor/editmenu.c:537
 msgid "&Search"
 msgstr "&Caută"
 
+#: src/editor/editmenu.c:543
 msgid "&Command"
 msgstr "&Comandă"
 
+#: src/editor/editmenu.c:553
 #, fuzzy
 msgid "&Navigate"
 msgstr "Navigare"
 
+#: src/editor/editmenu.c:580
 msgid "&Window"
 msgstr "Fe&reastră"
 
+#: src/editor/editmenu.c:586
 msgid "Pl&ugins"
 msgstr ""
 
+#: src/editor/editmenu.c:592
 msgid "&Options"
 msgstr "&Opțiuni"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Lua action"
 msgstr "Tabulare"
 
+#: src/editor/editmenu.c:616 src/editor/editmenu.c:629
 #, fuzzy
 msgid "Action failed"
 msgstr "Citirea a eșuat"
 
+#: src/editor/editoptions.c:58
 msgid "&None"
 msgstr "&Nimic"
 
+#: src/editor/editoptions.c:59
 msgid "&Dynamic paragraphing"
 msgstr "Paragrafe &dinamice"
 
+#: src/editor/editoptions.c:60
 msgid "Type &writer wrap"
 msgstr "Aranjare tip &mașină de scris"
 
+#: src/editor/editoptions.c:185
 msgid "Wrap mode"
 msgstr "Mod de aranjare"
 
+#: src/editor/editoptions.c:190
 msgid "Tabulation"
 msgstr "Tabulare"
 
+#: src/editor/editoptions.c:191
 msgid "&Fake half tabs"
 msgstr "&Simulează tab-urile 1/2"
 
+#: src/editor/editoptions.c:192
 msgid "&Backspace through tabs"
 msgstr "Șterge deodată &tab-urile"
 
+#: src/editor/editoptions.c:194
 msgid "Fill tabs with &spaces"
 msgstr "&Umple tab-urile cu spații"
 
+#: src/editor/editoptions.c:196
 msgid "Tab spacing:"
 msgstr "Spațiere tab:"
 
+#: src/editor/editoptions.c:201
 msgid "Other options"
 msgstr "Alte opțiuni"
 
+#: src/editor/editoptions.c:202
 msgid "&Return does autoindent"
 msgstr "Enter &autoindentează"
 
+#: src/editor/editoptions.c:204
 msgid "Confir&m before saving"
 msgstr "Confir&mă înainte de a salva"
 
+#: src/editor/editoptions.c:205
 msgid "Save file &position"
 msgstr "Salvează &poziția în fișier"
 
+#: src/editor/editoptions.c:206
 msgid "&Visible trailing spaces"
 msgstr "Spații la final &vizibile"
 
+#: src/editor/editoptions.c:208
 msgid "Visible &tabs"
 msgstr "&Taburi vizibile"
 
+#: src/editor/editoptions.c:209
 msgid "S&how control characters"
 msgstr ""
 
+#: src/editor/editoptions.c:211
 msgid "Synta&x highlighting"
 msgstr "&Evidențiere sintaxă"
 
+#: src/editor/editoptions.c:213
 msgid "C&ursor after inserted block"
 msgstr "C&ursor după blocul inserat"
 
+#: src/editor/editoptions.c:215
 msgid "Pers&istent selection"
 msgstr "Selecție pers&istentă"
 
+#: src/editor/editoptions.c:217
 msgid "Cursor be&yond end of line"
 msgstr "Cursor &dincolo de sfârşit fișier"
 
+#: src/editor/editoptions.c:219
 msgid "&Group undo"
 msgstr "&Group undo"
 
+#: src/editor/editoptions.c:220
 msgid "Word wrap line length:"
 msgstr "Lungime linie pentru curgere cuvinte:"
 
+#: src/editor/editoptions.c:233
 msgid "Editor options"
 msgstr "Opțiuni editor"
 
+#: src/editor/editsearch.c:148 src/editor/editsearch.c:770
 msgid "Enter search string:"
 msgstr "Introdu șirul de căutare:"
 
+#: src/editor/editsearch.c:157 src/editor/editsearch.c:781
 msgid "Cas&e sensitive"
 msgstr "S&ensibil la majuscule"
 
+#: src/editor/editsearch.c:158 src/editor/editsearch.c:782
 msgid "&Backwards"
 msgstr "În sens &invers"
 
+#: src/editor/editsearch.c:159 src/editor/editsearch.c:783
 msgid "In se&lection"
 msgstr "În se&lecție"
 
+#: src/editor/editsearch.c:160 src/editor/editsearch.c:784
 msgid "&Whole words"
 msgstr "C&uvinte întregi"
 
+#: src/editor/editsearch.c:161 src/editor/editsearch.c:785
 msgid "&All charsets"
 msgstr "To&ate seturile de caractere"
 
+#: src/editor/editsearch.c:165
 msgid "&Find all"
 msgstr "&Găsește tot"
 
+#: src/editor/editsearch.c:166
 msgid "Fil&ter"
 msgstr ""
 
+#: src/editor/editsearch.c:176 src/editor/editsearch.c:539
+#: src/editor/editsearch.c:565 src/editor/editsearch.c:599
+#: src/editor/editsearch.c:976 src/editor/editsearch.c:987
 msgid "Search"
 msgstr "Caută"
 
+#: src/editor/editsearch.c:697
 #, c-format
 msgid "Searching %s: %3d%%"
 msgstr "Caut %s: %3d%%"
 
+#: src/editor/editsearch.c:700
 #, c-format
 msgid "Searching %s"
 msgstr "Caut %s"
 
+#: src/editor/editsearch.c:773
 msgid "Enter replacement string:"
 msgstr "Introdu șirul de înlocuire:"
 
+#: src/editor/editsearch.c:796 src/editor/editsearch.c:1052
+#: src/editor/editsearch.c:1092 src/editor/editsearch.c:1104
 msgid "Replace"
 msgstr "Înlocuiește"
 
+#: src/editor/editsearch.c:850
 msgid "Replace with:"
 msgstr "Înlocuiește cu:"
 
+#: src/editor/editsearch.c:854
 msgid "A&ll"
 msgstr "Toa&te"
 
+#: src/editor/editsearch.c:865
 msgid "Confirm replace"
 msgstr "Confirmă înlocuirea"
 
+#: src/editor/editsearch.c:1104
 #, c-format
 msgid "%ld replacements made"
 msgstr "%ld înlocuiri efectuate"
 
+#: src/editor/editwidget.c:563
 msgid "Plugin"
 msgstr ""
 
+#: src/editor/editwidget.c:713
 #, c-format
 msgid ""
 "A user friendly text editor\n"
 "written for the %s."
 msgstr ""
 
+#: src/editor/editwidget.c:731
 msgid "About"
 msgstr "Despre"
 
+#: src/editor/editwidget.c:939 src/editor/editwidget.c:960
+#: src/editor/editwidget.c:993 src/editor/editwidget.c:1000
 msgid "Plugin info"
 msgstr ""
 
+#: src/editor/editwidget.c:939
 msgid "No plugins are loaded."
 msgstr ""
 
+#: src/editor/editwidget.c:994
 msgid "Selected runtime has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1001
 msgid "Selected plugin has no configuration callback."
 msgstr ""
 
+#: src/editor/editwidget.c:1154
 msgid "Open files"
 msgstr "Deschide fișiere"
 
+#: src/editor/editwidget.c:1221 src/editor/editwidget.c:1224
 msgid "Edit: "
 msgstr "Editează: "
 
+#: src/editor/editwidget.c:1523 src/help.c:1722
 msgid "ButtonBar|Help"
 msgstr "ButtonBar|Ajutor"
 
+#: src/editor/editwidget.c:1524
 msgid "ButtonBar|Save"
 msgstr "ButtonBar|Salvare"
 
+#: src/editor/editwidget.c:1525
 msgid "ButtonBar|Mark"
 msgstr "ButtonBar|Marc"
 
+#: src/editor/editwidget.c:1526
 msgid "ButtonBar|Replac"
 msgstr "ButtonBar|Înloc"
 
+#: src/editor/editwidget.c:1527
 msgid "ButtonBar|Copy"
 msgstr "ButtonBar|Copie"
 
+#: src/editor/editwidget.c:1528
 msgid "ButtonBar|Move"
 msgstr "ButtonBar|Mută"
 
+#: src/editor/editwidget.c:1529
 msgid "ButtonBar|Search"
 msgstr "ButtonBar|Caută"
 
+#: src/editor/editwidget.c:1530
 msgid "ButtonBar|Delete"
 msgstr "ButtonBar|Șterge"
 
+#: src/editor/editwidget.c:1531
 msgid "ButtonBar|PullDn"
 msgstr "ButtonBar|ÎnJos"
 
+#: src/editor/editwidget.c:1532 src/help.c:1731
 msgid "ButtonBar|Quit"
 msgstr "ButtonBar|Ieșire"
 
+#: src/editor/fold.c:478
 #, fuzzy, c-format
 msgid "Filtering %s: %3d%%"
 msgstr "Caut %s: %3d%%"
 
+#: src/editor/fold.c:521 src/editor/fold.c:596
 msgid "Filter"
 msgstr "Filtru"
 
+#: src/editor/fold.c:596
 msgid "No lines match"
 msgstr ""
 
+#: src/editor/syntax.c:140
 msgid "< Auto >"
 msgstr "< Auto >"
 
+#: src/editor/syntax.c:141
 msgid "< Reload Current Syntax >"
 msgstr "< Reîncarcă sintaxa curentă >"
 
+#: src/editor/syntax.c:283 src/help.c:172 src/help.c:1662 src/usermenu.c:825
+#: src/usermenu.c:852
 #, c-format
 msgid ""
 "Cannot open file\n"
 "%s"
 msgstr ""
 
+#: src/editor/syntax.c:285
 msgid "Load syntax file"
 msgstr "Încarcă fișier de sintaxă"
 
+#: src/editor/syntax.c:285
 #, c-format
 msgid "Error in file %s on line %d"
 msgstr "Eroare în fișierul %s pe linia %d"
 
+#: src/execute.c:240
 #, fuzzy
 msgid ""
 "Not an xterm;\n"
@@ -2400,183 +3127,233 @@ msgstr ""
 "Nu o consolă xterm sau Linux;\n"
 "subshell-ul nu poate fi comutat."
 
+#: src/execute.c:266
 #, c-format
 msgid "Type 'exit' to return to the %s"
 msgstr ""
 
+#: src/help.c:717
 msgid "Help file format error\n"
 msgstr "Format eronat al fișierului de ajutor\n"
 
+#: src/help.c:755
 msgid "Internal bug: Double start of link area"
 msgstr "Bug intern: Double start of link area"
 
+#: src/help.c:1103 src/help.c:1677
 #, c-format
 msgid "Cannot find node %s in help file"
 msgstr "Nu se poate găsi nodul %s în fișierul de ajutor"
 
+#: src/help.c:1487
 msgid "See also"
 msgstr ""
 
+#: src/help.c:1691
 msgid "Help"
 msgstr "Ajutor"
 
+#: src/help.c:1723
 msgid "ButtonBar|Index"
 msgstr "ButtonBar|Index"
 
+#: src/help.c:1724
 msgid "ButtonBar|Prev"
 msgstr "ButtonBar|Prec"
 
+#: src/key_learn.c:138
 #, fuzzy
 msgid "Function keys"
 msgstr "Tasta funcț. 1"
 
+#: src/key_learn.c:139
 #, fuzzy
 msgid "Arrows / Navigation"
 msgstr "Navigare"
 
+#: src/key_learn.c:140
 msgid "Special"
 msgstr ""
 
+#: src/key_learn.c:312
 #, fuzzy
 msgid "Learn key"
 msgstr "Învață tastele"
 
+#: src/key_learn.c:312
 #, c-format
 msgid "Press %s and wait..."
 msgstr ""
 
+#: src/key_learn.c:351
 #, c-format
 msgid ""
 "Sequence %s is already assigned to %s.\n"
 "Reassign to %s?"
 msgstr ""
 
+#: src/key_learn.c:354
 #, fuzzy
 msgid "Conflict"
 msgstr "Confirmare"
 
+#: src/key_learn.c:420
 #, c-format
 msgid ""
 "Cannot accept this key.\n"
 "You pressed: %s"
 msgstr ""
 
+#: src/key_learn.c:557
 #, c-format
 msgid "Learn terminal [%s]"
 msgstr ""
 
+#: src/key_learn.c:567 src/keybind_dialog.c:635
 #, fuzzy
 msgid "&Ctrl"
 msgstr "Ctrl"
 
+#: src/key_learn.c:568 src/keybind_dialog.c:636
 msgid "&Alt"
 msgstr ""
 
+#: src/key_learn.c:569 src/keybind_dialog.c:637
 #, fuzzy
 msgid "&Shift"
 msgstr "Shift"
 
+#: src/key_learn.c:645 src/key_learn.c:654 src/keybind_dialog.c:1143
+#: src/keybind_dialog.c:1155
 #, fuzzy
 msgid "Edit &term file"
 msgstr "Editare fișier &meniuri"
 
+#: src/key_sniffer.c:115
 msgid "(not recognized)"
 msgstr ""
 
+#: src/key_sniffer.c:166
 msgid "(none)"
 msgstr ""
 
+#: src/key_sniffer.c:184
 msgid ""
 "Press any key...\n"
 "\n"
 "Wait until this message disappears."
 msgstr ""
 
+#: src/key_sniffer.c:220
 msgid "Shortcut:"
 msgstr ""
 
+#: src/key_sniffer.c:224
 msgid "Action:"
 msgstr ""
 
+#: src/key_sniffer.c:228
 msgid "Raw:"
 msgstr ""
 
+#: src/key_sniffer.c:232
 msgid "Keycode:"
 msgstr ""
 
+#: src/key_sniffer.c:238
 msgid "&Capture key"
 msgstr ""
 
+#: src/keybind_dialog.c:128
 #, fuzzy
 msgid "&Main"
 msgstr "&Mail..."
 
+#: src/keybind_dialog.c:129
 msgid "&Ctrl-X + ..."
 msgstr ""
 
+#: src/keybind_dialog.c:133
 msgid "&Dialog"
 msgstr ""
 
+#: src/keybind_dialog.c:133
 #, fuzzy
 msgid "&Menu"
 msgstr "Fișier de &meniu"
 
+#: src/keybind_dialog.c:134
 msgid "&Input"
 msgstr ""
 
+#: src/keybind_dialog.c:134
 #, fuzzy
 msgid "&Listbox"
 msgstr "&Listă..."
 
+#: src/keybind_dialog.c:135
 msgid "&Radio"
 msgstr ""
 
+#: src/keybind_dialog.c:135
 #, fuzzy
 msgid "&Help"
 msgstr "Ajutor"
 
+#: src/keybind_dialog.c:139
 #, fuzzy
 msgid "&Editor"
 msgstr "&Editare"
 
+#: src/keybind_dialog.c:140
 msgid "&Widgets"
 msgstr ""
 
+#: src/keybind_dialog.c:566
 msgid "Key"
 msgstr ""
 
+#: src/keybind_dialog.c:623
 #, c-format
 msgid "Unknown sequence: %s"
 msgstr ""
 
+#: src/keybind_dialog.c:629
 #, fuzzy
 msgid "Assign key"
 msgstr "Tasta A1"
 
+#: src/keybind_dialog.c:643
 msgid "Key:"
 msgstr ""
 
+#: src/keybind_dialog.c:894
 msgid "Set shortcut"
 msgstr ""
 
+#: src/keybind_dialog.c:895
 #, fuzzy
 msgid "Press new shortcut..."
 msgstr "Apăsați o tastă pentru a continua..."
 
+#: src/keybind_dialog.c:963
 #, c-format
 msgid ""
 "%s is already bound to %s.\n"
 "Reassign anyway?"
 msgstr ""
 
+#: src/keybind_dialog.c:1104 src/keybind_dialog.c:1107
 #, fuzzy
 msgid "&Back"
 msgstr "În sens &invers"
 
+#: src/keybind_dialog.c:1142 src/keybind_dialog.c:1152
 #, fuzzy
 msgid "Edit &keymap file"
 msgstr "Editare fișier &meniuri"
 
+#: src/main.c:184
 #, c-format
 msgid ""
 "Failed to run:\n"
@@ -2585,9 +3362,11 @@ msgstr ""
 "A eșuat executarea:\n"
 "%s\n"
 
+#: src/main.c:197
 msgid "Home directory path is not absolute"
 msgstr "Calea către dosarul acasă nu este absolută"
 
+#: src/main.c:346
 #, c-format
 msgid ""
 "\n"
@@ -2598,191 +3377,247 @@ msgstr ""
 "A eșuat în timpul închiderii:\n"
 "%s\n"
 
+#: src/manage_plugins.c:172 src/manage_plugins.c:180 src/manage_plugins.c:190
 msgid "unspecified"
 msgstr ""
 
+#: src/manage_plugins.c:361 src/manage_plugins.c:442 src/manage_plugins.c:485
 #, fuzzy
 msgid "Lua scripts"
 msgstr "Pluginuri si scripturi VFS:"
 
+#: src/manage_plugins.c:361
 msgid "This script has no entry file."
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:417 src/manage_plugins.c:610
 msgid "Lua"
 msgstr ""
 
+#: src/manage_plugins.c:413 src/manage_plugins.c:594
 #, fuzzy
 msgid "Unknown error"
 msgstr "Eroare necunoscută în procesul copil"
 
+#: src/manage_plugins.c:417
 msgid "This script has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:444
 msgid "No global or user Lua scripts were found."
 msgstr ""
 
+#: src/manage_plugins.c:445
 msgid "Lua runtime is disabled. Enable Lua engine and restart bluerig."
 msgstr ""
 
+#: src/manage_plugins.c:511
 #, fuzzy
 msgid "&Settings"
 msgstr "&Setez"
 
+#: src/manage_plugins.c:593
 #, fuzzy
 msgid "Lua action failed"
 msgstr "Citirea a eșuat"
 
+#: src/manage_plugins.c:610
 msgid "The selected script has no runnable actions."
 msgstr ""
 
+#: src/manage_plugins.c:623
 msgid "Run Lua action"
 msgstr ""
 
+#: src/manage_plugins.c:732
 msgid "(disabled, not loaded)"
 msgstr ""
 
+#: src/manage_plugins.c:839 src/manage_plugins.c:900 src/manage_plugins.c:936
 msgid "Manage Plugins"
 msgstr ""
 
+#: src/manage_plugins.c:839
 msgid "This plugin has no settings."
 msgstr ""
 
+#: src/manage_plugins.c:900
 msgid "No plugins loaded."
 msgstr ""
 
+#: src/runtime-host.c:1931
 #, fuzzy
 msgid "Runtime errors"
 msgstr "undelfs: eroare"
 
+#: src/selcodepage.c:82
 msgid "Choose codepage"
 msgstr "Alege pagina de cod"
 
+#: src/selcodepage.c:84
 msgid "-  < No translation >"
 msgstr "-  < Fără translatare >"
 
+#: src/setup.c:575 src/setup.c:577
 msgid "Setup"
 msgstr "Configurație"
 
+#: src/setup.c:575
 #, c-format
 msgid "Setup saved to %s"
 msgstr "Configurația a fost salvată în %s"
 
+#: src/setup.c:577
 #, c-format
 msgid "Unable to save setup to %s"
 msgstr "Nu se poate salva configurația în %s"
 
+#: src/textconf.c:58
 #, fuzzy
 msgid "With aspell support"
 msgstr "Cu suport opțional pentru subshell-uri"
 
+#: src/textconf.c:62
 msgid "With mouse support on xterm and Linux console"
 msgstr "Cu suport pentru mouse pe xterm și consola Linux"
 
+#: src/textconf.c:64
 msgid "With mouse support on xterm"
 msgstr "Cu suport pentru mouse pe xterm"
 
+#: src/textconf.c:68
 msgid "With support for X11 events"
 msgstr "Cu suport pentru evenimente X11"
 
+#: src/textconf.c:72
 msgid "With internationalization support"
 msgstr "Cu suport pentru internaționalizare"
 
+#: src/textconf.c:91
 #, c-format
 msgid "   based on GNU Midnight Commander.\n"
 msgstr ""
 
+#: src/textconf.c:93
 #, c-format
 msgid "Built with GLib %d.%d.%d (using GLib %u.%u.%u)\n"
 msgstr ""
 
+#: src/textconf.c:98
 #, c-format
 msgid "Built with S-Lang"
 msgstr ""
 
+#: src/textconf.c:104
 #, c-format
 msgid " and terminfo database (using S-Lang %s)\n"
 msgstr ""
 
+#: src/textconf.c:106
 #, c-format
 msgid "Built with %s"
 msgstr ""
 
+#: src/textconf.c:116
 #, c-format
 msgid " (using %s)\n"
 msgstr ""
 
+#: src/textconf.c:124
 msgid "Data types:"
 msgstr "Tipuri de date:"
 
+#: src/textconf.c:202
 #, fuzzy
 msgid "directory not found"
 msgstr "Șirul căutat nu a fost găsit"
 
+#: src/textconf.c:208
 msgid "Home directory:"
 msgstr "Director acasă:"
 
+#: src/textconf.c:209
 msgid "Profile root directory:"
 msgstr "Director rădăcină:"
 
+#: src/textconf.c:212
 msgid "System data"
 msgstr "Date sistem"
 
+#: src/textconf.c:214 src/textconf.c:231
 msgid "Config directory:"
 msgstr "Dosarul pentru configurări:"
 
+#: src/textconf.c:215 src/textconf.c:232
 msgid "Data directory:"
 msgstr "Dosarul pentru date:"
 
+#: src/textconf.c:218 src/textconf.c:257
 #, fuzzy
 msgid "Editor plugins:"
 msgstr "Opțiuni editor"
 
+#: src/textconf.c:221
 msgid "Runtime plugins:"
 msgstr ""
 
+#: src/textconf.c:224 src/textconf.c:243
 #, fuzzy
 msgid "Lua scripts:"
 msgstr "Pluginuri si scripturi VFS:"
 
+#: src/textconf.c:225 src/textconf.c:244
 msgid "Lua modules:"
 msgstr ""
 
+#: src/textconf.c:229
 msgid "User data"
 msgstr "Date utilizator"
 
+#: src/textconf.c:249
 msgid "Cache directory:"
 msgstr "Dosarul pentru cache:"
 
+#: src/usermenu.c:307
 msgid "Debug"
 msgstr "Debug"
 
+#: src/usermenu.c:323
 msgid "ERROR:"
 msgstr "EROARE:"
 
+#: src/usermenu.c:327
 msgid "True:"
 msgstr "Adevărat:"
 
+#: src/usermenu.c:329
 msgid "False:"
 msgstr "Fals:"
 
+#: src/usermenu.c:421
 #, fuzzy
 msgid "Cannot create temporary file"
 msgstr ""
 "Nu se poate salva fișierul:\n"
 "%s"
 
+#: src/usermenu.c:434 src/usermenu.c:599
 msgid "Error calling program"
 msgstr "Eroare la executarea programului"
 
+#: src/usermenu.c:469
 msgid "Cannot create temporary command file"
 msgstr ""
 
+#: src/usermenu.c:497
 msgid "Parameter"
 msgstr "Parametru"
 
+#: src/usermenu.c:626
 msgid "Warning -- ignoring file"
 msgstr "Atenție -- se ignoră fișierul"
 
+#: src/usermenu.c:627
 #, c-format
 msgid ""
 "File %s is not owned by root or you or is world writable.\n"
@@ -2792,16 +3627,20 @@ msgstr ""
 "oricine.\n"
 "Utilizându-l vă puteți compromite securitatea"
 
+#: src/usermenu.c:815
 msgid "Cannot execute commands on non-local filesystems"
 msgstr "Nu se pot executa comenzi în sisteme de fișiere ne-locale"
 
+#: src/usermenu.c:941
 #, c-format
 msgid "No suitable entries found in %s"
 msgstr "Nu au fost găsite înregistrări potrivite in %s"
 
+#: src/usermenu.c:954
 msgid "User menu"
 msgstr "Meniu utilizator"
 
+#: src/util.c:73
 #, fuzzy, c-format
 msgid ""
 "Cannot copy %s to %s:\n"
