@@ -2,6 +2,19 @@
 
 The releases of bluerig, newest first.
 
+## 1.0.2
+
+- brg, a short name of bluerig, is installed next to it.
+- The syntax files of J, Kotlin and Yabasic are removed: their licenses and
+  authors could not be stated. Kotlin will be highlighted again by a file
+  written anew.
+- The Syntax file no longer holds the paths of perl, python3 and ruby of the
+  machine it was built on.
+- The Debian package suggests only the packages Debian has.
+- The Gentoo package takes Lua through lua-single; the Arch package runs the
+  tests while it builds.
+- Translations updated: German, Galician, Italian, Russian, Serbian, Swedish.
+
 ## 1.0.1
 
 - The first published release: 1.0.0 was built but not published, since its
