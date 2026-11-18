@@ -59,12 +59,12 @@ static const struct data_source
     const char *input_string;
     const char *expected_string;
 } data_source[] = {
-    // absolute paths
+    // absolute paths; /dev is there even in a build sandbox, /usr/bin is not
     { "/", "/" },
-    { "/usr/bin", "/usr/bin" },
+    { "/dev", "/dev" },
 
     // relative paths are relative to /
-    { "usr/bin", "/usr/bin" },
+    { "dev", "/dev" },
 };
 
 /* @Test(dataSource = "data_source") */
