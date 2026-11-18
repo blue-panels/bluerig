@@ -1,9 +1,5 @@
-# which highlighting a file gets, with the paths and interpreters of this system
+# which highlighting a file gets, with the install paths of this system
 syntax_conf = configuration_data({'PACKAGE': package, 'datarootdir': datadir})
-foreach p : [['PERL', 'perl'], ['PYTHON', 'python3'], ['RUBY', 'ruby']]
-  prog = find_program(p[1], required: false)
-  syntax_conf.set(p[0], prog.found() ? prog.full_path() : '/usr/bin/env ' + p[1])
-endforeach
 
 configure_file(
   input: 'Syntax.in',
