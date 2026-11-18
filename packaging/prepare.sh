@@ -13,6 +13,8 @@
 #   packaging/rpm/bluerig.spec              from bluerig.spec.in
 #   packaging/arch/PKGBUILD               from PKGBUILD.in
 #   packaging/gentoo/bluerig-VERSION.ebuild from bluerig.ebuild.in
+#   packaging/alpine/APKBUILD             from APKBUILD.in
+#   packaging/nix/package.nix             from package.nix.in
 #
 # Both changelogs are meant for a real upload, so their entries come from the
 # annotated tag messages and their dates from the tags themselves: the same
@@ -25,9 +27,10 @@
 #   DEB_VERSION_SUFFIX appended to the Debian revision of the leading entry,
 #                      e.g. ~ubuntu24.04.1 for X.Y.Z-1~ubuntu24.04.1
 #
-# Given the release archive, the Arch checksum is computed from it. Without
-# one the recipe keeps SKIP, and makepkg then says so instead of failing on a
-# stale checksum.
+# Given the release archive, the checksums are computed from it. Without one
+# the Arch recipe keeps SKIP, and makepkg then says so instead of failing on a
+# stale checksum; the Alpine and Nix recipes get an empty one, which abuild and
+# Nix reject while naming the checksum they found.
 set -eu
 
 die() {
@@ -62,8 +65,20 @@ test -n "$maintainer" || die "cannot read Maintainer from debian/control"
 if test -n "$archive"; then
     test -f "$archive" || die "no such archive: $archive"
     checksum=$(b2sum "$archive" | cut -d' ' -f1)
+    sha512=$(sha512sum "$archive" | cut -d' ' -f1)
+    # Nix takes the SHA-256 in the SRI form: the digest itself in base64.
+    # cksum gives that from coreutils 9.2 on; busybox has only openssl.
+    if sri=$(cksum -a sha256 --base64 --untagged "$archive" 2>/dev/null); then
+        sri=sha256-${sri%% *}
+    elif command -v openssl >/dev/null; then
+        sri=sha256-$(openssl dgst -sha256 -binary "$archive" | base64)
+    else
+        sri=
+    fi
 else
     checksum=SKIP
+    sha512=
+    sri=
 fi
 
 tags=$(git tag --list 'bluerig-*' --sort=-version:refname 2>/dev/null || true)
@@ -213,6 +228,12 @@ sed -e "s/@VERSION@/$version/g" packaging/rpm/bluerig.spec.in |
 sed -e "s/@VERSION@/$version/g" -e "s/@B2SUMS@/$checksum/g" \
     packaging/arch/PKGBUILD.in > packaging/arch/PKGBUILD
 
+sed -e "s/@VERSION@/$version/g" -e "s/@SHA512SUMS@/$sha512/g" \
+    packaging/alpine/APKBUILD.in > packaging/alpine/APKBUILD
+
+sed -e "s/@VERSION@/$version/g" -e "s|@HASH@|$sri|g" \
+    packaging/nix/package.nix.in > packaging/nix/package.nix
+
 rm -f packaging/gentoo/bluerig-*.ebuild
 cp packaging/gentoo/bluerig.ebuild.in "packaging/gentoo/bluerig-$version.ebuild"
 
@@ -221,3 +242,5 @@ echo "  debian/changelog ($distribution)"
 echo "  packaging/rpm/bluerig.spec"
 echo "  packaging/arch/PKGBUILD (b2sums: $checksum)"
 echo "  packaging/gentoo/bluerig-$version.ebuild"
+echo "  packaging/alpine/APKBUILD"
+echo "  packaging/nix/package.nix"

@@ -23,8 +23,10 @@ name one:
 | `packaging/rpm/bluerig.spec` | `bluerig.spec.in` and the `bluerig-*` tags |
 | `packaging/arch/PKGBUILD` | `PKGBUILD.in` |
 | `packaging/gentoo/bluerig-<version>.ebuild` | `bluerig.ebuild.in` |
+| `packaging/alpine/APKBUILD` | `APKBUILD.in` |
+| `packaging/nix/package.nix` | `package.nix.in` |
 
-All four are in `.gitignore`.  Making a release is therefore: tag, and let the
+All of them are in `.gitignore`.  Making a release is therefore: tag, and let the
 `release` workflow build.  Nothing is committed afterwards.
 
 Both changelogs take their entries from the section of `CHANGELOG.md` for the
@@ -72,6 +74,25 @@ overwrite an existing archive.
 `debian/` and `packaging/` carry `export-ignore` in `.gitattributes` and are
 absent from the archive: the recipes are used from the repository, and a Debian
 orig tarball must not carry a `debian` directory of its own.
+
+## Linting the recipes
+
+The `ci-packaging` workflow runs the linters of the distributions on every
+push and pull request that touches `debian/`, `packaging/` or a `meson.build`.
+Each job builds an archive of the commit as the release does and takes the
+version of the last tag:
+
+| Job | Checks |
+| --- | --- |
+| `debian` | builds in Debian unstable; `lintian --pedantic`, fails on warnings |
+| `gentoo` | `pkgcheck scan` with the dependency checks, in an overlay on the Gentoo tree |
+| `alpine` | `apkbuild-lint`, then `abuild -r` in Alpine edge |
+| `nix` | `nixfmt`, `nixpkgs-vet` against Nixpkgs master, the build, and no interpreter of the build among the run time references |
+
+The Alpine and Nix recipes are copies: the packages themselves are in aports
+(`testing/bluerig`) and Nixpkgs (`pkgs/by-name/bl/bluerig`), where their
+reviewers change them.  Bring a change made there back here, so that the next
+release starts from it.
 
 ## Architectures
 

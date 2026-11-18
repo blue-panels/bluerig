@@ -1,0 +1,273 @@
+name: ci-packaging
+
+# The linters of the distributions, run on the recipes in debian/ and
+# packaging/ before a release rather than by a reviewer after it: lintian in
+# Debian unstable, pkgcheck for Gentoo, apkbuild-lint for Alpine and
+# nixpkgs-vet for Nix. Each job builds the package as well, from an archive
+# of the commit made the way the release makes one.
+#
+# Only when what they read changes: the recipes, and the meson files, which
+# decide what is installed where. A pull request is checked as a whole on
+# each push to it, master after each merge; a push to any other branch is
+# matched by the files of its last commits alone, and would miss a fix to a
+# test that a recipe runs.
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'debian/**'
+      - 'packaging/**'
+      - '**/meson.build'
+      - 'meson_options.txt'
+      - '.github/workflows/ci-packaging.yml'
+  pull_request:
+    paths:
+      - 'debian/**'
+      - 'packaging/**'
+      - '**/meson.build'
+      - 'meson_options.txt'
+      - '.github/workflows/ci-packaging.yml'
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.build.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # prepare.sh and the version below read the tags.
+          fetch-depth: 0
+
+      - name: Build the source archive of the commit
+        id: build
+        run: |
+          # The version of the last release: prepare.sh takes release versions
+          # only, and the recipes do not care which one it is.
+          tag=$(git describe --tags --abbrev=0 --match 'bluerig-*')
+          version="${tag#bluerig-}"
+          packaging/release-source.sh "$version" HEAD "dist/bluerig-$version.tar.gz"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packaging-source-archive
+          path: dist/*.tar.gz
+
+  debian:
+    needs: archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container: debian:sid
+    env:
+      VERSION: ${{ needs.archive.outputs.version }}
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+      - name: Install the build tooling
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+              git ca-certificates build-essential dpkg-dev lintian
+
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: packaging-source-archive
+          path: dist
+
+      - name: Build the packages and run lintian
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          packaging/prepare.sh "$VERSION" "dist/bluerig-$VERSION.tar.gz"
+
+          # As the release builds them: the archive, with debian/ copied in.
+          build=$(mktemp -d)
+          cp "dist/bluerig-$VERSION.tar.gz" "$build/bluerig_$VERSION.orig.tar.gz"
+          tar -xf "dist/bluerig-$VERSION.tar.gz" -C "$build"
+          cp -r debian "$build/bluerig-$VERSION/"
+          cd "$build/bluerig-$VERSION"
+          apt-get build-dep -y --no-install-recommends ./
+          useradd -m build
+          chown -R build "$build"
+          su build -c "cd '$build/bluerig-$VERSION' && dpkg-buildpackage -us -uc"
+
+          # What the Debian archive is checked against: unstable, every tag
+          # shown, and warnings fail as errors do. The pedantic and
+          # informational tags are printed but pass.
+          cd ..
+          lintian --pedantic --display-info --fail-on error,warning \
+              --profile debian ./*.changes
+
+  gentoo:
+    needs: archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERSION: ${{ needs.archive.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: packaging-source-archive
+          path: dist
+
+      - name: Install pkgcheck and the Gentoo tree
+        run: |
+          # zstd: pkgcheck keeps its profile cache compressed with it, and
+          # without that cache it skips the dependency checks.
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends zstd
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install pkgcheck
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+
+          # The daily snapshot of the tree, as an image.
+          docker create --name portage gentoo/portage:latest
+          sudo mkdir -p /var/db/repos
+          sudo docker cp portage:/var/db/repos/gentoo /var/db/repos/gentoo
+          docker rm portage
+
+      - name: Run pkgcheck on the ebuild
+        run: |
+          packaging/prepare.sh "$VERSION" "dist/bluerig-$VERSION.tar.gz"
+
+          # An overlay holding the one package, on top of the Gentoo tree.
+          overlay="$RUNNER_TEMP/overlay"
+          pkg="$overlay/app-editors/bluerig"
+          mkdir -p "$overlay/profiles" "$overlay/metadata" "$pkg"
+          echo bluerig > "$overlay/profiles/repo_name"
+          printf 'masters = gentoo\nthin-manifests = true\nsign-manifests = false\n' \
+              > "$overlay/metadata/layout.conf"
+          cp "packaging/gentoo/bluerig-$VERSION.ebuild" packaging/gentoo/metadata.xml "$pkg/"
+          archive="dist/bluerig-$VERSION.tar.gz"
+          printf 'DIST bluerig-%s.tar.gz %s BLAKE2B %s SHA512 %s\n' "$VERSION" \
+              "$(stat -c %s "$archive")" \
+              "$(b2sum "$archive" | cut -d' ' -f1)" \
+              "$(sha512sum "$archive" | cut -d' ' -f1)" > "$pkg/Manifest"
+
+          sudo mkdir -p /etc/portage/repos.conf
+          printf '[DEFAULT]\nmain-repo = gentoo\n[gentoo]\nlocation = /var/db/repos/gentoo\n[bluerig]\nlocation = %s\n' \
+              "$overlay" | sudo tee /etc/portage/repos.conf/bluerig.conf
+          sudo ln -sf /var/db/repos/gentoo/profiles/default/linux/amd64/23.0 \
+              /etc/portage/make.profile
+
+          # Without --exit pkgcheck reports and still returns 0.
+          cd "$overlay"
+          pkgcheck scan --exit error,warning
+
+  alpine:
+    needs: archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # edge: new packages go to its testing repository.
+    container: alpine:edge
+    env:
+      VERSION: ${{ needs.archive.outputs.version }}
+
+    steps:
+      - name: Install the build tooling
+        # coreutils: prepare.sh wants the GNU date and b2sum.
+        run: apk add alpine-sdk atools coreutils git sudo
+
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: packaging-source-archive
+          path: dist
+
+      - name: Run apkbuild-lint and build the packages
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          packaging/prepare.sh "$VERSION" "dist/bluerig-$VERSION.tar.gz"
+          apkbuild-lint packaging/alpine/APKBUILD
+
+          # abuild refuses root and finds the archive in its distfiles
+          # instead of downloading it; its checksum is checked there.
+          adduser -D build
+          addgroup build abuild
+          echo 'build ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/build
+          mkdir -p /var/cache/distfiles ~build/bluerig
+          cp "dist/bluerig-$VERSION.tar.gz" /var/cache/distfiles/
+          chmod -R a+rwX /var/cache/distfiles
+          cp packaging/alpine/APKBUILD ~build/bluerig/
+          chown -R build ~build
+          su build -c 'cd ~/bluerig && abuild-keygen -ain && abuild -r'
+
+  nix:
+    needs: archive
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      VERSION: ${{ needs.archive.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: packaging-source-archive
+          path: dist
+
+      - uses: cachix/install-nix-action@v31
+
+      - name: Put the package into Nixpkgs
+        run: |
+          packaging/prepare.sh "$VERSION" "dist/bluerig-$VERSION.tar.gz"
+
+          # nixpkgs-vet compares two commits: Nixpkgs as it is, and with the
+          # package added.
+          git clone --depth 1 https://github.com/NixOS/nixpkgs.git "$RUNNER_TEMP/base"
+          git clone "$RUNNER_TEMP/base" "$RUNNER_TEMP/head"
+          cd "$RUNNER_TEMP/head"
+          mkdir -p pkgs/by-name/bl/bluerig
+          cp "$GITHUB_WORKSPACE/packaging/nix/package.nix" pkgs/by-name/bl/bluerig/
+          # The maintainer is listed in Nixpkgs once the package is there;
+          # before that the name does not evaluate.
+          if ! grep -q '^  ilia-maslakov = {' maintainers/maintainer-list.nix; then
+              sed -i '/maintainers = with lib.maintainers;/d' pkgs/by-name/bl/bluerig/package.nix
+          fi
+          git add pkgs/by-name/bl/bluerig
+          git -c user.name=ci -c user.email=ci@localhost commit -q -m "bluerig: from the bluerig CI"
+
+          # The URL names a release, and this commit is none: the archive goes
+          # into the store under the hash the recipe expects.
+          nix-store --add-fixed sha256 "$GITHUB_WORKSPACE/dist/bluerig-$VERSION.tar.gz"
+
+      - name: Run nixfmt and nixpkgs-vet
+        working-directory: ${{ runner.temp }}/head
+        run: |
+          nixfmt=$(nix-build --no-out-link -A nixfmt)
+          "$nixfmt/bin/nixfmt" --check pkgs/by-name/bl/bluerig/package.nix
+          nix-build ci -A nixpkgs-vet --arg base "$RUNNER_TEMP/base" --arg head "$RUNNER_TEMP/head"
+
+      - name: Build the package
+        working-directory: ${{ runner.temp }}/head
+        run: |
+          out=$(nix-build --no-out-link -A bluerig)
+
+          # What the package needs at run time is what it references. A path
+          # of the build machine written into the data, like that of python3
+          # once in Syntax, pulls the interpreter in with it.
+          refs=$(nix-store --query --references "$out")
+          printf '%s\n' "$refs"
+          if printf '%s\n' "$refs" | grep -E -- '-(python3|perl|ruby)-[0-9]'; then
+              echo "the package refers to an interpreter of the build" >&2
+              exit 1
+          fi
