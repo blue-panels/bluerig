@@ -89,8 +89,10 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 %dir %{_sysconfdir}/bluerig/
 %config(noreplace) %{_sysconfdir}/bluerig/*
 %{_mandir}/man1/bluerig.1*
+%{_mandir}/man1/brg.1*
 # The translated manuals.
 %{_mandir}/*/man1/bluerig.1*
+%{_mandir}/*/man1/brg.1*
 # Owned here so that the directory does not depend on the lua subpackage.
 %dir %{_libdir}/bluerig/
 # The editor plugins that are modules: the terminal, the viewer, the debugger.

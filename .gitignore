@@ -19,6 +19,8 @@
 /packaging/rpm/bluerig.spec
 /packaging/arch/PKGBUILD
 /packaging/gentoo/bluerig-*.ebuild
+/packaging/alpine/APKBUILD
+/packaging/nix/package.nix
 /dist/
 
 .claude/

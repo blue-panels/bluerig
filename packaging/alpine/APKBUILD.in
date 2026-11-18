@@ -1,0 +1,52 @@
+# Maintainer: Ilia Maslakov <il.smind@gmail.com>
+pkgname=bluerig
+pkgver=@VERSION@
+pkgrel=0
+pkgdesc="Terminal IDE, a continuation of cooledit"
+url="https://github.com/blue-panels/bluerig"
+arch="all"
+license="GPL-3.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-or-later AND BSD-3-Clause AND MIT"
+makedepends="
+	gettext-dev
+	glib-dev
+	gpm-dev
+	json-glib-dev
+	lua5.4-dev
+	meson
+	slang-dev
+	"
+checkdepends="check-dev"
+subpackages="$pkgname-doc $pkgname-lang $pkgname-lua"
+source="https://github.com/blue-panels/bluerig/releases/download/bluerig-$pkgver/bluerig-$pkgver.tar.gz"
+
+build() {
+	abuild-meson \
+		-Dscreen=slang \
+		-Dgpm=enabled \
+		-Dlua=enabled \
+		-Dnls=enabled \
+		-Dtests="$(want_check && echo enabled || echo disabled)" \
+		-Dplugins_dir=/usr/lib/bluerig/plugins \
+		-Druntime_plugins_dir=/usr/lib/bluerig/runtime-plugins \
+		. output
+	meson compile -C output
+}
+
+check() {
+	meson test -C output --print-errorlogs
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+lua() {
+	pkgdesc="Lua runtime and scripts for bluerig"
+	depends="$pkgname=$pkgver-r$pkgrel"
+
+	amove usr/lib/bluerig/runtime-plugins
+	amove usr/share/bluerig/lua
+}
+sha512sums="
+@SHA512SUMS@  bluerig-@VERSION@.tar.gz
+"

@@ -6,3 +6,4 @@ custom_target('bluerig.1-sr',
   install: true,
   install_dir: mandir / 'sr' / 'man1',
 )
+install_symlink('brg.1', pointing_to: 'bluerig.1', install_dir: mandir / 'sr' / 'man1')

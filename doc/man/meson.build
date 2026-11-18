@@ -21,6 +21,8 @@ custom_target('bluerig.1',
   install: true,
   install_dir: mandir / 'man1',
 )
+# brg, the short name, has the same page
+install_symlink('brg.1', pointing_to: 'bluerig.1', install_dir: mandir / 'man1')
 
 # the translated pages, each in a directory of its own for the one name bluerig.1
 if have_nls

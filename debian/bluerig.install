@@ -13,5 +13,6 @@ usr/share/bluerig/query/
 usr/share/bluerig/skins/
 usr/share/bluerig/syntax/
 usr/share/man/man1/bluerig.1
+usr/share/man/man1/brg.1
 usr/share/man/*/man1/
 usr/share/locale/
