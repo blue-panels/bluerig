@@ -37,9 +37,6 @@ This directory holds:
     The help the program shows on F1, which is the markdown of the
     manual page.
 
-* COPYING
-    The GNU General Public License, version 3.
-
 
 Reporting problems
 ------------------
