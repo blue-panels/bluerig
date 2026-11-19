@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bluerig - a terminal IDE, a continuation of cooledit</title>
+  <meta name="description" content="bluerig is a terminal IDE grown out of mcedit, the editor of GNU Midnight Commander: language servers, the tree of a project with its build and debugger (gdb and debug adapters), a Git window, and queries of PostgreSQL and MongoDB. Packages for openSUSE, Debian, Ubuntu, Fedora, Arch, macOS and Nix.">
+  <meta name="theme-color" content="#0b1220">
+  <meta property="og:title" content="bluerig - a terminal IDE, a continuation of cooledit">
+  <meta property="og:description" content="A terminal IDE grown out of mcedit: language servers, project, build, debugger, Git, PostgreSQL and MongoDB queries.">
+  <meta property="og:image" content="https://blue-panels.github.io/bluerig/assets/overview.gif">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/bp16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/bp32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/bp64.png">
+  <link rel="apple-touch-icon" sizes="164x164" href="assets/bp164.png">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-2: #0f1a2e;
+      --panel: #111d33;
+      --panel-2: #16243d;
+      --line: #22314d;
+      --line-2: #2f4370;
+      --fg: #e6edf7;
+      --fg-2: #aab8d0;
+      --muted: #7f8fab;
+      --blue: #3b82f6;
+      --blue-2: #60a5fa;
+      --blue-soft: rgba(59, 130, 246, 0.14);
+      --cyan: #22d3ee;
+      --yellow: #facc15;
+      --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "Fira Code", Menlo, Consolas, monospace;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+      --max: 1120px;
+      --r: 10px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--blue-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    code, pre, kbd {
+      font-family: var(--mono);
+      font-size: 0.92em;
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 5px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--fg);
+      overflow-wrap: anywhere;
+    }
+
+    kbd {
+      padding: 1px 6px;
+      border-radius: 5px;
+      background: #0a1424;
+      border: 1px solid var(--line-2);
+      border-bottom-width: 2px;
+      color: var(--fg);
+      white-space: nowrap;
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px 16px;
+      overflow-x: auto;
+      border-radius: var(--r);
+      background: #070d19;
+      border: 1px solid var(--line);
+      color: #d7e3f5;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    pre .c { color: var(--muted); }
+    pre .p { color: var(--cyan); }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 18, 32, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top .wrap {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-height: 60px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--fg);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+    }
+
+    .brand:hover { text-decoration: none; }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      image-rendering: pixelated;
+    }
+
+    .brand .org { color: var(--muted); font-weight: 500; }
+
+    nav.main {
+      margin-left: auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 18px;
+      font-size: 15px;
+    }
+
+    nav.main a { color: var(--fg-2); }
+    nav.main a:hover { color: var(--fg); text-decoration: none; }
+
+    .gh {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--line-2);
+      border-radius: 8px;
+      color: var(--fg) !important;
+    }
+
+    .gh:hover { background: var(--panel-2); }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 40px;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 0%, rgba(59, 130, 246, 0.18), transparent),
+        linear-gradient(180deg, var(--bg-2), var(--bg));
+    }
+
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line-2);
+      background: var(--blue-soft);
+      color: var(--blue-2);
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(31px, 4.5vw, 45px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span { color: var(--blue-2); }
+
+    .lead {
+      margin: 0 0 24px;
+      font-size: 18px;
+      color: var(--fg-2);
+      max-width: 34rem;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1px solid var(--line-2);
+      color: var(--fg);
+      background: var(--panel);
+    }
+
+    .btn:hover { background: var(--panel-2); text-decoration: none; }
+
+    .btn.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .btn.primary:hover { background: #2f6fe0; }
+
+    .hero-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 22px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .hero-facts b { color: var(--fg-2); font-weight: 600; }
+
+    .shot {
+      border-radius: var(--r);
+      overflow: hidden;
+      border: 1px solid var(--line-2);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      background: #000;
+    }
+
+    figure { margin: 0; }
+
+    figcaption {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Sections */
+    section { padding: 56px 0; border-top: 1px solid var(--line); }
+
+    .kicker {
+      margin: 0 0 6px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--blue-2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(26px, 3.4vw, 34px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    section > .wrap > p.intro {
+      margin: 0 0 28px;
+      max-width: 44rem;
+      color: var(--fg-2);
+      font-size: 17px;
+    }
+
+    p { margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul.plain {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--fg-2);
+    }
+
+    ul.plain li { margin: 4px 0; }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .grid.two { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+
+    .card {
+      padding: 20px;
+      border-radius: var(--r);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .card p { color: var(--fg-2); font-size: 15px; }
+
+    .card .name {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .card .name b { font-size: 17px; }
+
+    .card .name small {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Install */
+    .inst { display: grid; }
+
+    .inst-row {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 18px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .inst-row:last-child { border-bottom: 1px solid var(--line); }
+
+    .inst-row .os { font-weight: 600; }
+    .inst-row .os small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+
+    .inst-row pre {
+      white-space: pre;
+      overflow-wrap: normal;
+      padding: 10px 14px;
+    }
+
+    .inst-more { margin-top: 14px; color: var(--fg-2); font-size: 15px; }
+
+    @media (max-width: 640px) {
+      .inst-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    }
+
+    .note {
+      margin-top: 22px;
+      padding: 14px 18px;
+      border-radius: var(--r);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--yellow);
+      background: var(--panel);
+      color: var(--fg-2);
+      font-size: 15px;
+    }
+
+    /* Feature blocks with media */
+    .feature {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: 32px;
+      align-items: start;
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .feature:first-of-type { border-top: 0; padding-top: 8px; }
+
+    .feature.flip { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+    .feature.flip .text { order: 2; }
+
+    .feature .text p { color: var(--fg-2); }
+
+    .feature .shot { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4); }
+
+    /* Feature lists */
+    .flist { display: grid; }
+
+    .frow {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 18px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .frow:last-child { border-bottom: 1px solid var(--line); }
+    .frow span { color: var(--fg-2); }
+
+    @media (max-width: 640px) {
+      .frow { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    }
+
+    /* Plugins table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid var(--line);
+    }
+
+    thead th {
+      border-top: 0;
+      background: var(--panel-2);
+      color: var(--fg-2);
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td:first-child { font-weight: 600; white-space: nowrap; }
+    td { color: var(--fg-2); }
+    td:first-child { color: var(--fg); }
+
+    /* Releases */
+    .releases { display: grid; gap: 0; }
+
+    .rel {
+      display: grid;
+      grid-template-columns: 110px 120px 1fr;
+      gap: 18px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .rel:last-child { border-bottom: 1px solid var(--line); }
+
+    .rel .v { font-family: var(--mono); font-weight: 700; }
+    .rel .d { font-family: var(--mono); color: var(--muted); font-size: 14px; }
+    .rel .s { color: var(--fg-2); }
+
+    /* Footer */
+    footer {
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      justify-content: space-between;
+    }
+
+    footer .links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+
+    @media (max-width: 900px) {
+      .hero .wrap,
+      .feature,
+      .feature.flip { grid-template-columns: 1fr; }
+      .feature.flip .text { order: 0; }
+      .hero { padding-top: 40px; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      .top .wrap { flex-wrap: wrap; padding: 10px 0; }
+      nav.main { margin-left: 0; width: 100%; }
+      .rel { grid-template-columns: 1fr; gap: 2px; }
+      section { padding: 40px 0; }
+      .grid.two { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="https://blue-panels.github.io/bluerig/">
+        <img src="assets/bp64.png" alt="" width="32" height="32">
+        <span>bluerig</span>
+      </a>
+      <nav class="main" aria-label="Primary">
+        <a href="#install">Install</a>
+        <a href="#ide">IDE</a>
+        <a href="#editor">Editor</a>
+        <a href="#mcommander">mcommander</a>
+        <a href="#history">History</a>
+        <a href="#releases">Releases</a>
+        <a href="https://github.com/blue-panels/bluerig/wiki">Wiki</a>
+        <a class="gh" href="https://github.com/blue-panels/bluerig">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="wrap">
+        <div>
+          <span class="tag">v1.0.2, grown out of mcedit</span>
+          <h1>bluerig</h1>
+          <p class="lead" style="font-size:22px;color:#ffd804;margin-bottom:10px">A terminal IDE, a continuation of cooledit</p>
+          <p class="lead">
+            An editor that works with language servers, with the tree of a
+            project, its build and its debugger, a Git window, and the queries
+            of PostgreSQL and MongoDB. It runs full screen in any terminal, from
+            the Linux console to tmux and a remote session over ssh, and opens a
+            file in an instant.
+          </p>
+          <div class="cta">
+            <a class="btn primary" href="#install">Install</a>
+            <a class="btn" href="https://github.com/blue-panels/bluerig/releases/latest">Download packages</a>
+            <a class="btn" href="https://github.com/blue-panels/bluerig/wiki">Read the wiki</a>
+          </div>
+          <div class="hero-facts">
+            <span><b>openSUSE</b> &middot; <b>Debian</b> &middot; <b>Ubuntu</b> &middot; <b>Fedora</b> &middot; <b>Arch</b> &middot; <b>macOS</b> &middot; <b>Nix</b></span>
+            <span>Commands: <code>bluerig</code>, or <code>brg</code> for short</span>
+          </div>
+        </div>
+        <figure>
+          <div class="shot">
+            <img src="assets/overview.gif" alt="bluerig: a C file with the tree of its project, the README with its Preview, and the shell at the bottom">
+          </div>
+          <figcaption>A C file with the tree of its project, the README with its Preview, and the shell at the bottom.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <section id="install">
+      <div class="wrap">
+        <p class="kicker">Installing</p>
+        <h2>Packages for every release</h2>
+        <p class="intro">
+          Packages for Debian, Ubuntu, Fedora, Arch and macOS are attached to every
+          <a href="https://github.com/blue-panels/bluerig/releases">GitHub release</a>.
+          There are two of them: <code>bluerig</code>, and <code>bluerig-lua</code> with
+          the Lua runtime and the editor scripts.
+        </p>
+        <div class="inst">
+          <div class="inst-row">
+            <span class="os">openSUSE Tumbleweed<small>the distribution</small></span>
+            <pre>sudo zypper install bluerig bluerig-lua</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">Ubuntu 24.04, 26.04<small>PPA</small></span>
+            <pre>sudo add-apt-repository ppa:bluepanels/bluerig
+sudo apt update
+sudo apt install bluerig bluerig-lua</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">macOS, Linux<small>Homebrew</small></span>
+            <pre>brew install blue-panels/tap/bluerig</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">Nix<small>flake</small></span>
+            <pre>nix run github:blue-panels/bluerig
+nix profile install github:blue-panels/bluerig</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">Fedora<small>COPR</small></span>
+            <pre>sudo dnf copr enable smind/bluerig
+sudo dnf install bluerig bluerig-lua</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">Debian 13<small>files from the release</small></span>
+            <pre>sudo apt install ./bluerig{,-lua}_*debian13*_amd64.deb</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">Arch<small>files from the release</small></span>
+            <pre>sudo pacman -U ./bluerig{,-lua}-1*-x86_64.pkg.tar.zst</pre>
+          </div>
+          <div class="inst-row">
+            <span class="os">From source<small>meson</small></span>
+            <pre>git clone https://github.com/blue-panels/bluerig.git
+cd bluerig
+meson setup build --prefix=/usr --sysconfdir=/etc
+meson compile -C build
+sudo meson install -C build</pre>
+          </div>
+        </div>
+        <p class="inst-more">
+          The <a href="https://github.com/blue-panels/bluerig/releases/latest">latest release</a> has <code>.deb</code> files for Debian 13 and Ubuntu 26.04
+          (amd64, arm64), <code>.rpm</code> for Fedora (x86_64, aarch64), <code>.pkg.tar.zst</code> for Arch,
+          and a <code>.dmg</code> and <code>.pkg</code> for macOS on Apple Silicon.
+          The package is on its way into Debian, Fedora, Alpine and Gentoo as well.
+        </p>
+        <div class="note">
+          bluerig shares no file with the <code>mc</code> package, so both can be installed at once.
+          Its own directories are <code>~/.config/bluerig</code>, <code>~/.local/share/bluerig</code> and
+          <code>~/.cache/bluerig</code>. <b>F1</b> opens the built-in help, and <code>man bluerig</code> the manual page.
+        </div>
+      </div>
+    </section>
+
+    <section id="ide">
+      <div class="wrap">
+        <p class="kicker">The IDE</p>
+        <h2>A project, its build, its debugger, beside the text</h2>
+        <p class="intro">
+          <code>bluerig -D ~/src/project</code> opens the project of a directory. bluerig finds it by
+          itself from a file too: the nearest directory with a <code>.git</code> or a build file.
+        </p>
+
+        <div class="feature">
+          <div class="text">
+            <h3>Language servers</h3>
+            <p>clangd for C and C++, pylsp or pyright for Python, rust-analyzer, gopls, and the servers of TypeScript, Bash, Lua, MongoDB and PostgreSQL. The editor asks the server what to complete, what a name is and where it is defined, and marks the problems it finds.</p>
+            <p>On a project the server starts by itself and the completion comes as a name is typed; <kbd>Ctrl-Space</kbd> asks for it anywhere. <a href="https://github.com/blue-panels/bluerig/wiki/Language-servers">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/lsp.gif" alt="Completion, documentation and diagnostics from a language server" loading="lazy"></div>
+        </div>
+
+        <div class="feature flip">
+          <div class="text">
+            <h3>Debugger</h3>
+            <p>GDB, and the debug adapters of Python, Go, the shell and JavaScript. Breakpoints in the gutter, steps through the source, and the call stack, the local variables and the watches in a panel beside it. While the program is stopped, the values of the variables are shown at the end of the lines that use them.</p>
+            <p><kbd>Ctrl-F8</kbd> sets a breakpoint, <kbd>F5</kbd> builds and runs, <kbd>Alt-F9</kbd> runs to the cursor, <kbd>Alt-F8</kbd> evaluates the word under it. <a href="https://github.com/blue-panels/bluerig/wiki/Debugger">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/debugger.gif" alt="A breakpoint, the program run and stopped, the variables in the panel, then a step out" loading="lazy"></div>
+        </div>
+
+        <div class="feature">
+          <div class="text">
+            <h3>Build</h3>
+            <p>meson, cmake or make, found by itself. <kbd>Alt-B</kbd> saves the modified files and builds; the lines the compiler names are marked in the gutter, a cross for an error and an exclamation mark for a warning, and <kbd>Alt-J</kbd>, <kbd>Alt-K</kbd> go to the next and the previous one. <a href="https://github.com/blue-panels/bluerig/wiki/Build">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/build.gif" alt="The build marks an unused variable and an unknown name; after the fix it is clean" loading="lazy"></div>
+        </div>
+
+        <div class="feature flip">
+          <div class="text">
+            <h3>Project</h3>
+            <p>The tree of the project with the outline of the file, any of its files or symbols a few letters away, find in its files, and the header of a source. The files are what git knows and does not ignore. <a href="https://github.com/blue-panels/bluerig/wiki/Project">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/project.gif" alt="The project tree, the outline of a file and a file found by a few letters" loading="lazy"></div>
+        </div>
+
+        <div class="feature">
+          <div class="text">
+            <h3>Git</h3>
+            <p>Status, staging, the diff, a commit message written in an editor window, the log and the branches, side by side as in gitui. It runs the <code>git</code> of the system, so your hooks and identity apply. <kbd>Alt-C</kbd> opens the status, <kbd>Alt-L</kbd> the log, and <code>bluerig -G</code> starts on a work tree. <a href="https://github.com/blue-panels/bluerig/wiki/Git">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/git.gif" alt="The status with a diff, a file staged, a message committed, then the log" loading="lazy"></div>
+        </div>
+
+        <div class="feature flip">
+          <div class="text">
+            <h3>Queries of PostgreSQL and MongoDB</h3>
+            <p><code>bluerig -Q</code> runs the queries of a file: PostgreSQL through libpq, MongoDB through mongosh. The file is an ordinary editor window; <kbd>F5</kbd> runs the query or the selection, the rows come into Table, every query run is kept in History, and Schema shows the tables, the columns and the keys. The rows export to CSV, JSON, SQL or Markdown. <a href="https://github.com/blue-panels/bluerig/wiki/Queries">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/query.gif" alt="A query run on PostgreSQL, its rows in Table, EXPLAIN, and the schema of a table" loading="lazy"></div>
+        </div>
+
+        <div class="feature">
+          <div class="text">
+            <h3>Terminal</h3>
+            <p><kbd>Ctrl-O</kbd> shows your shell in a window under the file and hides it again; the shell goes on running while it is hidden. Its scrollback can be searched and filtered. <a href="https://github.com/blue-panels/bluerig/wiki/Terminal">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/terminal.gif" alt="The shell under a file: git log, a build and a run, hidden and shown again" loading="lazy"></div>
+        </div>
+
+        <div class="feature flip">
+          <div class="text">
+            <h3>Preview</h3>
+            <p><kbd>Ctrl-Alt-P</kbd> shows the file the way it is meant to read, beside its text and as you type: markdown with tables and mermaid diagrams, JSON and XML as trees and tables. The renderers are Lua scripts. <a href="https://github.com/blue-panels/bluerig/wiki/Preview">More</a></p>
+          </div>
+          <div class="shot"><img src="assets/preview-markdown.gif" alt="A markdown file and its Preview, drawn again as it is typed" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="editor">
+      <div class="wrap">
+        <p class="kicker">Editor</p>
+        <h2>The keys of mcedit, and much more under them</h2>
+        <p class="intro">
+          The hands remember it: <kbd>F2</kbd> saves, <kbd>F3</kbd> marks, <kbd>F5</kbd> and <kbd>F6</kbd> copy and move the block,
+          <kbd>F7</kbd> searches, <kbd>F4</kbd> replaces, <kbd>F10</kbd> quits. The syntax files, the skins and the user menu have the
+          formats you know. <a href="https://github.com/blue-panels/bluerig/wiki/Coming-from-mcedit">Coming from mcedit</a>
+        </p>
+
+        <div class="feature">
+          <div class="text">
+            <h3>Code folding</h3>
+            <p><kbd>Alt-F</kbd> on a line with a bracket folds the block up to its pair; the gutter shows the folds.</p>
+          </div>
+          <div class="shot"><img src="assets/fold.gif" alt="Folding and unfolding a block" loading="lazy"></div>
+        </div>
+
+        <div class="feature flip">
+          <div class="text">
+            <h3>Undo history</h3>
+            <p><kbd>Ctrl-T</kbd> lists the changes in groups, and any of them is a jump away, forward or back.</p>
+          </div>
+          <div class="shot"><img src="assets/undo.gif" alt="The undo history listing the changes and jumping back" loading="lazy"></div>
+        </div>
+
+        <div class="feature">
+          <div class="text">
+            <h3>Macros</h3>
+            <p><kbd>Ctrl-R</kbd> records keys into a macro bound to a key of its own; <kbd>Alt-M</kbd> lists the macros to run, delete or open.</p>
+          </div>
+          <div class="shot"><img src="assets/macros.gif" alt="A macro recorded, played back and shown in the Macro Explorer" loading="lazy"></div>
+        </div>
+
+        <div class="flist" style="margin-top:8px">
+          <div class="frow"><b>Syntax highlighting</b><span>Over a hundred languages, in plain text rules that one language can hand to another: the script in HTML, the code in markdown.</span></div>
+          <div class="frow"><b>Blocks</b><span>Column blocks, search and replace with regular expressions, bookmarks.</span></div>
+          <div class="frow"><b>Line filter</b><span>Only the lines that match stay on the screen, with their numbers.</span></div>
+          <div class="frow"><b>Skins and keys</b><span>16-colour, 256-colour and true-colour skins; key bindings changed in a dialog, in the default, Emacs or vim style.</span></div>
+          <div class="frow"><b>Lua scripts</b><span>Actions, menus, dialogs and full-screen views; the date, sorting, a paragraph, a table, the output of a command.</span></div>
+          <div class="frow"><b>Spell checking</b><span>aspell or hunspell, whichever is installed.</span></div>
+        </div>
+        <figure style="margin-top:24px">
+          <div class="shot"><img src="assets/skins.gif" alt="The same file in several skins" loading="lazy"></div>
+          <figcaption>Skins.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="mcommander">
+      <div class="wrap">
+        <p class="kicker">With mcommander</p>
+        <h2>A file manager next to it</h2>
+        <p class="intro">
+          bluerig has no file manager of its own: it works next to
+          <a href="https://blue-panels.github.io/mcommander/">mcommander</a>, the file manager that
+          continues GNU Midnight Commander and that bluerig's editor came from.
+        </p>
+        <div class="flist">
+          <div class="frow"><b>Panels</b><span>Archives open as directories, and connections to other machines, through panel plugins.</span></div>
+          <div class="frow"><b>Git, MongoDB, PostgreSQL</b><span>Their panels run bluerig: the Git window, a commit message, a commit to reword, the editor of queries.</span></div>
+          <div class="frow"><b>Sessions</b><span>When the terminal is closed or the ssh connection drops, the panels, the shell, the editors and the copy jobs go on, and mcommander started again takes them over.</span></div>
+          <div class="frow"><b>F4</b><span>Opens files in bluerig when "Use internal editor" is off and <code>EDITOR</code> is <code>bluerig</code>.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="history">
+      <div class="wrap">
+        <p class="kicker">History</p>
+        <h2>From cooledit, through mcedit</h2>
+        <p class="intro">
+          Paul Sheer wrote cooledit in the 1990s. Its terminal version lived on for many years as
+          mcedit, the internal editor of GNU Midnight Commander, and grew there: syntax highlighting,
+          column blocks, tags, the undo history. bluerig takes that editor, with the fixes and the
+          features it gained in mc, and grows it into a program of its own. Its author has worked on
+          mcedit since 2009.
+        </p>
+      </div>
+    </section>
+
+    <section id="releases">
+      <div class="wrap">
+        <p class="kicker">Releases</p>
+        <h2>Its own version line</h2>
+        <div class="releases">
+          <div class="rel">
+            <a class="v" href="https://github.com/blue-panels/bluerig/releases/tag/bluerig-1.0.2">1.0.2</a>
+            <span class="d">2026-11-18</span>
+            <span class="s">brg, a short name; the Syntax file without the paths of the build machine; the syntax files of J, Kotlin and Yabasic removed</span>
+          </div>
+          <div class="rel">
+            <a class="v" href="https://github.com/blue-panels/bluerig/releases/tag/bluerig-1.0.1">1.0.1</a>
+            <span class="d">2026-11-15</span>
+            <span class="s">The first published release</span>
+          </div>
+        </div>
+        <p style="margin-top:18px;color:var(--fg-2)">
+          All notes: <a href="https://github.com/blue-panels/bluerig/releases">Releases</a> &middot;
+          <a href="https://github.com/blue-panels/bluerig/blob/master/CHANGELOG.md">CHANGELOG.md</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <span>bluerig is free software under the GNU General Public License, version 3 or later. Report issues <a href="https://github.com/blue-panels/bluerig/issues">on GitHub</a>.</span>
+      <span class="links">
+        <a href="https://github.com/blue-panels/bluerig">Source</a>
+        <a href="https://github.com/blue-panels/bluerig/wiki">Wiki</a>
+        <a href="https://github.com/blue-panels/bluerig/releases">Releases</a>
+        <a href="https://blue-panels.github.io/mcommander/">mcommander</a>
+      </span>
+    </div>
+  </footer>
+</body>
+</html>
