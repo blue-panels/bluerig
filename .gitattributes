@@ -5,3 +5,5 @@ po/*.po -diff
 # of a debian directory.
 debian/ export-ignore
 packaging/ export-ignore
+flake.nix export-ignore
+flake.lock export-ignore
