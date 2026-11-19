@@ -9,6 +9,9 @@ bluerig continues cooledit, the editor written by Paul Sheer, whose terminal
 version lived on for many years as the internal editor of GNU Midnight
 Commander.
 
+Site: <https://blue-panels.github.io/bluerig/> - wiki:
+<https://github.com/blue-panels/bluerig/wiki>
+
 ![bluerig: a C file with the tree of its project, the README with its Preview, and the shell at the bottom](https://raw.githubusercontent.com/wiki/blue-panels/bluerig/assets/overview.gif)
 
 ## What it has
