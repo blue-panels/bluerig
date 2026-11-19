@@ -92,7 +92,7 @@ another directory, as packages do.
 "meson install" installs:
 
     $(bindir)/bluerig                       the program
-    $(sysconfdir)/bluerig/                  keymaps, bluerig.menu, edit.indent.rc
+    $(sysconfdir)/bluerig/                  keymaps, bluerig.menu
     $(datadir)/bluerig/                     defaults.ini, charsets, help,
                                           skins, syntax, examples
     $(libdir)/bluerig/runtime-plugins/      the Lua runtime plugin
