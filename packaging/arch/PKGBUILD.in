@@ -37,9 +37,9 @@ package_bluerig() {
               'hunspell: spell checking'
               'ctags: the tag index the editor reads')
   backup=('etc/bluerig/bluerig.menu' 'etc/bluerig/ctags.keymap'
-          'etc/bluerig/edit.indent.rc' 'etc/bluerig/keymap.default.ini'
-          'etc/bluerig/keymap.emacs.ini' 'etc/bluerig/keymap.ini'
-          'etc/bluerig/keymap.vim.ini' 'etc/bluerig/spell.keymap')
+          'etc/bluerig/keymap.default.ini' 'etc/bluerig/keymap.emacs.ini'
+          'etc/bluerig/keymap.ini' 'etc/bluerig/keymap.vim.ini'
+          'etc/bluerig/spell.keymap')
 
   meson install -C build --destdir "${pkgdir}"
   rm -rf "${pkgdir}/usr/lib/bluerig/runtime-plugins"
