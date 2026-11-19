@@ -46,6 +46,23 @@ bluerig -G ~/src/project   # the Git window of a work tree
 `brg` is a shorter name of the same program. `bluerig --help` lists all the
 options.
 
+## With mcommander
+
+bluerig has no file manager of its own: it works next to
+[mcommander](https://github.com/blue-panels/mcommander), the file manager that
+continues GNU Midnight Commander and that bluerig's editor came from.
+
+- Its panels open archives as directories, and connections to other machines,
+  through panel plugins.
+- Its Git, MongoDB and PostgreSQL panels run bluerig: the Git window, a commit
+  message, a commit to reword, the editor of queries.
+- With its Sessions plugin it outlives its terminal, as screen and tmux do:
+  when the terminal is closed or the ssh connection drops, the panels, the
+  shell, the editors and the copy jobs go on, and mcommander started again
+  takes them over.
+- F4 opens files in bluerig when "Use internal editor" is off and EDITOR is
+  bluerig.
+
 ## Building
 
 bluerig is built with [meson](https://mesonbuild.com) 0.61 or newer and
