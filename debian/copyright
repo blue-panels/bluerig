@@ -1,5 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: bluerig
+Upstream-Contact: Ilia Maslakov <il.smind@gmail.com>
 Source: https://github.com/blue-panels/bluerig
 Comment:
  bluerig is a terminal IDE, a continuation of cooledit.  Most of the
