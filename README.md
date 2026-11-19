@@ -93,8 +93,17 @@ sudo meson install -C build
 ## Packages
 
 The packages are **`bluerig`** and **`bluerig-lua`**, the Lua runtime and the
-scripts. There are no releases yet; the recipes for Debian and Ubuntu, Fedora,
-Arch and Gentoo are in [`packaging/`](packaging/README.md).
+scripts. Each [release](https://github.com/blue-panels/bluerig/releases)
+carries them for Debian 13, Ubuntu 26.04, Fedora and Arch, on amd64 and arm64
+where the distribution has it, and a package for macOS on Apple Silicon.
+
+- Ubuntu 24.04 and 26.04: `sudo add-apt-repository ppa:bluepanels/bluerig`
+- Homebrew, macOS and Linux: `brew install blue-panels/tap/bluerig`
+- Nix: `nix run github:blue-panels/bluerig`, or
+  `nix profile install github:blue-panels/bluerig`
+
+The recipes for these and for Gentoo, Alpine and Nix are in
+[`packaging/`](packaging/README.md).
 
 ## Translations
 

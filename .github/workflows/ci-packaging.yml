@@ -21,6 +21,8 @@ on:
       - 'packaging/**'
       - '**/meson.build'
       - 'meson_options.txt'
+      - 'flake.nix'
+      - 'flake.lock'
       - '.github/workflows/ci-packaging.yml'
   pull_request:
     paths:
@@ -28,6 +30,8 @@ on:
       - 'packaging/**'
       - '**/meson.build'
       - 'meson_options.txt'
+      - 'flake.nix'
+      - 'flake.lock'
       - '.github/workflows/ci-packaging.yml'
 
 jobs:
@@ -271,3 +275,8 @@ jobs:
               echo "the package refers to an interpreter of the build" >&2
               exit 1
           fi
+
+      - name: Build the flake
+        # flake.nix builds this tree with the same recipe, for
+        # "nix run github:blue-panels/bluerig".
+        run: nix build -L --no-link --extra-experimental-features 'nix-command flakes' "$GITHUB_WORKSPACE#bluerig"
