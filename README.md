@@ -118,6 +118,9 @@ carries them for Debian 13, Ubuntu 26.04, Fedora and Arch, on amd64 and arm64
 where the distribution has it, and a package for macOS on Apple Silicon.
 
 - Ubuntu 24.04 and 26.04: `sudo add-apt-repository ppa:bluepanels/bluerig`
+- openSUSE Tumbleweed: `sudo zypper install bluerig bluerig-lua`
+- Fedora (COPR): `sudo dnf copr enable smind/bluerig`, then
+  `sudo dnf install bluerig bluerig-lua`
 - Homebrew, macOS and Linux: `brew install blue-panels/tap/bluerig`
 - Nix: `nix run github:blue-panels/bluerig`, or
   `nix profile install github:blue-panels/bluerig`
