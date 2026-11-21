@@ -64,6 +64,7 @@
 #include "src/runtime-host.h"
 #include "src/setup.h"  // save_setup_cmd()
 #include "src/events_init.h"
+#include "src/clipboard.h"       // clipboard_paste_is_clip()
 #include "src/appearance.h"      // appearance_box()
 #include "src/keybind_dialog.h"  // keybind_dialog()
 #include "src/key_learn.h"       // key_learn()
@@ -2566,14 +2567,28 @@ fin:
 /* --------------------------------------------------------------------------------------------- */
 
 /* A bracketed paste: the text goes in as typed, but it is one step for Undo, without auto indent,
-   and the screen is drawn once when it is all in. A byte that would be a command is dropped. */
+   and the screen is drawn once when it is all in. A byte that would be a command is dropped.
+   The text of a column block copied here comes back from the terminal without its kind: it is
+   pasted from the clipfile then, as a column. */
 static void
 edit_paste_text (WEdit *e, const GString *text)
 {
     size_t i;
+    char *clip_path;
+    gboolean column;
 
     e->charpoint = 0;
     edit_push_key_press (e);
+
+    clip_path = mc_config_get_full_path (EDIT_HOME_CLIP_FILE);
+    if (clipboard_paste_is_clip (clip_path, text->str, text->len, &column) && column)
+    {
+        g_free (clip_path);
+        edit_paste_block (e, FALSE);
+        e->force |= REDRAW_PAGE;
+        return;
+    }
+    g_free (clip_path);
     bracketed_pasting_in_progress = TRUE;
     for (i = 0; i < text->len; i++)
     {
