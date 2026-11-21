@@ -1897,7 +1897,7 @@ edit_dlg_deinit (void)
 static void
 edit_about (void)
 {
-    char *version = g_strdup_printf ("MCEdit %s", mc_global.mc_version);
+    char *version = g_strdup_printf ("%s %s", PACKAGE_NAME, mc_global.mc_version);
     char *package_copyright = mc_get_package_copyright ();
 
     char *description =
