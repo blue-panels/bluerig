@@ -98,6 +98,23 @@ edit_get_macro (WEdit *edit, int hotkey)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* Delete from @section of @config every key that names @hotkey, however it is spelled: "ctrl-w"
+   of a file written by hand as well as "Ctrl-W" written here */
+
+static void
+edit_macro_del_keys (mc_config_t *config, const char *section, int hotkey)
+{
+    gchar **keys, **k;
+
+    keys = mc_config_get_keys (config, section, NULL);
+    for (k = keys; *k != NULL; k++)
+        if (tty_keyname_to_keycode (*k, NULL) == hotkey)
+            mc_config_del_key (config, section, *k);
+    g_strfreev (keys);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 /** returns FALSE on error */
 static gboolean
 edit_delete_macro (WEdit *edit, int hotkey)
@@ -106,7 +123,6 @@ edit_delete_macro (WEdit *edit, int hotkey)
     const char *section_name = "editor";
     gchar *macros_fname;
     int indx;
-    char *skeyname;
 
     // clear array of actions for current hotkey
     while ((indx = edit_get_macro (edit, hotkey)) != -1)
@@ -125,10 +141,7 @@ edit_delete_macro (WEdit *edit, int hotkey)
     if (macros_config == NULL)
         return FALSE;
 
-    skeyname = tty_keycode_to_keyname (hotkey);
-    while (mc_config_del_key (macros_config, section_name, skeyname))
-        ;
-    g_free (skeyname);
+    edit_macro_del_keys (macros_config, section_name, hotkey);
     mc_config_save_file (macros_config, NULL);
     mc_config_deinit (macros_config);
     return TRUE;
@@ -198,7 +211,7 @@ edit_store_macro_cmd (WEdit *edit)
     }
 
     if (macros == NULL)
-        mc_config_del_key (macros_config, section_name, skeyname);
+        edit_macro_del_keys (macros_config, section_name, hotkey);
     else
     {
         macros_t macro;
@@ -750,12 +763,10 @@ static long
 mexpl_macro_file_line (int hotkey)
 {
     char *fname;
-    char *skeyname;
     FILE *f;
     char line_buf[512];
     long lineno = 0;
     long found = 1;
-    size_t klen;
 
     fname = mc_config_get_full_path (MC_MACRO_FILE);
     f = fopen (fname, "r");
@@ -764,21 +775,28 @@ mexpl_macro_file_line (int hotkey)
     if (f == NULL)
         return 1;
 
-    skeyname = tty_keycode_to_keyname (hotkey);
-    klen = strlen (skeyname);
-
+    // the key of the line as it is spelled there, "ctrl-w" or "Ctrl-W"
     while (fgets (line_buf, sizeof (line_buf), f) != NULL)
     {
+        char *eq;
+
         lineno++;
-        if (strncmp (line_buf, skeyname, klen) == 0 && line_buf[klen] == '=')
+        eq = strchr (line_buf, '=');
+        if (eq != NULL && eq != line_buf)
         {
-            found = lineno;
-            break;
+            char *name = g_strstrip (g_strndup (line_buf, (gsize) (eq - line_buf)));
+            const gboolean same = *name != '\0' && tty_keyname_to_keycode (name, NULL) == hotkey;
+
+            g_free (name);
+            if (same)
+            {
+                found = lineno;
+                break;
+            }
         }
     }
 
     fclose (f);
-    g_free (skeyname);
     return found;
 }
 

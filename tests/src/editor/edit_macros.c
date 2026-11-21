@@ -386,8 +386,6 @@ START_TEST (test_store_replaces)
 {
     char *text;
 
-    // the name of the key as bluerig writes it; a name spelled otherwise ("ctrl-t") stays in
-    // the file next to the new one
     write_macro_file ("[editor]\nCtrl-T=InsertChar:120;\n");
     ck_assert (edit_load_macro_cmd (test_edit));
 
@@ -403,6 +401,35 @@ START_TEST (test_store_replaces)
     ck_assert_msg (strstr (text, "InsertChar:120;") == NULL, "the file: %s", text);
     g_free (text);
 
+    ck_assert (edit_execute_macro (test_edit, key ("ctrl-t")));
+    assert_text ("yy");
+}
+END_TEST
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The old macro under a key spelled by hand, "ctrl-t" as the manual has it, not as bluerig
+   writes it: a new macro on that key takes its place all the same, one macro after a reload */
+START_TEST (test_store_replaces_hand_spelled)
+{
+    char *text;
+
+    write_macro_file ("[editor]\nctrl-t=InsertChar:120;\n");
+    ck_assert (edit_load_macro_cmd (test_edit));
+
+    query_hotkey = key ("ctrl-t");
+    edit_execute_key_command (test_edit, CK_MacroStartRecord, -1);
+    edit_execute_key_command (test_edit, CK_InsertChar, 'y');
+    edit_execute_key_command (test_edit, CK_MacroStopRecord, -1);
+
+    text = read_macro_file ();
+    ck_assert_msg (strstr (text, "InsertChar:121;") != NULL, "the file: %s", text);
+    ck_assert_msg (strstr (text, "InsertChar:120;") == NULL, "the file: %s", text);
+    g_free (text);
+
+    free_macros ();
+    ck_assert (edit_load_macro_cmd (test_edit));
+    ck_assert_uint_eq (macros_list->len, 1);
     ck_assert (edit_execute_macro (test_edit, key ("ctrl-t")));
     assert_text ("yy");
 }
@@ -457,6 +484,7 @@ main (void)
     tcase_add_test (tc_core, test_play_no_macro);
     tcase_add_test (tc_core, test_record_store_reload);
     tcase_add_test (tc_core, test_store_replaces);
+    tcase_add_test (tc_core, test_store_replaces_hand_spelled);
     tcase_add_test (tc_core, test_store_cancelled);
 
     result = mctest_run_all (tc_core);
