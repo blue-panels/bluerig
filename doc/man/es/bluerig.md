@@ -92,7 +92,7 @@ modificadoras.
 *-S tema, --skin=tema*
 : Usar el tema (skin) con ese nombre.
 
-# Editor de Archivos Interno <a id="internal-file-editor"></a>
+# El editor bluerig <a id="internal-file-editor"></a>
 
 El editor de archivos interno es un editor a pantalla completa de avanzadas
 prestaciones. Un archivo mayor que

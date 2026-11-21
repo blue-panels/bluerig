@@ -185,7 +185,7 @@ at a time; the
 [Window menu](#window-menu)
 moves between them, and each of them can be moved and resized.
 
-# The editor <a id="internal-file-editor"></a>
+# The bluerig editor <a id="internal-file-editor"></a>
 
 The editor is easy to use and can be used without learning. The pull-down
 menu is invoked by pressing F9, and the keys of the commands stand next to

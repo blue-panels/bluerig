@@ -91,7 +91,7 @@ grep.
 *-S skórka, --skin=skórka*
 : Użyć skórki o tej nazwie.
 
-# Wbudowany edytor plików <a id="internal-file-editor"></a>
+# Edytor bluerig <a id="internal-file-editor"></a>
 
 Wbudowany edytor plików to pełnoekranowy edytor ze wszystkimi zwykłymi
 możliwościami. Plik większy niż
