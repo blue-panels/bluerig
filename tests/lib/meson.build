@@ -29,6 +29,14 @@ foreach name, source : lib_tests
     suite: 'lib')
 endforeach
 
+# colors come on without a terminal only with S-Lang: ncurses has none before initscr()
+if get_option('screen') == 'slang'
+  test('skin_colors',
+    executable('skin_colors', 'skin_colors.c', c_args: test_c_args, dependencies: test_lib_deps),
+    workdir: meson.current_build_dir(),
+    suite: 'lib')
+endif
+
 if have_gmodule
   # a runtime plugin for the loader to find: the only module in this directory
   fixture = shared_module('runtime-plugin-fixture',
