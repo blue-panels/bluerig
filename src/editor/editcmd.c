@@ -2015,19 +2015,28 @@ edit_cut_to_X_buf_cmd (WEdit *edit)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/** insert the clipfile as it is, without the external clipboard command */
 gboolean
-edit_paste_from_X_buf_cmd (WEdit *edit)
+edit_paste_clip_file (WEdit *edit)
 {
     char *tmp;
     gboolean ret;
 
-    // try use external clipboard utility
-    mc_event_raise (MCEVENT_GROUP_CORE, "clipboard_file_from_ext_clip", NULL);
     tmp = mc_config_get_full_path (EDIT_HOME_CLIP_FILE);
     ret = (edit_insert_file (edit, tmp) >= 0);
     g_free (tmp);
 
     return ret;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+gboolean
+edit_paste_from_X_buf_cmd (WEdit *edit)
+{
+    // try use external clipboard utility
+    mc_event_raise (MCEVENT_GROUP_CORE, "clipboard_file_from_ext_clip", NULL);
+    return edit_paste_clip_file (edit);
 }
 
 /* --------------------------------------------------------------------------------------------- */
