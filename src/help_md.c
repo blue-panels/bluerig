@@ -436,7 +436,8 @@ md_heading (md_ctx_t *ctx, const char *line, int level)
         ctx->notitle = FALSE;
     }
     else
-        g_string_append_printf (ctx->body, "%c[%s]\n%s\n\n", CHAR_NODE_END, node->id, node->title);
+        g_string_append_printf (ctx->body, "%c[%s]\n%c%s%c\n\n", CHAR_NODE_END, node->id,
+                                CHAR_FONT_BOLD, node->title, CHAR_FONT_NORMAL);
 
     ctx->open = TRUE;
 }
