@@ -93,7 +93,7 @@ a helyet.
 *-S téma, --skin=téma*
 : A megadott nevű téma (skin) használata.
 
-# Belső fájlszerkesztő <a id="internal-file-editor"></a>
+# A bluerig szerkesztő <a id="internal-file-editor"></a>
 
 A belső fájlszerkesztő egy teljes képernyős, minden szokásos eszközzel
 ellátott szerkesztő. Az

@@ -93,7 +93,7 @@ Commander); bluerig га развија даље као засебан прог�
 *-S скин, --skin=скин*
 : Користи скин са тим називом.
 
-# Уграђени уређивач датотека <a id="internal-file-editor"></a>
+# Уређивач bluerig <a id="internal-file-editor"></a>
 
 Уграђени уређивач датотека је моћан екрански уређивач. Датотека већа од
 *editor_filesize_threshold*

@@ -90,7 +90,7 @@ il primo file.
 *-S tema, --skin=tema*
 : Usare il tema (skin) con quel nome.
 
-# Editor di file interno <a id="internal-file-editor"></a>
+# L'editor bluerig <a id="internal-file-editor"></a>
 
 L'editor di file interno è un editor a pieno schermo con tutte le funzioni
 consuete. Un file più grande di
