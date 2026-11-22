@@ -977,7 +977,8 @@ md_plugin_title (const mc_editor_plugin_t *plugin)
     const char *p;
 
     title = g_string_new ("");
-    for (p = plugin->display_name != NULL ? plugin->display_name : plugin->name; *p != '\0'; p++)
+    for (p = plugin->display_name != NULL ? _ (plugin->display_name) : plugin->name; *p != '\0';
+         p++)
         if (*p != '&')
             g_string_append_c (title, *p);
     while (title->len != 0 && title->str[title->len - 1] == '.')

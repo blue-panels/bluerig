@@ -3233,7 +3233,7 @@ query_menu_shortcut (int action_index)
 static const mc_editor_plugin_t query_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "query",
-    .display_name = "Query",
+    .display_name = N_ ("Query"),
     .flags = MC_EPF_NONE,
     .open = query_open,
     .close = query_close,

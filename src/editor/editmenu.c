@@ -512,7 +512,7 @@ create_plugins_menu (void)
             continue;
         }
 
-        label = plugin->display_name != NULL ? plugin->display_name : plugin->name;
+        label = plugin->display_name != NULL ? _ (plugin->display_name) : plugin->name;
         entries = g_list_prepend (entries, menu_entry_new (label, command_id));
         command_id++;
     }

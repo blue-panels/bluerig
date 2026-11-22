@@ -2880,7 +2880,7 @@ project_menu_shortcut (int action_index)
 static const mc_editor_plugin_t project_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "project",
-    .display_name = "Project",
+    .display_name = N_ ("Project"),
     .flags = MC_EPF_NONE,
     .open = project_open,
     .close = project_close,

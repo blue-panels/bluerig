@@ -90,7 +90,7 @@
 #define VIEWER_SIZE_RIGHT  50
 #define VIEWER_SIZE_BOTTOM 25
 
-#define PREVIEW_TITLE      "Preview"
+#define PREVIEW_TITLE      N_ ("Preview")
 
 // where a window stands, to stand there again when it is shown
 #define VIEWER_DOCK_NONE   0
@@ -893,8 +893,8 @@ preview_toggle (viewer_t *v, void *edit)
         r = a;
         r.cols = (int) CLAMP (a.cols * VIEWER_SIZE_RIGHT / 100, 10, a.cols);
         r.x = a.x + a.cols - r.cols;
-        (void) viewer_window_new (v, &r, VIEWER_DOCK_RIGHT, FALSE, PREVIEW_TITLE, NULL, 0, FALSE,
-                                  &v->preview_id);
+        (void) viewer_window_new (v, &r, VIEWER_DOCK_RIGHT, FALSE, _ (PREVIEW_TITLE), NULL, 0,
+                                  FALSE, &v->preview_id);
     }
     else
         viewer_show (v, win, FALSE, v->host->window_current (v->host));

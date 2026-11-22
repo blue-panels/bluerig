@@ -4357,7 +4357,7 @@ lsp_menu_shortcut (int action_index)
 static mc_editor_plugin_t lsp_plugin_table = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "lsp",
-    .display_name = "Language servers",
+    .display_name = N_ ("Language servers"),
     .flags = MC_EPF_NONE,
     .open = lsp_open,
     .close = lsp_close,

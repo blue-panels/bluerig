@@ -1670,7 +1670,7 @@ debug_menu_shortcut (int action_index)
 static const mc_editor_plugin_t debug_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "debugger",
-    .display_name = "Debugger",
+    .display_name = N_ ("Debugger"),
     .flags = MC_EPF_NONE,
     .open = debug_open,
     .close = debug_close,
