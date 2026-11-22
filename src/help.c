@@ -123,6 +123,7 @@ static struct
 
 static GSList *link_area = NULL;
 static gboolean inside_link_area = FALSE;
+static int wrap_indent = 0;  // the column a line the window breaks goes on at
 
 /* --------------------------------------------------------------------------------------------- */
 /*** file scope functions ************************************************************************/
@@ -458,6 +459,47 @@ help_node_start (const char *c)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+/** The number of a column marker at p, and in next where the text goes on after it. */
+
+static int
+help_column (const char *p, const char **next)
+{
+    int column = 0;
+
+    for (p++; *p >= '0' && *p <= '9'; p++)
+        column = column * 10 + *p - '0';
+    if (*p == CHAR_COLUMN)
+        p++;
+    *next = p;
+
+    return column;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The column a line of the screen starts at: where the last column marker before it on the same
+ * line of the text has put the text, the left edge when there is none.
+ */
+
+static int
+help_line_indent (const char *start)
+{
+    const char *p, *n;
+    int indent = 0;
+
+    for (p = start; p > fdata && p[-1] != '\n' && p[-1] != CHAR_NODE_END; p--)
+        ;
+
+    for (; p < start; p = n)
+    {
+        n = p + 1;
+        if (*p == CHAR_COLUMN)
+            indent = help_column (p, &n);
+    }
+
+    return indent;
+}
+
+/* --------------------------------------------------------------------------------------------- */
 /** Where the line after this one starts on the screen.  The window breaks a line that does not
  * fit its width, so a paragraph written as one long line takes several lines of the screen, and
  * counting the newlines of the text would not find them.
@@ -470,7 +512,7 @@ help_next_line (const char *start)
     const char *p = start;
     const char *word_start = NULL;
     const char *mark_start = NULL;  // the markers that open the word
-    int col = 0;
+    int col = help_line_indent (start);
     int word = 0;
     gboolean painting = TRUE;
 
@@ -492,6 +534,26 @@ help_next_line (const char *start)
             if (*n == CHAR_ANCHOR)
                 n++;
             break;
+        case CHAR_COLUMN:
+        {
+            const int column = help_column (p, &n);
+
+            // the word before it ends there, and the text goes on at the column
+            if (word != 0)
+            {
+                if (col + word >= HELP_WINDOW_WIDTH && word_start != start)
+                    return word_start;
+                col += word;
+                word = 0;
+                word_start = NULL;
+            }
+            mark_start = NULL;
+            // a cell too wide for its column: the next one starts the next line
+            if (p != start && col + 2 > column)
+                return p;
+            col = column;
+            break;
+        }
         case CHAR_VERSION:
         {
             int width = 0;
@@ -892,9 +954,9 @@ help_print_word (WDialog *h, GString *word, int *col, int *line, gboolean add_sp
         int w;
 
         w = str_term_width1 (word->str);
-        if (*col + w >= HELP_WINDOW_WIDTH)
+        if (*col + w >= HELP_WINDOW_WIDTH && *col > wrap_indent)
         {
-            *col = 0;
+            *col = wrap_indent;
             (*line)++;
         }
 
@@ -918,7 +980,8 @@ help_print_word (WDialog *h, GString *word, int *col, int *line, gboolean add_sp
         }
         else
         {
-            *col = 0;
+            // the line breaks at the blank: it goes on at the column of its table
+            *col = wrap_indent;
             (*line)++;
         }
     }
@@ -941,8 +1004,12 @@ help_show (WDialog *h, const char *paint_start)
     do
     {
         int line = 0;
-        int col = 0;
+        int col;
         const char *p, *n;
+
+        // a line of the screen the window broke goes on at the column of its table
+        wrap_indent = help_line_indent (paint_start);
+        col = wrap_indent;
 
         active_col = 0;
         active_line = 0;
@@ -1050,7 +1117,23 @@ help_show (WDialog *h, const char *paint_start)
                     help_print_word (h, word, &col, &line, FALSE);
                 line++;
                 col = 0;
+                wrap_indent = 0;
                 break;
+            case CHAR_COLUMN:
+            {
+                const int column = help_column (p, &n);
+
+                // the word before it first; the text goes on at the column, and so does a
+                // line the window breaks after it
+                if (painting)
+                    help_print_word (h, word, &col, &line, FALSE);
+                // a cell too wide for its column: the next one starts the next line
+                if (col != wrap_indent && col + 2 > column)
+                    line++;
+                col = column;
+                wrap_indent = column;
+                break;
+            }
             case ' ':
             case '\t':
                 // word delimiter

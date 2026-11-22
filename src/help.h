@@ -30,6 +30,9 @@
 /* A place inside a node that a link can lead to; the name of it follows and
    another one closes it */
 #define CHAR_ANCHOR '\016'  // Ctrl-N
+/* A column of a table: the number of it follows and another one closes it. The text goes on at
+   that column, and a line of it that the window breaks goes on there too, up to the newline. */
+#define CHAR_COLUMN '\017'  // Ctrl-O
 
 /*** enums ***************************************************************************************/
 

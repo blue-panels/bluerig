@@ -3,7 +3,9 @@
 # Check doc/man/*.md against what the man page pipeline can carry.
 #
 # go-md2man is quiet about what it cannot do: a table needs a preprocessor
-# the pages do not ask for, a backslash inside a link label eats the rest
+# the pages do not ask for (update-man-in.sh makes a table of two columns,
+# the one the help window shows, a list of terms), a backslash inside a link
+# label eats the rest
 # of the label, two emphasis runs that touch print their own asterisks.
 # This says so instead.
 #
@@ -117,10 +119,19 @@ for my $file (@files)
                          . 'that paragraph into a section heading');
         }
 
-        # constructs the pipeline has no roff for
-        err($file, $n, 'table: go-md2man emits tbl markup that the pages '
-                     . 'are not preprocessed for')
-            if /^\s*\|/ || /^\s*[:-]+\s*\|\s*[:-]+/;
+        # constructs the pipeline has no roff for; a table of two columns
+        # with a bar at the start of each line is made a list of terms first
+        if (/^\|/)
+        {
+            my $row = $_;
+            $row =~ s/\\\|//g;
+            my $cells = () = $row =~ /\|/g;
+            err($file, $n, 'table: only a table of two columns becomes a list '
+                         . 'of terms in the man page')
+                if $cells != 3;
+        }
+        err($file, $n, 'table: a table row starts with a bar here')
+            if /^\s+\|/ || /^\s*[:-]+\s*\|\s*[:-]+/;
         err($file, $n, 'image') if /!\[[^\]]*\]\(/;
         err($file, $n, 'footnote') if /\[\^[^\]]+\]/;
         err($file, $n, 'strikethrough') if /(?<!\\)~~/;

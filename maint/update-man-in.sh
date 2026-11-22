@@ -48,7 +48,44 @@ for md in "$top"/doc/man/*.md "$top"/doc/man/*/*.md; do
     # front matter would end up as a rule and a heading, so neither reaches it
     { echo "% $title $SECTION \"$date\" \"$SOURCE\" \"$MANUAL\""
       $SED -e '1,/^---$/d' "$md"
-    } | $MD2MAN | $PERL -0777 -pe '
+    } | $PERL -e '
+        # a table of two columns, as the help window shows it, has no roff
+        # without tbl: it becomes a list of terms, the first cell the term;
+        # a head with no text is left out, and a row with no term is one
+        # more line of the term above it
+        my @l = <STDIN>;
+        sub cells {
+            my $row = shift;
+            chomp $row;
+            $row =~ s/^\|//;
+            $row =~ s/(?<!\\)\|\s*$//;
+            return map { my $c = $_; $c =~ s/\\\|/|/g; $c =~ s/^\s+|\s+$//g; $c }
+                   split /(?<!\\)\|/, $row, -1;
+        }
+        for (my $i = 0; $i < @l; $i++) {
+            if ($l[$i] =~ /^\|/ && $i + 1 < @l && $l[$i + 1] =~ /^\|[\s|:]*-[\s|:-]*$/) {
+                my @rows = ($l[$i]);
+                for ($i += 2; $i < @l && $l[$i] =~ /^\|/; $i++) {
+                    push @rows, $l[$i];
+                }
+                $i--;
+                my $open = 0;
+                for my $k (0 .. $#rows) {
+                    my @c = cells($rows[$k]);
+                    next if $k == 0 && !grep { $_ ne "" } @c;
+                    if ($c[0] ne "" || !$open) {
+                        print "\n" if $open;
+                        print "**$c[0]**\n";
+                        $open = 1;
+                    }
+                    print ": $c[1]\n";
+                }
+                print "\n";
+            } else {
+                print $l[$i];
+            }
+        }
+    ' | $MD2MAN | $PERL -0777 -pe '
         # go-md2man says what it can in roff, and these five rules say the
         # rest.  Order matters: an internal link must go before rule 4, or
         # it would be turned into a url.

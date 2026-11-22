@@ -47,6 +47,9 @@
 /*** file scope macro definitions ****************************************************************/
 
 #define BODY_INDENT "        "
+// a column of a table, but for the last, is never wider than this: the cell after a wider one
+// starts the next line
+#define TABLE_CELL_MAX 40
 
 /*** file scope type declarations ****************************************************************/
 
@@ -281,6 +284,159 @@ md_inline (GString *out, const char *line)
             p = n;
         }
     }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The columns the text the help window paints takes: the markers and the targets of the links
+ * take none.
+ */
+
+static int
+md_width (const char *text)
+{
+    const char *p;
+    int width = 0;
+    gboolean shown = TRUE;
+
+    for (p = text; *p != '\0'; p = g_utf8_next_char (p))
+    {
+        const gunichar c = g_utf8_get_char (p);
+
+        if (c == CHAR_LINK_POINTER)
+            shown = FALSE;
+        else if (c == CHAR_LINK_END)
+            shown = TRUE;
+        else if (shown && c >= ' ')
+            width += g_unichar_iswide (c) ? 2 : 1;
+    }
+
+    return width;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** Whether the line is the one under the head of a table: |---|:--| and the like. */
+
+static gboolean
+md_table_rule (const char *line)
+{
+    const char *p;
+    gboolean dash = FALSE;
+
+    if (line == NULL || line[0] != '|')
+        return FALSE;
+
+    for (p = line; *p != '\0'; p++)
+    {
+        if (*p == '-')
+            dash = TRUE;
+        else if (*p != '|' && *p != ':' && *p != ' ')
+            return FALSE;
+    }
+
+    return dash;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The cells of a line of a table, as the help window paints them.  \| is a bar inside a cell. */
+
+static GPtrArray *
+md_table_cells (const char *line)
+{
+    GPtrArray *cells;
+    GString *cell;
+    const char *p;
+
+    cells = g_ptr_array_new_with_free_func (g_free);
+    cell = g_string_sized_new (64);
+
+    for (p = line + 1; *p != '\0'; p++)
+    {
+        if (*p == '\\' && p[1] == '|')
+            g_string_append_c (cell, *++p);
+        else if (*p != '|')
+            g_string_append_c (cell, *p);
+        else
+        {
+            GString *out = g_string_sized_new (cell->len);
+
+            g_strstrip (cell->str);
+            md_inline (out, cell->str);
+            g_ptr_array_add (cells, g_string_free (out, FALSE));
+            g_string_set_size (cell, 0);
+        }
+    }
+
+    // text after the last bar is a cell too
+    g_strstrip (cell->str);
+    if (cell->str[0] != '\0')
+    {
+        GString *out = g_string_sized_new (cell->len);
+
+        md_inline (out, cell->str);
+        g_ptr_array_add (cells, g_string_free (out, FALSE));
+    }
+    g_string_free (cell, TRUE);
+
+    return cells;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** Write out a table: a row on a line, each cell at the column of its own, and a line of a cell
+ * the window breaks goes on at that column.  A head with no text in it is left out, a head with
+ * text is bold.
+ */
+
+static void
+md_table (md_ctx_t *ctx, GPtrArray *rows)
+{
+    GArray *widths;
+    guint r, c;
+    gboolean head = FALSE;
+
+    widths = g_array_new (FALSE, TRUE, sizeof (int));
+
+    for (r = 0; r < rows->len; r++)
+    {
+        const GPtrArray *cells = g_ptr_array_index (rows, r);
+
+        for (c = 0; c < cells->len; c++)
+        {
+            const int w = md_width (g_ptr_array_index (cells, c));
+
+            if (c >= widths->len)
+                g_array_set_size (widths, c + 1);
+            // a cell too wide for a column takes its line, and the column stays as it is
+            if (w <= TABLE_CELL_MAX)
+                g_array_index (widths, int, c) = MAX (g_array_index (widths, int, c), w);
+            if (r == 0 && w != 0)
+                head = TRUE;
+        }
+    }
+
+    for (r = head ? 0 : 1; r < rows->len; r++)
+    {
+        const GPtrArray *cells = g_ptr_array_index (rows, r);
+        int column = 0;
+
+        for (c = 0; c < cells->len; c++)
+        {
+            if (c != 0)
+            {
+                column += g_array_index (widths, int, c - 1) + 2;
+                g_string_append_printf (ctx->body, "%c%d%c", CHAR_COLUMN, column, CHAR_COLUMN);
+            }
+            if (r == 0)
+                g_string_append_printf (ctx->body, "%c%s%c", CHAR_FONT_BOLD,
+                                        (const char *) g_ptr_array_index (cells, c),
+                                        CHAR_FONT_NORMAL);
+            else
+                g_string_append (ctx->body, g_ptr_array_index (cells, c));
+        }
+        g_string_append_c (ctx->body, '\n');
+    }
+    g_string_append_c (ctx->body, '\n');
+
+    g_array_free (widths, TRUE);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -545,7 +701,8 @@ md_parse (md_ctx_t *ctx, const char *text)
         }
 
         // an anchor of its own marks a place inside the node; one with text
-        // after it belongs to a heading, and is taken there
+        // after it belongs to a heading, and is taken there. It takes no room:
+        // the text after it starts on its line, not under an empty one
         if (strncmp (line, "<a id=\"", 7) == 0 && md_anchor_alone (line))
         {
             const char *end = strchr (line + 7, '"');
@@ -556,7 +713,6 @@ md_parse (md_ctx_t *ctx, const char *text)
                 g_string_append_c (ctx->body, CHAR_ANCHOR);
                 g_string_append_len (ctx->body, line + 7, end - (line + 7));
                 g_string_append_c (ctx->body, CHAR_ANCHOR);
-                g_string_append_c (ctx->body, '\n');
             }
             continue;
         }
@@ -583,6 +739,21 @@ md_parse (md_ctx_t *ctx, const char *text)
         {
             md_flush (ctx);
             ctx->term = FALSE;
+            continue;
+        }
+
+        // a table: the head, the rule under it, and the rows up to a line that is not one
+        if (line[0] == '|' && ctx->para->len == 0 && md_table_rule (lines[i + 1]))
+        {
+            GPtrArray *rows = g_ptr_array_new_with_free_func ((GDestroyNotify) g_ptr_array_unref);
+
+            g_ptr_array_add (rows, md_table_cells (line));
+            for (i += 2; lines[i] != NULL && lines[i][0] == '|'; i++)
+                g_ptr_array_add (rows, md_table_cells (lines[i]));
+            i--;
+
+            md_table (ctx, rows);
+            g_ptr_array_free (rows, TRUE);
             continue;
         }
 
