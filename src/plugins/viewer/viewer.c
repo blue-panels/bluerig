@@ -1100,6 +1100,9 @@ static const mc_editor_plugin_t viewer_plugin = {
     .activate = viewer_plugin_activate,
     .handle_key = viewer_plugin_handle_key,
     .handle_event = viewer_plugin_handle_event,
+    .help_file = "viewer.md",
+    .help_node = "preview",
+    .summary = N_ ("Shows the file the way it is meant to read, in a window at the right of it"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

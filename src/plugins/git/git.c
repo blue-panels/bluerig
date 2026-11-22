@@ -638,6 +638,9 @@ static const mc_editor_plugin_t git_plugin = {
     .action_count = G_N_ELEMENTS (git_actions),
     .cmd_menu_entries = git_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (git_menu),
+    .help_file = "git.md",
+    .help_node = "git",
+    .summary = N_ ("Shows the changes and commits of the git work tree and writes commit messages"),
 };
 
 /*** public functions ****************************************************************************/

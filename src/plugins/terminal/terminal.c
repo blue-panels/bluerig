@@ -1128,6 +1128,9 @@ static const mc_editor_plugin_t terminal_plugin = {
     .activate = terminal_plugin_activate,
     .handle_action = terminal_plugin_handle_action,
     .handle_key = terminal_plugin_handle_key,
+    .help_file = "terminal.md",
+    .help_node = "terminal",
+    .summary = N_ ("Runs the shell in a window of the editor"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

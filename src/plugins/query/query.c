@@ -3246,6 +3246,9 @@ static const mc_editor_plugin_t query_plugin = {
     .cmd_menu_entries = query_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (query_menu),
     .get_menu_shortcut = query_menu_shortcut,
+    .help_file = "query.md",
+    .help_node = "query",
+    .summary = N_ ("Runs the queries of a file in MongoDB or PostgreSQL"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

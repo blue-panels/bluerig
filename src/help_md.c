@@ -39,6 +39,7 @@
 #include "lib/global.h"
 #include "lib/tty/tty.h"  // mc_tty_frm_t
 #include "lib/keybind.h"
+#include "lib/editor-plugin.h"
 
 #include "src/keymap.h"  // editor_map, editor_x_map
 
@@ -905,6 +906,20 @@ md_substitute (GString *text)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+/** Append text with a backslash before each character markdown reads. */
+
+static void
+md_escaped (GString *out, const char *text)
+{
+    for (; *text != '\0'; text++)
+    {
+        if (strchr ("\\*_[]<>|`", *text) != NULL)
+            g_string_append_c (out, '\\');
+        g_string_append_c (out, *text);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
 /** Append the keys of keymap that call action, each of them once and only where the editor finds
  * that action for it: a key bound twice calls the first.  prefix is written before each key of a
  * keymap that a prefix key opens.
@@ -921,7 +936,6 @@ md_keys_of (GString *keys, const global_keymap_t *keymap, long action, const cha
     for (i = 0; keymap[i].key != 0; i++)
     {
         GString *key;
-        const char *c;
 
         if (keymap[i].command != action || keymap[i].caption[0] == '\0'
             || keybind_lookup_keymap_command (keymap, keymap[i].key) != action)
@@ -931,12 +945,7 @@ md_keys_of (GString *keys, const global_keymap_t *keymap, long action, const cha
         key = g_string_new (prefix != NULL ? prefix : "");
         if (prefix != NULL)
             g_string_append_c (key, ' ');
-        for (c = keymap[i].caption; *c != '\0'; c++)
-        {
-            if (strchr ("\\*_[]<>|`", *c) != NULL)
-                g_string_append_c (key, '\\');
-            g_string_append_c (key, *c);
-        }
+        md_escaped (key, keymap[i].caption);
 
         // a key bound twice is written once; the list is compared item by item
         {
@@ -957,6 +966,84 @@ md_keys_of (GString *keys, const global_keymap_t *keymap, long action, const cha
 }
 
 /* --------------------------------------------------------------------------------------------- */
+/** The name of a plugin as the index shows it: its label without the hotkey mark and the dots
+ * of a dialog.
+ */
+
+static char *
+md_plugin_title (const mc_editor_plugin_t *plugin)
+{
+    GString *title;
+    const char *p;
+
+    title = g_string_new ("");
+    for (p = plugin->display_name != NULL ? plugin->display_name : plugin->name; *p != '\0'; p++)
+        if (*p != '&')
+            g_string_append_c (title, *p);
+    while (title->len != 0 && title->str[title->len - 1] == '.')
+        g_string_truncate (title, title->len - 1);
+
+    return g_string_free (title, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static int
+md_plugin_compare (gconstpointer a, gconstpointer b)
+{
+    return g_utf8_collate (*(const char *const *) a, *(const char *const *) b);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The index of the plugins: a row for each plugin loaded with a help of its own, its name a link
+ * to that help and what it does beside it, by name.
+ */
+
+static void
+md_plugins (GString *out)
+{
+    GPtrArray *rows;
+    const GSList *l;
+    guint i;
+
+    rows = g_ptr_array_new_with_free_func (g_free);
+
+    for (l = mc_editor_plugin_list (); l != NULL; l = g_slist_next (l))
+    {
+        const mc_editor_plugin_t *plugin = (const mc_editor_plugin_t *) l->data;
+        GString *row;
+        char *title;
+
+        if (plugin->help_file == NULL)
+            continue;
+
+        // the title first: the rows are sorted by it
+        title = md_plugin_title (plugin);
+        row = g_string_new ("");
+        md_escaped (row, title);
+        g_string_append (row, "\t| [");
+        md_escaped (row, title);
+        g_string_append_printf (row, "](%s#%s) | ", plugin->help_file,
+                                plugin->help_node != NULL ? plugin->help_node : "");
+        if (plugin->summary != NULL)
+            md_escaped (row, _ (plugin->summary));
+        g_string_append (row, " |\n");
+        g_ptr_array_add (rows, g_string_free (row, FALSE));
+        g_free (title);
+    }
+
+    if (rows->len != 0)
+    {
+        g_ptr_array_sort (rows, md_plugin_compare);
+        g_string_append (out, "|  |  |\n|--|--|\n");
+        for (i = 0; i < rows->len; i++)
+            g_string_append (out, strchr (g_ptr_array_index (rows, i), '\t') + 1);
+    }
+
+    g_ptr_array_free (rows, TRUE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
 /** The page with each {{key:Action|default}} made the keys of the editor that call the action
  * now; the default, as the man page has it, where none of them does.
  */
@@ -969,9 +1056,26 @@ md_keys (const char *text)
 
     out = g_string_sized_new (strlen (text) + 1024);
 
-    for (p = text; (start = strstr (p, "{{key:")) != NULL; p = start)
+    for (p = text; (start = strstr (p, "{{")) != NULL; p = start)
     {
         const char *name = start + 6;
+
+        // {{plugins}} on a line of its own: the index of the plugins
+        if (strncmp (start, "{{plugins}}", 11) == 0)
+        {
+            g_string_append_len (out, p, start - p);
+            md_plugins (out);
+            start += 11;
+            if (*start == '\n')
+                start++;
+            continue;
+        }
+        if (strncmp (start, "{{key:", 6) != 0)
+        {
+            g_string_append_len (out, p, start + 2 - p);
+            start += 2;
+            continue;
+        }
         const char *bar = strchr (name, '|');
         const char *end = strstr (name, "}}");
         GString *keys;

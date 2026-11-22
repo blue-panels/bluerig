@@ -2818,6 +2818,9 @@ static const mc_editor_plugin_t ctags_plugin_descriptor = {
     .cmd_menu_entries = ctags_menu_entries,
     .cmd_menu_entry_count = G_N_ELEMENTS (ctags_menu_entries),
     .get_menu_shortcut = ctags_get_menu_shortcut,
+    .help_file = "ctags.md",
+    .help_node = "ctags",
+    .summary = N_ ("Jumps to definitions and finds where a name is used, from a ctags index"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

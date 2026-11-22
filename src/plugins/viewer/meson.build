@@ -11,3 +11,9 @@ viewer_module = shared_module('viewer',
   install_dir: plugins_dir,
 )
 plugin_build_dirs += meson.current_build_dir()
+
+# the help of the plugin, beside the help of the editor; its translation is found as viewer.lang.md
+install_data('viewer.md', install_dir: pkgdatadir / 'help')
+if have_nls
+  install_data('viewer.ru.md', install_dir: pkgdatadir / 'help')
+endif

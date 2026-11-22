@@ -2893,6 +2893,9 @@ static const mc_editor_plugin_t project_plugin = {
     .cmd_menu_entries = project_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (project_menu),
     .get_menu_shortcut = project_menu_shortcut,
+    .help_file = "project.md",
+    .help_node = "project",
+    .summary = N_ ("Opens the files of the project and shows its tree"),
 };
 
 /*** public functions ****************************************************************************/

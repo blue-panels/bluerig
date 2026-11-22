@@ -1684,6 +1684,9 @@ static const mc_editor_plugin_t debug_plugin = {
     .cmd_menu_entries = debug_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (debug_menu),
     .get_menu_shortcut = debug_menu_shortcut,
+    .help_file = "debugger.md",
+    .help_node = "debugger",
+    .summary = N_ ("Runs a program under GDB or a debug adapter: breakpoints, steps, variables"),
 };
 
 /* The entry of the module, which the editor calls when it loads it */

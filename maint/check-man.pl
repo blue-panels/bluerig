@@ -218,8 +218,9 @@ for my $file (@files)
         # only the placeholders the build knows
         while (/\{\{([A-Za-z_]+)(?::\d+)?\}\}/g)
         {
+            # {{plugins}} is the index of the plugins the help window fills in
             err($file, $n, "unknown placeholder {{$1}}")
-                unless $placeholder{$1} || $1 eq 'MC_VERSION';
+                unless $placeholder{$1} || $1 eq 'MC_VERSION' || $1 eq 'plugins';
         }
 
         push @links, [$n, $1] while /\]\(#([^)]*)\)/g;

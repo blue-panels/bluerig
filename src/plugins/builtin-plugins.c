@@ -482,6 +482,9 @@ static const mc_editor_plugin_t edit_builtin_etags_plugin = {
     .handle_event = NULL,
     .on_file_open = NULL,
     .on_file_close = NULL,
+    .help_file = "etags.md",
+    .help_node = "definitions",
+    .summary = N_ ("Jumps to the definition of the name under the cursor from the TAGS file"),
 };
 
 /* --------------------------------------------------------------------------------------------- */
@@ -501,6 +504,9 @@ static const mc_editor_plugin_t edit_builtin_spell_plugin = {
     .handle_event = NULL,
     .on_file_open = NULL,
     .on_file_close = NULL,
+    .help_file = "spell.md",
+    .help_node = "spell",
+    .summary = N_ ("Checks the spelling of the text with aspell or hunspell"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

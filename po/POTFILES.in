@@ -31,6 +31,8 @@ src/plugins/ctags/ctags-config.c
 src/plugins/ctags/ctags-plugin.c
 src/plugins/ctags/ctags-ui.c
 src/plugins/debugger/debugger.c
+src/plugins/git/git.c
+src/plugins/lsp/lsp-plugin.c
 src/plugins/project/project.c
 src/plugins/query/query.c
 src/plugins/query/query-ai.c
@@ -44,6 +46,7 @@ src/plugins/build/build.c
 src/plugins/etags/etags.c
 src/plugins/spell/spell.c
 src/plugins/terminal/terminal.c
+src/plugins/viewer/viewer.c
 src/editor/edit.c
 src/editor/editcmd.c
 src/editor/editcomplete.c

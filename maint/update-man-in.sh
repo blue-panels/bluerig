@@ -57,6 +57,9 @@ for md in "$top"/doc/man/*.md "$top"/doc/man/*/*.md; do
         # {{key:Action|keys}}: the help window shows the keys bound to the
         # action now; a man page has the default keys after the bar
         s/\{\{key:[A-Za-z0-9_]+\|(.*?)\}\}/$1/g for @l;
+        # {{plugins}}: the index of the plugins loaded, which only the help
+        # window knows
+        @l = grep { !/^\{\{plugins\}\}\s*$/ } @l;
         sub cells {
             my $row = shift;
             chomp $row;

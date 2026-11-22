@@ -1779,6 +1779,9 @@ static const mc_editor_plugin_t build_plugin = {
     .cmd_menu_entries = build_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (build_menu),
     .get_menu_shortcut = build_menu_shortcut,
+    .help_file = "build.md",
+    .help_node = "build",
+    .summary = N_ ("Builds the project and goes to the errors and warnings of the compiler"),
 };
 
 /*** public functions ****************************************************************************/
