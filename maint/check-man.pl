@@ -26,6 +26,19 @@ my %placeholder = map { $_ => 1 } qw(
 
 my %marker = map { $_ => 1 } qw(skip notitle topics break);
 
+# the names of the actions: those of lib/keybind.c and those plugins register
+my %actions;
+for my $src (glob("$top/lib/keybind.c"), glob("$top/src/plugins/*/*.c"),
+             glob("$top/src/plugins/*.c"))
+{
+    open(my $fh, '<', $src) or next;
+    local $/;
+    my $text = <$fh>;
+    close($fh);
+    $actions{$1} = 1 while $text =~ /ADD_KEYMAP_NAME(?:_DESC)?\s*\((\w+)/g;
+    $actions{$1} = 1 while $text =~ /\{\s*"(\w+)",\s*N_\s*\(/g;
+}
+
 my ($errors, $warnings) = (0, 0);
 
 sub err  { my ($f, $n, $m) = @_; print "$f:$n: error: $m\n";   $errors++ }
@@ -121,9 +134,27 @@ for my $file (@files)
 
         # constructs the pipeline has no roff for; a table of two columns
         # with a bar at the start of each line is made a list of terms first
+        # {{key:Action|default keys}} names an action of the keymaps; a
+        # comment may tell of one
+        (my $text = $_) =~ s/<!--.*?-->//g;
+        while ($text =~ /\{\{key:([^|}]*)(\|?)/g)
+        {
+            if ($2 eq '')
+            {
+                err($file, $n, "{{key:$1}}: the default keys follow a bar, "
+                             . '{{key:Action|F2}}');
+            }
+            elsif (!$actions{$1})
+            {
+                err($file, $n, "{{key:$1|...}}: no action $1 in lib/keybind.c "
+                             . 'or in a plugin');
+            }
+        }
+
         if (/^\|/)
         {
             my $row = $_;
+            $row =~ s/\{\{key:[^}]*\}\}/key/g;
             $row =~ s/\\\|//g;
             my $cells = () = $row =~ /\|/g;
             err($file, $n, 'table: only a table of two columns becomes a list '

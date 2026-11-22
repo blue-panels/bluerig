@@ -54,6 +54,9 @@ for md in "$top"/doc/man/*.md "$top"/doc/man/*/*.md; do
         # a head with no text is left out, and a row with no term is one
         # more line of the term above it
         my @l = <STDIN>;
+        # {{key:Action|keys}}: the help window shows the keys bound to the
+        # action now; a man page has the default keys after the bar
+        s/\{\{key:[A-Za-z0-9_]+\|(.*?)\}\}/$1/g for @l;
         sub cells {
             my $row = shift;
             chomp $row;

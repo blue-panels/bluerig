@@ -38,6 +38,9 @@
 
 #include "lib/global.h"
 #include "lib/tty/tty.h"  // mc_tty_frm_t
+#include "lib/keybind.h"
+
+#include "src/keymap.h"  // editor_map, editor_x_map
 
 #include "help.h"
 #include "help_md.h"
@@ -902,6 +905,114 @@ md_substitute (GString *text)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+/** Append the keys of keymap that call action, each of them once and only where the editor finds
+ * that action for it: a key bound twice calls the first.  prefix is written before each key of a
+ * keymap that a prefix key opens.
+ */
+
+static void
+md_keys_of (GString *keys, const global_keymap_t *keymap, long action, const char *prefix)
+{
+    size_t i;
+
+    if (keymap == NULL)
+        return;
+
+    for (i = 0; keymap[i].key != 0; i++)
+    {
+        GString *key;
+        const char *c;
+
+        if (keymap[i].command != action || keymap[i].caption[0] == '\0'
+            || keybind_lookup_keymap_command (keymap, keymap[i].key) != action)
+            continue;
+
+        // the caption may hold a character markdown reads, as Alt-_ does
+        key = g_string_new (prefix != NULL ? prefix : "");
+        if (prefix != NULL)
+            g_string_append_c (key, ' ');
+        for (c = keymap[i].caption; *c != '\0'; c++)
+        {
+            if (strchr ("\\*_[]<>|`", *c) != NULL)
+                g_string_append_c (key, '\\');
+            g_string_append_c (key, *c);
+        }
+
+        // a key bound twice is written once; the list is compared item by item
+        {
+            char *list = g_strconcat (", ", keys->str, ", ", (char *) NULL);
+            char *item = g_strconcat (", ", key->str, ", ", (char *) NULL);
+
+            if (strstr (list, item) == NULL)
+            {
+                if (keys->len != 0)
+                    g_string_append (keys, ", ");
+                g_string_append (keys, key->str);
+            }
+            g_free (item);
+            g_free (list);
+        }
+        g_string_free (key, TRUE);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The page with each {{key:Action|default}} made the keys of the editor that call the action
+ * now; the default, as the man page has it, where none of them does.
+ */
+
+static char *
+md_keys (const char *text)
+{
+    GString *out;
+    const char *p, *start;
+
+    out = g_string_sized_new (strlen (text) + 1024);
+
+    for (p = text; (start = strstr (p, "{{key:")) != NULL; p = start)
+    {
+        const char *name = start + 6;
+        const char *bar = strchr (name, '|');
+        const char *end = strstr (name, "}}");
+        GString *keys;
+        char *action_name;
+        long action;
+
+        g_string_append_len (out, p, start - p);
+
+        if (bar == NULL || end == NULL || bar > end)
+        {
+            // not a marker: the text goes as it is
+            g_string_append_len (out, start, 6);
+            start = name;
+            continue;
+        }
+
+        keys = g_string_new ("");
+        action_name = g_strndup (name, bar - name);
+        action = keybind_lookup_action (action_name);
+        if (action > 0)
+        {
+            md_keys_of (keys, editor_map, action, NULL);
+            md_keys_of (keys, editor_x_map, action,
+                        keybind_lookup_keymap_shortcut (editor_map, CK_ExtendedKeyMap));
+        }
+        g_free (action_name);
+
+        if (keys->len != 0)
+            g_string_append (out, keys->str);
+        else
+            g_string_append_len (out, bar + 1, end - (bar + 1));
+        g_string_free (keys, TRUE);
+
+        start = end + 2;
+    }
+    g_string_append (out, p);
+
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
 /*** public functions ****************************************************************************/
 /* --------------------------------------------------------------------------------------------- */
 
@@ -921,10 +1032,21 @@ help_md_convert (const char *page, const char *tmpl)
     ctx.para = g_string_sized_new (1024);
     ctx.nodes = g_ptr_array_new_with_free_func (md_node_free);
 
+    // the keys go in first: a marker holds a bar, and a table would take it for one of its own
     if (page != NULL)
-        md_parse (&ctx, page);
+    {
+        char *text = md_keys (page);
+
+        md_parse (&ctx, text);
+        g_free (text);
+    }
     if (tmpl != NULL)
-        md_parse (&ctx, tmpl);
+    {
+        char *text = md_keys (tmpl);
+
+        md_parse (&ctx, text);
+        g_free (text);
+    }
 
     out = g_string_sized_new (ctx.body->len + 4096);
     g_string_append_printf (out, "%c[Contents]\n", CHAR_NODE_END);
