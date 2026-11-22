@@ -3576,6 +3576,78 @@ msgid ""
 "%s"
 msgstr "Не удаётся переименовать %s в %s: %s"
 
+#: src/plugins/viewer/viewer.c:1105
+msgid "Shows the file the way it is meant to read, in a window at the right of it"
+msgstr "Показывает файл в том виде, в каком его читают, в окне справа от него"
+
+#: src/plugins/builtin-plugins.c:487
+msgid "Jumps to the definition of the name under the cursor from the TAGS file"
+msgstr "Переходит к определению имени под курсором по файлу TAGS"
+
+#: src/plugins/builtin-plugins.c:509
+msgid "Checks the spelling of the text with aspell or hunspell"
+msgstr "Проверяет орфографию текста с помощью aspell или hunspell"
+
+#: src/plugins/build/build.c:1784
+msgid "Builds the project and goes to the errors and warnings of the compiler"
+msgstr "Собирает проект и переходит к ошибкам и предупреждениям компилятора"
+
+#: src/plugins/project/project.c:2898
+msgid "Opens the files of the project and shows its tree"
+msgstr "Открывает файлы проекта и показывает его дерево"
+
+#: src/plugins/terminal/terminal.c:1133
+msgid "Runs the shell in a window of the editor"
+msgstr "Запускает оболочку в окне редактора"
+
+#: src/plugins/git/git.c:643
+msgid "Shows the changes and commits of the git work tree and writes commit messages"
+msgstr "Показывает изменения и коммиты рабочего дерева git и пишет сообщения коммитов"
+
+#: src/plugins/debugger/debugger.c:1689
+msgid "Runs a program under GDB or a debug adapter: breakpoints, steps, variables"
+msgstr "Запускает программу под GDB или адаптером отладки: точки останова, шаги, переменные"
+
+#: src/plugins/query/query.c:3251
+msgid "Runs the queries of a file in MongoDB or PostgreSQL"
+msgstr "Выполняет запросы файла в MongoDB или PostgreSQL"
+
+#: src/plugins/ctags/ctags-plugin.c:2823
+msgid "Jumps to definitions and finds where a name is used, from a ctags index"
+msgstr "Переходит к определениям и находит, где используется имя, по индексу ctags"
+
+#: src/plugins/lsp/lsp-plugin.c:4377
+msgid "Asks language servers about the code: problems, definitions, completion"
+msgstr "Запрашивает у языковых серверов сведения о коде: ошибки, определения, дополнение"
+
+#: src/plugins/project/project.c:1003 src/plugins/project/project.c:2883
+msgid "Project"
+msgstr "Файлы проекта"
+
+#: src/plugins/builtin-plugins.c:454
+msgid "Scripts"
+msgstr "Скрипты"
+
+#: src/plugins/viewer/viewer.c:93
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: src/plugins/build/build.c:270 src/plugins/build/build.c:1769
+msgid "Build"
+msgstr "Сборщик"
+
+#: src/plugins/debugger/debugger.c:1673
+msgid "Debugger"
+msgstr "Отладчик"
+
+#: src/plugins/query/query.c:1099 src/plugins/query/query.c:3236
+msgid "Query"
+msgstr "Запросы"
+
+#: src/plugins/lsp/lsp-plugin.c:3671 src/plugins/lsp/lsp-plugin.c:4360
+msgid "Language servers"
+msgstr "Языковые серверы"
+
 #~ msgid "Toggle sticky windows"
 #~ msgstr "Переключить липкие окна"
 
@@ -3692,9 +3764,6 @@ msgstr "Не удаётся переименовать %s в %s: %s"
 #, c-format
 #~ msgid "line %ld"
 #~ msgstr "строка %ld"
-
-#~ msgid "Query"
-#~ msgstr "Запрос"
 
 #~ msgid "A query is running. Stop it?"
 #~ msgstr "Выполняется запрос. Остановить его?"
