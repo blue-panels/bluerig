@@ -20,7 +20,7 @@ commit message**, **Git: status and log**, **Git: staged changes** and
 the keys. It is windows frame to frame where the windows of the files are:
 
 ```
- ┌─[BLUERIG_EDITMSG]────────────────────┐┌─[Diff]────────────────┐
+ ┌─[Commit message]───────────────────┐┌─[Diff]────────────────┐
  │ the message of                     ││ the diff of the file  │
  │ the next commit                    ││ or of the commit      │
  └────────────────────────────────────┘│                       │
