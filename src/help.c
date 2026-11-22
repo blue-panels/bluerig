@@ -62,9 +62,15 @@
 
 /*** file scope macro definitions ****************************************************************/
 
-#define MAXLINKNAME       80
-#define HISTORY_SIZE      20
-#define HELP_WINDOW_WIDTH MIN (80, COLS - 16)
+#define MAXLINKNAME  80
+#define HISTORY_SIZE 20
+/* The window is 4 columns narrower and 4 lines lower than the screen; its frame lies on its edges.
+   The text is right under the top of the frame, a blank column on each side of it. */
+#define HELP_WINDOW_WIDTH MAX (20, COLS - 8)
+#define HELP_WINDOW_LINES MAX (3, LINES - 6)
+// where the text starts in the window
+#define HELP_TEXT_Y 1
+#define HELP_TEXT_X 2
 
 // the help of the program, the file every other one falls back to
 #define HELP_MAIN_FILE      "bluerig.md"
@@ -106,6 +112,7 @@ static const char *selected_item;
 
 /* The widget variables */
 static WDialog *whelp;
+static WScrollBar *help_bar_scroll;  // on the right side of the frame; NULL on a slow terminal
 
 static struct
 {
@@ -611,6 +618,75 @@ move_backward2 (const char *c, int lines)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The lines of the node of point as the window wraps them: how many there are, and in pos the one
+   point is on. starts gets the start of each line when it is not NULL. */
+static long
+help_node_lines (const char *point, long *pos, GPtrArray *starts)
+{
+    const char *p;
+    long n = 0;
+
+    *pos = 0;
+    for (p = help_node_start (point); p != NULL; p = help_next_line (p))
+    {
+        if (p <= point)
+            *pos = n;
+        if (starts != NULL)
+            g_ptr_array_add (starts, (gpointer) p);
+        n++;
+    }
+
+    return n;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The bar on the right side of the frame, as long as the text is high */
+static void
+help_bar_place (void)
+{
+    const WRect *d = &CONST_WIDGET (whelp)->rect;
+    WRect r = { d->y + HELP_TEXT_Y, d->x + d->cols - 1, help_lines, 1 };
+
+    if (help_bar_scroll != NULL)
+        widget_set_size_rect (WIDGET (help_bar_scroll), &r);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The bar shows the node as it is on the screen now; the group draws it after the text */
+static void
+help_bar_update (void)
+{
+    long total, pos;
+
+    if (help_bar_scroll == NULL)
+        return;
+
+    total = help_node_lines (currentpoint, &pos, NULL);
+    scrollbar_set_range (help_bar_scroll, total, help_lines, pos);
+    scrollbar_set_color (help_bar_scroll, HELP_FRAME_COLOR);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The bar has moved: the text goes to the line it asks for */
+static void
+help_bar_moved (void)
+{
+    GPtrArray *starts;
+    long total, pos, to;
+
+    starts = g_ptr_array_new ();
+    total = help_node_lines (currentpoint, &pos, starts);
+    to = MIN (scrollbar_get_pos (help_bar_scroll), total - 1);
+    if (to >= 0)
+        currentpoint = g_ptr_array_index (starts, to);
+    g_ptr_array_free (starts, TRUE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static void
 move_forward (int i)
 {
@@ -642,13 +718,18 @@ move_to_top (void)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The last page of the node fills the window */
 static void
 move_to_bottom (void)
 {
-    while ((*currentpoint != '\0') && (*currentpoint != CHAR_NODE_END))
-        currentpoint++;
-    currentpoint--;
-    move_backward (1);
+    GPtrArray *starts;
+    long total, pos;
+
+    starts = g_ptr_array_new ();
+    total = help_node_lines (currentpoint, &pos, starts);
+    if (total > 0)
+        currentpoint = g_ptr_array_index (starts, MAX (0, total - help_lines));
+    g_ptr_array_free (starts, TRUE);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -821,7 +902,7 @@ help_print_word (WDialog *h, GString *word, int *col, int *line, gboolean add_sp
             g_string_set_size (word, 0);
         else
         {
-            widget_gotoyx (h, *line + 2, *col + 2);
+            widget_gotoyx (h, *line + HELP_TEXT_Y, *col + HELP_TEXT_X);
             tty_print_string (word->str);
             g_string_set_size (word, 0);
             *col += w;
@@ -896,8 +977,8 @@ help_show (WDialog *h, const char *paint_start)
                     tty_setcolor (HELP_SLINK_COLOR);
 
                     // Store the coordinates of the link
-                    active_col = col + 2;
-                    active_line = line + 2;
+                    active_col = col + HELP_TEXT_X;
+                    active_line = line + HELP_TEXT_Y;
                 }
                 start_link_area (col, line, p);
                 break;
@@ -932,7 +1013,7 @@ help_show (WDialog *h, const char *paint_start)
                 else
                     width = str_term_width1 (mc_global.mc_version);
 
-                widget_gotoyx (h, line + 2, col + 2);
+                widget_gotoyx (h, line + HELP_TEXT_Y, col + HELP_TEXT_X);
                 tty_print_string (mc_global.mc_version);
                 col += width;
                 break;
@@ -947,7 +1028,7 @@ help_show (WDialog *h, const char *paint_start)
                     // a role of md_lines () alone: a stray ^E in a file prints nothing
                     if (col < HELP_WINDOW_WIDTH && n[0] >= 'A' && n[0] - 'A' < MC_TTY_FRM_MAX)
                     {
-                        widget_gotoyx (h, line + 2, col + 2);
+                        widget_gotoyx (h, line + HELP_TEXT_Y, col + HELP_TEXT_X);
                         tty_print_char (mc_tty_frm[n[0] - 'A']);
                         col++;
                     }
@@ -1286,6 +1367,7 @@ help_bg_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *d
     case MSG_DRAW:
         frame_callback (w, NULL, MSG_DRAW, 0, NULL);
         help_show (DIALOG (w->owner), currentpoint);
+        help_bar_update ();
         return MSG_HANDLED;
 
     default:
@@ -1302,10 +1384,11 @@ help_resize (WDialog *h)
     WButtonBar *bb;
     WRect r = w->rect;
 
-    help_lines = MIN (LINES - 4, MAX (2 * LINES / 3, 18));
-    r.lines = help_lines + 4;
+    help_lines = HELP_WINDOW_LINES;
+    r.lines = help_lines + 2;
     r.cols = HELP_WINDOW_WIDTH + 4;
     dlg_default_callback (w, NULL, MSG_RESIZE, 0, &r);
+    help_bar_place ();
     bb = buttonbar_find (h);
     widget_set_size (WIDGET (bb), LINES - 1, 0, 1, COLS);
 
@@ -1338,6 +1421,13 @@ help_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data
     case MSG_ACTION:
         // Handle shortcuts and buttonbar.
         return help_execute_cmd (parm);
+
+    case MSG_NOTIFY:
+        if (help_bar_scroll == NULL || sender != WIDGET (help_bar_scroll))
+            return MSG_NOT_HANDLED;
+        help_bar_moved ();
+        widget_draw (w);
+        return MSG_HANDLED;
 
     default:
         return dlg_default_callback (w, sender, msg, parm, data);
@@ -1455,6 +1545,7 @@ md_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data)
     case MSG_RESIZE:
         widget_default_callback (w, NULL, MSG_RESIZE, 0, data);
         w->rect.lines = help_lines;
+        w->rect.cols = HELP_WINDOW_WIDTH - 2;
         return MSG_HANDLED;
 
     default:
@@ -1494,8 +1585,8 @@ help_mouse_callback (Widget *w, mouse_msg_t msg, mouse_event_t *event)
     // Left bytton click
 
     // The event is relative to the dialog window, adjust it:
-    x = event->x - 1;
-    y = event->y - 1;
+    x = event->x + 1 - HELP_TEXT_X;
+    y = event->y + 1 - HELP_TEXT_Y;
 
     // Test whether the mouse click is inside one of the link areas
     for (current_area = link_area; current_area != NULL; current_area = g_slist_next (current_area))
@@ -1638,10 +1729,10 @@ help_interactive_display (const gchar *event_group_name, const gchar *event_name
         }
     }
 
-    help_lines = MIN (LINES - 4, MAX (2 * LINES / 3, 18));
+    help_lines = HELP_WINDOW_LINES;
 
-    whelp = dlg_create (TRUE, 0, 0, help_lines + 4, HELP_WINDOW_WIDTH + 4, WPOS_CENTER | WPOS_TRYUP,
-                        FALSE, help_colors, help_callback, NULL, "[Help]", _ ("Help"));
+    whelp = dlg_create (TRUE, 0, 0, help_lines + 2, HELP_WINDOW_WIDTH + 4, WPOS_CENTER | WPOS_TRYUP,
+                        TRUE, help_colors, help_callback, NULL, "[Help]", _ ("Help"));
     wh = WIDGET (whelp);
     g = GROUP (whelp);
     wh->keymap = help_map;
@@ -1672,6 +1763,14 @@ help_interactive_display (const gchar *event_group_name, const gchar *event_name
     group_add_widget (g, md);
     group_add_widget (g, help_bar);  // FIXME
 
+    help_bar_scroll = NULL;
+    if (!mc_global.tty.slow_terminal)
+    {
+        help_bar_scroll = scrollbar_new (0, 0, help_lines, SCROLLBAR_VERTICAL);
+        group_add_widget (g, help_bar_scroll);
+        help_bar_place ();
+    }
+
     buttonbar_set_label (help_bar, 1, Q_ ("ButtonBar|Help"), wh->keymap, NULL);
     buttonbar_set_label (help_bar, 2, Q_ ("ButtonBar|Index"), wh->keymap, NULL);
     buttonbar_set_label (help_bar, 3, Q_ ("ButtonBar|Prev"), wh->keymap, NULL);
@@ -1686,6 +1785,7 @@ help_interactive_display (const gchar *event_group_name, const gchar *event_name
     dlg_run (whelp);
     interactive_display_finish ();
     widget_destroy (wh);
+    help_bar_scroll = NULL;
     return TRUE;
 }
 
