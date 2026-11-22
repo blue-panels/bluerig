@@ -151,9 +151,22 @@ if have_gmodule and json_glib.found()
 endif
 # their translations, found by the help as name.lang.md
 if have_nls
-  install_data('plugins/git/git.ru.md', install_dir: pkgdatadir / 'help')
+  install_data(
+    'plugins/ctags/ctags.ru.md',
+    'plugins/debugger/debugger.ru.md',
+    'plugins/project/project.ru.md',
+    'plugins/build/build.ru.md',
+    'plugins/git/git.ru.md',
+    'plugins/etags/etags.ru.md',
+    'plugins/spell/spell.ru.md',
+    install_dir: pkgdatadir / 'help',
+  )
+  if have_terminal
+    install_data('plugins/terminal/terminal.ru.md', install_dir: pkgdatadir / 'help')
+  endif
   if have_gmodule and json_glib.found()
-    install_data('plugins/query/query.ru.md', install_dir: pkgdatadir / 'help')
+    install_data('plugins/lsp/lsp.ru.md', 'plugins/query/query.ru.md',
+                 install_dir: pkgdatadir / 'help')
   endif
 endif
 
