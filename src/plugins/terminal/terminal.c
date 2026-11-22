@@ -1121,13 +1121,16 @@ terminal_plugin_handle_action (void *plugin_data, long command, void *edit)
 static const mc_editor_plugin_t terminal_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "terminal",
-    .display_name = "Terminal",
+    .display_name = N_ ("Terminal"),
     .flags = MC_EPF_HAS_MENU,
     .open = terminal_plugin_open,
     .close = terminal_plugin_close,
     .activate = terminal_plugin_activate,
     .handle_action = terminal_plugin_handle_action,
     .handle_key = terminal_plugin_handle_key,
+    .help_file = "terminal.md",
+    .help_node = "terminal",
+    .summary = N_ ("Runs the shell in a window of the editor"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

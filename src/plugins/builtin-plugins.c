@@ -451,7 +451,7 @@ spell_plugin_handle_key (void *plugin_data, int key, void *edit)
 static const mc_editor_plugin_t edit_builtin_scripts_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "scripts",
-    .display_name = "Scripts",
+    .display_name = N_ ("Scripts"),
     .flags = MC_EPF_NONE,
     .open = editor_builtin_plugin_open,
     .close = editor_builtin_plugin_close,
@@ -470,7 +470,7 @@ static const mc_editor_plugin_t edit_builtin_scripts_plugin = {
 static const mc_editor_plugin_t edit_builtin_etags_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "etags",
-    .display_name = "Etags",
+    .display_name = N_ ("Etags"),
     .flags = MC_EPF_NONE,
     .open = editor_builtin_plugin_open,
     .close = editor_builtin_plugin_close,
@@ -482,6 +482,9 @@ static const mc_editor_plugin_t edit_builtin_etags_plugin = {
     .handle_event = NULL,
     .on_file_open = NULL,
     .on_file_close = NULL,
+    .help_file = "etags.md",
+    .help_node = "definitions",
+    .summary = N_ ("Jumps to the definition of the name under the cursor from the TAGS file"),
 };
 
 /* --------------------------------------------------------------------------------------------- */
@@ -489,7 +492,7 @@ static const mc_editor_plugin_t edit_builtin_etags_plugin = {
 static const mc_editor_plugin_t edit_builtin_spell_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "spell",
-    .display_name = "Spell",
+    .display_name = N_ ("Spell"),
     .flags = MC_EPF_HAS_MENU,
     .open = spell_plugin_open,
     .close = spell_plugin_close,
@@ -501,6 +504,9 @@ static const mc_editor_plugin_t edit_builtin_spell_plugin = {
     .handle_event = NULL,
     .on_file_open = NULL,
     .on_file_close = NULL,
+    .help_file = "spell.md",
+    .help_node = "spell",
+    .summary = N_ ("Checks the spelling of the text with aspell or hunspell"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

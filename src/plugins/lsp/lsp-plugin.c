@@ -4357,7 +4357,7 @@ lsp_menu_shortcut (int action_index)
 static mc_editor_plugin_t lsp_plugin_table = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "lsp",
-    .display_name = "Language servers",
+    .display_name = N_ ("Language servers"),
     .flags = MC_EPF_NONE,
     .open = lsp_open,
     .close = lsp_close,
@@ -4372,6 +4372,9 @@ static mc_editor_plugin_t lsp_plugin_table = {
     .cmd_menu_entries = lsp_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (lsp_menu),
     .get_menu_shortcut = lsp_menu_shortcut,
+    .help_file = "lsp.md",
+    .help_node = "lsp",
+    .summary = N_ ("Asks language servers about the code: problems, definitions, completion"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

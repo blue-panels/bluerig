@@ -626,7 +626,7 @@ static const mc_ep_cmd_menu_entry_t git_menu[] = {
 static const mc_editor_plugin_t git_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "git",
-    .display_name = "Git",
+    .display_name = N_ ("Git"),
     .flags = MC_EPF_NONE,
     .open = git_open,
     .close = git_close,
@@ -638,6 +638,9 @@ static const mc_editor_plugin_t git_plugin = {
     .action_count = G_N_ELEMENTS (git_actions),
     .cmd_menu_entries = git_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (git_menu),
+    .help_file = "git.md",
+    .help_node = "git",
+    .summary = N_ ("Shows the changes and commits of the git work tree and writes commit messages"),
 };
 
 /*** public functions ****************************************************************************/

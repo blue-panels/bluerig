@@ -179,6 +179,17 @@ The descriptor minimum:
     void *(*open) (mc_editor_host_t *host, void *editor_dialog);
     void (*close) (void *plugin_data);
 
+The help of a plugin, optional:
+
+- help_file: its markdown file, installed in the help directory
+  ("myedit.md"); a myedit.ru.md beside it is shown in Russian
+- help_node: the node the file opens on, the anchor of its first
+  heading ("myedit")
+- summary: one N_() line of what the plugin does
+
+The Plugins page of the help window lists every plugin loaded with a
+help_file: its name links to that node, the summary stands beside it.
+
 
 5. Capability Flags (mc_ep_flags_t)
 -----------------------------------

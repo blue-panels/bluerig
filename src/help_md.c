@@ -38,6 +38,10 @@
 
 #include "lib/global.h"
 #include "lib/tty/tty.h"  // mc_tty_frm_t
+#include "lib/keybind.h"
+#include "lib/editor-plugin.h"
+
+#include "src/keymap.h"  // editor_map, editor_x_map
 
 #include "help.h"
 #include "help_md.h"
@@ -47,6 +51,9 @@
 /*** file scope macro definitions ****************************************************************/
 
 #define BODY_INDENT "        "
+// a column of a table, but for the last, is never wider than this: the cell after a wider one
+// starts the next line
+#define TABLE_CELL_MAX 40
 
 /*** file scope type declarations ****************************************************************/
 
@@ -172,9 +179,18 @@ md_inline (GString *out, const char *line)
             while (*p == '`')
                 p++;
             len = p - fence;
-            end = strstr (p, fence);
-            while (end != NULL && end[len] == '`')
-                end = strstr (end + 1, fence);
+
+            // the closing run is one of as many backticks, no more and no less
+            for (end = strchr (p, '`'); end != NULL; end = strchr (end, '`'))
+            {
+                size_t n = 0;
+
+                while (end[n] == '`')
+                    n++;
+                if (n == len)
+                    break;
+                end += n;
+            }
 
             if (end == NULL)
                 g_string_append_len (out, fence, len);
@@ -281,6 +297,159 @@ md_inline (GString *out, const char *line)
             p = n;
         }
     }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The columns the text the help window paints takes: the markers and the targets of the links
+ * take none.
+ */
+
+static int
+md_width (const char *text)
+{
+    const char *p;
+    int width = 0;
+    gboolean shown = TRUE;
+
+    for (p = text; *p != '\0'; p = g_utf8_next_char (p))
+    {
+        const gunichar c = g_utf8_get_char (p);
+
+        if (c == CHAR_LINK_POINTER)
+            shown = FALSE;
+        else if (c == CHAR_LINK_END)
+            shown = TRUE;
+        else if (shown && c >= ' ')
+            width += g_unichar_iswide (c) ? 2 : 1;
+    }
+
+    return width;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** Whether the line is the one under the head of a table: |---|:--| and the like. */
+
+static gboolean
+md_table_rule (const char *line)
+{
+    const char *p;
+    gboolean dash = FALSE;
+
+    if (line == NULL || line[0] != '|')
+        return FALSE;
+
+    for (p = line; *p != '\0'; p++)
+    {
+        if (*p == '-')
+            dash = TRUE;
+        else if (*p != '|' && *p != ':' && *p != ' ')
+            return FALSE;
+    }
+
+    return dash;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The cells of a line of a table, as the help window paints them.  \| is a bar inside a cell. */
+
+static GPtrArray *
+md_table_cells (const char *line)
+{
+    GPtrArray *cells;
+    GString *cell;
+    const char *p;
+
+    cells = g_ptr_array_new_with_free_func (g_free);
+    cell = g_string_sized_new (64);
+
+    for (p = line + 1; *p != '\0'; p++)
+    {
+        if (*p == '\\' && p[1] == '|')
+            g_string_append_c (cell, *++p);
+        else if (*p != '|')
+            g_string_append_c (cell, *p);
+        else
+        {
+            GString *out = g_string_sized_new (cell->len);
+
+            g_strstrip (cell->str);
+            md_inline (out, cell->str);
+            g_ptr_array_add (cells, g_string_free (out, FALSE));
+            g_string_set_size (cell, 0);
+        }
+    }
+
+    // text after the last bar is a cell too
+    g_strstrip (cell->str);
+    if (cell->str[0] != '\0')
+    {
+        GString *out = g_string_sized_new (cell->len);
+
+        md_inline (out, cell->str);
+        g_ptr_array_add (cells, g_string_free (out, FALSE));
+    }
+    g_string_free (cell, TRUE);
+
+    return cells;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** Write out a table: a row on a line, each cell at the column of its own, and a line of a cell
+ * the window breaks goes on at that column.  A head with no text in it is left out, a head with
+ * text is bold.
+ */
+
+static void
+md_table (md_ctx_t *ctx, GPtrArray *rows)
+{
+    GArray *widths;
+    guint r, c;
+    gboolean head = FALSE;
+
+    widths = g_array_new (FALSE, TRUE, sizeof (int));
+
+    for (r = 0; r < rows->len; r++)
+    {
+        const GPtrArray *cells = g_ptr_array_index (rows, r);
+
+        for (c = 0; c < cells->len; c++)
+        {
+            const int w = md_width (g_ptr_array_index (cells, c));
+
+            if (c >= widths->len)
+                g_array_set_size (widths, c + 1);
+            // a cell too wide for a column takes its line, and the column stays as it is
+            if (w <= TABLE_CELL_MAX)
+                g_array_index (widths, int, c) = MAX (g_array_index (widths, int, c), w);
+            if (r == 0 && w != 0)
+                head = TRUE;
+        }
+    }
+
+    for (r = head ? 0 : 1; r < rows->len; r++)
+    {
+        const GPtrArray *cells = g_ptr_array_index (rows, r);
+        int column = 0;
+
+        for (c = 0; c < cells->len; c++)
+        {
+            if (c != 0)
+            {
+                column += g_array_index (widths, int, c - 1) + 2;
+                g_string_append_printf (ctx->body, "%c%d%c", CHAR_COLUMN, column, CHAR_COLUMN);
+            }
+            if (r == 0)
+                g_string_append_printf (ctx->body, "%c%s%c", CHAR_FONT_BOLD,
+                                        (const char *) g_ptr_array_index (cells, c),
+                                        CHAR_FONT_NORMAL);
+            else
+                g_string_append (ctx->body, g_ptr_array_index (cells, c));
+        }
+        g_string_append_c (ctx->body, '\n');
+    }
+    g_string_append_c (ctx->body, '\n');
+
+    g_array_free (widths, TRUE);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -545,7 +714,8 @@ md_parse (md_ctx_t *ctx, const char *text)
         }
 
         // an anchor of its own marks a place inside the node; one with text
-        // after it belongs to a heading, and is taken there
+        // after it belongs to a heading, and is taken there. It takes no room:
+        // the text after it starts on its line, not under an empty one
         if (strncmp (line, "<a id=\"", 7) == 0 && md_anchor_alone (line))
         {
             const char *end = strchr (line + 7, '"');
@@ -556,7 +726,6 @@ md_parse (md_ctx_t *ctx, const char *text)
                 g_string_append_c (ctx->body, CHAR_ANCHOR);
                 g_string_append_len (ctx->body, line + 7, end - (line + 7));
                 g_string_append_c (ctx->body, CHAR_ANCHOR);
-                g_string_append_c (ctx->body, '\n');
             }
             continue;
         }
@@ -583,6 +752,21 @@ md_parse (md_ctx_t *ctx, const char *text)
         {
             md_flush (ctx);
             ctx->term = FALSE;
+            continue;
+        }
+
+        // a table: the head, the rule under it, and the rows up to a line that is not one
+        if (line[0] == '|' && ctx->para->len == 0 && md_table_rule (lines[i + 1]))
+        {
+            GPtrArray *rows = g_ptr_array_new_with_free_func ((GDestroyNotify) g_ptr_array_unref);
+
+            g_ptr_array_add (rows, md_table_cells (line));
+            for (i += 2; lines[i] != NULL && lines[i][0] == '|'; i++)
+                g_ptr_array_add (rows, md_table_cells (lines[i]));
+            i--;
+
+            md_table (ctx, rows);
+            g_ptr_array_free (rows, TRUE);
             continue;
         }
 
@@ -731,6 +915,218 @@ md_substitute (GString *text)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+/** Append text with a backslash before each character markdown reads. */
+
+static void
+md_escaped (GString *out, const char *text)
+{
+    for (; *text != '\0'; text++)
+    {
+        if (strchr ("\\*_[]<>|`", *text) != NULL)
+            g_string_append_c (out, '\\');
+        g_string_append_c (out, *text);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** Append the keys of keymap that call action, each of them once and only where the editor finds
+ * that action for it: a key bound twice calls the first.  prefix is written before each key of a
+ * keymap that a prefix key opens.
+ */
+
+static void
+md_keys_of (GString *keys, const global_keymap_t *keymap, long action, const char *prefix)
+{
+    size_t i;
+
+    if (keymap == NULL)
+        return;
+
+    for (i = 0; keymap[i].key != 0; i++)
+    {
+        GString *key;
+
+        if (keymap[i].command != action || keymap[i].caption[0] == '\0'
+            || keybind_lookup_keymap_command (keymap, keymap[i].key) != action)
+            continue;
+
+        // the caption may hold a character markdown reads, as Alt-_ does
+        key = g_string_new (prefix != NULL ? prefix : "");
+        if (prefix != NULL)
+            g_string_append_c (key, ' ');
+        md_escaped (key, keymap[i].caption);
+
+        // a key bound twice is written once; the list is compared item by item
+        {
+            char *list = g_strconcat (", ", keys->str, ", ", (char *) NULL);
+            char *item = g_strconcat (", ", key->str, ", ", (char *) NULL);
+
+            if (strstr (list, item) == NULL)
+            {
+                if (keys->len != 0)
+                    g_string_append (keys, ", ");
+                g_string_append (keys, key->str);
+            }
+            g_free (item);
+            g_free (list);
+        }
+        g_string_free (key, TRUE);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The name of a plugin as the index shows it: its label without the hotkey mark and the dots
+ * of a dialog.
+ */
+
+static char *
+md_plugin_title (const mc_editor_plugin_t *plugin)
+{
+    GString *title;
+    const char *p;
+
+    title = g_string_new ("");
+    for (p = plugin->display_name != NULL ? _ (plugin->display_name) : plugin->name; *p != '\0';
+         p++)
+        if (*p != '&')
+            g_string_append_c (title, *p);
+    while (title->len != 0 && title->str[title->len - 1] == '.')
+        g_string_truncate (title, title->len - 1);
+
+    return g_string_free (title, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static int
+md_plugin_compare (gconstpointer a, gconstpointer b)
+{
+    return g_utf8_collate (*(const char *const *) a, *(const char *const *) b);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The index of the plugins: a row for each plugin loaded with a help of its own, its name a link
+ * to that help and what it does beside it, by name.
+ */
+
+static void
+md_plugins (GString *out)
+{
+    GPtrArray *rows;
+    const GSList *l;
+    guint i;
+
+    rows = g_ptr_array_new_with_free_func (g_free);
+
+    for (l = mc_editor_plugin_list (); l != NULL; l = g_slist_next (l))
+    {
+        const mc_editor_plugin_t *plugin = (const mc_editor_plugin_t *) l->data;
+        GString *row;
+        char *title;
+
+        if (plugin->help_file == NULL)
+            continue;
+
+        // the title first: the rows are sorted by it
+        title = md_plugin_title (plugin);
+        row = g_string_new ("");
+        md_escaped (row, title);
+        g_string_append (row, "\t| [");
+        md_escaped (row, title);
+        g_string_append_printf (row, "](%s#%s) | ", plugin->help_file,
+                                plugin->help_node != NULL ? plugin->help_node : "");
+        if (plugin->summary != NULL)
+            md_escaped (row, _ (plugin->summary));
+        g_string_append (row, " |\n");
+        g_ptr_array_add (rows, g_string_free (row, FALSE));
+        g_free (title);
+    }
+
+    if (rows->len != 0)
+    {
+        g_ptr_array_sort (rows, md_plugin_compare);
+        g_string_append (out, "|  |  |\n|--|--|\n");
+        for (i = 0; i < rows->len; i++)
+            g_string_append (out, strchr (g_ptr_array_index (rows, i), '\t') + 1);
+    }
+
+    g_ptr_array_free (rows, TRUE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** The page with each {{key:Action|default}} made the keys of the editor that call the action
+ * now; the default, as the man page has it, where none of them does.
+ */
+
+static char *
+md_keys (const char *text)
+{
+    GString *out;
+    const char *p, *start;
+
+    out = g_string_sized_new (strlen (text) + 1024);
+
+    for (p = text; (start = strstr (p, "{{")) != NULL; p = start)
+    {
+        const char *name = start + 6;
+
+        // {{plugins}} on a line of its own: the index of the plugins
+        if (strncmp (start, "{{plugins}}", 11) == 0)
+        {
+            g_string_append_len (out, p, start - p);
+            md_plugins (out);
+            start += 11;
+            if (*start == '\n')
+                start++;
+            continue;
+        }
+        if (strncmp (start, "{{key:", 6) != 0)
+        {
+            g_string_append_len (out, p, start + 2 - p);
+            start += 2;
+            continue;
+        }
+        const char *bar = strchr (name, '|');
+        const char *end = strstr (name, "}}");
+        GString *keys;
+        char *action_name;
+        long action;
+
+        g_string_append_len (out, p, start - p);
+
+        if (bar == NULL || end == NULL || bar > end)
+        {
+            // not a marker: the text goes as it is
+            g_string_append_len (out, start, 6);
+            start = name;
+            continue;
+        }
+
+        keys = g_string_new ("");
+        action_name = g_strndup (name, bar - name);
+        action = keybind_lookup_action (action_name);
+        if (action > 0)
+        {
+            md_keys_of (keys, editor_map, action, NULL);
+            md_keys_of (keys, editor_x_map, action,
+                        keybind_lookup_keymap_shortcut (editor_map, CK_ExtendedKeyMap));
+        }
+        g_free (action_name);
+
+        if (keys->len != 0)
+            g_string_append (out, keys->str);
+        else
+            g_string_append_len (out, bar + 1, end - (bar + 1));
+        g_string_free (keys, TRUE);
+
+        start = end + 2;
+    }
+    g_string_append (out, p);
+
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
 /*** public functions ****************************************************************************/
 /* --------------------------------------------------------------------------------------------- */
 
@@ -750,10 +1146,21 @@ help_md_convert (const char *page, const char *tmpl)
     ctx.para = g_string_sized_new (1024);
     ctx.nodes = g_ptr_array_new_with_free_func (md_node_free);
 
+    // the keys go in first: a marker holds a bar, and a table would take it for one of its own
     if (page != NULL)
-        md_parse (&ctx, page);
+    {
+        char *text = md_keys (page);
+
+        md_parse (&ctx, text);
+        g_free (text);
+    }
     if (tmpl != NULL)
-        md_parse (&ctx, tmpl);
+    {
+        char *text = md_keys (tmpl);
+
+        md_parse (&ctx, text);
+        g_free (text);
+    }
 
     out = g_string_sized_new (ctx.body->len + 4096);
     g_string_append_printf (out, "%c[Contents]\n", CHAR_NODE_END);

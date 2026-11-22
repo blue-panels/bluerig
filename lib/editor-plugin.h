@@ -11,7 +11,7 @@
 
 /*** typedefs(not structures) and defined constants **********************************************/
 
-#define MC_EDITOR_PLUGIN_API_VERSION 10
+#define MC_EDITOR_PLUGIN_API_VERSION 11
 #define MC_EDITOR_PLUGIN_ENTRY       "mc_editor_plugin_register"
 #define MC_EDITOR_PLUGIN_CMD_BASE    30000L /* Plugins-menu: base + plugin_index */
 #define MC_EDITOR_PLUGIN_ACTION_BASE 31000L /* per-action menu commands           */
@@ -332,6 +332,13 @@ typedef struct mc_editor_plugin_t
     char *(*get_menu_shortcut) (int action_index);
     /* FALSE keeps the editor from ending: a plugin with a process running asks first */
     gboolean (*ok_to_quit) (void *plugin_data);
+
+    /* v11: the help of the plugin, for the index of the plugins in the help window: the file of
+       it in the help directory and the node it opens on, NULL = none; summary is one N_() line
+       of what the plugin does */
+    const char *help_file;
+    const char *help_node;
+    const char *summary;
 } mc_editor_plugin_t;
 
 typedef const mc_editor_plugin_t *(*mc_editor_plugin_register_fn) (void);

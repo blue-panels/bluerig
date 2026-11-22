@@ -2880,7 +2880,7 @@ project_menu_shortcut (int action_index)
 static const mc_editor_plugin_t project_plugin = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "project",
-    .display_name = "Project",
+    .display_name = N_ ("Project"),
     .flags = MC_EPF_NONE,
     .open = project_open,
     .close = project_close,
@@ -2893,6 +2893,9 @@ static const mc_editor_plugin_t project_plugin = {
     .cmd_menu_entries = project_menu,
     .cmd_menu_entry_count = G_N_ELEMENTS (project_menu),
     .get_menu_shortcut = project_menu_shortcut,
+    .help_file = "project.md",
+    .help_node = "project",
+    .summary = N_ ("Opens the files of the project and shows its tree"),
 };
 
 /*** public functions ****************************************************************************/

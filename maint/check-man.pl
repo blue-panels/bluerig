@@ -3,7 +3,9 @@
 # Check doc/man/*.md against what the man page pipeline can carry.
 #
 # go-md2man is quiet about what it cannot do: a table needs a preprocessor
-# the pages do not ask for, a backslash inside a link label eats the rest
+# the pages do not ask for (update-man-in.sh makes a table of two columns,
+# the one the help window shows, a list of terms), a backslash inside a link
+# label eats the rest
 # of the label, two emphasis runs that touch print their own asterisks.
 # This says so instead.
 #
@@ -23,6 +25,19 @@ my %placeholder = map { $_ => 1 } qw(
 );
 
 my %marker = map { $_ => 1 } qw(skip notitle topics break);
+
+# the names of the actions: those of lib/keybind.c and those plugins register
+my %actions;
+for my $src (glob("$top/lib/keybind.c"), glob("$top/src/plugins/*/*.c"),
+             glob("$top/src/plugins/*.c"))
+{
+    open(my $fh, '<', $src) or next;
+    local $/;
+    my $text = <$fh>;
+    close($fh);
+    $actions{$1} = 1 while $text =~ /ADD_KEYMAP_NAME(?:_DESC)?\s*\((\w+)/g;
+    $actions{$1} = 1 while $text =~ /\{\s*"(\w+)",\s*N_\s*\(/g;
+}
 
 my ($errors, $warnings) = (0, 0);
 
@@ -117,10 +132,37 @@ for my $file (@files)
                          . 'that paragraph into a section heading');
         }
 
-        # constructs the pipeline has no roff for
-        err($file, $n, 'table: go-md2man emits tbl markup that the pages '
-                     . 'are not preprocessed for')
-            if /^\s*\|/ || /^\s*[:-]+\s*\|\s*[:-]+/;
+        # constructs the pipeline has no roff for; a table of two columns
+        # with a bar at the start of each line is made a list of terms first
+        # {{key:Action|default keys}} names an action of the keymaps; a
+        # comment may tell of one
+        (my $text = $_) =~ s/<!--.*?-->//g;
+        while ($text =~ /\{\{key:([^|}]*)(\|?)/g)
+        {
+            if ($2 eq '')
+            {
+                err($file, $n, "{{key:$1}}: the default keys follow a bar, "
+                             . '{{key:Action|F2}}');
+            }
+            elsif (!$actions{$1})
+            {
+                err($file, $n, "{{key:$1|...}}: no action $1 in lib/keybind.c "
+                             . 'or in a plugin');
+            }
+        }
+
+        if (/^\|/)
+        {
+            my $row = $_;
+            $row =~ s/\{\{key:[^}]*\}\}/key/g;
+            $row =~ s/\\\|//g;
+            my $cells = () = $row =~ /\|/g;
+            err($file, $n, 'table: only a table of two columns becomes a list '
+                         . 'of terms in the man page')
+                if $cells != 3;
+        }
+        err($file, $n, 'table: a table row starts with a bar here')
+            if /^\s+\|/ || /^\s*[:-]+\s*\|\s*[:-]+/;
         err($file, $n, 'image') if /!\[[^\]]*\]\(/;
         err($file, $n, 'footnote') if /\[\^[^\]]+\]/;
         err($file, $n, 'strikethrough') if /(?<!\\)~~/;
@@ -176,8 +218,9 @@ for my $file (@files)
         # only the placeholders the build knows
         while (/\{\{([A-Za-z_]+)(?::\d+)?\}\}/g)
         {
+            # {{plugins}} is the index of the plugins the help window fills in
             err($file, $n, "unknown placeholder {{$1}}")
-                unless $placeholder{$1} || $1 eq 'MC_VERSION';
+                unless $placeholder{$1} || $1 eq 'MC_VERSION' || $1 eq 'plugins';
         }
 
         push @links, [$n, $1] while /\]\(#([^)]*)\)/g;

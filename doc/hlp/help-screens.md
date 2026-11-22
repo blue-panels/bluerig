@@ -32,6 +32,8 @@ If your terminal doesn't support the cursor keys, use the **space bar** to scrol
 
 The left mouse button follows a link or scrolls. The right mouse button goes back in the history of the nodes.
 
+The bar on the right side of the frame shows where the screen is in the node: an arrow scrolls a line, a click beside the thumb a page, and the thumb is dragged.
+
 The full list of the keys of the help window:
 
 [General movement keys](#general-movement-keys) are accepted.

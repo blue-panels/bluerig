@@ -716,7 +716,7 @@ mp_collect_rows (GPtrArray *strpool)
         r.kind = "editor";
         r.kind_id = MC_PLUGIN_KIND_EDITOR;
         r.name = p->name;
-        r.desc = p->display_name != NULL ? p->display_name : p->name;
+        r.desc = p->display_name != NULL ? _ (p->display_name) : p->name;
         r.get_enabled = NULL;
         r.set_enabled = NULL;
         r.settings = NULL;

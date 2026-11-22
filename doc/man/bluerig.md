@@ -187,357 +187,225 @@ moves between them, and each of them can be moved and resized.
 
 # The bluerig editor <a id="internal-file-editor"></a>
 
-The editor is easy to use and can be used without learning. The pull-down
-menu is invoked by pressing F9, and the keys of the commands stand next to
-them in the menus and in the labels of the function keys.
+<a id="keys"></a>
+**Keys**
 
-Sections:
-: [The keys](#keys)
-: [The menus](#menu-bar)
-: [Search, replace and the line filter](#search-and-replace)
-: [Folding](#folding)
-: [Macros](#macros)
-: [The user menu](#edit-menu-file)
-: [Code navigation](#code-navigation)
-: [Syntax highlighting](#syntax-highlighting)
-: [Editor options](#editor-options)
-: [Settings in the ini file](#internal-file-editor-options)
-
-Each file is opened in its own window in full-screen mode. Window control is
-similar to the window control of other multi-window programs: a double click
-on the window title maximizes the window to full screen or restores its size
-and position; a left click on the title and a mouse drag move the window; a
-left click on the lower right corner of the frame and a mouse drag resize it.
-The same is done from the
-[Window menu](#window-menu).
-A window that is not full screen has a scrollbar down the right side of its
-frame and one along the bottom, after the position of the cursor: an arrow
-scrolls a line or a few columns, the bar beside the thumb a page, and the thumb
-is dragged. Up and down the cursor goes along with the view; sideways the view
-moves alone, as far as the widest line on the screen, and the next key or a
-click on the text brings it back to the cursor. The bars are drawn as the
-section
-**[scrollbar]**
-of the skin has them: the vertical thumb six cells long and the horizontal one
-four, when they fit, by default. The horizontal bar
-measures the lines in view, not the whole file. The wheel tilted, or turned
-with Shift, scrolls sideways.
-
-Shift combined with the arrows highlights text (if the terminal supports it).
-**Ctrl-Ins**
-copies to the clipboard file
-**~/.local/share/bluerig/clipboard**,
-**Shift-Ins**
-pastes from it,
-**Shift-Del**
-cuts to it, and
-**Ctrl-Del**
-deletes the highlighted text. Mouse highlighting also works, and the mouse of
-the terminal itself is had by holding down the Shift key while dragging; that
-selection is not shared with the clipboard file of bluerig.
-
-**Ctrl-o**
-shows a window with your shell at the bottom of the screen, the file in a
-window above it, and hides it again as it is, the file taking the whole screen
-back; see [Terminal](#terminal).
-
-# Keys
-
-Some commands involve the use of the
-*Control*
-(sometimes labeled CTRL or CTL) and the
-*Meta*
-(sometimes labeled ALT or even Compose) keys. In this manual we will
-use the following abbreviations:
-
-**Ctrl-\<chr>**
-: means hold the Control key while typing the character \<chr>.
-Thus Ctrl-f would be: hold the Control key and type f.
-
-**Alt-\<chr>**
-: means hold the Meta or Alt key down while typing \<chr>.
-If there is no Meta or Alt key, type
-*Esc,*
-release it, then type the character \<chr>.
-
-**Shift-\<chr>**
-: means hold the Shift key down while typing \<chr>.
-
-These are the default keys of the editor. Every one of them can be changed:
-see
+<!-- {{key:Action|F8}}: Action is the action name of misc/keymap.default.ini and src/keymap.c (Remove = f8); the help shows the keys bound to it now, the man page the default keys after the bar -->
+These are the default keys. Any of them can be changed, see
 [Redefine key bindings](#keys_redefine).
 
-## Files and windows
+<a id="moving-around"></a>
+**Cursor movement**
 
-**F2**
-: Save the file.
+|  |  |
+|--|--|
+| {{key:Left|Left}} | Character left |
+| {{key:Right|Right}} | Character right |
+| {{key:Up|Up}} | Line up |
+| {{key:Down|Down}} | Line down |
+| {{key:WordLeft|Ctrl-Left, Ctrl-z}} | Word left |
+| {{key:WordRight|Ctrl-Right, Ctrl-x}} | Word right |
+| {{key:ScrollUp|Ctrl-Up}} | Scroll the screen up |
+| {{key:ScrollDown|Ctrl-Down}} | Scroll the screen down |
+| {{key:PageUp|PgUp}} | Page up |
+| {{key:PageDown|PgDn}} | Page down |
+| {{key:Home|Home}} | Start of the line |
+| {{key:End|End}} | End of the line |
+| {{key:Top|Ctrl-Home, Alt-\<}} | Start of the file |
+| {{key:Bottom|Ctrl-End, Alt-\>}} | End of the file |
+| {{key:TopOnScreen|Ctrl-PgUp}} | Top of the screen |
+| {{key:BottomOnScreen|Ctrl-PgDn}} | Bottom of the screen |
 
-**F12, Ctrl-F2**
-: Save the file under another name. See
-[Save As](#save-file-as).
+**Deletion**
 
-**Ctrl-n**
-: Open a new, empty window.
+|  |  |
+|--|--|
+| {{key:Delete|Delete, Ctrl-d}} | Delete the character |
+| {{key:BackSpace|Backspace, Ctrl-h}} | Delete the character to the left |
+| {{key:DeleteLine|Ctrl-y}} | Delete the line |
+| {{key:DeleteToEnd|Ctrl-k}} | Delete to the end of the line |
+| {{key:DeleteToWordBegin|Alt-Backspace}} | Delete to the start of the word |
+| {{key:DeleteToWordEnd|Alt-d}} | Delete to the end of the word |
 
-**F15**
-: Insert a file at the cursor.
+<a id="blocks"></a>
+**Blocks**
 
-**Ctrl-f**
-: Copy the highlighted block to a file.
+|  |  |
+|--|--|
+| Shift+cursor keys | Mark a block |
+| Alt+cursor keys | Mark a column block |
+| {{key:Mark|F3}} | Start or end marking a block |
+| {{key:MarkColumn|F13}} | Start a column block |
+| {{key:MarkAll|Ctrl-a}} | Mark the whole text |
+| {{key:Copy|F5}} | Copy the block to the cursor |
+| {{key:Move|F6}} | Move the block to the cursor |
+| {{key:Remove|F8}} | Delete the block |
+| {{key:Store|Ctrl-Ins}} | Copy the block to the clipboard file |
+| {{key:Cut|Shift-Del}} | Move the block to the clipboard file |
+| {{key:Paste|Shift-Ins}} | Paste the block from the clipboard file |
+| {{key:BlockSave|Ctrl-f}} | Write the block to a file |
 
-**Alt-Shift-e**
-: The history of the files that were edited, to open one of them again.
+<a id="search-keys"></a>
+**Search and replace**
 
-**Alt-e**
-: Choose the encoding of the text. See
-[Choose codepage](#codepages-translation).
+|  |  |
+|--|--|
+| {{key:Search|F7}} | [Search](#search-and-replace) |
+| {{key:SearchContinue|F17}} | Search again |
+| {{key:Replace|F4}} | Replace |
+| {{key:ReplaceContinue|F14}} | Replace again |
+| {{key:FilterToggle|Alt-s}} | Remove the line filter, or apply the last search as a filter |
+| {{key:FilterWord|Alt-S}} | Filter by the marked text or the word under the cursor |
 
-**F10, Esc**
-: Close the window; the editor ends with its last window.
+**Jumps and bookmarks**
 
-**F1**
-: This help.
+|  |  |
+|--|--|
+| {{key:Goto|Alt-l}} | Go to a line by its number |
+| {{key:MatchBracket|Alt-b}} | To the matching bracket |
+| {{key:Bookmark|Alt-k}} | Set or clear a bookmark |
+| {{key:BookmarkNext|Alt-j}}, {{key:BookmarkPrev|Alt-i}} | To the next or the previous bookmark |
+| {{key:BookmarkFlush|Alt-o}} | Clear all the bookmarks |
+| {{key:Find|Alt-Enter}} | Find the definition of the name under the cursor |
+| {{key:FilePrev|Alt-Minus}}, {{key:FileNext|Alt-Plus}} | Back and forward through the places the definition lookup went to |
 
-**F9**
-: The menu bar.
+<a id="files-and-windows"></a>
+**Files**
 
-**F11**
-: The [user menu](#edit-menu-file).
+|  |  |
+|--|--|
+| {{key:Save|F2}} | Save the file |
+| {{key:SaveAs|F12, Ctrl-F2}} | [Save the file under another name](#save-file-as) |
+| {{key:EditNew|Ctrl-n}} | New empty window |
+| {{key:InsertFile|F15}} | Insert a file at the cursor |
+| {{key:History|Alt-E}} | History of the edited files |
+| {{key:SelectCodepage|Alt-e}} | [Encoding of the text](#codepages-translation) |
+| {{key:Quit|F10, Esc}} | Close the window; closing the last one quits the editor |
 
-**Ctrl-o**
-: Show or hide the window of the terminal. See [Terminal](#terminal).
+<a id="editing"></a>
+<a id="macros-and-plugins"></a>
+**Other commands**
 
-**Ctrl-Alt-p**
-: Show or hide the Preview of the file. See [Preview](#preview).
+|  |  |
+|--|--|
+| {{key:InsertOverwrite|Insert}} | Insert or overwrite mode |
+| {{key:Undo|Ctrl-u}} | Undo |
+| {{key:Redo|Alt-r}} | Redo |
+| {{key:UndoHistory|Ctrl-t, Alt-U}} | Undo history |
+| {{key:Complete|Alt-Tab}} | [Complete the word](#completion) from the words of the open files |
+| {{key:FoldToggle|Alt-F}} | Fold or unfold the block between matching brackets |
+| {{key:Sort|Alt-t}} | Sort the marked lines |
+| {{key:ExternalCommand|Alt-u}} | Insert the output of a shell command |
+| {{key:ParagraphFormat|Alt-p}} | Format the paragraph |
+| {{key:InsertLiteral|Ctrl-q}} | Insert the next key, or a code U+XXXX, as it is |
+| Ctrl-p | Check the spelling of the word under the cursor |
+| {{key:MacroStartStopRecord|Ctrl-r}} | Start or stop recording a [macro](#macros) |
+| {{key:MacroExplorer|Alt-M}} | [Macro Explorer](#macro-explorer) |
+| {{key:ShowNumbers|Alt-n}} | Show or hide the line numbers |
+| {{key:ShowTabTws|Alt-\_}} | Show or hide the tabs and the trailing spaces |
+| {{key:SyntaxOnOff|Ctrl-s}} | Switch the syntax highlighting on or off |
+| {{key:Help|F1}} | Help |
+| {{key:Menu|F9}} | Menu bar |
+| {{key:UserMenu|F11}} | [User menu](#edit-menu-file) |
+| {{key:Shell|Ctrl-o}} | Show or hide the terminal |
+| Ctrl-Alt-p | Show or hide the Preview |
+| {{key:Refresh|Ctrl-l}} | Redraw the screen |
 
-**Ctrl-l**
-: Redraw the screen.
-
-## Moving around
-
-**Ctrl-Left, Ctrl-Right**
-: One word to the left or to the right.
-
-**Home, End**
-: The beginning or the end of the line.
-
-**PgUp, PgDn**
-: One page up or down.
-
-**Ctrl-Home, Ctrl-End**
-: The beginning or the end of the file.
-
-**Ctrl-PgUp, Ctrl-PgDn**
-: The top or the bottom line of the screen.
-
-**Ctrl-Up, Ctrl-Down**
-: Scroll the text one line, leaving the cursor where it is in the text.
-
-**Alt-l**
-: Go to a line, given by its number.
-
-**Alt-b**
-: Go to the bracket matching the one under the cursor.
-
-**Alt-k**
-: Set or clear a bookmark on the current line.
-
-**Alt-j, Alt-i**
-: Go to the next or the previous bookmark.
-
-**Alt-o**
-: Clear all the bookmarks.
-
-## Editing
-
-**Insert**
-: Switch between insert and overwrite mode.
-
-**Ctrl-u**
-: Undo.
-
-**Alt-r**
-: Redo.
-
-**Ctrl-t, Alt-Shift-u**
-: The undo history, to take back several changes at once.
-
-**Ctrl-y**
-: Delete the line.
-
-**Ctrl-k**
-: Delete to the end of the line.
-
-**Alt-Backspace, Alt-d**
-: Delete to the beginning or to the end of the word.
-
-**Alt-Tab**
-: Complete the word before the cursor from the words of the file (and of the
-other open files). See [Completion](#completion).
-
-**Alt-n**
-: Show or hide the line numbers.
-
-**Alt-\_**
-: Show or hide the tabs and the trailing spaces.
-
-**Ctrl-s**
-: Switch the syntax highlighting on or off.
-
-## Blocks
-
-**F3**
-: Start or end the highlighting of a block.
-
-**F13**
-: Start a column block.
-
-**Ctrl-a**
-: Highlight the whole text.
-
-**Shift-arrows, Shift-PgUp, Shift-PgDn, Shift-Home, Shift-End**
-: Highlight the text the cursor goes over.
-
-**Alt-arrows, Alt-PgUp, Alt-PgDn**
-: Highlight a column block.
-
-**F5**
-: Copy the block to the cursor.
-
-**F6**
-: Move the block to the cursor.
-
-**F8**
-: Delete the block.
-
-**Ctrl-Ins, Shift-Ins, Shift-Del, Ctrl-Del**
-: Copy to the clipboard file, paste from it, cut to it, and delete the block.
-
-## Search keys
-
-**F7**
-: Search.
-
-**F17, Ctrl-F7**
-: Search again.
-
-**F4**
-: Replace.
-
-**F14, Ctrl-F4**
-: Replace again.
-
-**Alt-s**
-: Lift the line filter, or put the last search back on as a filter.
-
-**Alt-Shift-s**
-: Filter by the highlighted text or by the word under the cursor.
-
-**Alt-Shift-f**
-: Fold the block, or the lines between a bracket and its match, or unfold.
-
-## Macros and plugins
-
-**Ctrl-r**
-: Start and stop recording a macro. See [Macros](#macros).
-
-**Alt-Shift-m**
-: The [Macro Explorer](#macro-explorer).
-
-**Alt-Enter**
-: Look up the definitions of the name under the cursor in the TAGS file. See
-[Code navigation](#code-navigation).
-
-**Alt-Minus, Alt-Plus**
-: Go back and forward in the list of places the tags lookup went to.
-
-These commands have keys but no menu entry of their own:
-**Alt-t**
-sorts the selected lines,
-**Alt-u**
-runs a shell command and puts its output in,
-**Alt-p**
-formats the paragraph the cursor is in,
-**Ctrl-q**
-inserts the next key, or a code point written as U+XXXX, as it stands, and
-**Ctrl-p**
-checks the spelling of the word under the cursor. The first four are Lua
-scripts of the editor and go away with them; the last one belongs to the
-[spell plugin](#spell-checking),
-which also has an entry in the Plugins menu, as every editor plugin that
-carries one does.
+|  |  |
+|--|--|
+| See also: | [Menus](#menu-bar) |
+|  | [Search, replace and the line filter](#search-and-replace) |
+|  | [Folding](#folding) |
+|  | [Macros](#macros) |
+|  | [User menu](#edit-menu-file) |
+|  | [Plugins](#plugins) |
+|  | [Syntax highlighting](#syntax-highlighting) |
+|  | [Editor options](#editor-options) |
+|  | [Settings in the ini file](#internal-file-editor-options) |
 
 ## Redefine key bindings <a id="keys_redefine"></a>
 
-The
-[Key bindings](#key-bindings)
-dialog of the Options menu lists every action with the keys it answers to,
-changes them and writes the result to
-**~/.config/bluerig/keymap.ini**.
-The
-[Learn keys](#learn-keys)
-dialog is about the other end of the problem: it teaches the program the
-sequences a terminal sends for keys it gets wrong. The
-[Key sniffer](#key-sniffer)
-shows what arrives for a key that is pressed, with the action it is bound to
-in the current keymap, which is what to look at when a binding seems to do
-nothing.
+|  |  |
+|--|--|
+| Options \> [Key bindings](#key-bindings) | Give an action keys of your own; they are kept in **~/.config/bluerig/keymap.ini** |
+| Options \> [Learn keys](#learn-keys) | Give keys their escape sequences |
+| Options \> [Key sniffer](#key-sniffer) | Show what the terminal sends for a key and which action the key is bound to |
 
-The key bindings may be read from a keymap file as well. The program starts
-from the keymap built into its source. Then the files
-**{{pkgdatadir}}/keymap.ini**
-and
-**{{sysconfdir}}/bluerig/keymap.ini**
-are always loaded, each reassigning the keys the one before defined. The
-package puts its own keymaps in
-**{{sysconfdir}}/bluerig**:
+At start bluerig takes the built-in keymap and loads over it
+**{{pkgdatadir}}/keymap.ini**,
+then
+**{{sysconfdir}}/bluerig/keymap.ini**.
+An action named in a file gets the keys of the file, and its built-in keys
+stop working.
+
+The package installs the keymaps
 **keymap.default.ini**,
 **keymap.emacs.ini**
 and
-**keymap.vim.ini**,
-with
+**keymap.vim.ini**
+in
+**{{sysconfdir}}/bluerig**
+and makes
 **keymap.ini**
-a link to the default one.
+a link to
+**keymap.default.ini**.
+
 The option
 **--nokeymap**
-leaves every file out and keeps the bindings of the source code.
+turns the loading of the files off, and only the built-in keymap works.
 
-The keymap file of the user is the first one found of:
+The user's keymap file is the first one found of:
 
 ```
 1) command line option -K <keymap>, --keymap=<keymap>
 2) environment variable BLUERIG_KEYMAP
-3) setting keymap of the [bluerig] section of the ini file
+3) the keymap setting in the [bluerig] section of the ini file
 4) file ~/.config/bluerig/keymap.ini
 ```
 
 The first three take a name or an absolute path. A name that does not end in
 **.keymap**
-gets that extension added, and is looked for in (to the first one found):
+gets that extension, and the file is looked for in these directories, the
+first match wins:
 
 ```
 1) ~/.config/bluerig/
 2) {{pkgdatadir}}/
 ```
 
-Because of that extension the keymaps of the package, whose names end in
+The option
+**-K**,
+the variable
+**BLUERIG_KEYMAP**
+and the setting
+**keymap**
+add the extension
+**.keymap**
+to a name that has none, so the keymaps of the package, which end in
 **.ini**,
-cannot be chosen this way. To take one of them, copy or link it to
-**~/.config/bluerig/keymap.ini**,
-which is read last and needs no option:
+cannot be chosen this way. To take one of them, make
+**~/.config/bluerig/keymap.ini**
+a link to it: this file is loaded when none of the three is given.
 
 ```
-ln -s {{sysconfdir}}/bluerig/keymap.vim.ini \
-      ~/.config/bluerig/keymap.ini
+ln -s {{sysconfdir}}/bluerig/keymap.vim.ini ~/.config/bluerig/keymap.ini
 ```
 
-A keymap file has a section for the editor,
-**[editor]**,
-one for the keys that follow Ctrl-x,
-**[editor:xmap]**,
-and one each for the dialogs, the menus, the input lines, the lists, the radio
-buttons and the help window. A line of a section names an action and the keys
-it answers to:
+The sections of a keymap file:
+
+|  |  |
+|--|--|
+| [editor] | Editor |
+| [editor:xmap] | Keys after the prefix, action ExtendedKeyMap |
+| [dialog] | Dialogs |
+| [menu] | Menus |
+| [input] | Input lines |
+| [listbox] | Lists |
+| [radio] | Radio buttons |
+| [help] | Help window |
+| [mcterm] | Terminal |
+
+A line of a section names an action and its keys, separated by semicolons:
 
 ```
 [editor]
@@ -545,124 +413,66 @@ Save = f2
 SaveAs = f12; ctrl-f2
 ```
 
-## Input Line Keys
+## Input line keys <a id="input-line-keys"></a>
 
 The input lines of the dialogs accept these keys:
 
-**Ctrl-a, Home**
-: puts the cursor at the beginning of line.
+|  |  |
+|--|--|
+| Ctrl-a, Home | Start of the line |
+| Ctrl-e, End | End of the line |
+| Ctrl-b, Left | Character left |
+| Ctrl-f, Right | Character right |
+| Alt-f, Ctrl-Right | Word forward |
+| Alt-b, Ctrl-Left | Word back |
+| Ctrl-h, Backspace | Delete the character before the cursor |
+| Ctrl-d, Delete | Delete the character under the cursor |
+| Ctrl-@ | Set the mark |
+| Ctrl-w | Cut the text from the mark to the cursor to the buffer |
+| Alt-w | Copy the text from the mark to the cursor to the buffer |
+| Ctrl-y | Paste the buffer |
+| Ctrl-k | Delete to the end of the line |
+| Ctrl-Insert | Copy the selection, or the whole line without one, to the clipboard file |
+| Shift-Delete | Cut the selection to the clipboard file |
+| Shift-Insert | Paste the clipboard file as one line: line breaks become spaces |
+| Alt-p, Alt-n | Previous or next entry of the history of the line |
+| Alt-h | [History](#history-query) of the line as a list |
+| Alt-Backspace | Delete the word before the cursor |
+| Alt-Tab | [Complete](#completion) a file name, a variable or a user name |
 
-**Ctrl-e, End**
-: puts the cursor at the end of the line.
+## General movement keys <a id="general-movement-keys"></a>
 
-**Ctrl-b, Left**
-: move the cursor one position left.
+The help window and the lists share the same movement code, so they accept
+the same keys:
 
-**Ctrl-f, Right**
-: move the cursor one position right.
+|  |  |
+|--|--|
+| Up, Ctrl-p | Line back |
+| Down, Ctrl-n | Line forward |
+| Page Up, Alt-v | Page up |
+| Page Down, Ctrl-v | Page down |
+| Home, A1 | To the start |
+| End, C1 | To the end |
 
-**Alt-f, Ctrl-Right**
-: moves one word forward.
+The help window also accepts these keys:
 
-**Alt-b, Ctrl-Left**
-: moves one word backward.
+|  |  |
+|--|--|
+| b, Backspace | Page up |
+| Space, f | Page down |
+| u, d | Half a page up or down |
+| g, G | To the start or to the end |
 
-**Ctrl-h, Backspace**
-: delete the previous character.
+# Mouse support <a id="mouse-support"></a>
 
-**Ctrl-d, Delete**
-: delete the character in the point (over the cursor).
-
-**Ctrl-@**
-: sets the mark for cutting.
-
-**Ctrl-w**
-: copies the text between the cursor and the mark to a kill buffer and
-removes the text from the input line.
-
-**Alt-w**
-: copies the text between the cursor and the mark to a kill buffer.
-
-**Ctrl-y**
-: yanks back the contents of the kill buffer.
-
-**Ctrl-k**
-: kills the text from the cursor to the end of the line.
-
-**Ctrl-Insert**
-: copies the selected text, or else the whole line, to the clipboard file.
-
-**Shift-Delete**
-: cuts the selected text to the clipboard file.
-
-**Shift-Insert**
-: pastes the clipboard file into the line as one line: line breaks and other
-control characters become spaces.
-
-**Alt-p, Alt-n**
-: browse through the history of the line: Alt-p takes you to the previous
-entry, Alt-n to the next one.
-
-**Alt-h**
-: shows the [history](#history-query) of the line in a list.
-
-**Alt-Backspace**
-: delete one word backward.
-
-**Alt-Tab**
-: does the file name, variable and user name
-[completion](#completion)
-for you.
-
-## General Movement Keys
-
-The help window and the lists of the program share the code that moves in
-them, so they accept the same keys:
-
-**Up, Ctrl-p**
-: moves one line backward.
-
-**Down, Ctrl-n**
-: moves one line forward.
-
-**Page Up, Alt-v**
-: moves one page up.
-
-**Page Down, Ctrl-v**
-: moves one page down.
-
-**Home, A1**
-: moves to the beginning.
-
-**End, C1**
-: move to the end.
-
-The help window accepts the following keys in addition to the ones mentioned
-above:
-
-**b, Backspace**
-: moves one page up.
-
-**Space bar, f**
-: moves one page down.
-
-**u, d**
-: moves one half of a page up or down.
-
-**g, G**
-: moves to the beginning or to the end.
-
-# Mouse Support
-
-bluerig comes with mouse support. It is activated whenever you are running on
-an
+bluerig supports the mouse. It works in an
 **xterm(1)**
-terminal (it even works if you take a telnet or ssh connection to another
-machine from the xterm) or if you are running on a Linux console and have the
+terminal (even over a telnet or ssh connection from the xterm) and on the
+Linux console with the
 **gpm**
 mouse server running.
 
-A click puts the cursor where it is, a drag highlights text, and a click on a
+A click puts the cursor where you click, a drag highlights text, and a click on a
 menu, a button or a function key label chooses it. The wheel scrolls the
 text.
 
@@ -677,14 +487,14 @@ If you are running bluerig with the mouse support, you can get the default mouse
 behavior of the terminal (cutting and pasting text) by holding down the Shift
 key.
 
-# Menu Bar
+# Menu bar <a id="menu-bar"></a>
 
 The menu bar pops up when you press F9 or click the mouse on the top row of
-the screen. Its menus are File, Edit, Search, Command, Navigate (where a
-plugin or a script puts something in it), Window, Plugins and Options. A Lua
+the screen. Its menus are File, Edit, Search, Command, Navigate (only when a
+plugin or a script adds something to it), Window, Plugins and Options. A Lua
 script may add entries to any of them, or menus of its own.
 
-## File menu
+## File menu <a id="file-menu"></a>
 
 **Open file...**
 : Open a file in a new window.
@@ -714,22 +524,22 @@ script may add entries to any of them, or menus of its own.
 **Quit**
 : Leave the editor, asking about the files that are not saved.
 
-## Edit menu
+## Edit menu <a id="edit-menu"></a>
 
 Undo, Redo and the Undo history; the switch between insert and overwrite
 mode; the commands that highlight a block, a column block or the whole file,
-and remove the highlighting; copy, move and delete of the block; copy to, cut
-to and paste from the clipboard file; and the moves to the beginning and to
-the end of the file.
+and remove the highlighting; copying, moving and deleting the block; copy to, cut
+to and paste from the clipboard file; and going to the start and the end of
+the file.
 
-## Search menu
+## Search menu <a id="search-menu"></a>
 
 Search, Search again and Replace; the line filter (Toggle line filter, Filter
 by word; see [Search, replace and the line filter](#search-and-replace)); and
 the bookmarks: toggle a bookmark on the current line, go to the next or to
 the previous one, and clear them all.
 
-## Command menu
+## Command menu <a id="command-menu"></a>
 
 **Go to line...**
 : Go to a line, given by its number.
@@ -756,12 +566,11 @@ the previous one, and clear them all.
 **Start/Stop record macro, Macro explorer..., Record/Repeat actions**
 : See [Macros](#macros).
 
-## Navigate menu
+## Navigate menu <a id="navigate-menu"></a>
 
-The commands of the tags plugins, where one of them is loaded: go to the
-declaration of the name under the cursor, find its references, the history of
-the jumps, back and forward, the symbols of the file and so on. See
-[Code navigation](#code-navigation).
+The commands of the plugins: go to the declaration, find the references, the
+symbols of the file and others. See
+[Plugins](#plugins).
 
 ## Window menu <a id="window-menu"></a>
 
@@ -777,8 +586,8 @@ together: the corner of a window moves the edge it is on with all the windows
 along it, on both sides, and no gap opens between them. Where four windows
 meet, the corner moves both edges. A side that is on the edge of the screen
 when the resize begins stays there, a window keeps its smallest size, and an
-edge stops at a window in its way, which from then on resizes along. Esc puts
-every window back. A window moved by its title goes alone. The setting is kept as
+edge stops at a window in its way, and that window then resizes with the others. Esc puts
+every window back. A window dragged by its title moves alone. The setting is kept as
 **editor_sticky_windows**
 in the ini file.
 
@@ -799,11 +608,11 @@ The windows of the plugins stand in docks. The tree, the panel of the
 debugger and the Preview go in the column at the right, one above the other,
 all the height of the screen. The console, the output of the build and the
 terminal go in the row at the bottom, under the windows of the files: they
-are tabs, one of them seen, their names on its title. A click on a name, or
+share the row as tabs: one is shown, and its title lists their names. A click on a name, or
 **Ctrl-Alt-PgDn** and **Ctrl-Alt-PgUp** (*WindowTabNext* and *WindowTabPrev*
-in the keymap), shows another. A file window that was fullscreen takes the
-rest of the screen, and the screen again when the docks are empty. A window
-of a dock resized gives the dock its size; moved, it leaves the dock.
+in the keymap), shows another. A fullscreen file window fills the rest of
+the screen, and the whole screen again when the docks are empty. Resizing a
+docked window resizes the dock; moving it takes it out of the dock.
 
 **Layout...**
 : The layouts of the windows: which windows of the plugins are open, in
@@ -819,16 +628,16 @@ read.
 The windows of a project are kept when the editor ends, and come back when
 it starts with a file of the project.
 *bluerig --debug* starts with the layout *Debug*. The layouts are kept in
-*layouts.ini* of the settings.
+*layouts.ini* in the settings directory.
 
-## Plugins menu
+## Plugins menu <a id="plugins-menu"></a>
 
 The editor plugins that carry an entry of their own, the spell checker for
 one; their windows are in the [Window menu](#window-menu). A plugin that is switched off in
 [Manage plugins](#manage-plugins)
 is not in the menu.
 
-## Options menu
+## Options menu <a id="options-menu"></a>
 
 **General...**
 : The [editor options](#editor-options).
@@ -881,76 +690,51 @@ setting on, they are written whenever the editor ends.
 
 ### Editor options <a id="editor-options"></a>
 
-The settings of the editor, which the
+The entry
 **General...**
-item of the Options menu opens. They are written to the ini file under the
-names the
-[Settings in the ini file](#internal-file-editor-options)
-section describes.
+of the Options menu opens the dialog of the editor options. Each option is
+written to the ini file, see
+[Settings in the ini file](#internal-file-editor-options).
 
-*Wrap mode.*
-Off, dynamic paragraph formatting, or the typewriter wrap that breaks a line
-at the word wrap line length while it is typed.
+**Wrap mode**
 
-*Fake half tabs.*
-Move and indent by half a tab between the text and the left margin, with
-spaces, while a tab stays a tab everywhere else.
+|  |  |
+|--|--|
+| None | Lines are not wrapped |
+| Dynamic paragraphing | Formats the paragraph under the cursor while typing |
+| Type writer wrap | Breaks the line at the wrap length while typing |
 
-*Backspace through tabs.*
-One backspace deletes all the space to the left margin when there is no text
-between the cursor and the margin.
+**Tabulation**
 
-*Fill tabs with spaces.*
-Insert spaces up to the next tab stop instead of a tab character.
+|  |  |
+|--|--|
+| Fake half tabs | Between the left margin and the text a tab steps half its width, and the file gets spaces and tabs |
+| Backspace through tabs | Backspace deletes the whole indent to the left margin when no text stands between the cursor and the margin |
+| Fill tabs with spaces | Inserts spaces to the next tab stop instead of a tab character |
+| Tab spacing | The width of a tab character; 8 by default |
 
-*Tab spacing.*
-The width a tab character stands for. 8 by default, and other editors and
-viewers assume 8 as well.
+**Keyboard**
 
-*Return does autoindent.*
-A new line starts at the indentation of the line above.
+|  |  |
+|--|--|
+| Esc timeout, ms | How many milliseconds Esc waits for the rest of a key before it counts as Esc; 1000 by default. In the ini file it is *old_esc_mode_timeout* in microseconds, and the variable **KEYBOARD_KEY_TIMEOUT_US** overrides it at startup |
 
-*Confirm before saving.*
-Ask before the file is written.
+**Other options**
 
-*Save file position.*
-Open a file at the place it was left the last time.
-
-*Visible trailing spaces.*
-Mark the spaces at the end of a line.
-
-*Visible tabs.*
-Mark the tab characters.
-
-*Show control characters.*
-Print the control characters of the text instead of hiding them.
-
-*Syntax highlighting.*
-Color the text by the syntax rules of its file type.
-
-*Cursor after inserted block.*
-Leave the cursor at the end of a block that was just inserted, not at its
-start.
-
-*Persistent selection.*
-A selection stays when the cursor moves, instead of being dropped.
-
-*Cursor beyond end of line.*
-The cursor may stand past the last character of a line.
-
-*Group undo.*
-One undo takes back a run of the same kind of change, not a single key.
-
-*Word wrap line length.*
-The column the wrap modes break a line at. 72 by default.
-
-*Esc timeout, ms.*
-How long a single Esc waits for the rest of a key before it counts as Esc,
-in milliseconds. 1000 by default. It is written to the ini file as
-*old_esc_mode_timeout*,
-in microseconds, and the
-**KEYBOARD_KEY_TIMEOUT_US**
-variable overrides it when the editor starts.
+|  |  |
+|--|--|
+| Return does autoindent | Enter starts the line with the indent of the line above |
+| Confirm before saving | Asks before writing the file |
+| Save file position | Opens the file where it was left |
+| Visible trailing spaces | Marks the spaces at the end of lines |
+| Visible tabs | Marks the tab characters |
+| Show control characters | Shows control characters as ^M instead of hiding them |
+| Syntax highlighting | Colors the text by the syntax rules of its type |
+| Cursor after inserted block | Leaves the cursor at the end of an inserted block, not at its start |
+| Persistent selection | Keeps the selection when the cursor moves |
+| Cursor beyond end of line | Lets the cursor go past the last character of the line |
+| Group undo | Undoes a series of changes of one kind at once |
+| Word wrap line length | The column where the wrap modes break the line; 72 by default |
 
 ### Edit Save Mode <a id="edit-save-mode"></a>
 
@@ -1115,53 +899,63 @@ See [Lua scripting](#lua-scripting) for the scripts themselves.
 
 # Search, replace and the line filter <a id="search-and-replace"></a>
 
-The search dialog
-(**F7**)
-takes the text to look for and the type of the search: a plain string, a
-regular expression, hexadecimal bytes or a shell pattern; whether the case
-matters; whether it looks backwards, only in the highlighted block, or for
-whole words; and whether it looks in every encoding the file might be in.
-**Find all**
-sets a bookmark on every line that matches. The replace dialog
-(**F4**)
-takes the text to put in as well, and asks at every match unless it is told to
-replace them all. In a regular expression replacement, \\1 to \\9 stand for
-the groups of the match.
+{{key:Search|F7}} opens the search dialog.
 
-The
+|  |  |
+|--|--|
+| Normal | Searches for the string as it is |
+| Regular expression | Searches by a regular expression |
+| Hexadecimal | Searches for bytes written as hexadecimal numbers |
+| Wildcard search | Searches by a shell pattern with \* and ? |
+| Case sensitive | Tells lowercase from uppercase letters |
+| Backwards | Searches from the cursor to the start of the file |
+| In selection | Searches only in the marked block |
+| Whole words | Matches only a whole word |
+| All charsets | Searches in every encoding the file may be written in |
+| Find all | Sets a bookmark on every line with a match |
+| Filter | Hides the lines without a match |
+
+{{key:Replace|F4}} opens the replace dialog: the same fields and the line
+"Enter replacement string". In a regular expression replacement \\1 to
+\\9 insert the matched groups.
+
+|  |  |
+|--|--|
+| Replace | Replaces this match and searches for the next one |
+| All | Replaces every match without asking |
+| Skip | Leaves this match and searches for the next one |
+
 **Filter**
-button of the search dialog hides every line that does not match the search
-string, using the same type, case and whole-word settings as the search. Line
-numbers keep their original values and the line state gutter marks each
-hidden run. The set of hidden lines is fixed at the moment the button is
-pressed: editing never re-applies the match, so a shown line that is split or
-joined stays shown, and lines typed afterwards stay shown even if they do not
-match.
-**Alt-s**
-lifts the filter; pressed again it puts the last search back on as a filter.
-**Alt-Shift-s**
-filters by the highlighted text, or by the word under the cursor, at once.
-"Unfold all" in the Command menu lifts the filter as well.
 
-# Folding
+Hides the lines without a match; the line numbers do not change, and the
+line state column marks every hidden run. The lines are hidden once, when the
+button is pressed: a line changed or typed afterwards stays shown even if it
+does not match.
+
+|  |  |
+|--|--|
+| {{key:FilterToggle|Alt-s}} | Removes the filter, or applies the last search as a filter; with no search, opens the search dialog |
+| {{key:FilterWord|Alt-S}} | Filters by the marked text or by the word under the cursor |
+| Command \> Unfold all | Lifts the filter and every fold |
+
+# Folding <a id="folding"></a>
 
 A fold hides a run of lines behind its first line, which stays on the screen
 with a mark in the line state gutter.
-**Alt-Shift-f**
+**Alt-F**
 (Fold / Unfold block in the Command menu) folds the highlighted lines, or,
 with nothing highlighted, the lines from a bracket on the current line to the
 bracket that matches it. On the first line of a fold it unfolds it.
 **Unfold all**
 opens every fold of the file, and lifts the line filter.
 
-# Macros
+# Macros <a id="macros"></a>
 
-To define a macro, press
+{{key:MacroStartStopRecord|Ctrl-r}}
+starts recording a macro: the keys pressed after it are recorded. Pressing
 **Ctrl-r**
-and then type out the keys you want to be executed. Press
-**Ctrl-r**
-again when finished, and assign the macro to a key by pressing that key. The
-macro is executed by that key.
+again ends the recording and waits for the key the macro is bound to; that
+key then runs it.
 
 The macros are kept in the section
 **[editor]**
@@ -1197,7 +991,7 @@ is a number from 0 to 9999. Examples are installed in
 **{{pkgdatadir}}/examples/macros.d/**.
 A script has the format of the entries of the
 [user menu](#edit-menu-file)
-and takes the same macros. Its first line may be
+and takes the same substitutions. Its first line may be
 
 *#silent*
 : The script is run without asking for its parameters.
@@ -1207,9 +1001,9 @@ Here is a sample script:
 ```
 l       comment selection
 	TMPFILE=`mktemp ${BLUERIG_TMPDIR:-/tmp}/up.XXXXXX` || exit 1
-	echo #if 0 > $TMPFILE
+	echo '#if 0' > $TMPFILE
 	cat %b >> $TMPFILE
-	echo #endif >> $TMPFILE
+	echo '#endif' >> $TMPFILE
 	cat $TMPFILE > %b
 	rm -f $TMPFILE
 ```
@@ -1232,11 +1026,9 @@ section describes.
 
 # User menu <a id="edit-menu-file"></a>
 
-The user menu
-(**F11**)
-is a menu of useful actions that can be customized by the user: each entry is
-a shell script that is run with the text of the editor at hand. The menu is
-read from the first one found of:
+{{key:UserMenu|F11}}
+opens the user menu: each of its entries is a shell script run on the text of
+the editor. The menu is read from the first file found of:
 
 ```
 1) ./.bluerig.menu in the current directory
@@ -1247,68 +1039,38 @@ read from the first one found of:
 ```
 
 The file of the current directory is read only where it belongs to the user or
-to root and nobody else can write it, because its entries run commands. The
+to root and nobody else can write it: its entries run commands. The
 **Menu file**
-item of the Options menu opens the menu file in the editor.
+entry of the Options menu opens the menu file in the editor.
 
-The format of the menu file is very simple. Lines that start with anything but
-space or tab are considered entries for the menu (in order to be able to use
-it like a hot key, the first character should be a letter). All the lines that
-start with a space or a tab are the commands that will be executed when the
-entry is selected. Comments are started with '#'.
+A line that starts with anything but a space or a tab is a menu entry, its
+first character the hot key of the entry. The lines that start with a space
+or a tab are the commands of the entry. A line that starts with '#' is a
+comment.
 
-When an entry is selected all its command lines are copied to a temporary file
-and then that file is executed by the shell. This allows the user to put
-normal shell constructs in the menus. Also simple macro substitution takes
-place before executing the menu code:
+When an entry is chosen its commands are written to a temporary file, the
+substitutions in them are replaced, and the shell runs that file:
 
-*%f, %p*
-: The name of the current file.
+|  |  |
+|--|--|
+| %f, %p, %s | The name of the current file |
+| %n | The name of the current file without its extension |
+| %x | The extension of the name of the current file |
+| %d | The current directory |
+| %c | The position of the cursor in the file |
+| %i | An indent of spaces as wide as the cursor column |
+| %y | The syntax type of the current file |
+| %b | The block file: the marked text is written to **~/.cache/bluerig/block** before the run, and what the commands leave there replaces the block |
+| %m | The name of the menu file |
+| %% | The % character |
+| %{text} | An input line with the prompt "text"; what is typed goes in, Esc or F10 cancel the entry |
+| %view | Opens the standard output of the commands in a new editor window; words in braces after it, as in %view{ascii}, are skipped |
 
-*%n*
-: The current file name without extension.
+Substitution letters are case-insensitive. A number
+after % turns quoting on (the default) or off: %f and %1f quote the inserted
+value, %0f does not.
 
-*%x*
-: The extension of the current file name.
-
-*%d*
-: The current directory.
-
-*%c*
-: The position of the cursor in the file.
-
-*%i*
-: The indent of blank space, equal to the cursor column.
-
-*%y*
-: The syntax type of the current file.
-
-*%b*
-: The block file: the highlighted text is written to
-*~/.cache/bluerig/block*
-before the command runs, and what the command leaves there replaces the
-block afterwards.
-
-*%m*
-: The name of the menu file.
-
-*%%*
-: The % character.
-
-*%{some text}*
-: Prompt for the substitution. An input box is shown and the text inside the
-braces is used as a prompt. The macro is substituted by the text typed by the
-user. The user can press Esc or F10 to cancel.
-
-*%view*
-: Run the commands and open their standard output in a new editor window. The
-words in braces after %view, as in %view{ascii}, are accepted and ignored.
-
-Uppercase and lowercase macros are the same. With a number after the %
-character quoting is turned on (the default) and off: %f and %1f quote the
-expanded macro, %0f does not.
-
-Here is a sample menu file:
+A sample menu file:
 
 ```
 s       Sort the block
@@ -1321,11 +1083,10 @@ m       Run make in the directory of the file
 	make
 ```
 
-**Default Conditions**
+**Default entry**
 
-Each menu entry may be preceded by a condition. The condition must start from
-the first column with a '=' character. If the condition is true, the menu
-entry will be the default entry.
+A line that starts with '=' in the first column is a condition of the entry
+under it: when the condition is true, the entry becomes the default one.
 
 ```
 Condition syntax:   = <sub-cond>
@@ -1342,13 +1103,12 @@ Sub-condition is one of following:
   ! <sub-cond>  negate the result of sub-condition
 ```
 
-Pattern is a normal shell pattern or a regular expression, according to the
+Pattern is a shell pattern or a regular expression, according to the
 *shell_patterns*
-setting. You can override the global value of that setting by writing
-"shell_patterns=x" on the first line of the menu file (where "x" is either 0
-or 1).
+setting; a line "shell_patterns=0" or "shell_patterns=1" as the first line of
+the menu file sets it for that file.
 
-Type is one or more of the following characters:
+Type is one or more characters:
 
 ```
   n   not a directory
@@ -1362,12 +1122,13 @@ Type is one or more of the following characters:
   x   executable file
 ```
 
-For example 'rlf' means either regular file, link or fifo.
+For example 'rlf' is a regular file, a link or a FIFO.
 
-If the condition starts with '=?' instead of '=' a debug trace will be shown
-whenever the value of the condition is calculated.
+A condition that starts with '=?' instead of '=' shows a debug trace each
+time it is calculated.
 
-The conditions are calculated from left to right. This means
+The conditions are calculated from left to right; '&' does not bind tighter
+than '|':
 
 ```
 	= f *.c | f *.h & y C
@@ -1379,137 +1140,20 @@ is calculated as
 	( (f *.c) | (f *.h) ) & (y C)
 ```
 
-**Addition Conditions**
+**Addition conditions**
 
-If the condition begins with '+' (or '+?') instead of '=' (or '=?') it is an
-addition condition. If the condition is true the menu entry will be included
-in the menu. If the condition is false the menu entry will not be included in
-the menu.
+A condition that starts with '+' (or '+?') puts the entry in the menu only
+when it is true. A condition with '+=' or '=+' ('+=?' and '=+?' with a trace)
+works both as an addition and as a default condition. Two condition lines
+before an entry, one with '+' and one with '=', set them apart.
 
-You can combine default and addition conditions by starting condition with
-'+=' or '=+' (or '+=?' or '=+?' if you want debug trace). If you want to use
-two different conditions, one for adding and another for defaulting, you can
-precede a menu entry with two condition lines, one starting with '+' and
-another starting with '='.
+# Plugins <a id="plugins"></a>
 
-# Code navigation
+{{plugins}}
+A plugin is switched on and off in the Options menu, entry
+[Manage plugins](#manage-plugins).
 
-The editor finds the definition of a name in a tags file, with one of two
-plugins.
-
-The etags plugin reads the
-**TAGS**
-file of the project, in the Emacs format, which etags or
-*ctags -e*
-builds. For example, with exuberant-ctags for the C language:
-
-```
-ctags -e --language-force=C -R ./
-```
-
-**Alt-Enter**
-shows the list of the definitions of the name under the cursor (the cursor
-should stand at the end of the word); with a single one it goes there at
-once. See
-[Definitions](etags.md#definitions).
-
-**Alt-Minus**
-goes to the previous place in the navigation list (like the Back button of a
-browser), and
-**Alt-Plus**
-to the next one (like its Forward button).
-
-The ctags plugin reads the
-**tags**
-file of ctags, and fills the Navigate menu: go to the declaration, find the
-references, complete a symbol, the symbols of the file, the members of a class
-or structure, and more. See
-[Ctags](ctags.md#ctags).
-
-Both plugins can be switched off in
-[Manage plugins](#manage-plugins),
-and then their keys do nothing.
-
-# Spell checking
-
-The spell plugin checks the text with aspell or hunspell.
-**Ctrl-p**
-checks the word under the cursor, and the Plugins menu checks the whole file.
-See [Spell](spell.md#spell).
-
-# Terminal
-
-The terminal plugin runs your shell in a window of the editor.
-**Ctrl-o**
-shows the window at the bottom of the screen, a file shown full screen going
-into a window above it, and the windows already there, a file beside the
-Preview for one, going up out of its way; in the terminal it hides it again,
-and each of them goes back where it was. The shell goes on running while the
-window is hidden.
-The window is moved, resized, shown full screen and closed like the window of
-a file. The scrollbar on the right of its frame scrolls the history of the
-output. See [Terminal](terminal.md#terminal).
-
-# Preview
-
-The viewer plugin shows the file the way it is meant to read, whatever the
-file is, in a window named Preview at the right of it.
-**Ctrl-Alt-p**,
-or Preview in the Window menu, shows and hides it. The file keeps the
-focus; the Preview is drawn again as the text changes, follows the cursor,
-and shows the file window that comes to the front. The window is moved,
-resized and closed like the window of a file. Once it has the focus, it has
-a cursor of its own, which the keys of the editor move as in a file: the
-arrows, Home and End, the pages, the top and the bottom of the text; the keys
-of the words, Ctrl-Left and Ctrl-Right, move it eight columns. The view
-follows it, sideways too for what is wider than it. A click
-on the text puts the cursor there.
-Text is marked as in a file: the mouse drawn over it, a word by a double
-click, a line by a triple one, Shift and the arrows, F3 at the start and
-again at the end, Ctrl-A all of it. Ctrl-Ins, or Enter, copies what is
-marked to the clipboard, without the colors. The windows of the build and
-of the query plugin are such windows too; in History, a list of queries,
-Enter and F3 are its own, and Ctrl-Ins copies.
-The mouse wheel scrolls it without the focus, sideways when it is tilted or
-turned with Shift. Its frame has a scrollbar on the right and one at the
-bottom: an arrow scrolls a step, the bar beside the thumb a page, and the
-thumb is dragged. The key is set in
-**viewer.ini**,
-section
-**[Preview]**,
-entry
-**key**.
-
-The renderers tell the viewer what files they draw, by the ends of their names
-or how their texts start, and the viewer has the file drawn by the renderer of
-its type: a markdown file comes out with its headings, lists,
-tables with rules, blocks of code in the colors of the editor, formulas as
-symbols and mermaid diagrams as drawings; that renderer is the Lua script
-render-markdown, lua-markdown of Midnight Commander, whose settings, from
-Manage plugins, are kept in
-**~/.config/bluerig/render-markdown.ini**.
-A JSON file, and JSON Lines, comes out one value to a line in the colors the
-editor gives JSON, the size of every object and array beside it, a long array
-packed to the width or cut short, and an array of objects of one kind as a
-table; comments and a comma before a closing bracket are taken. While it does
-not read, halfway through a change, the error and its place are shown above
-the last view that read. That renderer is the Lua script render-json.
-An XML file, by the end of its name or by a text that starts with <?xml, comes
-out an element to a line in the colors the editor gives XML: a short text on
-the line of its element, a long one wrapped under it, the attributes one to a
-line when they do not fit, the number of the elements an element holds beside
-it, a long run of elements of one name cut short, and a run of elements of one
-name that hold attributes and plain text as a table. That renderer is the Lua
-script render-xml, and it shows its errors the way render-json does.
-A string of base64 in JSON or XML, a text, a value or a data: URI, is cut to
-its first letters, and what it holds is shown beside it in parentheses: the
-start of the text, or the kind of file its bytes start like, and the size.
-Only the start of it is decoded, so a string of megabytes costs no more than a
-short one; a string of the letters of base64 that holds neither text nor a
-known kind of file, a hash for one, is left as it is.
-A file of a type no renderer knows is shown as its text.
-
-# Dialogs
+# Dialogs <a id="dialogs"></a>
 
 ## Save As <a id="save-file-as"></a>
 
@@ -1541,32 +1185,29 @@ switch between the screens:
 : open a dialog window with the list of the screens that are open, to choose
 one.
 
-## Completion
+## Completion <a id="completion"></a>
 
-Let the program type for you.
-
-In the editor,
-**Alt-Tab**
-completes the word before the cursor from the words of the file, and, with the
+{{key:Complete|Alt-Tab}}
+in the editor completes the word before the cursor from the words of the open
+files, and shows a list when several words fit. The setting
 *editor_wordcompletion_collect_all_files*
-setting on (the default), of the other open files as well. Where more than one
-word fits, a list of them pops up to choose from.
+of the ini file, on by default, takes words from all the open files; when off,
+from the current file only.
 
-In an input line of a dialog,
 **Alt-Tab**
-attempts completion treating the text as a variable (if the text begins with
-**$**),
-a user name (if the text begins with
-**~**)
-or a file name. If the completion is ambiguous, the program beeps, and with
-the
+in an input line of a dialog completes the text:
+
+|  |  |
+|--|--|
+| $name | An environment variable |
+| ~name | A user name |
+| Else | A file name |
+
+Where several fit, the program beeps. The setting
 *show_all_if_ambiguous*
-setting on, a list of all the possibilities pops up next to the current
-position: select one with the arrow keys and
-**Enter**,
-or type the first letters in which the possibilities differ to narrow the
-list. As soon as there is no ambiguity, the list disappears; Esc, F10 and the
-left and right arrow keys hide it as well.
+of the ini file, off by default, shows their list next to the cursor:
+**Enter**
+chooses one, typed letters narrow the list, Esc, F10, Left and Right hide it.
 
 ## Choose codepage <a id="codepages-translation"></a>
 
@@ -1592,61 +1233,69 @@ removes the entry the cursor is on from the history. The histories are kept in
 *num_history_items_recorded*
 says how many entries each of them keeps.
 
-# Syntax Highlighting
+# Syntax highlighting <a id="syntax-highlighting"></a>
 
-**bluerig**
-supports syntax highlighting.  This means that keywords and contexts
-(like C comments, string constants, etc) are highlighted in different
-colors.  The following section explains the format of the file
-**~/.local/share/bluerig/syntax/Syntax**.
-The system-wide
-**{{pkgdatadir}}/syntax/Syntax**
-is read after it, for every file type it does not name: the file of the user
-holds only what the user added or wants otherwise, and an entry of its own
-wins over an installed one for the files it matches.  The files its
+{{key:SyntaxOnOff|Ctrl-s}}
+switches the syntax highlighting on and off. The rules of the highlighting
+are in the syntax files: keywords and contexts, such as comments and strings,
+get their colors there.
+
+|  |  |
+|--|--|
+| [Syntax files](#syntax-files) | Where the rules are and in which order they are read |
+| [The file section](#syntax-file) | Which files a section of rules highlights |
+| [Contexts](#syntax-contexts) | Regions of the text with colors of their own |
+| [Embedding and layers](#syntax-embed) | Rules of another syntax inside a context and over the text |
+| [Keywords](#syntax-keywords) | Words and patterns colored inside a context |
+| [Colors and attributes](#syntax-colors) | Colors, scope tokens of the skin, attributes |
+| [Other lines](#syntax-other) | Comments, caseinsensitive, line-local |
+
+## Syntax files <a id="syntax-files"></a>
+
+|  |  |
+|--|--|
+| **~/.local/share/bluerig/syntax/Syntax** | The rules of the user: what the user added or wants otherwise |
+| **{{pkgdatadir}}/syntax/Syntax** | The installed rules, for the file types the user file does not name |
+
+A user entry overrides an installed one for the files it
+matches. The files named by
 **include**
-lines name are looked for in
+lines are looked for in
 *~/.local/share/bluerig/syntax/*
-first and among the installed ones after.  A full copy of the system file, as
-older versions made, hides every file type installed after it: keep in it only
-the entries you changed.
-The file
-**~/.local/share/bluerig/syntax/Syntax**
-is rescanned on opening of every new editor file.  The file contains
-rules for highlighting, each of which is given on a separate line, and
-define which keywords will be highlighted with what color.
+first, then among the installed ones. The user file is read again each time
+a new file is opened in the editor.
 
-The file is divided into sections, each beginning with a line with the
+A full copy of the installed file, as older versions made, hides every file
+type installed after it, and their highlighting stops working: keep only the
+changed entries in the copy.
+
+## The file section <a id="syntax-file"></a>
+
+A syntax file consists of sections. Each one starts with a
 **file**
-command.  The sections are normally put into separate files using the
+line and is usually put in a file of its own with an
 **include**
-command.
+line:
+
+```
+file <file name> <description> [<first line>]
+```
 
 The
-**file**
-command has three arguments.  The first argument is a regular expression
-that is applied to the file name to determine if the following section
-applies to the file.  The second argument is the description of the file
-type.  It is used in
-**cooledit**;
-future versions of
-**bluerig**
-may use it as well.  The third optional argument is a regular expression
-to match the first line of text of the file.  The rules in the following
-section apply if either the file name or the first line of text matches.
-
-A section ends with the start of another section.  Each section is
-divided into contexts, and each context contains rules.  A context is a
-scope within the text that a particular set of rules belongs to.  For
-instance, the text within a C style comment (i.e. between
-**/\***
+*file name*
+and the
+*first line*
+are regular expressions: the section applies to a file when its name or the
+first line of its text matches. The
+*description*
+is the name of the syntax, with \s for a space: the
+**embed**
 and
-**\*/**)
-has its own color.  This is a context, although it has no further rules
-inside it because there is probably nothing that we want highlighted
-within a C comment.
+**overlay**
+lines use it. A section ends where the next one starts and is divided into
+contexts with keywords.
 
-A trivial C programming section might look like this:
+A trivial section for a C program:
 
 ```
 file .\*\\.c C\sProgram\sFile (#include|/\\\*)
@@ -1684,84 +1333,59 @@ context " " green
   keyword  \\"   brightgreen
 ```
 
-Each context starts with a line of the form:
+## Contexts <a id="syntax-contexts"></a>
 
-**context**
-[**exclusive**]
-[**oneline**]
-[**whole**|**wholeright**|**wholeleft**]
-[**linestart**]
-*delim*
-[**linestart**]
-*delim*
-*[foreground]*
-*[background]*
-*[attributes]*
+A context is a region of the text with its own color and its own keywords,
+such as a C comment between /\* and \*/. It starts with the line:
 
-The first context is an exception.  It must start with the command
+```
+context [exclusive] [oneline] [whole|wholeright|wholeleft] [linestart] <delim>
+        [linestart] <delim> [<foreground>] [<background>] [<attributes>]
+```
 
+The first context of a section is
 **context default**
-*[foreground]*
-*[background]*
-*[attributes]*
+[*foreground*] [*background*] [*attributes*];
+without it the section gives an error.
 
-otherwise
-**bluerig**
-will report an error.  The
-**linestart**
-option specifies that
-*delim*
-must start at the beginning of a line.  The
-**whole**
-option tells that
-*delim*
-must be a whole word.  To specify that a word must begin on the word
-boundary only on the left side, you can use the
-**wholeleft**
-option, and similarly a word that must end on the word boundary is specified by
-**wholeright**.
+|  |  |
+|--|--|
+| linestart | The delimiter stands at the start of a line |
+| whole | The delimiter is a whole word |
+| wholeleft | The delimiter is on a word boundary at the left |
+| wholeright | The delimiter is on a word boundary at the right |
+| exclusive | Colors the text between the delimiters, not the delimiters |
+| oneline | After exclusive: ends the context at the end of the line when the right delimiter is not on it |
 
-The set of characters that constitute a whole word can be changed at any
-point in the file with the
+A line
 **wholechars**
-command.  The left and right set of characters can be set separately
-with
+[**left**|**right**] *characters*
+anywhere in the file sets the characters of a whole word; left and right
+set the two sides separately. A line
+**spellcheck**
+after
+**context**
+gives the words of the context to the spell check.
 
-**wholechars**
-[**left**|**right**]
-*characters*
+## Embedding and layers <a id="syntax-embed"></a>
 
-The
-**exclusive**
-option causes the text between the delimiters to be highlighted, but not
-the delimiters themselves.
-
-The
-**oneline**
-option, after
-**exclusive**
-if both are given, ends the context at the end of its line when the right
-delimiter is not there, so that a delimiter left open colors no more than
-the rest of its line.
-
-A context can hand the text between its delimiters to the rules of
-another syntax, with a line right below it:
+A line
 
 **embed**
 [**soft**]
 *type*
 
-where
+after
+**context**
+gives the text between the delimiters to the rules of another syntax;
 *type*
-is the name of the rules as the file line of the Syntax file gives it,
-with \\s for a space.  It is looked up in the Syntax file the rules are
-read from, and then in the one installed with bluerig, so that a copy of the
-Syntax file older than the rules still finds it; a type found in neither
-leaves the context as if it embedded nothing, in its own colors.  The delimiters keep the colors of the context.  The
-right delimiter ends the embedded text wherever it stands, inside a string
-or a comment of the embedded rules as well.  An embedded syntax can embed
-another one in turn, a few levels deep.  For example, HTML hands scripts to
-JavaScript:
+is the description of its file line, with \s for a space. The type is looked
+up in the Syntax file the rules are read from, then in the one installed with
+bluerig. A type found in neither leaves the context in its own colors. The
+delimiters keep the colors of the context. The right delimiter ends the
+embedded text wherever it stands, inside a string or a comment of the
+embedded rules too. An embedded syntax can embed another one, a few levels
+deep. For example, HTML gives scripts to the rules of JavaScript:
 
 ```
   context <SCRIPT*> </SCRIPT> brightcyan
@@ -1772,23 +1396,25 @@ With
 **soft**
 the right delimiter ends the embedded text only outside the strings,
 comments and keywords of the embedded rules, so that in {{ "}}" }} of a
-Jinja2 template the first }} is part of the string, and in ${x/\\}/y} of a
-shell script the first } is part of the escape.
+Jinja2 template the first }} stays part of the string, and in ${x/\\}/y} of
+a shell script the first } stays part of the escape.
 
-A whole syntax can instead be a layer over another one, with a line
+A line
 
 **overlay**
 *type*
 
-anywhere among its rules.  Its contexts then color what they hold wherever it
-stands, and the rest of the text is read by the rules of
+among the rules makes the whole syntax a layer over
+*type*:
+its contexts color what they hold wherever it stands, and the rest of the
+text is read by the rules of
 *type*,
-which see what the contexts hold as blanks and never know it was there.  This
-is how the tags of a template language are colored in the text, inside an HTML
-tag, in a string of an attribute and in a script alike, while HTML colors the
-rest.  The default context of a layer colors nothing: a keyword there only
-keeps a context from starting.  A type found in no Syntax file leaves the
-layer over plain text.  For example, Smarty over HTML:
+which see the contents of the contexts as blanks. This way the tags of a template
+language are colored in the text, inside an HTML tag, in a string of an
+attribute and in a script alike, and HTML colors the rest. The default
+context of a layer colors nothing: a keyword there only keeps a context from
+starting. A type found in no Syntax file leaves the layer over plain text.
+For example, Smarty over HTML:
 
 ```
   overlay HTML\sFile
@@ -1799,59 +1425,69 @@ layer over plain text.  For example, Smarty over HTML:
       embed soft Smarty\sTag
 ```
 
-Each rule is a line of the form:
+## Keywords <a id="syntax-keywords"></a>
 
-**keyword**
-[**whole**|**wholeright**|**wholeleft**]
-[**linestart**]
-*string foreground*
-*[background]*
-*[attributes]*
+A keyword of a context is given by the line:
 
-Context or keyword strings are interpreted, so that you can include tabs
-and spaces with the sequences \\t and \\s.  Newlines and backslashes are
-specified with \\n and \\\\ respectively.  Since whitespace is used as a
-separator, it may not be used as is.  Also, \\\* must be used to specify
-an asterisk.  The \* itself is a wildcard that matches any length of
-characters.  For example,
+```
+keyword [whole|wholeright|wholeleft] [linestart] <string> [<foreground>] [<background>] [<attributes>]
+```
+
+The strings of keywords and of context delimiters are read so:
+
+|  |  |
+|--|--|
+| \\t, \\s | Tab and space: blanks separate the words of the line and cannot be used as they are |
+| \\n, \\r | Newline and carriage return |
+| `\\` | Backslash |
+| \\\* | Asterisk |
+| \* | Any characters, any number of them |
+| + | Any number of word characters, including none |
+| \\[abc\\] | Any number of characters from the set |
+| \\{abc\\} | One character of the set |
+
+A pattern cannot be the first or the last character of a context delimiter.
+For example,
 
 ```
   keyword         '*'      green
 ```
 
-colors all C single character constants green.  You also could use
+colors the C single character constants green, and
 
 ```
   keyword         "*"      green
 ```
 
-to color string constants, but the matched string would not be allowed
-to span across multiple newlines.  The wildcard may be used within
-context delimiters as well, but you cannot have a wildcard as the last
-or first character.
+colors the string constants, as long as they do not run across a newline.
 
-Important to note is the line
+The line
 
 ```
   keyword  \\\n  brightgreen
 ```
 
-This line defines a keyword containing the backslash and newline
-characters.  Since the keywords are matched before the context
-delimiters, this keyword prevents the context from ending at the end of
-the lines that end in a backslash, thus allowing C preprocessor
-directive to continue across multiple lines.
+gives a keyword of a backslash and a newline. Keywords are matched before
+the context delimiters, so it keeps the context from ending at the end of a
+line with a backslash, and a C preprocessor directive goes on across several
+lines.
 
-The possible colors are: black, gray, red, brightred, green,
-brightgreen, brown, yellow, blue, brightblue, magenta, brightmagenta,
-cyan, brightcyan, lightgray and white. The special keyword "default" means
-the terminal's default. Another special keyword "base" means the main
-colors, it is useful as a placeholder if you want to specify attributes
-without modifying the background color. When 256 colors are available,
-they can be specified either as color16 to color255, or as rgb000 to rgb555
+A line
+**define**
+*name words...*
+gives a name that stands for these words in the rules, such as
+**define comment brown**.
+
+## Colors and attributes <a id="syntax-colors"></a>
+
+The colors: black, gray, red, brightred, green, brightgreen, brown, yellow,
+blue, brightblue, magenta, brightmagenta, cyan, brightcyan, lightgray and
+white. "default" is the default color of the terminal, "base" the main
+colors of the editor; it sets attributes without changing the background
+color. With 256 colors there are also color16 to color255, rgb000 to rgb555
 and gray0 to gray23.
 
-Instead of a color, the foreground may be a scope token, a word in capitals
+The foreground may be a scope token instead of a color: a word in capitals
 that says what the text is rather than how it looks:
 
 ```
@@ -1861,79 +1497,42 @@ context  " " STRING_QUOTED_DOUBLE
 keyword  linestart TODO  KEYWORD_OTHER_TODO black
 ```
 
-The color of a token comes from the skin, so that one skin colors the
-program and the text alike, and every language in the same way; see
+The color of a token comes from the skin, so one skin colors the program and
+the text, and every language in the same way; see
 [Skins](#skins).
-A token is read as a scope, the token in lower case with dots for its
-underscores: KEYWORD_CONTROL_IMPORT is keyword.control.import, a kind of
-keyword.control, which is a kind of keyword. The names are those of the
-scopes of Sublime Text and TextMate. What the skin does not color keeps the
-colors mcedit gave that kind of text. A background or attributes after a
-token stand over the colors of mcedit, as black does above, but not over a
-background or attributes the skin gives that token itself. A token may
-stand in a define, and on the number, string and symbols lines of
-line-local rules. The syntax files installed with bluerig use tokens alone;
-the list of the tokens they use, with the colors of mcedit, is in
+A token is read as a scope: in lower case, with dots for the underscores.
+KEYWORD_CONTROL_IMPORT is keyword.control.import, a kind of keyword.control,
+which is a kind of keyword. These are the scope names of Sublime Text and
+TextMate. What the skin does not color keeps the colors mcedit gave that
+text. A background or attributes after a token stand over the colors of
+mcedit, as black does above, but not over a background or attributes the
+skin gives the token itself. A token works in a define too, and on the
+number, string and symbols lines of line-local rules. The installed syntax
+files use tokens only; the list of them with the colors of mcedit is in
 **{{pkgdatadir}}/syntax/README.txt**.
 
-If the syntax file is shared with
-**cooledit**,
-it is possible to specify different colors for
-**bluerig**
-and
+A syntax file shared with
 **cooledit**
-by separating them with a slash, e.g.
+gives the colors for both with a slash, and bluerig takes the color before
+it:
 
 ```
 keyword  #include  red/Orange
 ```
 
-**bluerig**
-uses the color before the slash.  See cooledit(1) for supported
-**cooledit**
-colors.
+The attributes are bold, italic, underline, reverse and blink, several
+joined with a plus sign.
 
-Attributes can be any of bold, italic, underline, reverse and blink, appended by a
-plus sign if more than one are desired.
+## Other lines <a id="syntax-other"></a>
 
-Comments may be put on a separate line starting with the hash sign (#).
-
-If you are describing case insensitive language you need to use
-**caseinsensitive**
-directive. It should be specified at the beginning of syntax file.
-
-Because of the simplicity of the implementation, there are a few
-intricacies that will not be dealt with correctly but these are a minor
-irritation.  On the whole, a broad spectrum of quite complicated
-situations are handled with these simple rules.  It is a good idea to
-take a look at the syntax file to see some of the nifty tricks you can
-do with a little imagination.  If you cannot get by with the rules I
-have coded, and you think you have a rule that would be useful, please
-email me with your request.  However, do not ask for regular expression
-support, because this is flatly impossible.
-
-The special
-**line-local**
-syntax mode is intended for plain text.  It resets at every newline and
-screen boundary, and only scans the displayed text.  It supports
-**number**
-*max foreground*
-for decimal numbers up to
-*max*
-digits,
-**string**
-*quote foreground*
-for single- or double-quoted strings, and
-**symbols**
-*characters foreground*
-for individually colored punctuation characters.
-
-A useful hint is to work with as much as possible with the things you
-can do rather than try to do things that this implementation cannot deal
-with.  Also remember that the aim of syntax highlighting is to make
-programming less prone to error, not to make code look pretty.
-
-The syntax highlighting can be toggled using Ctrl-s shortcut.
+|  |  |
+|--|--|
+| # ... | A comment, on a line of its own |
+| caseinsensitive | At the start of the file: the case of letters does not matter |
+| line-local | The mode for plain text: resets at every newline and at the screen edge and reads only the text shown |
+| number *max* *color* | In line-local: decimal numbers of up to *max* digits |
+| string *quote* *color* | In line-local: strings in single or double quotes |
+| symbols *characters* *color* | In line-local: punctuation characters colored one by one |
 
 # Colors
 
@@ -2192,157 +1791,50 @@ section: show the labels of the function keys at the bottom of the screen.
 
 # Settings in the ini file <a id="internal-file-editor-options"></a>
 
-Most settings are made in the dialogs of the
+The dialogs of the
 **Options**
-menu, and
+menu make most settings, and
 **Save setup**
 writes them to the
 **[bluerig]**
 section of
 **~/.config/bluerig/ini**.
-The file can be edited by hand as well; these are the names the editor
-settings have there. Unless said otherwise, 1 turns a setting on and 0 turns
-it off.
+These are the editor settings of that file: 1 turns a setting on, 0 off, and
+the default comes last.
 
-*editor_tab_spacing*
-: Interpret the tab character as being of this length.
-Default is 8. You should avoid using
-other than 8 since most other editors and text viewers
-assume a tab spacing of 8. Use
-**editor_fake_half_tabs**
-to simulate a smaller tab spacing.
-
-*editor_fill_tabs_with_spaces*
-: Never insert a tab character. Rather insert spaces (ascii 32) to fill to the
-desired tab size.
-
-*editor_return_does_auto_indent*
-: Pressing return will tab across to match the indentation
-of the first line above that has text on it.
-
-*editor_backspace_through_tabs*
-: Make a single backspace delete all the space to the left
-margin if there is no text between the cursor and the left
-margin.
-
-*editor_fake_half_tabs*
-: This will emulate a half tab for those who want to program
-with a tab spacing of 4, but do not want the tab size changed
-from 8 (so that the code will be formatted the same when displayed
-by other programs). When editing between text and the left
-margin, moving and tabbing will be as though a tab space were
-4, while actually using spaces and normal tabs for an optimal fill.
-When editing anywhere else, a normal tab is inserted.
-
-*editor_option_save_mode*
-: Possible values 0, 1 and 2.  The save mode (see the options menu also)
-allows you to change the method of saving a file.  Quick save (0) saves
-the file immediately, truncating the disk file to zero length (i.e.
-erasing it) and then writing the editor contents to the file.  This
-method is fast, but dangerous, since a system error during a file save
-will leave the file only partially written, possibly rendering the data
-irretrievable.  When saving, the safe save (1) option enables creation
-of a temporary file into which the file contents are first written.  In
-the event of a problem, the original file is untouched.  When the
-temporary file is successfully written, it is renamed to the name of the
-original file, thus replacing it.  The safest method is create backups
-(2): a backup file is created before any changes are made.  You
-can specify your own backup file extension in the dialog.  Note that
-saving twice will replace your backup as well as your original file.
-
-*editor_word_wrap_line_length*
-: Line length to wrap at. Default is 72.
-
-*editor_backup_extension*
-: Symbol to add to name of backup files. Default is "~".
-
-*editor_line_state*
-: Show the line state column of the editor: the line numbers, and the marks of
-the folds and of the lines the filter hides. Alt-n toggles this option.
-
-*editor_visible_spaces*
-: Toggle "show visible trailing spaces".  If editor_visible_spaces=1, they are shown
-as '.'
-
-*editor_visible_tabs*
-: Toggle "show visible tabs".  If editor_visible_tabs=1, tabs are shown as '<---->'
-
-*editor_show_control_chars*
-: Show control characters in caret notation, for example '^M' or '^L'.
-If editor_show_control_chars=0, each of them takes one blank cell instead.
-The "Toggle control characters" item of the Command menu switches this option.
-
-*editor_persistent_selections*
-: Do not remove block selection after cursor movement.
-
-*editor_drop_selection_on_copy*
-: Reset selection after copy to clipboard.
-
-*editor_cursor_beyond_eol*
-: Allow moving cursor beyond the end of line.
-
-*editor_cursor_after_inserted_block*
-: Allow moving cursor after inserted block.
-
-*editor_syntax_highlighting*
-: enable syntax highlighting.
-
-*editor_edit_confirm_save*
-: Show confirmation dialog on save.
-
-*editor_option_typewriter_wrap*
-: Break the line at
-**editor_word_wrap_line_length**
-while it is typed, the way a typewriter does. One of the three wrap modes of
-the options dialog.
-
-*editor_option_auto_para_formatting*
-: Format the paragraph the cursor is in while it is typed. The other of the
-three wrap modes; off means no wrapping at all.
-
-*editor_option_save_position*
-: Save file position on exit.
-
-*editor_group_undo*
-: Combine UNDO actions for several of the same type of action (inserting/overwriting,
-deleting, navigating, typing)
-
-*editor_wordcompletion_collect_entire_file*
-: Search autocomplete candidates in entire file (1) or just from
-beginning of file to cursor position (0).
-
-*editor_wordcompletion_collect_all_files*
-: Search autocomplete candidates from all loaded files (1, default), not only from
-the currently edited one (0).
-
-*editor_stop_format_chars*
-: Set of characters to stop paragraph formatting. If one of those characters
-is found in the beginning of line, that line and all following lines of paragraph
-will be untouched. Default value is
-"**-+\*\\,.;:&>**".
-
-*editor_state_full_filename*
-: Show full path name in the status line. If disabled (default), only base name of the
-file is shown.
-
-*editor_filesize_threshold*
-: The size above which a file is opened only after a question. The value takes
-a suffix, as in 64M or 512K. Default is 64M.
-
-*editor_show_right_margin*
-: Mark the column of
-**editor_word_wrap_line_length**
-as the right margin. The "Toggle right margin" item of the Command menu
-switches this option. Disabled by default.
-
-*editor_simple_statusbar*
-: Show a shorter status line, without the offset and the character under the
-cursor. Disabled by default.
-
-*editor_check_new_line*
-: Ask about the missing newline at the end of the file when it is saved. The
-"Check POSIX new line" option of the save mode dialog switches it. Disabled
-by default.
+|  |  |
+|--|--|
+| editor_tab_spacing | The width of a tab; 8 by default. editor_fake_half_tabs gives half tabs |
+| editor_fill_tabs_with_spaces | Inserts spaces instead of a tab character; 0 |
+| editor_return_does_auto_indent | Enter indents like the nearest line with text above; 1 |
+| editor_backspace_through_tabs | Backspace deletes all the blank space to the left margin when no text stands between the cursor and the margin; 0 |
+| editor_fake_half_tabs | A tab between the left margin and the text moves 4 columns, and the file gets spaces and 8-column tabs; 1 |
+| editor_option_save_mode | How the file is written, see [Edit Save Mode](#edit-save-mode): 0 - straight into the file, and a failure while writing leaves it cut short; 1 - through a temporary file; 2 - with a backup copy; 0 |
+| editor_word_wrap_line_length | The line length for wrapping; 72 |
+| editor_backup_extension | The suffix of a backup file name; ~ |
+| editor_line_state | Shows the line state column: numbers, folds, hidden runs; 0. Alt-n switches it |
+| editor_visible_spaces | Shows the trailing spaces as dots; 1 |
+| editor_visible_tabs | Shows tabs as \<----\>; 1 |
+| editor_show_control_chars | Shows control characters as ^M, ^L, else as a blank cell; 1. An entry of the Command menu switches it |
+| editor_persistent_selections | Keeps the selection after the cursor moves; 1 |
+| editor_drop_selection_on_copy | Drops the selection after a copy to the clipboard file; 1 |
+| editor_cursor_beyond_eol | Lets the cursor go past the end of the line; 0 |
+| editor_cursor_after_inserted_block | Puts the cursor after an inserted block; 0 |
+| editor_syntax_highlighting | Switches the syntax highlighting on; 1 |
+| editor_edit_confirm_save | Asks before writing; 1 |
+| editor_option_typewriter_wrap | Breaks the line at editor_word_wrap_line_length while typing; 0 |
+| editor_option_auto_para_formatting | Formats the paragraph under the cursor while typing; 0 |
+| editor_option_save_position | Keeps the position in the file on exit; 1 |
+| editor_group_undo | Undoes several actions of one kind in a row at once; 0 |
+| editor_wordcompletion_collect_entire_file | Takes the words for completion from the whole file, not only up to the cursor; 0 |
+| editor_wordcompletion_collect_all_files | Takes the words for completion from all the open files; 1 |
+| editor_stop_format_chars | Paragraph formatting leaves alone a line that starts with one of these characters, and the lines after it; -+\*\\,.;:&\> |
+| editor_state_full_filename | Shows the full path in the status line, not the file name; 0 |
+| editor_filesize_threshold | The size over which a file is opened after a question, with a suffix K or M; 64M |
+| editor_show_right_margin | Marks the column editor_word_wrap_line_length as the right margin; 0. An entry of the Command menu switches it |
+| editor_simple_statusbar | Shows a short status line, without the offset and the character under the cursor; 0 |
+| editor_check_new_line | Asks about a missing newline at the end of the file when saving; 0. A check box of the save mode dialog switches it |
+| editor_sticky_windows | Resizes windows whose frames touch as one, see [Window menu](#window-menu); 0 |
 
 # ENVIRONMENT
 

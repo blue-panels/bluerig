@@ -2801,7 +2801,7 @@ static const mc_ep_cmd_menu_entry_t ctags_menu_entries[] = {
 static const mc_editor_plugin_t ctags_plugin_descriptor = {
     .api_version = MC_EDITOR_PLUGIN_API_VERSION,
     .name = "ctags",
-    .display_name = "&Ctags...",
+    .display_name = N_ ("&Ctags..."),
     .flags = MC_EPF_HAS_MENU,
     .open = ctags_plugin_open,
     .close = ctags_plugin_close,
@@ -2818,6 +2818,9 @@ static const mc_editor_plugin_t ctags_plugin_descriptor = {
     .cmd_menu_entries = ctags_menu_entries,
     .cmd_menu_entry_count = G_N_ELEMENTS (ctags_menu_entries),
     .get_menu_shortcut = ctags_get_menu_shortcut,
+    .help_file = "ctags.md",
+    .help_node = "ctags",
+    .summary = N_ ("Jumps to definitions and finds where a name is used, from a ctags index"),
 };
 
 /* --------------------------------------------------------------------------------------------- */

@@ -90,7 +90,7 @@
 #define VIEWER_SIZE_RIGHT  50
 #define VIEWER_SIZE_BOTTOM 25
 
-#define PREVIEW_TITLE      "Preview"
+#define PREVIEW_TITLE      N_ ("Preview")
 
 // where a window stands, to stand there again when it is shown
 #define VIEWER_DOCK_NONE   0
@@ -893,8 +893,8 @@ preview_toggle (viewer_t *v, void *edit)
         r = a;
         r.cols = (int) CLAMP (a.cols * VIEWER_SIZE_RIGHT / 100, 10, a.cols);
         r.x = a.x + a.cols - r.cols;
-        (void) viewer_window_new (v, &r, VIEWER_DOCK_RIGHT, FALSE, PREVIEW_TITLE, NULL, 0, FALSE,
-                                  &v->preview_id);
+        (void) viewer_window_new (v, &r, VIEWER_DOCK_RIGHT, FALSE, _ (PREVIEW_TITLE), NULL, 0,
+                                  FALSE, &v->preview_id);
     }
     else
         viewer_show (v, win, FALSE, v->host->window_current (v->host));
@@ -1100,6 +1100,9 @@ static const mc_editor_plugin_t viewer_plugin = {
     .activate = viewer_plugin_activate,
     .handle_key = viewer_plugin_handle_key,
     .handle_event = viewer_plugin_handle_event,
+    .help_file = "viewer.md",
+    .help_node = "preview",
+    .summary = N_ ("Shows the file the way it is meant to read, in a window at the right of it"),
 };
 
 /* --------------------------------------------------------------------------------------------- */
