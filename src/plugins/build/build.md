@@ -1,114 +1,65 @@
 # Build <!-- help:notitle -->
 
-**Build plugin of the editor**
+**Build**
 
-Builds the project of the file in front, shows what the compiler says, marks
-the lines it names and goes to them.
+Builds the project, shows the output of the compiler as a list of errors
+and goes to the lines with errors and warnings.
+
+|  |  |
+|--|--|
+| Ctrl-F9, Alt-B | Build the project |
+| Alt-J | Next error |
+| Alt-K | Previous error |
+| Enter | In the list of errors: go to the error |
+
+The keys are changed in the *[build]* section of the keymap file. The same
+commands are in the Project menu.
+
+Saves the modified files of the project before the build. The output of the
+compiler comes in the **Build** window at the bottom of the screen; Project >
+Build output shows this window again. Alt-J goes to the warnings when there
+are no errors.
+
+**The list of errors**
+
+After the build the window shows the result, then the errors and warnings,
+one line each, with their notes under them, and at the end the rest of the
+output of the compiler. The cursor of the list follows Alt-J and Alt-K. When
+the cursor moves in the list, the line of the error is shown in its file, if
+the file is open; Enter or a double click goes to it. The cursor goes to the
+column the compiler named.
+
+Lines with errors are marked in the gutter with a cross, lines with warnings
+with an exclamation mark, until the next build. The keys *build-error-char*
+and *build-warning-char* of the *[widget-editor]* section of the skin set the
+marks, *builderror* and *buildwarning* of the *[editor]* section their
+colors.
 
 **How the project is built**
 
-The project is the one the project plugin finds for the file. Its build is
-found by itself:
+The plugin finds by itself how to build the project:
 
-*meson*
-: a build directory of meson in the project or next to it, whose source is
-the project: *meson compile -C* that directory.
+|  |  |
+|--|--|
+| meson | meson compile -C with the meson build directory of the project |
+| cmake | cmake --build with the cmake build directory |
+| make | make, if the project has a Makefile |
+| language | the command of the language from presets.ini, e.g. cargo build or go build ./... |
 
-*cmake*
-: likewise, a build directory of cmake: *cmake --build* that directory.
+Project > Build command... sets a build command of the project's own, which
+takes precedence over the one found. If nothing is found, the plugin asks for a command at
+the first build.
 
-*make*
-: a *Makefile* in the project: *make* there.
+**Languages and project settings**
 
-*the language*
-: else the command of the language of the project, as *presets.ini* has it:
-*cargo build --message-format=short* for a project with a *Cargo.toml*,
-*go build ./...* for one with a *go.mod*. Its errors are listed as those of
-gcc are; a line of go, *./main.go:12:2: undefined: x*, has no word *error*,
-and is an error when the file it names is there.
+The file *presets.ini* in the configuration directory of bluerig describes
+the languages: the markers in the root of a project, the file extensions, the
+build command and the way to debug. The file *~/.config/bluerig/presets.ini*
+extends it, and each of its groups replaces the bluerig group of the same
+name entirely.
 
-**Presets of the languages**
-
-*presets.ini* of bluerig, in its directory of configuration, has a group for
-each language: the files in the root of a project that tell it (*markers*),
-the endings of its files (*extensions*), the command that builds it
-(*build*), and how it is debugged (see the help of the debugger). The
-language of a project is that of a marker in its root, else that of the file
-in front, by its ending, when the file is in the project.
-*~/.config/bluerig/presets.ini* has groups of its own: they come first, and a
-group of it replaces that of bluerig of its name, all of it. A mistake in it
-is told once, with its line.
-
-**The settings of a project**
-
-A project opened as one, with *bluerig -D* or **Open project**, takes a copy
-of the preset of its language: *.bluerig/project.ini* in the project, its
-group *[project]*, with the keys of *presets.ini* and *language*, the name of
-the language. From then on the project has it: what is changed there stays.
-A key the copy has not is that of the language in *presets.ini*, of the user
-first, so that what bluerig adds to a preset later reaches the projects copied
-before; a key left empty, *build=*, has none. A project with a build
-system of its own, meson, cmake or a *Makefile*, has no *build* in its copy.
-A file opened alone, without a project, leaves no file in its directory. A
-*.bluerig/project.ini* that cannot be read is told of, with its line, and left
-as it is until it is put right.
-
-**Project → Build command...** gives a project a command of its own,
-*command* in *.bluerig/project.ini*, which then goes before what was found.
-With nothing found the plugin asks for one the first time. A command given
-before there was this file, kept with the settings of the user, goes into
-it with the copy.
-
-**Project → Language defaults of the project...** makes *.bluerig/project.ini*
-the preset of the language again, without the command given to the project.
-The debug configurations stay as they are, until they are made anew.
-
-**The keys**
-
-These are the default keys; they can be changed in **Options → Key
-bindings → Editor → Build**, or in the *[build]* section of the keymap.
-
-**Ctrl-F9, Alt-B**
-: Build the project: the modified files of it are saved first, and the
-output comes in the window **Build** at the bottom of the screen;
-**Project → Build output** and **Window → Build output** show it again.
-
-**Alt-J**
-: Go to the next error, or to the next warning when there is no error.
-
-**Alt-K**
-: Go to the previous one.
-
-**Enter**
-: In the list of the window **Build**: go to the error of its line.
-
-**The list of the errors**
-
-While the build runs, the window **Build** shows what the compiler says.
-When it is over and the compiler has named lines, the window is a list, as
-the window Message of Turbo C was: the result first, then an error or a
-warning a line, *Error bad.c 3: 'x' undeclared*, its notes under it, and
-what the compiler said last. The cursor of the list is on the error gone to;
-**Alt-J** and **Alt-K** move it with the file. In the list, the
-cursor moved by a key or the mouse shows the line of its error in its file,
-when a window has the file, the list keeping the focus; **Enter** or a
-double click goes to it, opening the file. Enter on marked text copies it.
-The cursor goes to the column the compiler named. Gone to while the build
-runs, or with the window closed, the message of the error stands after its
-line.
-
-**The marks**
-
-A line the compiler has named an error of is marked with a cross in the
-gutter, one with a warning with an exclamation mark, till the next build.
-The skin gives them in *[widget-editor]* (*build-error-char*,
-*build-warning-char*) and their colors in *[editor]* (*builderror*,
-*buildwarning*).
-
-**For the other plugins**
-
-The plugin offers the service *build*: *info* (argument *root*) tells how the
-project is built and the programs with debug information it has built,
-newest first; *elf* (argument *path*) whether a file is a program, has debug
-information and was built with optimization; *run* (argument *root*) starts
-a build, whose end the signal *finished* tells (*root*, *ok*, *errors*).
+A project opened with *bluerig -D* or Project > Open project... gets a copy of
+the settings of its language in *.bluerig/project.ini*; changes in it stay
+with the project. A key the copy does not have comes from *presets.ini*.
+Project > Language defaults of the project... makes the copy from the
+language settings again.

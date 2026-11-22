@@ -1,103 +1,52 @@
 # Ctags <!-- help:notitle -->
 
-**Ctags plugin of the editor**
+**Ctags**
 
-Jumps to the definition of the name under the cursor, and finds where a name
-is used, from a tags file that ctags built.
+Goes to the definitions of names and finds the places where a name is used,
+from an index that ctags builds.
+
+|  |  |
+|--|--|
+| Ctrl-Enter | Definition of the name under the cursor |
+| Ctrl-click | Definition of the name under the mouse |
+| Ctrl-Backslash | Find a definition by its name |
+| Alt-g | Find references to the name under the cursor |
+| Alt-Minus | Back to the place before the jump |
+| Alt-Plus | Forward |
+| Alt-h | History of the jumps |
+| Alt-= | Members of a class or structure |
+| Alt-q | Search for a symbol of the project |
+| Alt-y | Symbols of the current file |
+| Shift-Tab | Complete the symbol before the cursor |
+
+If a name has several definitions, shows a list of them. In a file that a
+language server serves, Ctrl-Enter and Alt-g ask the server first, and the
+server handles Ctrl-click itself. Alt-Minus and Alt-Plus count the jumps of
+the language server too. The history of the jumps lasts as long as the
+editor runs.
+
+The same commands are in the Navigate menu. The Ctags... item of the Plugins
+menu adds a file search, loading a tags file, reindexing and the list of
+repositories.
 
 **The index**
 
-The index of a project is kept by the plugin itself: when a command of the
-plugin is first used in a file of a project (a directory with *.bluerig*,
-*.git* or a build file, the project the project plugin finds), or the file
-is opened by *bluerig --debug*, the plugin indexes the project in the
-background with ctags, into *.bluerig/tags* of the project, and does so again
-when the index is older than the files and whenever a file of the project is
-saved. A file opened without *--debug* does not wait for the index.
-The files indexed are those of the project: what git knows and does not
-ignore, else what is under it but hidden directories and build trees.
+Builds the index of the project by itself, in the background, at the first
+command in a file of the project, and at startup with *bluerig -D*. Keeps it in
+*.bluerig/tags* of the project and updates it after every save of a file of
+the project. A *tags* file at the root of the project is not rebuilt but
+used as it is. Without a project, looks for *tags* in the directory of the
+file and above it.
 
-A *tags* file at the root of the project is the user's: it is used as it is
-and not built again by itself; Reindex builds it again. Without a project,
-a *tags* file is looked for in the directory of the file and the directories
-above it. The home directory and the root of the disk are not indexed by
-themselves.
-
-The plugin needs the program ctags, Universal Ctags best:
-
-```
-sudo apt install universal-ctags
-```
-
-When it is not there, a command of the plugin says so, once.
-
-The options of ctags for the index of a project are those of the settings
-(*ctags_args*), unless the project has its own: the form **Debug
-configuration** of the debugger has a line for them, kept with the settings
-of the user by the root of the project.
-
-**The keys**
-
-These are the default keys; they are kept in
-*ctags.keymap*
-(see Settings below).
-
-**Ctrl-Enter**
-: Jump to the declaration of the name under the cursor; in a file a language
-server serves, it is asked first, and so for Find references. Where several
-declarations answer, a list asks which one. A click with Ctrl on a name does
-the same, when no language server knows the file.
-
-**Ctrl-Backslash**
-: Find a declaration by its name.
-
-**Alt-g**
-: Find the references to the name under the cursor.
-
-**Alt-Minus, Alt-Plus**
-: Back to where the last jump started, and forward again, like the back and
-forward of a browser. Every jump counts, those of a language server too: Go
-to definition, Find references, a click with Ctrl, a problem chosen. A file
-open in a window is shown in it, as it is, its undo kept; a file changed
-here is not let go, the other one opens in a window of its own.
-
-**Alt-h**
-: The history of the jumps: each place with the text of its line, the list
-open at the place the editor is; Enter goes to the one chosen.
-
-**Alt-=**
-: The members of a class or a structure.
-
-**Alt-q**
-: Search a symbol of the project.
-
-**Alt-y**
-: The symbols of the current file.
-
-**Shift-Tab**
-: Complete the symbol before the cursor.
-
-The same commands, and a few more (search a file, load a tags file by hand,
-manage the repositories, reindex, the configuration), are in the Navigate
-menu of the editor and in the menu of the plugin in the Plugins menu.
-
-**The dialogs**
-
-The list of definitions shows the file, the line and the kind of every hit;
-Enter opens the one under the cursor, Esc leaves the editor where it is. The
-list of references does the same for the places a name is used.
+Needs the program ctags, preferably Universal Ctags (package universal-ctags). The
+ctags options of a project are set in the Debug configuration form of the
+debugger.
 
 **Settings**
 
-The settings of the plugin, which the Manage plugins dialog of the Options
-menu opens, hold the ctags command and its arguments, whether the search is
-case sensitive, and whether the tags file is looked for by itself. They are
-kept in the
-**[ctags]**
-section of
-*~/.config/bluerig/ini*.
-The keys are read from
-*ctags.keymap*
-of the system configuration directory of bluerig, and then from
-*~/.config/bluerig/ctags.keymap*,
-which overrides it. The history of the jumps lasts as long as the editor.
+The *[ctags]* section of *~/.config/bluerig/ini* keeps the ctags command, its
+options, the case sensitivity of the search and the automatic search for the
+tags file. The Manage plugins dialog of the Options menu changes them.
+
+The keys come from *ctags.keymap* in the system configuration directory of
+bluerig, and *~/.config/bluerig/ctags.keymap* overrides them.

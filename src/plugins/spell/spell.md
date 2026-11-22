@@ -1,61 +1,37 @@
 # Spell <!-- help:notitle -->
 
-**Spell checking**
+**Spell**
 
-Checks the text of the editor with aspell or hunspell and offers what it
-suggests. The library of the engine and the dictionary of the language have
-to be installed.
+Checks the spelling of the text with aspell or hunspell and offers
+replacements. Needs the engine's library and a dictionary for the
+language.
 
-**The keys**
+|  |  |
+|--|--|
+| Ctrl-p | Check the word under the cursor |
 
-**Ctrl-p**
-: Check the word under the cursor. The word is replaced by what is chosen, or
-left as it is.
+The Spell item of the Plugins menu checks the whole file: the check goes word
+by word and stops at every word that is not in the dictionary.
 
-The whole file is checked from the Plugins menu of the editor, which walks the
-words one by one and stops at every one the engine does not know.
+**The check dialog**
 
-**The dialog**
+Shows the word, the replacements, the language and the engine.
 
-The word the engine stumbled on is shown with what it suggests, and the
-language and the engine of the check.
-
-**Enter, Replace**
-: Take the suggestion under the cursor and go on.
-
-**Skip**
-: Leave the word as it is and go on.
-
-**Add word**
-: Add the word to the personal dictionary, so that it is never asked about
-again.
-
-**Esc, Cancel**
-: Leave the word as it is and stop the check.
+|  |  |
+|--|--|
+| Enter, Replace | Replace the word with the chosen replacement |
+| Skip | Leave the word as it is |
+| Add word | Add the word to the personal dictionary |
+| Esc, Cancel | Stop the check |
 
 **Settings**
 
-The settings of the plugin, which the Manage plugins dialog of the Options
-menu opens, choose the engine, Aspell or Hunspell, and the language: a name
-that the engine knows, en, ru and so on. Select... lists the dictionaries that
-are installed; for aspell
+The Manage plugins dialog of the Options menu sets the engine, Aspell or
+Hunspell, and the language: en, ru and other names the engine knows.
+Select... shows the installed dictionaries; for aspell the command
+*aspell dump dicts* shows them too. The language NONE turns the check off.
 
-```
-aspell dump dicts
-```
-
-prints them as well. The language
-**NONE**
-switches the checking off. The settings are kept in the
-**[EditorPluginSpell]**
-section of
-*~/.config/bluerig/ini*,
-as
-*engine*
-and
-*language*.
-The keys of the plugin are read from
-*spell.keymap*
-of the system configuration directory of bluerig, and then from
-*~/.config/bluerig/spell.keymap*,
-which overrides it.
+The settings are kept in the *[EditorPluginSpell]* section of
+*~/.config/bluerig/ini* (keys *engine* and *language*). The keys come from
+*spell.keymap* in the system configuration directory of bluerig, and
+*~/.config/bluerig/spell.keymap* overrides them.

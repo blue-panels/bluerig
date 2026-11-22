@@ -1,486 +1,238 @@
 # Debugger <!-- help:notitle -->
 
-**Debugger plugin of the editor**
+**Debugger**
 
-Runs a program of the project under GDB, or under the debug adapter of its
-language: breakpoints in the gutter of the source, steps through it from the
-source window, and the call stack, the local variables and the watches
-beside it.
+Runs the program of the project under GDB or the debug adapter of its
+language: puts breakpoints in the gutter, steps in the source window and
+shows the call stack, the variables and the watches beside it.
 
-**The start**
+|  |  |
+|--|--|
+| Shift-F9 | Build and run, or continue |
+| Ctrl-F8, Ctrl-B | Toggle breakpoint |
+| Alt-F6 | Breakpoint condition |
+| Alt-F5 | To the debugger panel and back |
+| Ctrl-F2 | While debugging: stop the program |
 
-Put a breakpoint on a line with **Ctrl-F8** and run with **Shift-F9** (or
-**Debug → Toggle breakpoint** and **Debug → Start or continue**). The first
-time, the debugger makes a configuration of its own:
+These keys work in any file window. Change them in the *[debugger]*
+section of the keymap, for example *DebugStepOver = alt-o*; there *f15* is
+Shift-F5, *f17* is Shift-F7, *f18* is Shift-F8. The Debug menu has the
+commands too.
 
-1. The project is the one chosen with **Project → Open project...**, else
-the one the project plugin finds for the file: no directory has to be named.
-Another project chosen there, or the project closed, the debugger follows.
-2. The program is the one the build has made, found by the build plugin
-among the programs of the project with debug information; of several, the
-newest come first in a list to choose from. The language of the project,
-as its copy in *.bluerig/project.ini* has it, else *presets.ini* (see the help
-of the build), gives the rest: the programs not to choose from (*hide*), the
-program before the first build (*program*) and GDB (*gdb*, the first of the
-list that is there). In a
-project of Cargo, with a Cargo.toml, the copies cargo keeps for itself, with
-a hash in target/*/deps, and its build scripts are none to choose from, so
-that the program of the package is taken unasked; before the first build it
-is target/debug and the name of the package. GDB is rust-gdb when it is
-there, the printers of the types of Rust with it. The title of the form
-names the language: *Debug configuration: rust*.
-3. A program without debug information, or built with optimization, is
-told of, with the command that builds it fit for debugging.
-4. The form **Debug configuration** shows it all at once: the name, the
-program, its arguments, the directory it runs in, its environment, GDB, the
-options of ctags for the index of the symbols of the project (when the
-plugin ctags is on; a change indexes the project again), and whether the
-project is built before every start. Enter takes it.
+**First start**
 
-Then the project is built (its modified files saved first), GDB starts, and
-the program runs to the first breakpoint. When the build fails, the start
-waits: the lines with errors are marked, and **Alt-J** goes from one
-to the next.
+On the first start the debugger makes a configuration and shows the form
+Debug configuration: the program, its arguments, the directory, the
+environment, GDB, the options of ctags and the build before the start.
+Enter accepts the form.
 
-**The program in a terminal**
+|  |  |
+|--|--|
+| Project | The one the Project plugin finds, or the one chosen in Project > Open project... |
+| Program | Built by the Build plugin with debug information; of several, a list, newest first |
+| Language | From *presets.ini*: GDB, the program before the first build, the adapter; rust-gdb for Rust |
 
-With **Run in a terminal window** checked in the form, as it is at first,
-the program runs in a terminal of its own, the tab **Program** at the
-bottom: what it writes is there, and what is typed there goes to it, every
-key, F1 and F10 too. While the program runs the tab is in front, the console
-behind it, and the panel says so: a program that reads, a question of a script
-for one, waits there for its answer, and a step does nothing till it has it.
-A step or a continue the program is longer at than 0.3 s gives the tab the
-focus, for what is typed to go to it; when it stops, the focus goes back to
-the file it stops in. A quick step leaves the focus where it is.
-While it is stopped, the keys that run it on, Continue, the steps and Stop,
-work in the tab too; while it runs, every key there is the program's.
-A program that takes the whole screen, an editor or
-bluerig itself, runs there as in any terminal. A click on the tab, or
-**Window → Program**, goes to it; **Alt-F5** leaves it for the panel of
-the debugger. The tab stays when the program ends, to be read, and is
-cleared when it starts again. Without the plugin terminal, or unchecked,
-the output of the program comes in the console, and **Send line...** gives
-it a line to read.
+For a program without debug information or built with optimization, the
+debugger says so and names the command that builds it for debugging.
 
-The arguments and the environment are split as a shell would split them,
-but no shell runs them: an entry of the environment with spaces is
-*GREETING="hello world"*.
+The project is built before the start. When the build fails, Alt-J goes to
+the errors.
 
-**Debug mode**
-
-*bluerig --debug DIR* (or *-D DIR*) opens the project of that directory to
-debug it: its latest file instead of an empty one, and at the right the tree
-of the project with the panel of the debugger under it. The panel says what
-to do next while nothing runs.
-
-In debug mode the file windows take the keys of the debugger all the time,
-not only while the program is stopped: F3 to F8 are the debugger's, F2, F9
-and F10 stay Save, the menu and Quit, and the text can be edited as ever.
-**Window → Debug keys in files** turns debug mode on and off without
-*--debug*.
-
-In debug mode the editor asks before it ends, F10 being easy to press by a
-slip; while a program runs under the debugger it asks whether to stop it.
-
-**F3**
-: Index the symbols of the project again, in the background (with the
-plugin ctags); **Navigate** jumps by them.
-
-**F6**
-: Toggle a breakpoint on the line of the cursor.
-
-**F5**
-: Build and run, or go on when the program is stopped.
-
-**The keys anywhere**
-
-These work in a file window too, since the editor has nothing on them:
-
-**Alt-F5**
-: Go to the panel of the debugger, and back to the file.
-
-**Ctrl-F8**, **Ctrl-B**
-: Toggle a breakpoint on the line of the cursor.
-
-**Alt-F6**
-: The condition of the breakpoint on the line of the cursor, a breakpoint
-put there with it when there is none: the program stops there only when the
-condition is true, *i == 7*, *[[ $f == report.pdf ]]*, *x > 2 and y*, in the
-language of the program. An empty one makes it a breakpoint as any other.
-Its mark is a circle with a dot, and the panel shows the condition after
-it: *loop.c:7 main if i == 7*. It can be changed while the program runs. A
-debug adapter that has no conditions says so, and stops there each time.
-**Debug → Breakpoint condition...** too.
-
-**Shift-F9**
-: Run: build the program and start it, or go on when it is stopped. The
-first time it asks what to run.
-
-**Ctrl-F2**
-: Stop the program, while one is debugged; the rest of the time it is Save
-as.
-
-**Exceptions**
-
-**Debug → Exceptions...** chooses the exceptions the program stops on, of the
-selected configuration, kept with it. The debugger offers the kinds:
-
-```
-GDB        C++ exceptions, when thrown or when caught
-debugpy    raised, uncaught, user uncaught
-```
-
-A debug adapter tells its kinds when it starts: the first time the form has
-them after one run. Until some are chosen it stops on those the adapter
-stops on by itself, uncaught ones for debugpy. A test of pytest is no
-uncaught exception, pytest catches it: *User uncaught* stops where it leaves
-the code of the project. A change goes to the program that runs at once.
-
-The stop says which exception it is, in the console: *Stopped on an
-exception: ValueError: bad value*. GDB stops in *__cxa_throw*, which has no
-source; the frame that threw it is the one shown.
-
-**The configurations**
-
-A project may have several. **Project → Debug configurations...** lists
-them, the one **Start** runs marked with a star: **Select** makes the one of
-the cursor that one, **New** guesses another one, **Edit** changes the one of
-the cursor and **Delete** deletes it; the list comes back after them. They
-are kept, when **Keep in the project** is checked, in *.bluerig/debug.ini* in the project, with the names relative to it,
-for everyone who works on it; else with the settings of the user. A project
-new to the debugger has it checked. The breakpoints
-and the watches are one's own: they stay with the settings of the user.
+The arguments and the environment are split as a shell splits them, but no
+shell runs them: *GREETING="hello world"*.
 
 **Step mode**
 
-While the program is stopped the source windows take the debugger keys; the
-keys that move around the text, search, select or switch windows stay the
-editor's, and a key that would change the text beeps.
+While the program is stopped, the source windows take the debugger keys.
+The keys that move, search and select stay the editor's, and a key that
+changes the text beeps.
 
-**F5**, **Shift-F9**
-: Continue.
+|  |  |
+|--|--|
+| F5, Shift-F9 | Continue |
+| Shift-F6 | Pause |
+| F7 | Step into |
+| F8 | Step over |
+| Shift-F8 | Step out |
+| Shift-F7, Ctrl-F7 | Step into by one instruction |
+| Shift-F4 | Step over by one instruction |
+| F4, Alt-F9 | Run to the cursor line |
+| F6 | Toggle breakpoint |
+| Alt-F8 | Evaluate the selection or the word under the cursor |
+| Alt-F10 | Back to the stop line |
+| F3 | Index the symbols of the project again |
+| Shift-F5, Ctrl-F2 | Stop the program |
+| Esc | Back to editing until the next stop |
 
-**Shift-F6**
-: Pause the running program.
+F2, F9 and F10 stay Save, the menu and Quit. Shift-F7 and Shift-F4 belong
+to the debugger only while the program is stopped; the rest of the time
+they are Search again and Replace again.
 
-**F7**, **F8**, **Shift-F8**
-: Step into, step over, step out.
+The keys come from IntelliJ IDEA where the editor leaves them free; F5 and
+F4 are added because F9 and F10 are the menu and Quit.
 
-**Shift-F7**, **Shift-F4**
-: Step into, step over, by one instruction of the machine (**Ctrl-F7** too
-for the first). These two keys are the
-debugger's only while the program is stopped: the rest of the time they are
-Search again and Replace again, in debug mode too.
+**Debug mode**
 
-**F4**, **Alt-F9**
-: Run to the line of the cursor, **Debug → Run to cursor** too: from where
-the program stopped, it stops at that line, at a breakpoint before it, or
-when the function it is in returns. A line of another function is reached
-with a breakpoint, or with **Debug → Run to function...**.
+*bluerig -D DIR* opens the project for debugging: the latest file of the
+project, the project tree at the right and the debugger panel under it. In
+this mode the debugger keys F3-F8 always work in the file windows, and the
+text is edited as usual. Window > Debug keys in files turns this mode on
+without *-D*. Before it quits, the editor asks for confirmation.
 
-**F6**
-: Toggle a breakpoint on the line of the cursor.
+At the start the windows are arranged as in the *Debug* layout: the tree
+and the panel at the right, the console at the bottom. After debugging the
+windows go back to their places. Window > Layout... changes this or turns
+it off.
 
-**F3**
-: Index the symbols of the project again.
+**The program in a terminal**
 
-F2, F9 and F10 stay Save, the menu and Quit.
+With Run in a terminal window checked, the program runs in the Program tab
+at the bottom: its output is there, and all keys go to it. When a step
+takes longer than 0.3 s, the focus goes to the tab, and after the stop it
+comes back to the file. Alt-F5 goes from the tab to the panel. Unchecked,
+the output goes to the console, and Send line... of the Debug menu sends
+the program a line.
 
-**Alt-F8**
-: Evaluate the selection or the word under the cursor; the value comes in a
-dialog that can add it to the watches. Enter changes the text, as in other
-IDEs, and beeps here: Esc first to edit.
+**Debugger panel**
 
-**Alt-F10**
-: Back to the line the program is stopped at, the cursor having gone
-elsewhere; **Debug → Show the stop line** too.
+At the right: the state of the program, Locals, Registers, Watches, Call
+stack and Breakpoints. Under the stop line, *ran 0.004 s* is the time from
+the step to the stop, including the debugger's own time. Window >
+Debugger panel and Window > Debug console reopen the panel and the console.
 
-**Shift-F5**, **Ctrl-F2**
-: Stop the program.
+|  |  |
+|--|--|
+| Up, Down, PgUp, PgDn, Home, End | Move between rows |
+| Right, Left | Open or close |
+| Enter | Open, show the value, go to the frame or breakpoint |
+| Space | Disable or enable the breakpoint |
+| Ins | Add a watch |
+| Del | Remove the watch or breakpoint |
+| Alt-F6 | Breakpoint condition |
+| : | Command of GDB or of the adapter console |
+| F10 | Close the panel |
 
-**Esc**
-: Go back to editing until the next stop.
+A value the step has changed is yellow and marked `*`, a new one is green
+and marked *+*, an error is red. Open values stay open from stop to stop.
+The registers are read only while their section is open, and they open by
+themselves in code without source.
 
-The keys can be changed in **Options → Key bindings → Editor → Debugger**, or
-in the *[debugger]* section of the keymap, *DebugStepOver = alt-o* for one;
-*f15* is the name of Shift-F5, *f18* that of Shift-F8, *f17* that of
-Shift-F7.
+The *[debugger]* section of the skin gives the colors and marks of the
+panel: *title*, *changed*, *added*, *error*, *internal*, *changed-char*,
+*added-char*, *arrow*.
 
-The keys are those of IntelliJ IDEA, PyCharm and CLion where the editor
-leaves them free: F7, F8 and Shift-F8 step, Ctrl-F8 is a breakpoint, Alt-F8
-evaluates, Alt-F9 runs to the cursor, Alt-F10 shows the stop, Shift-F9 runs
-and Ctrl-F2 stops. F9 and F10 stay the menu and Quit, so F5 continues, as in
-NetBeans, and F4 runs to the cursor too.
+**Values in the source**
 
-**The layout of debugging**
+While the program is stopped, the lines of the function up to the stop line
+show, after their text, the values of the variables they use, and in
+assembler the registers. *editnote* in the *[editor]* section of the skin
+gives the color.
 
-When the debugger starts, the windows are put as the layout *Debug* has
-them: the tree of the project at the right, the panel of the debugger under
-it, the console coming at the bottom when there is something in it. When
-it stops, they are put back as they were, the console staying to be read.
-**Window → Layout...** says which windows *Debug* has (save another as
-*Debug*), and turns this off. *bluerig --debug* starts with the layout *Debug*
-and does not keep it as the windows of the project: a file of the project
-opened by itself has the windows it had before.
+**Gutter marks**
 
-**The panel and the console**
+|  |  |
+|--|--|
+| o | Breakpoint |
+| - | Disabled breakpoint |
+| c | Breakpoint with a condition |
+| ? | Breakpoint the debugger has not accepted yet |
+| > | Stop line |
+| @ | Stop line with a breakpoint |
 
-The start puts the panel of the debugger at the right of the source, all its
-height, and the console under the source. The panel has the state of the
-program, the local variables of the frame, the watches, the call stack and
-the breakpoints; the console has the output of the program and what GDB
-says. Under the place of a stop, *ran 0.004 s* is the time from the step or
-the continue to it: a line much slower than the others shows at once. It is no
-measure of the program: the work of the debugger is in it, and the time the
-program waited for what is typed in its tab. **Window → Debugger panel** and **Window → Debug console** open them
-again, beside the windows of the other plugins.
+These are the marks without a skin. The *[widget-editor]* section of the
+skin gives characters of its own, circles and a diamond in darkfar, and the
+*[editor]* section the colors.
 
-The panel is a tree: its parts, Locals, Registers, Watches, Call stack and
-Breakpoints, open and close, and a variable or a watch with members, a
-structure, an array, a pointer to one, an object of Python, opens in place,
-its members under it, read from the debugger as it is opened. What is open
-stays open from a stop to the next, read again there: *p*, *p.meta* open,
-a step shows their new values. The groups debugpy adds to an object of
-Python, *special variables*, *function variables* and *class variables*,
-come after its fields and are gray, and so is what is in them: there is
-seldom anything to look at there. A value the last step has changed is
-yellow, marked *\** and shown after the value it had, *0 -> 1*, as the row
-has room; a value it has made, a variable of the function there was none of
-or a member of an object, is green and marked *+*. An error of the debugger
-is red, of a watch it cannot evaluate say. The skin gives these colors and
-marks in *[debugger]*: *title*, *changed*, *added*, *error*, *internal*,
-*changed-char*, *added-char* and *arrow*. In the panel the debugger keys
-work as in step mode (there F6 and F4 work on the cursor of the topmost file
-window; F10 closes the panel, and while a program is debugged it asks first:
-**Stop** the session, **Close panel** and let it go on, or **Cancel**), and:
+A breakpoint moves with its line. On a line without code it moves to the
+next line with code.
 
-**Up**, **Down**, **PgUp**, **PgDn**, **Home**, **End**
-: Move from one row to another; a letter goes to the next row that starts
-with it.
+**Breakpoint condition**
 
-**Right**, **Left**
-: Open a part or a value with members; close it, or go up to the one it is
-of. A click on the mark before it does so too.
+Alt-F6 sets a condition in the language of the program: *i == 7*,
+*x > 2 and y*. The program stops only when the condition is true. An empty
+condition makes the breakpoint a plain one. The panel shows the condition:
+*loop.c:7 main if i == 7*.
 
-**Enter**
-: On a value with members, open or close it; on one with none, its whole
-value in a dialog that can add it to the watches; on a frame, go to it; on a
-breakpoint, go to its line.
+**Debug menu**
 
-**Evaluate expression...** and **Alt-F8** in a source window show an
-expression as a tree in a dialog, its members as in the panel; **Add watch**
-there watches the member of the cursor, *p->corner[1]* for one, by the
-expression the debugger gives or one made as C has it.
+|  |  |
+|--|--|
+| Breakpoint on function... | Breakpoint on a project function by name |
+| Run to function... | Continue to a function |
+| Call stack... | Choose a stack frame |
+| Evaluate expression... | Evaluate an expression, as Alt-F8 |
+| Add watch... | Add a watch |
+| Exceptions... | Exceptions to stop on |
+| Send line... | Send a line to the program |
+| Stop | End the session |
 
-**Space**
-: Disable a breakpoint, or enable it again: GDB keeps it but does not stop
-on it, and its mark is an empty circle.
+The function names come from the index of the Ctags plugin. A watch shows
+a value, but does not stop the program when the value changes.
 
-**Alt-F6**
-: The condition of a breakpoint, as in a file.
+Exceptions... offers the kinds the debugger knows: for GDB, C++ exceptions
+when thrown or caught; for debugpy, raised, uncaught and user uncaught.
+While none is chosen, the adapter stops on its own kinds.
 
-**Del**
-: Remove a watch or a breakpoint.
+**Instructions**
 
-**Ins**
-: Add a watch; on a variable or a member, watch it, *pp->meta.id* for one.
+Window > Disassembly shows, under the source, the instructions of the
+frame's function, each source line before its instructions. The window
+opens by itself on a stop in code without source.
 
-**:**
-: A command of GDB itself, for what the panel does not have: *p x*,
-*info registers*, *x/8x buf*. What GDB answers comes in the console. Under
-a debug adapter it is an expression or a command of the adapter's console,
-*p 1+2* for GDB, a line of Python for debugpy.
+|  |  |
+|--|--|
+| Up, Down, PgUp, PgDn, Home, End | Move between instructions |
+| F6 | Breakpoint on the instruction |
+| Enter | To the source line |
 
-**The registers**
+A step into code without source (*printf*, for example) goes on until it
+leaves it; a step by one instruction stays there.
 
-Under the local variables the panel has the registers of the frame: the
-general ones, the program counter and the flags, in hexadecimal; those the
-last step has changed are yellow, as the values are. They are asked of the debugger only while
-they are shown: Enter on their title shows and hides them, Right opens it, and
-a stop in code
-with no source, or in a source of assembler (*.s*, *.S*, *.asm*), shows them.
-Enter on a register gives its value in the dialog
-that adds it to the watches, *$rax* for one. A program of a language with no
-registers, Python say, has no such title.
+**Configurations**
 
-**The instructions**
-
-**Window → Disassembly** opens a window under the source, a tab beside the
-console, with the instructions of the function of the frame: each source line
-before its instructions, when the program has its source, and *>* on the
-instruction the program is at. A stop in code with no source opens it by
-itself, and so does the first step by an instruction, which moves in no line of
-the source. It follows the steps and the frame chosen in the call stack.
-
-**Up**, **Down**, **PgUp**, **PgDn**, **Home**, **End**
-: Move from one instruction to another.
-
-**F6**
-: Put a breakpoint on the instruction of the cursor, or take it off. Such a
-breakpoint is in the panel too, *● \*0x401136*, where Del takes it off; it
-is not kept for the next session.
-
-**Enter**
-: Go to the source line of the instruction.
-
-The other keys of the debugger work there as in the panel.
-
-**The values in the source**
-
-While the program is stopped the lines of the function, from its start down
-to the line it stopped on, show the values of the local variables they name,
-after their text. In a source of assembler they are the registers, from the
-label above: *add %rcx, %rdi* gets *rcx = 0xa, rdi = 0x0*; a register is
-named by its parts too, *eax* or *al* for *rax*. The values go when the
-program runs on and when the text is edited. The skin gives their color,
-*editnote* in *[editor]*.
-
-A step that ends in code whose source is not on this machine, a library
-with debug information but without its sources, goes on out of it: a step
-into *printf* comes back to the call, a step out of *main* ends the program.
-A step by an instruction stays there: the panel names the function and the
-address, and the instructions and the registers come. A frame without its
-source is named in the panel and opens nothing.
-
-**The marks**
-
-**●**
-: a breakpoint
-
-**○**
-: a breakpoint that is disabled
-
-**◊**
-: a breakpoint GDB has not taken yet, or has refused
-
-**>**
-: the line the program stopped on
-
-**♦**
-: the line the program stopped on, with a breakpoint
-
-A breakpoint moves with its line as lines are inserted or deleted above it;
-GDB keeps the old line till the next start, since the program running was
-built from the text as it was. GDB stops only on lines with code: a
-breakpoint on another line moves to the next line GDB stops on. The skin
-gives the marks in *[widget-editor]* (*breakpoint-char*, *exec-char* and the
-others) and their colors in *[editor]* (*breakpoint*, *execmark*,
-*execline*); without them, or on a terminal that is not UTF-8, the marks are
-*o*, *?*, *-*, *c*, *>* and *@*.
-
-**Functions by name**
-
-**Debug → Breakpoint on function...** lists the functions of the project
-whose names have the letters typed, with their files, and puts a breakpoint
-on the one chosen, on its line, as Ctrl-B would there. **Debug → Run to
-function...** runs the stopped program on to the function chosen, with a
-breakpoint GDB takes off when it stops there. The panel names the function
-of every breakpoint, *● calc.c:13  twice*.
-
-The functions come from the index of the plugin ctags. Without it Run to
-function takes a name typed as it is, and a breakpoint goes on a line.
-
-**The rest of the Debug menu**
-
-**Call stack...** chooses a frame in a list, as Enter in the panel does.
-**Evaluate expression...** is Alt-F8 of a source window: the value of an
-expression, in the dialog that can add it to the watches. **Add watch...**
-keeps an expression for the project; a watch shows a value, it does not
-stop the program when the value changes. Both offer the selection, or the
-word under the cursor, to be taken as it is or changed. **Send line...** gives
-a line to a program that reads lines. **Stop** ends the session and keeps the
-breakpoints, the configurations and the watches.
+Project > Debug configurations... shows the configurations of the project;
+a star marks the one Shift-F9 runs. With Keep in the project checked they
+are kept in *.bluerig/debug.ini* of the project, else in the settings of
+the user. The breakpoints and the watches are kept in the settings of the
+user.
 
 **Debug adapters**
 
-The debuggers of most languages speak the Debug Adapter Protocol: debugpy for
-Python, Delve for Go, bash-dap for the shell, js-debug for
-JavaScript, lldb-dap, and GDB itself from version 14 (*gdb -i dap*). In
-**Debug configuration** the choice **Debug adapter**, instead of **GDB**,
-has one run the program:
+In the Debug configuration form, choosing Debug adapter instead of GDB runs
+the program through a Debug Adapter Protocol adapter:
 
-**Adapter**
-: The command of the adapter, which speaks on its stdin and stdout, or on a
-socket when **Address** is set.
+|  |  |
+|--|--|
+| Adapter | Command of the adapter |
+| Address | host:port of the adapter; with port 0 the port comes from the command output |
+| Launch (JSON) | Members of the launch request, for example {"justMyCode": false} |
 
-**Address**
-: *host:port* of an adapter that listens already; with port 0 the
-command is run, and the port is the one it says on its output, *listening
-at: 127.0.0.1:38697*.
+The adapter comes from *presets.ini* by the file type:
 
-**Launch (JSON)**
-: Members added to the request that launches the program, each adapter
-having its own: *{"mode": "debug"}* for Delve, *{"justMyCode": false}* for
-debugpy. The form checks it: an error is told with its line and column.
+|  |  |
+|--|--|
+| .py | python3 -m debugpy.adapter |
+| .sh, .bash | bash-dap |
+| .go | dlv dap --listen=127.0.0.1:0 |
+| .js, .mjs, .ts | js-debug-adapter |
+| a program | gdb -i dap |
 
-A program by the name of its file has its adapter set when the form is
-taken, if the configuration has none, as *presets.ini* has it (*adapter*,
-*address* and *launch* of its language):
-
-```
-.py              python3 -m debugpy.adapter
-.sh, .bash       bash-dap
-.go              dlv dap --listen=127.0.0.1:0
-.js, .mjs, .ts   js-debug-adapter 0, on 127.0.0.1:0
-a program        gdb -i dap
-```
-
-A new configuration of a language with an adapter is the adapter's: the
-programs the build has made are not offered to GDB. It runs the *program* of
-the preset, else the file in front, when it is such a script. For Go the
-program is a package, which Delve builds with all of its files, where
-*main.go* alone would miss the rest: a directory with a file of the line
-*package main* (*entry* in *presets.ini*), that of the file in front when it
-is one, else the one the project has, else one chosen from a list, as
-*cmd/server* and *cmd/client*; with none, the root (*program*). An
-adapter that is not there, or that ends
-before the program starts, is told with how to get it; what it says is in
-the console.
+When the adapter is missing, the debugger says how to install it. A Go
+program is the package with *package main* in the directory of the file,
+or one chosen from a list.
 
 **Python**
 
-debugpy is had once, with *apt install python3-debugpy* or *pip install --user
-debugpy*. Then a script is debugged as a program of C is: F6 on a line, F5,
-and Enter in the form, which has the adapter of Python already.
+Install debugpy with the package python3-debugpy or *pip install --user
+debugpy*. A project with *.venv*, *venv*, *.env* or *env* is debugged with
+its own Python, and debugpy has to be installed there too. A script that
+reads input needs the terminal of the program:
+*{"console": "integratedTerminal"}*.
 
-A project with a virtual environment, *.venv*, *venv*, *.env* or *env* with
-*bin/python* in it, is debugged with its own Python and the packages of the
-project: the adapter becomes *.venv/bin/python -m debugpy.adapter*, the
-arguments of the adapter kept, *-I* or *--log-stderr*. A Python named by its
-path stays as it is. debugpy
-has to be in that environment too, *.venv/bin/python -m pip install
-debugpy*: without it the form says so, and the script runs with the Python
-of the system.
+**Shell**
 
-A script that reads what is typed, *input()* for one, needs the terminal of
-the program: *{"console": "integratedTerminal"}*. Else what it writes comes
-in the console, and it reads nothing.
-
-**The shell**
-
-bash-dap debugs a script of bash, with Python 3 alone: *pipx install bash-dap*,
-or *pip install --user bash-dap*. Then as for Python: F6 on a line, F5, Enter in
-the form. The script runs in the terminal of the program, and reads what is
-typed there; it stops in the functions of *$(...)* and of pipes too, and the
-variables of a stop are all those it sees, bash having no others. An array
-opens as a tree.
-
-The adapter runs in a session of its own, away from the terminal of the
-editor, and ends with it. The program has the terminal of the program when
-the adapter asks for one (*runInTerminal*: debugpy with *{"console":
-"integratedTerminal"}*, bash-dap); else what it writes comes in the
-console, and it reads nothing. js-debug runs the program in a session it
-starts on its socket: the debugger connects to it there, and the steps are of
-that session.
-
-Under *gdb -i dap* GDB has the breakpoints before it runs the program, which
-it does as soon as it is launched; the program writes in the console. A
-breakpoint the adapter has on no code yet is pending, *◊*, until it says it
-is on some.
-
-The configuration keeps these as *backend*, *adapter*, *address* and
-*launch_extra* in *debug.ini*, the exceptions as *exceptions* and the kinds
-the adapter offered as *exception_filters*.
+bash-dap debugs bash scripts and needs only Python 3: *pipx install
+bash-dap*. The script runs in the terminal of the program and stops in
+functions inside *$(...)* and pipes too.
 
 The debugger runs one local program at a time.
