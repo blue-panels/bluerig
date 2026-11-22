@@ -140,6 +140,25 @@ END_TEST
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* a code span is bold and its text is taken as it is, backslashes and all */
+START_TEST (test_code_span)
+{
+    char *body;
+
+    body = convert_body ("# Keys\n"
+                         "\n"
+                         "|  |  |\n"
+                         "|--|--|\n"
+                         "| `\\\\` | a ``x`y`` b |\n");
+    mctest_assert_str_eq (body,
+                          B "\\\\" N COL "4" COL "a " B "x`y" N " b\n"
+                            "\n");
+    g_free (body);
+}
+END_TEST
+
+/* --------------------------------------------------------------------------------------------- */
+
 /* a line with bars that has no rule under it is a paragraph */
 START_TEST (test_no_rule_no_table)
 {
@@ -165,6 +184,7 @@ main (void)
     tcase_add_test (tc_core, test_table_head);
     tcase_add_test (tc_core, test_table_bar_and_link);
     tcase_add_test (tc_core, test_table_wide_cell);
+    tcase_add_test (tc_core, test_code_span);
     tcase_add_test (tc_core, test_no_rule_no_table);
 
     return mctest_run_all (tc_core);

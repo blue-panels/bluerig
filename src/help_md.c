@@ -179,9 +179,18 @@ md_inline (GString *out, const char *line)
             while (*p == '`')
                 p++;
             len = p - fence;
-            end = strstr (p, fence);
-            while (end != NULL && end[len] == '`')
-                end = strstr (end + 1, fence);
+
+            // the closing run is one of as many backticks, no more and no less
+            for (end = strchr (p, '`'); end != NULL; end = strchr (end, '`'))
+            {
+                size_t n = 0;
+
+                while (end[n] == '`')
+                    n++;
+                if (n == len)
+                    break;
+                end += n;
+            }
 
             if (end == NULL)
                 g_string_append_len (out, fence, len);
