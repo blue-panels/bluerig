@@ -882,12 +882,12 @@ Lua, то и движок Lua как плагин вида
 
 # Макросы <a id="macros"></a>
 
-Чтобы задать макрос, нажмите
+{{key:MacroStartStopRecord|Ctrl-r}}
+начинает запись макроса: клавиши, нажатые после него, записываются.
+Повторное
 **Ctrl-r**
-и наберите те клавиши, которые должны выполняться. Нажмите
-**Ctrl-r**
-еще раз, когда закончите, и назначьте макрос на клавишу, нажав ее. Макрос
-вызывается этой клавишей.
+заканчивает запись и ждёт клавишу, на которую макрос назначается; эта клавиша
+потом его и вызывает.
 
 Макросы хранятся в секции
 **[editor]**
@@ -934,9 +934,9 @@ ctrl-W=ExecuteScript:25;
 ```
 l       comment selection
 	TMPFILE=`mktemp ${BLUERIG_TMPDIR:-/tmp}/up.XXXXXX` || exit 1
-	echo #if 0 > $TMPFILE
+	echo '#if 0' > $TMPFILE
 	cat %b >> $TMPFILE
-	echo #endif >> $TMPFILE
+	echo '#endif' >> $TMPFILE
 	cat $TMPFILE > %b
 	rm -f $TMPFILE
 ```
