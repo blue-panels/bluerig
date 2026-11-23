@@ -1,9 +1,9 @@
 .\" Generated from bluerig.md by maint/update-man-in.sh. Do not edit.
-.TH BLUERIG 1 "settembre 2026" "bluerig {{MAN_VERSION}}" "bluerig"
+.TH BLUERIG 1 "novembre 2026" "bluerig {{MAN_VERSION}}" "bluerig"
 
 .SH NOME
 .PP
-bluerig \- un editor di testo.
+bluerig \- un IDE per il terminale.
 
 
 .SH USO
@@ -15,341 +15,1312 @@ bluerig \- un editor di testo.
 .SH DESCRIZIONE
 .PP
 \fBbluerig\fP
-è un editor di testo per la console. Continua
+è un IDE per il terminale. Continua
 \fBcooledit\fP,
 l'editor di Paul Sheer, la cui versione per terminale è stata sviluppata per
-molti anni come editor interno di GNU Midnight Commander; bluerig lo porta avanti
-come programma a sé.
+molti anni come editor interno di GNU Midnight Commander; bluerig porta avanti
+quell'editor come programma a sé.
+\fBbrg\fP
+è un nome più corto dello stesso programma.
 
 .PP
-Modifica più file insieme, ciascuno nella sua finestra, e anche file binari.
-Ogni file indicato sulla riga di comando viene aperto nella sua finestra;
-senza file, l'editor apre una finestra vuota.
+Modifica più file insieme, ciascuno nella sua finestra, e può modificare
+file binari. Offre copia, spostamento, cancellazione, taglio e incolla di
+blocchi; annullamento e ripristino tasto per tasto; menu a discesa;
+inserimento di file; macro; ricerca e sostituzione con espressioni regolari;
+un filtro delle righe; il ripiegamento; i segnalibri; la selezione del testo
+con Shift e le frecce (dove il terminale lo permette); i blocchi a colonne;
+le modalità di inserimento e sovrascrittura; il rientro automatico; l'a capo
+automatico e la formattazione dei paragrafi; l'ampiezza regolabile delle
+tabulazioni;
+l'evidenziazione della sintassi per molti tipi di file; un menu utente che
+passa il testo a comandi di shell; plugin dell'editor (navigazione per tag,
+controllo ortografico) e script Lua.
+
+.PP
+Ogni file indicato sulla riga di comando viene aperto nella sua finestra.
+Senza file, l'editor apre una finestra vuota. Un file più grande di
+\fIeditor_filesize_threshold\fP
+(64 MB in modo predefinito) viene aperto dopo una domanda, non rifiutato.
 
 
 .SH OPZIONI
 .TP
 \fI+riga\fP
-Andare alla riga con quel numero (senza spazio tra il segno
+Va alla riga con quel numero (senza spazio tra il segno
 \fI+\fP
-e il numero). Sono ammessi più numeri, ma viene usato solo l'ultimo, e solo per
-il primo file.
+e il numero). Sono ammessi più numeri, ma viene usato solo l'ultimo, e solo
+per il primo file.
 
 .TP
 \fIfile:riga[:]\fP
-Aprire il file a quella riga, come indicano un punto i compilatori e grep.
+Apre il file a quella riga, come compilatori e grep indicano un punto di un
+file. Se esiste un file con il nome intero, due punti e numero compresi,
+viene aperto quel file.
 
 .TP
 \fI\-V, \-\-version\fP
-Mostrare la versione del programma.
+Mostra la versione del programma.
 
 .TP
 \fI\-f, \-\-datadir\fP
-Mostrare i percorsi di ricerca compilati per i file di dati di bluerig.
+Mostra il percorso di ricerca compilato per i file di dati di bluerig.
 
 .TP
 \fI\-F, \-\-datadir\-info\fP
-Mostrare informazioni estese sulle directory usate da bluerig.
+Mostra informazioni estese sulle directory che bluerig usa: i file di dati,
+i file dell'utente e i plugin.
 
 .TP
 \fI\-\-configure\-options\fP
-Mostrare le opzioni con cui il programma è stato configurato.
+Mostra le opzioni con cui il programma è stato configurato.
 
 .TP
 \fI\-\-no\-lua\fP
-Avviare senza l'ambiente Lua: non viene caricato nessuno script Lua.
+Avvia senza l'ambiente Lua: non viene caricato nessuno script Lua.
+
+.TP
+\fI\-D, \-\-debug=directory\fP
+Apre il progetto di quella directory per farne il debug: l'ultimo file del
+progetto, l'albero del progetto e il pannello del debugger a destra. Le
+finestre dei file prendono i tasti del debugger: F6 mette un punto di
+interruzione, F5 compila il programma e lo avvia, creando la sua
+configurazione di debug la prima volta, F7 e F8 avanzano passo passo, F3
+indicizza i simboli del progetto; F2, F9 e F10 restano salvataggio, menu e
+uscita, e Alt\-F5 va al pannello e torna indietro. Servono i plugin project,
+build e debugger, e ctags per F3. I menu Drawing, Format e Plugins non sono
+nella barra dei menu; i loro tasti restano, e Opzioni conserva Manage
+plugins.
+
+.TP
+\fI\-Q, \-\-query\fP
+Esegue le query del file in un database, MongoDB tramite mongosh o
+PostgreSQL tramite libpq; la risposta arriva nelle schede Output, Table e
+Cronologia in basso. \fIMC_QUERY_KIND\fP vale \fImongo\fP o \fIpostgres\fP; senza di
+essa, \fIMC_MONGO_URI\fP indica MongoDB e un file \fI\&.sql\fP PostgreSQL. Per MongoDB
+\fIMC_MONGO_URI\fP e \fIMC_MONGO_DB\fP dicono a cosa connettersi, \fIMC_MONGOSH\fP il
+programma; F5 esegue la selezione, altrimenti la parte tra le righe \fI// \-\-\-\fP
+intorno al cursore, altrimenti tutto il file. Per PostgreSQL libpq prende la
+connessione da \fIPGHOST\fP, \fIPGDATABASE\fP, \fIPGSERVICE\fP e simili, la password da
+\fI~/.pgpass\fP; F5 esegue la selezione, altrimenti tutto il file. Ctrl\-F5
+esegue tutto il file. Senza un file indicato, il file è
+\fI~/.local/share/bluerig/queries/\fP, con il nome del database e \fI\&.js\fP, oppure
+\fIpostgres/\fP, il nome della connessione, quello del database e \fI\&.sql\fP\&. Le
+finestre che il progetto aveva l'ultima volta non vengono mostrate, e i
+plugin di progetto e di codice (project, build, debugger, ctags, etags, git,
+terminal, spell) non vengono avviati; restano gli script, e il language
+server delle query quando lsp.json ne ha uno. I menu Drawing, Format e
+Plugins non sono nella barra dei menu, come con \-D. Serve il plugin query.
+
+.TP
+\fI\-G, \-\-git=directory\fP
+Apre la finestra Git del plugin git sull'albero di lavoro di quella
+directory; chiuderla termina l'editor. Le finestre che il progetto aveva
+l'ultima volta non vengono mostrate, e i plugin di progetto (project, build,
+debugger, ctags, etags) non vengono avviati. Per un pannello di git in un
+file manager, con una di queste dopo, oppure da sola per la directory
+corrente:
+
+.TP
+\fI\-\-git\-log\fP
+La finestra Git sul log.
+
+.TP
+\fI\-\-git\-show=commit\fP
+La finestra Git su quel commit: i suoi file e le loro differenze.
+
+.TP
+\fI\-\-git\-commit\fP, \fI\-\-git\-amend\fP
+La finestra Git con il messaggio di un commit di ciò che è nell'area di
+stage, o dell'ultimo commit corretto con esso; l'editor termina quando il
+messaggio è salvato e il commit fatto, o quando la sua finestra viene
+chiusa.
+
+.TP
+\fI\-\-git\-reword=commit\fP
+Un altro messaggio per quel commit, allo stesso modo, con i file del commit
+sotto.
 
 .TP
 \fI\-h, \-?, \-\-help\fP
-Mostrare le opzioni e cosa fanno.
+Mostra le opzioni e cosa fanno.
+
+.TP
+\fI\-\-help\-terminal, \-\-help\-color\fP
+Mostra le opzioni del terminale o le opzioni dei colori qui sotto.
+
+.PP
+Le opzioni del terminale:
 
 .TP
 \fI\-x, \-\-xterm\fP
-Forzare la modalità xterm.
+Forza la modalità xterm. Si usa con i terminali compatibili con xterm (due
+modalità dello schermo, e capaci di inviare sequenze di escape del mouse).
 
 .TP
 \fI\-X, \-\-no\-x11\fP
-Non usare il sistema X Window per conoscere lo stato dei tasti modificatori.
+Non usa il sistema X Window per conoscere lo stato dei tasti modificatori.
 
 .TP
 \fI\-g, \-\-oldmouse\fP
-Usare il vecchio tracciamento del mouse del terminale.
+Usa il vecchio tracciamento del mouse con evidenziazione del terminale.
 
 .TP
 \fI\-d, \-\-nomouse\fP
-Disattivare il mouse.
+Disattiva il mouse.
 
 .TP
 \fI\-t, \-\-termcap\fP
-Usare termcap invece di terminfo (solo con la libreria S\-Lang).
+Usa il database termcap invece di terminfo. L'opzione esiste solo quando
+bluerig è stato compilato con la libreria S\-Lang.
 
 .TP
 \fI\-s, \-\-slow\fP
-Terminale lento: lo schermo viene ridisegnato meno spesso.
+Funziona su un terminale lento: lo schermo viene disegnato con meno
+aggiornamenti.
 
 .TP
 \fI\-a, \-\-stickchars\fP
-Disegnare le cornici con caratteri semplici.
+Disegna le cornici con caratteri semplici invece dei caratteri grafici
+del terminale.
 
 .TP
 \fI\-K file, \-\-keymap=file\fP
-Caricare le associazioni dei tasti da quel file.
+Carica le associazioni dei tasti da quel file. Vedere
+Ridefinire i tasti\&.
 
 .TP
 \fI\-\-nokeymap\fP
-Non caricare nessun file dei tasti: usare le associazioni interne.
+Non carica nessun file dei tasti: usa le associazioni interne del
+programma.
+
+.PP
+Le opzioni dei colori:
 
 .TP
 \fI\-b, \-\-nocolor\fP
-Forzare la visualizzazione in bianco e nero.
+Forza la visualizzazione in bianco e nero.
 
 .TP
 \fI\-c, \-\-color\fP
-Forzare la modalità a colori.
+Forza la modalità a colori sui terminali che non sembrano supportare i
+colori.
 
 .TP
 \fI\-S tema, \-\-skin=tema\fP
-Usare il tema (skin) con quel nome.
+Usa il tema con quel nome. Vedere
+Temi\&.
+
+
+.SH Panoramica
+.PP
+Lo schermo di bluerig ha la
+barra dei menu
+in alto, le finestre dell'editor sotto e le etichette dei tasti funzione in
+basso. La barra dei menu può essere nascosta: F9 o un clic sulla prima riga
+dello schermo la fanno comparire.
+
+.PP
+Ogni finestra mostra un file: il nome, lo stato del file e la posizione del
+cursore stanno nella riga di stato in alto. Si possono aprire più finestre
+insieme; con il
+menu Finestra
+si passa dall'una all'altra, e ciascuna si può spostare e ridimensionare.
 
 
 .SH L'editor bluerig
 .PP
-L'editor di file interno è un editor a pieno schermo con tutte le funzioni
-consuete. Un file più grande di
-\fIeditor_filesize_threshold\fP
-(64 MB come impostazione predefinita) viene aperto dopo una domanda. I file
-binari si possono modificare.
+
+\fBTasti\fP
 
 .PP
-Le funzioni che allo stato attuale supporta sono: copia, spostamento,
-cancellazione, taglia e incolla di blocchi; annullamento tasto per tasto;
-menu a discesa; inserimento file; definizione di macro; ricerca e
-sostituzione con espressioni regolari; selezione del testo con
-maiuscole\-freccia (se il terminale le distingue); scambio tra inserimento e
-sovrascrittura; a capo automatico; rientro automatico; dimensione della
-tabulazione regolabile; evidenziazione della sintassi per vari tipi di file;
-e la possibilità di passare blocchi di testo a comandi di shell come indent o
-ispell.
+Questi sono i tasti predefiniti. Ognuno si può cambiare, vedere
+Ridefinire i tasti\&.
+
+.PP
+
+\fBMovimento del cursore\fP
 
 .TP
-Sezioni:
-Opzioni dell'editor
-
-.PP
-L'editor è molto semplice da usare e non richiede apprendimento. Per vedere
-cosa fanno i tasti, basta consultare il menu a discesa appropriato. Gli altri
-tasti sono: maiuscole più i tasti freccia selezionano il testo.
-\fBCtrl\-Ins\fP
-copia nel file di scambio
-\fB~/.local/share/bluerig/clipboard\fP,
-\fBShift\-Ins\fP
-incolla da esso,
-\fBShift\-Del\fP
-vi taglia dentro e
-\fBCtrl\-Del\fP
-cancella il testo selezionato.
-Funziona anche la selezione con il mouse che, come al solito, si può
-scavalcare premendo il tasto Maiuscole mentre si trascina, lasciando al
-terminale la propria gestione del mouse.
-
-.PP
-Per definire una macro, premere
-\fBCtrl\-R\fP,
-poi premere i tasti che si vuole vengano eseguiti. Premere nuovamente
-\fBCtrl\-R\fP
-quando si ha finito e assegnare la macro a un tasto premendolo. La macro
-viene eseguita con quel tasto. Le macro stanno nella sezione
-\fB[editor]\fP
-del file
-\fB~/.local/share/bluerig/macros\fP,
-e si cancella una macro cancellando la sua riga in quel file.
-
-.PP
-Il set di caratteri del testo mostrato si cambia con Alt\-e (M\-e). La
-riconversione avviene dal set scelto a quello di sistema. Per annullarla,
-scegliere "<No translation>" nella finestra di scelta del set di caratteri.
-
-.PP
-Il pulsante
-\fBFiltro\fP
-della finestra di ricerca
-(\fBF7\fP)
-nasconde tutte le righe che non contengono il testo cercato, con le stesse
-impostazioni di tipo, maiuscole e parola intera della ricerca. I numeri di
-riga restano quelli originali e la colonna di stato segna ogni tratto
-nascosto. L'insieme delle righe nascoste viene fissato nel momento in cui si
-preme il pulsante: la modifica non riapplica la condizione, quindi una riga
-visibile che venga divisa o unita resta visibile, e le righe scritte dopo
-restano visibili anche se non corrispondono. Il tasto
-\fBM\-s\fP
-toglie il filtro; premuto di nuovo rimette l'ultima ricerca come filtro.
-Anche "Espandi tutto" del menu Comandi lo toglie.
-
-
-.SH Opzioni dell'editor
-.PP
-Le impostazioni dell'
-editor interno\&.
-Le apre la voce
-\fBGenerale...\fP
-del menu
-\fBOpzioni\fP
-dell'editor.
-
-.PP
-\fIModalità di a capo.\fP
-Disattivata, formattazione continua del paragrafo, oppure l'a capo da macchina
-da scrivere, che spezza la riga alla lunghezza fissata mentre si scrive.
-
-.PP
-\fIMezze tabulazioni finte.\fP
-Tra il testo e il margine sinistro il movimento e il rientro vanno di mezza
-tabulazione e si riempiono di spazi; altrove la tabulazione è quella normale.
-
-.PP
-\fIBackspace attraverso le tabulazioni.\fP
-Un solo backspace cancella tutto il rientro fino al margine sinistro quando
-tra il cursore e il margine non c'è testo.
-
-.PP
-\fIRiempi le tabulazioni con spazi.\fP
-Invece del carattere di tabulazione vengono inseriti spazi fino alla
-tabulazione successiva.
-
-.PP
-\fIAmpiezza della tabulazione.\fP
-L'ampiezza che vale il carattere di tabulazione. 8 in modo predefinito.
-
-.PP
-\fIInvio fa il rientro automatico.\fP
-La riga nuova comincia con il rientro della riga sopra.
-
-.PP
-\fIConferma prima di salvare.\fP
-Chiede prima di scrivere il file.
-
-.PP
-\fIRicorda la posizione nel file.\fP
-Il file si apre dove è stato lasciato l'ultima volta.
-
-.PP
-\fIMostra gli spazi finali.\fP
-Gli spazi a fine riga vengono segnati.
-
-.PP
-\fIMostra le tabulazioni.\fP
-I caratteri di tabulazione vengono segnati.
-
-.PP
-\fIMostra i caratteri di controllo.\fP
-I caratteri di controllo del testo vengono stampati invece che nascosti.
-
-.PP
-\fIEvidenziazione della sintassi.\fP
-Il testo viene colorato con le regole di sintassi del suo tipo di file.
-
-.PP
-\fICursore dopo il blocco inserito.\fP
-Dopo aver inserito un blocco il cursore resta alla fine e non all'inizio.
-
-.PP
-\fISelezione persistente.\fP
-La selezione resta quando il cursore si muove, invece di perdersi.
-
-.PP
-\fICursore oltre la fine della riga.\fP
-Il cursore può stare dopo l'ultimo carattere della riga.
-
-.PP
-\fIAnnulla in gruppo.\fP
-Un solo annullamento riporta indietro una serie di modifiche dello stesso
-tipo, non un singolo tasto.
-
-.PP
-\fILunghezza della riga per l'a capo.\fP
-La colonna in cui le modalità di a capo spezzano la riga. 72 in modo
-predefinito.
-
-
-.SH Salva come
-.PP
-Il nome con cui scrivere il file e i fine riga con cui scriverlo: come li ha
-il file, Unix (LF), Windows e DOS (CR LF) oppure Macintosh (CR).
-
-
-.SH Modalità di salvataggio
-.PP
-Come viene scritto il file:
+\fBLeft\fP
+Un carattere a sinistra
 
 .TP
-\fBSalvataggio rapido\fP
-Scrive subito sopra il file. Veloce, e un guasto a metà lascia il file
-scritto a metà.
+\fBRight\fP
+Un carattere a destra
 
 .TP
-\fBSalvataggio sicuro\fP
-Scrive prima un file temporaneo e lo rinomina sopra l'originale quando è
-intero, così un guasto non tocca l'originale.
+\fBUp\fP
+Una riga in su
 
 .TP
-\fBCrea copie di sicurezza con l'estensione\fP
-Salvataggio sicuro, e l'originale resta con il suo nome più l'estensione
-della riga di ingresso, "~" in modo predefinito.
+\fBDown\fP
+Una riga in giù
 
 .TP
-\fBControlla il fine riga POSIX\fP
-Chiede del fine riga che manca alla fine del file prima di scriverlo.
+\fBCtrl\-Left, Ctrl\-z\fP
+Una parola a sinistra
 
+.TP
+\fBCtrl\-Right, Ctrl\-x\fP
+Una parola a destra
 
-.SH Esploratore di macro
+.TP
+\fBCtrl\-Up\fP
+Scorre lo schermo in su
+
+.TP
+\fBCtrl\-Down\fP
+Scorre lo schermo in giù
+
+.TP
+\fBPgUp\fP
+Pagina su
+
+.TP
+\fBPgDn\fP
+Pagina giù
+
+.TP
+\fBHome\fP
+Inizio della riga
+
+.TP
+\fBEnd\fP
+Fine della riga
+
+.TP
+\fBCtrl\-Home, Alt\-<\fP
+Inizio del file
+
+.TP
+\fBCtrl\-End, Alt\->\fP
+Fine del file
+
+.TP
+\fBCtrl\-PgUp\fP
+Cima dello schermo
+
+.TP
+\fBCtrl\-PgDn\fP
+Fondo dello schermo
+
 .PP
-Le macro registrate, con il tasto a cui ciascuna risponde e ciò che fa. I
-pulsanti sono
+\fBCancellazione\fP
 
 .TP
-\fBEsegui\fP
-Riproduce la macro su cui è il cursore.
+\fBDelete, Ctrl\-d\fP
+Cancella il carattere
 
 .TP
-\fBElimina\fP
-La toglie, dopo una domanda.
+\fBBackspace, Ctrl\-h\fP
+Cancella il carattere a sinistra
 
 .TP
-\fBModifica file\fP
-Apre il file in cui stanno le macro.
+\fBCtrl\-y\fP
+Cancella la riga
 
+.TP
+\fBCtrl\-k\fP
+Cancella fino alla fine della riga
 
-.SH File aperti
+.TP
+\fBAlt\-Backspace\fP
+Cancella fino all'inizio della parola
+
+.TP
+\fBAlt\-d\fP
+Cancella fino alla fine della parola
+
 .PP
-I file che l'editor ha aperti, uno per riga. Invio va al file su cui è il
-cursore, Esc lascia quello mostrato.
 
-
-.SH Informazioni sui componenti
-.PP
-I componenti aggiuntivi che l'editor ha caricato: il nome, se è attivo, cosa
-offre e cosa fa. È un elenco da guardare; si disattiva un componente e se ne
-aprono le impostazioni nella finestra
-Gestione dei componenti
-del menu Opzioni.
-
-
-.SH Associazioni dei tasti
-.PP
-Vedere e cambiare le combinazioni di tasti delle azioni del programma (menu
-Opzioni, "Associazioni dei tasti...").
+\fBBlocchi\fP
 
 .TP
-\fBInvio\fP
-Sostituisce la combinazione: premere il tasto da assegnare.
+\fBShift+tasti cursore\fP
+Seleziona un blocco
+
+.TP
+\fBAlt+tasti cursore\fP
+Seleziona un blocco a colonne
+
+.TP
+\fBF3\fP
+Inizia o termina la selezione di un blocco
+
+.TP
+\fBF13\fP
+Inizia un blocco a colonne
+
+.TP
+\fBCtrl\-a\fP
+Seleziona tutto il testo
 
 .TP
 \fBF5\fP
-Aggiunge un'altra combinazione per questa azione.
+Copia il blocco al cursore
 
 .TP
-\fBF8, Canc\fP
-Toglie la combinazione.
+\fBF6\fP
+Sposta il blocco al cursore
+
+.TP
+\fBF8\fP
+Cancella il blocco
+
+.TP
+\fBCtrl\-Ins\fP
+Copia il blocco nel file degli appunti
+
+.TP
+\fBShift\-Del\fP
+Sposta il blocco nel file degli appunti
+
+.TP
+\fBShift\-Ins\fP
+Incolla il blocco dal file degli appunti
+
+.TP
+\fBCtrl\-f\fP
+Scrive il blocco in un file
+
+.PP
+
+\fBRicerca e sostituzione\fP
+
+.TP
+\fBF7\fP
+Ricerca
+
+.TP
+\fBF17\fP
+Ripete la ricerca
+
+.TP
+\fBF4\fP
+Sostituzione
+
+.TP
+\fBF14\fP
+Ripete la sostituzione
+
+.TP
+\fBAlt\-s\fP
+Toglie il filtro delle righe, o applica l'ultima ricerca come filtro
+
+.TP
+\fBAlt\-S\fP
+Filtra per il testo selezionato o per la parola sotto il cursore
+
+.PP
+\fBSalti e segnalibri\fP
+
+.TP
+\fBAlt\-l\fP
+Va a una riga per numero
+
+.TP
+\fBAlt\-b\fP
+Alla parentesi corrispondente
+
+.TP
+\fBAlt\-k\fP
+Mette o toglie un segnalibro
+
+.TP
+\fBAlt\-j, Alt\-i\fP
+Al segnalibro successivo o precedente
+
+.TP
+\fBAlt\-o\fP
+Toglie tutti i segnalibri
+
+.TP
+\fBAlt\-Enter\fP
+Trova la definizione del nome sotto il cursore
+
+.TP
+\fBAlt\-Minus, Alt\-Plus\fP
+Indietro e avanti tra i punti in cui è andata la ricerca delle definizioni
+
+.PP
+
+\fBFile\fP
+
+.TP
+\fBF2\fP
+Salva il file
+
+.TP
+\fBF12, Ctrl\-F2\fP
+Salva il file con un altro nome
+
+.TP
+\fBCtrl\-n\fP
+Nuova finestra vuota
+
+.TP
+\fBF15\fP
+Inserisce un file al cursore
+
+.TP
+\fBAlt\-E\fP
+Cronologia dei file modificati
+
+.TP
+\fBAlt\-e\fP
+Codifica del testo
+
+.TP
+\fBF10, Esc\fP
+Chiude la finestra; chiudere l'ultima fa uscire dall'editor
+
+.PP
+
+
+\fBAltri comandi\fP
+
+.TP
+\fBInsert\fP
+Modalità inserimento o sovrascrittura
+
+.TP
+\fBCtrl\-u\fP
+Annulla
+
+.TP
+\fBAlt\-r\fP
+Ripristina
+
+.TP
+\fBCtrl\-t, Alt\-U\fP
+Cronologia degli annullamenti
+
+.TP
+\fBAlt\-Tab\fP
+Completa la parola con le parole dei file aperti
+
+.TP
+\fBAlt\-F\fP
+Ripiega o riapre il blocco tra parentesi corrispondenti
+
+.TP
+\fBAlt\-t\fP
+Ordina le righe selezionate
+
+.TP
+\fBAlt\-u\fP
+Inserisce l'output di un comando di shell
+
+.TP
+\fBAlt\-p\fP
+Formatta il paragrafo
+
+.TP
+\fBCtrl\-q\fP
+Inserisce il tasto successivo, o un codice U+XXXX, così com'è
+
+.TP
+\fBCtrl\-p\fP
+Controlla l'ortografia della parola sotto il cursore
+
+.TP
+\fBCtrl\-r\fP
+Avvia o ferma la registrazione di una macro
+
+.TP
+\fBAlt\-M\fP
+Macro Explorer
+
+.TP
+\fBAlt\-n\fP
+Mostra o nasconde i numeri di riga
+
+.TP
+\fBAlt\-_\fP
+Mostra o nasconde le tabulazioni e gli spazi finali
+
+.TP
+\fBCtrl\-s\fP
+Attiva o disattiva l'evidenziazione della sintassi
+
+.TP
+\fBF1\fP
+Aiuto
+
+.TP
+\fBF9\fP
+Barra dei menu
+
+.TP
+\fBF11\fP
+Menu utente
+
+.TP
+\fBCtrl\-o\fP
+Mostra o nasconde il terminale
+
+.TP
+\fBCtrl\-Alt\-p\fP
+Mostra o nasconde la Preview
+
+.TP
+\fBCtrl\-l\fP
+Ridisegna lo schermo
+
+.TP
+\fBVedere anche:\fP
+Menu
+
+Ricerca, sostituzione e filtro delle righe
+
+Ripiegamento
+
+Macro
+
+Menu utente
+
+Plugin
+
+Evidenziazione della sintassi
+
+Opzioni editor
+
+Impostazioni nel file ini
+
+.SH Ridefinire i tasti
+.TP
+\fBOpzioni > Key bindings\fP
+Dà a un'azione tasti propri; vengono salvati in \fB~/.config/bluerig/keymap.ini\fP
+
+.TP
+\fBOpzioni > Impara tasti\fP
+Dà ai tasti le loro sequenze di escape
+
+.TP
+\fBOpzioni > Key sniffer\fP
+Mostra cosa invia il terminale per un tasto e a quale azione il tasto è associato
+
+.PP
+All'avvio bluerig prende la mappa dei tasti interna e vi carica sopra
+\fB{{pkgdatadir}}/keymap.ini\fP,
+poi
+\fB{{sysconfdir}}/bluerig/keymap.ini\fP\&.
+Un'azione nominata in un file prende i tasti del file, e i suoi tasti interni
+smettono di funzionare.
+
+.PP
+Il pacchetto installa le mappe dei tasti
+\fBkeymap.default.ini\fP,
+\fBkeymap.emacs.ini\fP
+e
+\fBkeymap.vim.ini\fP
+in
+\fB{{sysconfdir}}/bluerig\fP
+e fa di
+\fBkeymap.ini\fP
+un collegamento a
+\fBkeymap.default.ini\fP\&.
+
+.PP
+L'opzione
+\fB\-\-nokeymap\fP
+disattiva il caricamento dei file, e funziona solo la mappa interna.
+
+.PP
+Il file dei tasti dell'utente è il primo trovato tra:
+
+.EX
+1) command line option \-K <keymap>, \-\-keymap=<keymap>
+2) environment variable BLUERIG_KEYMAP
+3) the keymap setting in the [bluerig] section of the ini file
+4) file ~/.config/bluerig/keymap.ini
+.EE
+
+.PP
+I primi tre accettano un nome o un percorso assoluto. Un nome che non finisce
+in
+\fB\&.keymap\fP
+prende quell'estensione, e il file viene cercato in queste directory, vince
+la prima corrispondenza:
+
+.EX
+1) ~/.config/bluerig/
+2) {{pkgdatadir}}/
+.EE
+
+.PP
+L'opzione
+\fB\-K\fP,
+la variabile
+\fBBLUERIG_KEYMAP\fP
+e l'impostazione
+\fBkeymap\fP
+aggiungono l'estensione
+\fB\&.keymap\fP
+a un nome che non ne ha, quindi le mappe del pacchetto, che finiscono in
+\fB\&.ini\fP,
+non si possono scegliere in questo modo. Per usarne una, fare di
+\fB~/.config/bluerig/keymap.ini\fP
+un collegamento a essa: questo file viene caricato quando non è dato nessuno
+dei tre.
+
+.EX
+ln \-s {{sysconfdir}}/bluerig/keymap.vim.ini ~/.config/bluerig/keymap.ini
+.EE
+
+.PP
+Le sezioni di un file dei tasti:
+
+.TP
+\fB[editor]\fP
+Editor
+
+.TP
+\fB[editor:xmap]\fP
+Tasti dopo il prefisso, azione ExtendedKeyMap
+
+.TP
+\fB[dialog]\fP
+Finestre di dialogo
+
+.TP
+\fB[menu]\fP
+Menu
+
+.TP
+\fB[input]\fP
+Righe di immissione
+
+.TP
+\fB[listbox]\fP
+Elenchi
+
+.TP
+\fB[radio]\fP
+Pulsanti di opzione
+
+.TP
+\fB[help]\fP
+Finestra dell'aiuto
+
+.TP
+\fB[mcterm]\fP
+Terminale
+
+.PP
+Una riga di una sezione nomina un'azione e i suoi tasti, separati da punti e
+virgola:
+
+.EX
+[editor]
+Save = f2
+SaveAs = f12; ctrl\-f2
+.EE
+
+.SH Tasti delle righe di immissione
+.PP
+Le righe di immissione delle finestre di dialogo accettano questi tasti:
+
+.TP
+\fBCtrl\-a, Home\fP
+Inizio della riga
+
+.TP
+\fBCtrl\-e, End\fP
+Fine della riga
+
+.TP
+\fBCtrl\-b, Left\fP
+Un carattere a sinistra
+
+.TP
+\fBCtrl\-f, Right\fP
+Un carattere a destra
+
+.TP
+\fBAlt\-f, Ctrl\-Right\fP
+Una parola avanti
+
+.TP
+\fBAlt\-b, Ctrl\-Left\fP
+Una parola indietro
+
+.TP
+\fBCtrl\-h, Backspace\fP
+Cancella il carattere prima del cursore
+
+.TP
+\fBCtrl\-d, Delete\fP
+Cancella il carattere sotto il cursore
+
+.TP
+\fBCtrl\-@\fP
+Mette il segno
+
+.TP
+\fBCtrl\-w\fP
+Taglia nel buffer il testo dal segno al cursore
+
+.TP
+\fBAlt\-w\fP
+Copia nel buffer il testo dal segno al cursore
+
+.TP
+\fBCtrl\-y\fP
+Incolla il buffer
+
+.TP
+\fBCtrl\-k\fP
+Cancella fino alla fine della riga
+
+.TP
+\fBCtrl\-Insert\fP
+Copia la selezione, o senza selezione tutta la riga, nel file degli appunti
+
+.TP
+\fBShift\-Delete\fP
+Taglia la selezione nel file degli appunti
+
+.TP
+\fBShift\-Insert\fP
+Incolla il file degli appunti come una sola riga: gli a capo diventano spazi
+
+.TP
+\fBAlt\-p, Alt\-n\fP
+Voce precedente o successiva della cronologia della riga
+
+.TP
+\fBAlt\-h\fP
+Cronologia della riga come elenco
+
+.TP
+\fBAlt\-Backspace\fP
+Cancella la parola prima del cursore
+
+.TP
+\fBAlt\-Tab\fP
+Completa un nome di file, una variabile o un nome utente
+
+.SH Tasti di movimento generali
+.PP
+La finestra dell'aiuto e gli elenchi usano lo stesso codice di movimento,
+quindi accettano gli stessi tasti:
+
+.TP
+\fBUp, Ctrl\-p\fP
+Una riga indietro
+
+.TP
+\fBDown, Ctrl\-n\fP
+Una riga avanti
+
+.TP
+\fBPage Up, Alt\-v\fP
+Pagina su
+
+.TP
+\fBPage Down, Ctrl\-v\fP
+Pagina giù
+
+.TP
+\fBHome, A1\fP
+All'inizio
+
+.TP
+\fBEnd, C1\fP
+Alla fine
+
+.PP
+La finestra dell'aiuto accetta anche questi tasti:
+
+.TP
+\fBb, Backspace\fP
+Pagina su
+
+.TP
+\fBSpace, f\fP
+Pagina giù
+
+.TP
+\fBu, d\fP
+Mezza pagina su o giù
+
+.TP
+\fBg, G\fP
+All'inizio o alla fine
+
+
+.SH Supporto del mouse
+.PP
+bluerig supporta il mouse. Funziona in un terminale
+\fBxterm(1)\fP
+(anche attraverso una connessione telnet o ssh dall'xterm) e sulla console di
+Linux con il server del mouse
+\fBgpm\fP
+in esecuzione.
+
+.PP
+Un clic mette il cursore dove si fa clic, un trascinamento evidenzia il
+testo, e un clic su un menu, un pulsante o un'etichetta dei tasti funzione lo
+sceglie. La rotella fa scorrere il testo.
+
+.PP
+La ripetizione automatica dei pulsanti del mouse è di 400 millisecondi in
+modo predefinito. Si cambia con l'impostazione
+\fImouse_repeat_rate\fP
+del file ini, e il tempo entro cui due clic sono un doppio clic con
+\fIdouble_click_speed\fP\&.
+
+.PP
+Se bluerig funziona con il supporto del mouse, si ottiene il comportamento
+normale del mouse del terminale (tagliare e incollare il testo) tenendo
+premuto il tasto Shift.
+
+
+.SH Barra dei menu
+.PP
+La barra dei menu compare quando si preme F9 o si fa clic sulla riga in alto
+dello schermo. I suoi menu sono File, Modifica, Cerca, Comandi, Navigate
+(solo quando un plugin o uno script vi aggiunge qualcosa), Finestra, Plugins
+e Opzioni. Uno script Lua può aggiungere voci a ognuno di essi, o menu
+propri.
+
+.SH Menu File
+.TP
+\fBApri file...\fP
+Apre un file in una nuova finestra.
+
+.TP
+\fBNuovo\fP
+Apre una finestra vuota.
+
+.TP
+\fBChiudi\fP
+Chiude la finestra.
+
+.TP
+\fBCronologia...\fP
+I file modificati in precedenza, per riaprirne uno.
+
+.TP
+\fBSalva, Salva come...\fP
+Scrive il file, con il suo nome o con un altro. Vedere
+Salva come\&.
+
+.TP
+\fBInserisci file..., Copia su file...\fP
+Inserisce un file al cursore, o scrive il blocco evidenziato in un file.
+
+.TP
+\fBMenu utente...\fP
+Il menu utente\&.
+
+.TP
+\fBInformazioni...\fP
+La versione del programma.
+
+.TP
+\fBUscita\fP
+Esce dall'editor, chiedendo dei file non salvati.
+
+.SH Menu Modifica
+.PP
+Annulla, Rifà e Undo History; il passaggio tra modalità di inserimento e di
+sovrascrittura; i comandi che evidenziano un blocco, un blocco a colonne o
+tutto il file, e tolgono l'evidenziazione; copia, spostamento e
+cancellazione del blocco; copia nel file degli appunti, taglio nel file e
+incolla da esso; e il salto all'inizio e alla fine del file.
+
+.SH Menu Cerca
+.PP
+Cerca, Ripeti cerca e Rimpiazza; il filtro delle righe (Toggle line filter,
+Filter by word; vedere
+Ricerca, sostituzione e filtro delle righe); e i
+segnalibri: mettere o togliere un segnalibro sulla riga corrente, andare al
+successivo o al precedente, e toglierli tutti.
+
+.SH Menu Comandi
+.TP
+\fBVai alla riga...\fP
+Va a una riga, indicata dal suo numero.
+
+.TP
+\fBCommuta la riga di stato\fP
+Mostra o nasconde la colonna dei numeri di riga.
+
+.TP
+\fBVai alla parentesi relativa\fP
+Va alla parentesi che corrisponde a quella sotto il cursore.
+
+.TP
+\fBCommuta l'evidenziazione della sintassi, Commuta margine destro, Toggle control characters\fP
+Li attiva e disattiva.
+
+.TP
+\fBCodifica...\fP
+La codifica in cui è scritto il testo. Vedere
+Scegli la codepage\&.
+
+.TP
+\fBFold / Unfold block, Unfold all\fP
+Vedere Ripiegamento\&.
+
+.TP
+\fBAggiorna lo schermo\fP
+Ridisegna lo schermo.
+
+.TP
+\fBAvvio/stop registrazione macro, Macro explorer..., Registra/ripeti le azioni\fP
+Vedere Macro\&.
+
+.SH Menu Navigate
+.PP
+I comandi dei plugin: andare alla dichiarazione, trovare i riferimenti, i
+simboli del file e altri. Vedere
+Plugin\&.
+
+.SH Menu Finestra
+.TP
+\fBSposta, Ridimensiona\fP
+Sposta o ridimensiona la finestra con i tasti freccia; Enter termina.
+
+.TP
+\fBCommuta a pieno schermo\fP
+Passa la finestra tra lo schermo intero e la sua dimensione.
+
+.TP
+\fBToggle sticky windows\fP
+Con le finestre adesive, le finestre le cui cornici stanno una accanto
+all'altra si ridimensionano insieme: l'angolo di una finestra sposta il bordo
+su cui si trova con tutte le finestre lungo di esso, da entrambi i lati, e
+tra di esse non si apre nessuno spazio. Dove si incontrano quattro finestre,
+l'angolo sposta entrambi i bordi. Un lato che è sul bordo dello schermo
+quando il ridimensionamento comincia resta lì, una finestra conserva la sua
+dimensione minima, e un bordo si ferma a una finestra che trova sulla sua
+strada, e quella finestra allora si ridimensiona con le altre. Esc rimette
+ogni finestra com'era. Una finestra trascinata per il titolo si sposta da
+sola. L'impostazione è salvata come
+\fBeditor_sticky_windows\fP
+nel file ini.
+
+.TP
+\fBSuccessiva, Precedente\fP
+Va alla finestra successiva o precedente.
+
+.TP
+\fBElenco...\fP
+Le finestre aperte, per andare a una di esse. Vedere
+Apri i file\&.
+
+.PP
+Sotto vengono le finestre dei plugin: l'albero del progetto, l'output della
+compilazione, il pannello e la console del debugger, il terminale, il
+terminale del programma che il debugger esegue, la Preview. Una voce apre la
+sua finestra, la porta in primo piano quando è dietro un'altra, e la chiude
+quando è già in primo piano; una finestra aperta è segnata con \fI*\fP\&. Un
+plugin disattivato non ha voce.
+
+.PP
+Le finestre dei plugin stanno in aree di aggancio. L'albero, il pannello del
+debugger e la Preview vanno nella colonna a destra, una sopra l'altra, per
+tutta l'altezza dello schermo. La console, l'output della compilazione e il
+terminale vanno nella fila in basso, sotto le finestre dei file, e se la
+dividono come schede: se ne vede una, e il suo titolo elenca i nomi di tutte. Un
+clic su un nome, oppure
+\fBCtrl\-Alt\-PgDn\fP e \fBCtrl\-Alt\-PgUp\fP (\fIWindowTabNext\fP e \fIWindowTabPrev\fP
+nella mappa dei tasti), ne mostra un'altra. Una finestra di file a pieno
+schermo riempie il resto dello schermo, e di nuovo tutto lo schermo quando
+le aree di aggancio sono vuote. Ridimensionare una finestra agganciata
+ridimensiona l'area; spostarla la toglie dall'area.
+
+.TP
+\fBLayout...\fP
+Le disposizioni delle finestre: quali finestre dei plugin sono aperte, in
+quale area di aggancio, e quanto sono grandi le aree. \fIEdit\fP ha solo i file,
+\fIProject\fP l'albero del progetto, \fIDebug\fP l'albero e il pannello del
+debugger. \fBUse\fP mette le finestre così; \fBSave as...\fP le salva come sono
+con un nome, anche con il nome di una di queste; \fBDelete\fP dimentica una
+disposizione salvata, e torna quella dell'editor con quel nome. Con \fBDebug
+layout while debugging\fP l'avvio del debugger mette le finestre come le ha
+\fIDebug\fP, e il suo arresto le rimette com'erano, lasciando le schede in basso
+da leggere.
+
+.PP
+Le finestre di un progetto vengono salvate quando l'editor termina, e
+tornano quando l'editor si avvia con un file del progetto.
+\fIbluerig \-\-debug\fP parte con la disposizione \fIDebug\fP\&. Le disposizioni sono
+salvate in \fIlayouts.ini\fP nella directory delle impostazioni.
+
+.SH Menu Plugins
+.PP
+I plugin dell'editor che hanno una voce propria, per esempio il controllo
+ortografico; le loro finestre sono nel menu Finestra\&. Un
+plugin disattivato in
+Manage plugins
+non è nel menu.
+
+.SH Menu Opzioni
+.TP
+\fBGenerale...\fP
+Le opzioni dell'editor\&.
+
+.TP
+\fBModalità salvataggio...\fP
+Come viene scritto un file. Vedere
+Modifica modalità salvataggio\&.
+
+.TP
+\fBSintassi evidenziata...\fP
+Sceglie a mano le regole di sintassi per il file, o le lascia al nome e
+alla prima riga del file.
+
+.TP
+\fBAspetto...\fP
+Il tema e le ombre. Vedere Aspetto\&.
+
+.TP
+\fBImpara tasti...\fP
+Vedere Impara tasti\&.
+
+.TP
+\fBKey bindings...\fP
+Vedere Key bindings\&.
+
+.TP
+\fBKey sniffer...\fP
+Vedere Key sniffer\&.
+
+.TP
+\fBManage plugins...\fP
+Vedere Manage plugins\&.
+
+.TP
+\fBPlugin info...\fP
+Vedere Plugin info\&.
+
+.TP
+\fBLua scripts...\fP
+Vedere Lua scripts\&. La voce c'è solo dove bluerig è stato
+compilato con Lua.
+
+.TP
+\fBFile sintassi\fP
+Apre nell'editor il file di sintassi dell'utente,
+\fI~/.local/share/bluerig/syntax/Syntax\fP\&.
+Dove non esiste, viene creato con un breve commento su ciò che contiene, non
+come copia del file di sistema, che viene letto comunque dopo di esso.
+Vedere
+Evidenziazione della sintassi\&.
+
+.TP
+\fBMenu file\fP
+Apre nell'editor il file del menu utente\&.
+
+.TP
+\fBSalva configurazione\fP
+Scrive le impostazioni in
+\fI~/.config/bluerig/ini\fP\&.
+Con l'impostazione
+\fIauto_save_setup\fP
+attiva, vengono scritte ogni volta che l'editor termina.
+
+.SS Opzioni editor
+.PP
+La voce
+\fBGenerale...\fP
+del menu Opzioni apre la finestra delle opzioni dell'editor. Ogni opzione
+viene scritta nel file ini, vedere
+Impostazioni nel file ini\&.
+
+.PP
+\fBModalità a capo\fP
+
+.TP
+\fBNiente\fP
+Le righe non vanno a capo
+
+.TP
+\fBParagrafi dinamici\fP
+Formatta il paragrafo sotto il cursore mentre si scrive
+
+.TP
+\fBA capo automatico\fP
+Spezza la riga alla lunghezza di a capo mentre si scrive
+
+.PP
+\fBTabulazione\fP
+
+.TP
+\fBImbroglia i mezzi tab\fP
+Tra il margine sinistro e il testo una tabulazione avanza di metà della sua ampiezza, e il file riceve spazi e tabulazioni
+
+.TP
+\fBBackspace attraverso i tab\fP
+Backspace cancella tutto il rientro fino al margine sinistro quando tra il cursore e il margine non c'è testo
+
+.TP
+\fBRiempie i tabulatori di spazi\fP
+Inserisce spazi fino alla tabulazione successiva invece di un carattere di tabulazione
+
+.TP
+\fBSpaziatura tab\fP
+L'ampiezza di un carattere di tabulazione; 8 in modo predefinito
+
+.PP
+\fBKeyboard\fP
+
+.TP
+\fBEsc timeout, ms\fP
+Quanti millisecondi Esc aspetta il resto di un tasto prima di valere come Esc; 1000 in modo predefinito. Nel file ini è \fIold_esc_mode_timeout\fP in microsecondi, e la variabile \fBKEYBOARD_KEY_TIMEOUT_US\fP lo sostituisce all'avvio
+
+.PP
+\fBAltre opzioni\fP
+
+.TP
+\fBInvio autoindenta\fP
+Enter comincia la riga con il rientro della riga sopra
+
+.TP
+\fBConferma prima di salvare\fP
+Chiede prima di scrivere il file
+
+.TP
+\fBSalva posizione file\fP
+Apre il file dove è stato lasciato
+
+.TP
+\fBSpazi finali visibili\fP
+Segna gli spazi a fine riga
+
+.TP
+\fBTab visibili\fP
+Segna i caratteri di tabulazione
+
+.TP
+\fBShow control characters\fP
+Mostra i caratteri di controllo come ^M invece di nasconderli
+
+.TP
+\fBSintassi evidenziata\fP
+Colora il testo con le regole di sintassi del suo tipo
+
+.TP
+\fBCursore dopo il blocco inserito\fP
+Lascia il cursore alla fine di un blocco inserito, non all'inizio
+
+.TP
+\fBSelezione persistente\fP
+Mantiene la selezione quando il cursore si muove
+
+.TP
+\fBCursore oltre la fine riga\fP
+Lascia andare il cursore oltre l'ultimo carattere della riga
+
+.TP
+\fBAnnullamento di gruppo\fP
+Annulla in una volta una serie di modifiche dello stesso tipo
+
+.TP
+\fBAuto a capo colonna\fP
+La colonna in cui le modalità di a capo spezzano la riga; 72 in modo predefinito
+
+.SS Modifica modalità salvataggio
+.PP
+Come viene scritto un file, le stesse tre modalità che accetta
+l'impostazione
+\fIeditor_option_save_mode\fP:
+
+.TP
+\fBSalva veloce\fP
+Scrive subito sopra il file. È veloce, ma un errore a metà lascia il file
+scritto a metà.
+
+.TP
+\fBSalva sicuro\fP
+Scrive prima un file temporaneo e lo rinomina sopra l'originale quando è
+completo, così un errore lascia intatto l'originale.
+
+.TP
+\fBEsegue i backup con le seguenti estensioni\fP
+Salvataggio sicuro, e l'originale resta con il suo nome più l'estensione
+della riga di immissione, "~" in modo predefinito. Un secondo salvataggio
+sostituisce anche la copia di sicurezza.
+
+.TP
+\fBControllo nuova linea POSIX\fP
+Prima di scrivere il file chiede cosa fare se manca il fine riga finale.
+
+.SS Aspetto
+.PP
+Il tema con cui viene disegnato il programma, e se le finestre di dialogo e
+i menu a discesa hanno un'ombra.
+
+.TP
+\fBTema\fP
+Il pulsante apre l'elenco dei temi installati e di quelli dell'utente;
+quello scelto viene applicato subito.
+
+.TP
+\fBOmbre\fP
+Disegna un'ombra sotto ogni finestra di dialogo e menu a discesa. Senza
+colori non ci sono ombre.
+
+.PP
+La scelta viene scritta nelle impostazioni
+\fIskin\fP
+e
+\fIshadows\fP
+del file ini. Vedere la sezione
+Temi
+per i file dei temi.
+
+.SS Impara tasti
+.PP
+Questa finestra insegna a bluerig le sequenze di escape che il terminale
+invia per i tasti funzione, le frecce e i tasti di navigazione. Il titolo
+riporta il nome del terminale, preso dalla variabile
+\fBTERM\fP\&.
+
+.PP
+Scegliere una combinazione di modificatori (Ctrl, Alt, Shift) con le
+caselle, poi premere il pulsante di un tasto. Premere il tasto sulla
+tastiera e aspettare che il messaggio di cattura scompaia. La sequenza
+appresa compare accanto al pulsante. Una sequenza che ha già un altro tasto
+viene segnalata come conflitto.
+
+.TP
+\fBDel\fP
+Cancella il tasto appreso su cui è il cursore.
+
+.TP
+\fBSalva\fP
+Scrive i tasti appresi in
+\fI~/.config/bluerig/term/<TERM>\fP\&.
+
+.TP
+\fBEdit term file\fP
+Apre quel file nell'editor.
+
+.SS Key bindings
+.PP
+Le azioni del programma con i tasti a cui rispondono, in una tabella. I
+pulsanti in alto scelgono il gruppo, Editor o Widgets, e poi la sua parte:
+Main e Ctrl\-X per l'editor; Dialog, Menu, Input, Listbox, Radio e Help per i
+widget. Back torna ai gruppi. Le azioni segnate con * hanno tasti diversi
+da quelli predefiniti.
+
+.TP
+\fBEnter\fP
+Sostituisce il tasto dell'azione: premere il tasto da assegnare.
+
+.TP
+\fBF5\fP
+Aggiunge un altro tasto all'azione.
+
+.TP
+\fBF8, Del\fP
+Toglie il tasto.
 
 .TP
 \fBSalva\fP
@@ -357,104 +1328,1634 @@ Scrive le modifiche in
 \fI~/.config/bluerig/keymap.ini\fP\&.
 
 .TP
-\fBModifica file dei tasti\fP
+\fBEdit keymap file\fP
 Apre
 \fIkeymap.ini\fP
 nell'editor.
 
 .TP
-\fBModifica file del terminale\fP
-Apre le definizioni dei tasti del terminale.
+\fBEdit term file\fP
+Apre le sequenze dei tasti del terminale, il file che scrive
+Impara tasti\&.
 
 .PP
-Le azioni segnate con * si scostano da quelle di serie.
+Un tasto già preso da un'altra azione viene segnalato, con la domanda se
+toglierlo da lì.
 
-
-.SH Analizzatore di tasti
+.SS Key sniffer
 .PP
-Premere Cattura e poi un tasto qualsiasi. Mostra:
+Premere
+\fBCapture key\fP,
+poi un tasto qualsiasi. La finestra mostra cosa è arrivato:
 
 .EX
-Combinazione   Nome simbolico (per esempio Ctrl\-F5)
-Azione         Azione associata nella mappa attuale
-Grezzo         Sequenza di escape e byte in esadecimale
-Codice         Codice numerico interno
+Shortcut   the symbolic name, e.g. Ctrl\-F5
+Action     the action of the key in the editor keymap
+Raw        the escape sequence and its bytes in hex
+Keycode    the internal numeric code
 .EE
 
 .PP
-Utile per capire i problemi con i tasti del terminale.
+È il posto dove guardare quando un tasto non fa niente o fa la cosa
+sbagliata: un tasto che arriva come una sequenza che il programma non
+riconosce va insegnato in
+Impara tasti,
+e uno che arriva ma non ha un'azione va associato in
+Key bindings\&.
+
+.SS Manage plugins
+.PP
+I plugin che il programma ha caricato, in una tabella: il tipo, il nome e
+ciò che il plugin dice di sé. Qui sono elencati i plugin dell'editor e, dove
+bluerig è stato compilato con Lua, il motore Lua come plugin di tipo
+\fIruntime\fP\&.
+Un plugin si disattiva e si attiva con la casella della sua riga, e ciò che
+è disattivato non viene caricato nemmeno la volta successiva; la scelta è
+salvata in
+\fI~/.config/bluerig/plugins.ini\fP\&.
+Un plugin disattivato resta nell'elenco, così che si possa riattivare.
+
+.TP
+\fBEnter, F4\fP
+Apre le impostazioni del plugin su cui è il cursore. Un plugin che non ne
+ha lo dice. Sulla riga del motore Lua apre i
+Lua scripts\&.
+
+.TP
+\fBIDE: project, build, debugger\fP
+Attiva insieme i tre plugin che fanno dell'editor un IDE, o li disattiva
+insieme quando sono tutti attivi: il progetto e i suoi file, la
+compilazione e il debugger. Ognuno funziona anche senza gli altri.
+
+.SS Plugin info
+.PP
+I plugin che l'editor ha caricato: il nome, se è attivo, cosa offre e cosa
+fa. È un elenco da guardare; un plugin si disattiva e se ne aprono le
+impostazioni nella finestra
+Manage plugins\&.
+
+.SS Lua scripts
+.PP
+Gli script Lua trovati, quelli di sistema e quelli dell'utente, in una
+tabella: se è attivo, dove si trova lo script (globale o dell'utente), il
+suo identificatore, il suo spazio di lavoro, cosa offre e cosa fa. Uno
+script si disattiva e si attiva con la casella della sua riga; la modifica
+ha effetto al prossimo avvio di bluerig.
+
+.TP
+\fBSettings\fP
+Esegue lo script con le impostazioni del pacchetto, se il pacchetto ne ha
+uno.
+
+.PP
+Vedere Script Lua per gli script stessi.
+
+
+.SH Ricerca, sostituzione e filtro delle righe
+.PP
+F7 apre la finestra di ricerca.
+
+.TP
+\fBNormale\fP
+Cerca la stringa così com'è
+
+.TP
+\fBEspressione regolare\fP
+Cerca con un'espressione regolare
+
+.TP
+\fBEsadecimale\fP
+Cerca byte scritti come numeri esadecimali
+
+.TP
+\fBRicerca tipo jolly\fP
+Cerca con un modello della shell con * e ?
+
+.TP
+\fBDistingui le maiuscole\fP
+Distingue le lettere minuscole dalle maiuscole
+
+.TP
+\fBIndietro\fP
+Cerca dal cursore verso l'inizio del file
+
+.TP
+\fBIn selezione\fP
+Cerca solo nel blocco selezionato
+
+.TP
+\fBParole intere\fP
+Trova solo parole intere
+
+.TP
+\fBTutti i caratteri\fP
+Cerca in ogni codifica in cui il file può essere scritto
+
+.TP
+\fBTrova tutti\fP
+Mette un segnalibro su ogni riga con una corrispondenza
+
+.TP
+\fBFilter\fP
+Nasconde le righe senza corrispondenza
+
+.PP
+F4 apre la finestra di sostituzione: gli stessi campi e la
+riga "Inserire stringa di sostituzione". In una sostituzione con espressione
+regolare da \e1 a \e9 inseriscono i gruppi trovati.
+
+.TP
+\fBRimpiazza\fP
+Sostituisce questa corrispondenza e cerca la successiva
+
+.TP
+\fBTutti\fP
+Sostituisce ogni corrispondenza senza chiedere
+
+.TP
+\fBSalta\fP
+Lascia questa corrispondenza e cerca la successiva
+
+.PP
+\fBFilter\fP
+
+.PP
+Nasconde le righe senza corrispondenza; i numeri di riga non cambiano, e la
+colonna di stato delle righe segna ogni tratto nascosto. Le righe vengono
+nascoste una volta sola, quando si preme il pulsante: una riga modificata o
+scritta dopo resta visibile anche se non corrisponde.
+
+.TP
+\fBAlt\-s\fP
+Toglie il filtro, o applica l'ultima ricerca come filtro; senza ricerca, apre la finestra di ricerca
+
+.TP
+\fBAlt\-S\fP
+Filtra per il testo selezionato o per la parola sotto il cursore
+
+.TP
+\fBComandi > Unfold all\fP
+Toglie il filtro e ogni ripiegamento
+
+
+.SH Ripiegamento
+.PP
+Un ripiegamento nasconde una serie di righe dietro la sua prima riga, che
+resta sullo schermo con un segno nella colonna di stato delle righe.
+\fBAlt\-F\fP
+(Fold / Unfold block nel menu Comandi) ripiega le righe evidenziate o, se
+non c'è niente di evidenziato, le righe da una parentesi sulla riga corrente
+alla parentesi che le corrisponde. Sulla prima riga di un ripiegamento lo
+riapre.
+\fBUnfold all\fP
+riapre ogni ripiegamento del file, e toglie il filtro delle righe.
+
+
+.SH Macro
+.PP
+Ctrl\-r
+avvia la registrazione di una macro: i tasti premuti dopo vengono
+registrati. Un secondo
+\fBCtrl\-r\fP
+termina la registrazione e aspetta il tasto a cui associare la macro; quel
+tasto poi la esegue.
+
+.PP
+Le macro sono salvate nella sezione
+\fB[editor]\fP
+del file
+\fB~/.local/share/bluerig/macros\fP,
+e una macro si cancella cancellando la sua riga in quel file, o nel
+Macro Explorer\&.
+
+.PP
+\fBRegistra/ripeti le azioni\fP
+nel menu Comandi registra le azioni che seguono finché non viene scelto di
+nuovo, e poi chiede quante volte ripeterle.
+
+.PP
+Anche uno script di shell si può assegnare a un tasto, con una riga del file
+\fBmacros\fP
+come questa:
+
+.EX
+[editor]
+Ctrl\-W=ExecuteScript:25;
+.EE
+
+.PP
+Questo significa che Ctrl\-W esegue l'azione
+\fIExecuteScript(25)\fP,
+che esegue lo script di shell
+\fB~/.local/share/bluerig/macros.d/macro.25.sh\fP\&.
+Gli script sono salvati nella directory
+\fB~/.local/share/bluerig/macros.d/\fP
+e devono chiamarsi
+\fBmacro.XXXX.sh\fP,
+dove
+\fBXXXX\fP
+è un numero da 0 a 9999. Gli esempi sono installati in
+\fB{{pkgdatadir}}/examples/macros.d/\fP\&.
+Uno script ha il formato delle voci del
+menu utente
+e accetta le stesse sostituzioni. La sua prima riga può essere
+
+.TP
+\fI#silent\fP
+Lo script viene eseguito senza chiedere i suoi parametri.
+
+.PP
+Ecco uno script di esempio:
+
+.EX
+l       comment selection
+	TMPFILE=`mktemp ${BLUERIG_TMPDIR:\-/tmp}/up.XXXXXX` || exit 1
+	echo '#if 0' > $TMPFILE
+	cat %b >> $TMPFILE
+	echo '#endif' >> $TMPFILE
+	cat $TMPFILE > %b
+	rm \-f $TMPFILE
+.EE
+
+.SH Macro Explorer
+.PP
+Le macro registrate, con il tasto a cui ciascuna risponde e ciò che fa. I
+pulsanti sono
+
+.TP
+\fBRun\fP
+Esegue la macro su cui è il cursore.
+
+.TP
+\fBElimina\fP
+La toglie, dopo una domanda.
+
+.TP
+\fBModifica file\fP
+Apre il file in cui stanno le macro, descritto nella sezione
+Macro\&.
+
+
+.SH Menu utente
+.PP
+F11
+apre il menu utente: ognuna delle sue voci è uno script di shell eseguito sul
+testo dell'editor. Il menu viene letto dal primo file trovato tra:
+
+.EX
+1) ./.bluerig.menu in the current directory
+2) ~/.config/bluerig/menu
+3) ~/bluerig.menu
+4) {{sysconfdir}}/bluerig/bluerig.menu
+5) {{pkgdatadir}}/bluerig.menu
+.EE
+
+.PP
+Il file della directory corrente viene letto solo se appartiene all'utente o
+a root e nessun altro può scriverlo: le sue voci eseguono comandi. La voce
+\fBMenu file\fP
+del menu Opzioni apre il file del menu nell'editor.
+
+.PP
+Una riga che comincia con qualsiasi carattere tranne uno spazio o una
+tabulazione è una voce del menu, e il suo primo carattere è il tasto rapido
+della voce. Le righe che cominciano con uno spazio o una tabulazione sono i
+comandi della voce. Una riga che comincia con '#' è un commento.
+
+.PP
+Quando si sceglie una voce, i suoi comandi vengono scritti in un file
+temporaneo, vi si applicano le sostituzioni, e la shell esegue quel file:
+
+.TP
+\fB%f, %p, %s\fP
+Il nome del file corrente
+
+.TP
+\fB%n\fP
+Il nome del file corrente senza estensione
+
+.TP
+\fB%x\fP
+L'estensione del nome del file corrente
+
+.TP
+\fB%d\fP
+La directory corrente
+
+.TP
+\fB%c\fP
+La posizione del cursore nel file
+
+.TP
+\fB%i\fP
+Un rientro di spazi largo quanto la colonna del cursore
+
+.TP
+\fB%y\fP
+Il tipo di sintassi del file corrente
+
+.TP
+\fB%b\fP
+Il file del blocco: il testo selezionato viene scritto in \fB~/.cache/bluerig/block\fP prima dell'esecuzione, e ciò che i comandi vi lasciano sostituisce il blocco
+
+.TP
+\fB%m\fP
+Il nome del file del menu
+
+.TP
+\fB%%\fP
+Il carattere %
+
+.TP
+\fB%{text}\fP
+Una riga di immissione con la richiesta "text"; ciò che si scrive viene inserito, Esc o F10 annullano la voce
+
+.TP
+\fB%view\fP
+Apre l'output standard dei comandi in una nuova finestra dell'editor; le parole tra graffe dopo di esso, come in %view{ascii}, vengono saltate
+
+.PP
+Le lettere delle sostituzioni non distinguono maiuscole e minuscole. Un
+numero dopo % attiva le virgolette (il comportamento predefinito) o le
+disattiva: %f e %1f mettono tra virgolette il valore inserito, %0f no.
+
+.PP
+Un file di menu di esempio:
+
+.EX
+s       Sort the block
+	sort %b > %b.tmp && mv \-f %b.tmp %b
+
+w       Count the words of the file
+	%view wc %f
+
+m       Run make in the directory of the file
+	make
+.EE
+
+.PP
+\fBVoce predefinita\fP
+
+.PP
+Una riga che comincia con '=' nella prima colonna è una condizione della
+voce sotto di essa: quando la condizione è vera, la voce diventa quella
+predefinita.
+
+.EX
+Condition syntax:   = <sub\-cond>
+  or:               = <sub\-cond> | <sub\-cond> ...
+  or:               = <sub\-cond> & <sub\-cond> ...
+
+Sub\-condition is one of following:
+
+  y <pattern>   syntax of current file matching pattern?
+  f <pattern>   current file matching pattern?
+  d <pattern>   current directory matching pattern?
+  t <type>      current file of type?
+  x <filename>  is it executable filename?
+  ! <sub\-cond>  negate the result of sub\-condition
+.EE
+
+.PP
+Il modello è un modello della shell o un'espressione regolare, secondo
+l'impostazione
+\fIshell_patterns\fP;
+una riga "shell_patterns=0" o "shell_patterns=1" come prima riga del file
+del menu la fissa per quel file.
+
+.PP
+Il tipo è uno o più caratteri:
+
+.EX
+  n   not a directory
+  r   regular file
+  d   directory
+  l   link
+  c   character device
+  b   block device
+  f   FIFO (pipe)
+  s   socket
+  x   executable file
+.EE
+
+.PP
+Per esempio 'rlf' è un file normale, un collegamento o una FIFO.
+
+.PP
+Una condizione che comincia con '=?' invece di '=' mostra una traccia di
+debug ogni volta che viene calcolata.
+
+.PP
+Le condizioni vengono calcolate da sinistra a destra; '&' non lega più
+strettamente di '|':
+
+.EX
+	= f *.c | f *.h & y C
+.EE
+
+.PP
+viene calcolata come
+
+.EX
+	( (f *.c) | (f *.h) ) & (y C)
+.EE
+
+.PP
+\fBCondizioni di aggiunta\fP
+
+.PP
+Una condizione che comincia con '+' (o '+?') mette la voce nel menu solo
+quando è vera. Una condizione con '+=' o '=+' ('+=?' e '=+?' con traccia)
+vale sia come condizione di aggiunta sia come condizione predefinita. Due
+righe di condizione prima di una voce, una con '+' e una con '=', tengono
+separate le due condizioni.
+
+
+.SH Plugin
+.PP
+Un plugin si attiva e si disattiva nel menu Opzioni, voce
+Manage plugins\&.
+
+
+.SH Finestre di dialogo
+.SH Salva come
+.PP
+Il nome con cui scrivere il file, e i fine riga con cui scriverlo: come li ha
+il file, Unix (LF), Windows e DOS (CR LF), oppure Macintosh (CR). La scelta
+vale per quel salvataggio; il file conserva i fine riga che riceve.
+
+.SH Apri i file
+.PP
+I file che l'editor ha aperti, uno per riga. Enter va al file su cui è il
+cursore, Esc lascia dov'è il file mostrato. Lo stesso elenco è la voce
+\fBElenco...\fP
+del menu Finestra.
+
+.SH Scelta dello schermo
+.PP
+Oltre all'editor, uno script Lua può aprire schermi propri, viste a pieno
+schermo che restano aperte mentre si torna all'editor. Ci sono tre modi per
+passare da uno schermo all'altro:
+
+.TP
+\fBAlt\-}\fP
+passa allo schermo successivo;
+
+.TP
+\fBAlt\-{\fP
+passa allo schermo precedente;
+
+.TP
+\fBAlt\-`\fP
+apre una finestra di dialogo con l'elenco degli schermi aperti, per
+sceglierne uno.
+
+.SH Completamento
+.PP
+Alt\-Tab
+nell'editor completa la parola prima del cursore con le parole dei file
+aperti, e mostra un elenco quando più parole vanno bene. L'impostazione
+\fIeditor_wordcompletion_collect_all_files\fP
+del file ini, attiva in modo predefinito, prende le parole da tutti i file
+aperti; quando è disattivata, solo dal file corrente.
+
+.PP
+\fBAlt\-Tab\fP
+in una riga di immissione di una finestra di dialogo completa il testo:
+
+.TP
+\fB$nome\fP
+Una variabile d'ambiente
+
+.TP
+\fB~nome\fP
+Un nome utente
+
+.TP
+\fBAltrimenti\fP
+Un nome di file
+
+.PP
+Quando ne vanno bene più d'uno, il programma emette un segnale acustico.
+L'impostazione
+\fIshow_all_if_ambiguous\fP
+del file ini, disattivata in modo predefinito, mostra il loro elenco accanto
+al cursore:
+\fBEnter\fP
+ne sceglie uno, le lettere scritte restringono l'elenco, Esc, F10, Left e
+Right lo nascondono.
+
+.SH Scegli la codepage
+.PP
+L'elenco delle codifiche che il programma conosce, da
+\fB{{pkgdatadir}}/charsets\fP\&.
+Sceglierne una dice all'editor in quale codifica è scritto il testo del
+file, e il testo viene ricodificato da essa nella codifica del terminale
+per lo schermo;
+\fB<Non tradotto>\fP
+lo lascia come byte. L'elenco si apre con
+\fBAlt\-e\fP
+e con la voce Codifica del menu Comandi.
+
+.SH Cronologia
+.PP
+L'elenco di ciò che è stato scritto prima in una riga di immissione, dal più
+recente, che
+\fBAlt\-h\fP
+apre per la riga in cui è il cursore. Enter porta nella riga la voce su cui
+è il cursore, Esc lascia la riga com'era, e
+\fBF8, Del\fP
+toglie dalla cronologia la voce su cui è il cursore. Le cronologie sono
+salvate in
+\fI~/.local/share/bluerig/history\fP;
+\fInum_history_items_recorded\fP
+dice quante voci conserva ognuna di esse.
+
+
+.SH Evidenziazione della sintassi
+.PP
+Ctrl\-s
+attiva e disattiva l'evidenziazione della sintassi. Le regole
+dell'evidenziazione sono nei file di sintassi: parole chiave e contesti,
+come commenti e stringhe, vi ricevono i loro colori.
+
+.TP
+\fBFile di sintassi\fP
+Dove sono le regole e in quale ordine vengono lette
+
+.TP
+\fBLa sezione file\fP
+Quali file evidenzia una sezione di regole
+
+.TP
+\fBContesti\fP
+Zone del testo con colori propri
+
+.TP
+\fBIncorporamento e livelli\fP
+Regole di un'altra sintassi dentro un contesto e sopra il testo
+
+.TP
+\fBParole chiave\fP
+Parole e modelli colorati dentro un contesto
+
+.TP
+\fBColori e attributi\fP
+Colori, token di scope del tema, attributi
+
+.TP
+\fBAltre righe\fP
+Commenti, caseinsensitive, line\-local
+
+.SH File di sintassi
+.TP
+*\fB\fI~/.local/share/bluerig/syntax/Syntax\fP\fP*
+Le regole dell'utente: ciò che l'utente ha aggiunto o vuole diverso
+
+.TP
+*\fB\fI{{pkgdatadir}}/syntax/Syntax\fP\fP*
+Le regole installate, per i tipi di file che il file dell'utente non nomina
+
+.PP
+Una voce dell'utente sostituisce una voce installata per i file a cui
+corrisponde. I file nominati dalle righe
+\fBinclude\fP
+vengono cercati prima in
+\fI~/.local/share/bluerig/syntax/\fP,
+poi tra quelli installati. Il file dell'utente viene riletto ogni volta che
+si apre un nuovo file nell'editor.
+
+.PP
+Una copia completa del file installato, come facevano le versioni
+precedenti, nasconde ogni tipo di file installato dopo di essa, e la loro
+evidenziazione smette di funzionare: nella copia tenere solo le voci
+cambiate.
+
+.SH La sezione file
+.PP
+Un file di sintassi è fatto di sezioni. Ognuna comincia con una riga
+\fBfile\fP
+e di solito sta in un file a sé con una riga
+\fBinclude\fP:
+
+.EX
+file <file name> <description> [<first line>]
+.EE
+
+.PP
+Il
+\fIfile name\fP
+e la
+\fIfirst line\fP
+sono espressioni regolari: la sezione si applica a un file quando il suo
+nome o la prima riga del suo testo corrispondono. La
+\fIdescription\fP
+è il nome della sintassi, con \es per uno spazio: le righe
+\fBembed\fP
+e
+\fBoverlay\fP
+lo usano. Una sezione finisce dove comincia la successiva ed è divisa in
+contesti con parole chiave.
+
+.PP
+Una sezione minima per un programma C:
+
+.EX
+file .\e*\e\e.c C\esProgram\esFile (#include|/\e\e\e*)
+
+wholechars abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_
+
+# default colors
+define  comment   brown
+context default
+  keyword  whole  if       yellow
+  keyword  whole  else     yellow
+  keyword  whole  for      yellow
+  keyword  whole  while    yellow
+  keyword  whole  do       yellow
+  keyword  whole  switch   yellow
+  keyword  whole  case     yellow
+  keyword  whole  static   yellow
+  keyword  whole  extern   yellow
+  keyword         {        brightcyan
+  keyword         }        brightcyan
+  keyword         '*'      green
+
+# C comments
+context /\e* \e*/ comment
+
+# C preprocessor directives
+context linestart # \en red
+  keyword  \e\e\en  brightred
+
+# C string constants
+context " " green
+  keyword  %d    brightgreen
+  keyword  %s    brightgreen
+  keyword  %c    brightgreen
+  keyword  \e\e"   brightgreen
+.EE
+
+.SH Contesti
+.PP
+Un contesto è una zona del testo con un colore proprio e parole chiave
+proprie, come un commento C tra /* e */. Comincia con la riga:
+
+.EX
+context [exclusive] [oneline] [whole|wholeright|wholeleft] [linestart] <delim>
+        [linestart] <delim> [<foreground>] [<background>] [<attributes>]
+.EE
+
+.PP
+Il primo contesto di una sezione è
+\fBcontext default\fP
+[\fIforeground\fP] [\fIbackground\fP] [\fIattributes\fP];
+senza di esso la sezione dà un errore.
+
+.TP
+\fBlinestart\fP
+Il delimitatore sta all'inizio di una riga
+
+.TP
+\fBwhole\fP
+Il delimitatore è una parola intera
+
+.TP
+\fBwholeleft\fP
+Il delimitatore è su un confine di parola a sinistra
+
+.TP
+\fBwholeright\fP
+Il delimitatore è su un confine di parola a destra
+
+.TP
+\fBexclusive\fP
+Colora il testo tra i delimitatori, non i delimitatori
+
+.TP
+\fBoneline\fP
+Dopo exclusive: termina il contesto alla fine della riga quando il delimitatore destro non è su di essa
+
+.PP
+Una riga
+\fBwholechars\fP
+[\fBleft\fP|\fBright\fP] \fIcharacters\fP
+in qualsiasi punto del file fissa i caratteri di una parola intera; left e
+right fissano i due lati separatamente. Una riga
+\fBspellcheck\fP
+dopo
+\fBcontext\fP
+passa le parole del contesto al controllo ortografico.
+
+.SH Incorporamento e livelli
+.PP
+Una riga
+
+.PP
+\fBembed\fP
+[\fBsoft\fP]
+\fItype\fP
+
+.PP
+dopo
+\fBcontext\fP
+passa il testo tra i delimitatori alle regole di un'altra sintassi;
+\fItype\fP
+è la descrizione della sua riga file, con \es per uno spazio. Il tipo viene
+cercato nel file Syntax da cui si leggono le regole, poi in quello
+installato con bluerig. Un tipo che non si trova in nessuno dei due lascia
+il contesto nei suoi colori. I delimitatori mantengono i colori del
+contesto. Il delimitatore destro termina il testo incorporato ovunque si
+trovi, anche dentro una stringa o un commento delle regole incorporate. Una
+sintassi incorporata può incorporarne un'altra, fino a pochi livelli. Per
+esempio, HTML passa gli script alle regole di JavaScript:
+
+.EX
+  context <SCRIPT*> </SCRIPT> brightcyan
+      embed JavaScript\esProgram
+.EE
+
+.PP
+Con
+\fBsoft\fP
+il delimitatore destro termina il testo incorporato solo fuori dalle
+stringhe, dai commenti e dalle parole chiave delle regole incorporate, così
+che in {{ "}}" }} di un template Jinja2 il primo }} resta parte della
+stringa, e in ${x/\e}/y} di uno script di shell il primo } resta parte
+dell'escape.
+
+.PP
+Una riga
+
+.PP
+\fBoverlay\fP
+\fItype\fP
+
+.PP
+tra le regole fa di tutta la sintassi un livello sopra
+\fItype\fP:
+i suoi contesti colorano ciò che contengono ovunque si trovi, e il resto del
+testo viene letto dalle regole di
+\fItype\fP,
+che vedono il contenuto dei contesti come spazi vuoti. In questo modo i tag
+di un linguaggio di template vengono colorati allo stesso modo nel testo,
+dentro un tag HTML, in una stringa di un attributo e in uno script, e HTML
+colora il resto. Il contesto predefinito di un livello non colora niente:
+una parola chiave lì impedisce solo a un contesto di cominciare. Un tipo che
+non si trova in nessun file Syntax lascia il livello sopra il testo
+semplice. Per esempio, Smarty sopra HTML:
+
+.EX
+  overlay HTML\esFile
+  context default
+      keyword {\es
+  context {\e* \e*} brown
+  context { } brightcyan
+      embed soft Smarty\esTag
+.EE
+
+.SH Parole chiave
+.PP
+Una parola chiave di un contesto è data dalla riga:
+
+.EX
+keyword [whole|wholeright|wholeleft] [linestart] <string> [<foreground>] [<background>] [<attributes>]
+.EE
+
+.PP
+Le stringhe delle parole chiave e dei delimitatori dei contesti si leggono
+così:
+
+.TP
+\fB\et, \es\fP
+Tabulazione e spazio: gli spazi vuoti separano le parole della riga e non si possono usare così come sono
+
+.TP
+\fB\en, \er\fP
+A capo e ritorno carrello
+
+.TP
+\fB\fB\e\e\fR\fP
+Barra rovesciata
+
+.TP
+\fB\e*\fP
+Asterisco
+
+.TP
+\fB*\fP
+Qualsiasi carattere, in qualsiasi numero
+
+.TP
+\fB+\fP
+Qualsiasi numero di caratteri di parola, anche nessuno
+
+.TP
+\fB\e[abc\e]\fP
+Qualsiasi numero di caratteri dell'insieme
+
+.TP
+\fB\e{abc\e}\fP
+Un carattere dell'insieme
+
+.PP
+Un modello non può essere il primo o l'ultimo carattere di un delimitatore
+di contesto. Per esempio,
+
+.EX
+  keyword         '*'      green
+.EE
+
+.PP
+colora di verde le costanti C di un solo carattere, e
+
+.EX
+  keyword         "*"      green
+.EE
+
+.PP
+colora le costanti stringa, purché non attraversino un a capo.
+
+.PP
+La riga
+
+.EX
+  keyword  \e\e\en  brightgreen
+.EE
+
+.PP
+dà una parola chiave fatta di una barra rovesciata e un a capo. Le parole
+chiave vengono confrontate prima dei delimitatori dei contesti, quindi questa
+impedisce al contesto di finire alla fine di una riga con una barra
+rovesciata, e una direttiva del preprocessore C continua su più righe.
+
+.PP
+Una riga
+\fBdefine\fP
+\fIname words...\fP
+dà un nome che sta per queste parole nelle regole, come
+\fBdefine comment brown\fP\&.
+
+.SH Colori e attributi
+.PP
+I colori: black, gray, red, brightred, green, brightgreen, brown, yellow,
+blue, brightblue, magenta, brightmagenta, cyan, brightcyan, lightgray e
+white. "default" è il colore predefinito del terminale, "base" i colori
+principali dell'editor; imposta gli attributi senza cambiare il colore di
+sfondo. Con 256 colori ci sono anche da color16 a color255, da rgb000 a
+rgb555 e da gray0 a gray23.
+
+.PP
+Il colore del testo può essere un token di scope invece di un colore: una
+parola in maiuscolo che dice cos'è il testo invece di come appare:
+
+.EX
+keyword  whole  if   KEYWORD_CONTROL
+context  " " STRING_QUOTED_DOUBLE
+    keyword  \e\e"   CONSTANT_CHARACTER_ESCAPE
+keyword  linestart TODO  KEYWORD_OTHER_TODO black
+.EE
+
+.PP
+Il colore di un token viene dal tema, così un solo tema colora il programma
+e il testo, e ogni linguaggio allo stesso modo; vedere
+Temi\&.
+Un token si legge come uno scope: in minuscolo, con punti al posto dei
+trattini bassi. KEYWORD_CONTROL_IMPORT è keyword.control.import, un tipo di
+keyword.control, che è un tipo di keyword. Sono i nomi di scope di Sublime
+Text e TextMate. Ciò che il tema non colora mantiene i colori che mcedit
+dava a quel testo. Uno sfondo o attributi dopo un token prevalgono sui
+colori di mcedit, come black qui sopra, ma non su uno sfondo o attributi che
+il tema dà al token stesso. Un token funziona anche in un define, e sulle
+righe number, string e symbols delle regole line\-local. I file di sintassi
+installati usano solo token; il loro elenco con i colori di mcedit è in
+\fB{{pkgdatadir}}/syntax/README.txt\fP\&.
+
+.PP
+Un file di sintassi condiviso con
+\fBcooledit\fP
+dà i colori per entrambi con una barra, e bluerig prende il colore prima di
+essa:
+
+.EX
+keyword  #include  red/Orange
+.EE
+
+.PP
+Gli attributi sono bold, italic, underline, reverse e blink, più d'uno uniti
+con un segno più.
+
+.SH Altre righe
+.TP
+\fB# ...\fP
+Un commento, su una riga a sé
+
+.TP
+\fBcaseinsensitive\fP
+All'inizio del file: maiuscole e minuscole non contano
+
+.TP
+\fBline\-local\fP
+La modalità per il testo semplice: si azzera a ogni a capo e al bordo dello schermo e legge solo il testo mostrato
+
+.TP
+\fBnumber \fImax\fP *color\fP*
+In line\-local: numeri decimali fino a \fImax\fP cifre
+
+.TP
+\fBstring \fIquote\fP *color\fP*
+In line\-local: stringhe tra virgolette singole o doppie
+
+.TP
+\fBsymbols \fIcharacters\fP *color\fP*
+In line\-local: segni di punteggiatura colorati uno per uno
+
+
+.SH Colori
+.PP
+bluerig cerca di capire se il terminale supporta i colori usando il database
+dei terminali e il nome del terminale. A volte si sbaglia, quindi si può
+forzare la modalità a colori o disattivarla con le opzioni \-c e \-b
+rispettivamente.
+
+.PP
+Se il programma è compilato con il gestore dello schermo S\-Lang invece di
+ncurses, controlla anche la variabile
+\fBCOLORTERM,\fP
+che, se è impostata, ha lo stesso effetto dell'opzione \-c.
+
+.PP
+Si possono indicare terminali che forzano sempre la modalità a colori
+aggiungendo la variabile
+\fIcolor_terminals\fP
+alla sezione Colors del file di inizializzazione. Questo impedisce a bluerig
+di cercare di capire se il terminale supporta i colori. Esempio:
+
+.EX
+[Colors]
+color_terminals=linux,xterm
+color_terminals=terminal\-name1,terminal\-name2...
+.EE
+
+.PP
+Il programma si può compilare sia con ncurses sia con S\-Lang; ncurses non
+offre un modo per forzare la modalità a colori: ncurses usa solo le
+informazioni del database dei terminali.
+
+
+.SH Temi
+.PP
+I colori del programma e le linee delle sue cornici vengono presi da un file
+di tema. La finestra
+Aspetto
+ne sceglie uno da un elenco.
+
+.PP
+Se il tema contiene definizioni true\-color, si deve definire la chiave
+\&'truecolors' con il valore TRUE nella sezione [skin]. Se non si usa il
+true\-color ma i 256 colori, si deve definire invece '256colors'.
+
+.PP
+Il tema è il primo indicato da:
+
+.EX
+1) command line option \-S <skin>, \-\-skin=<skin>
+2) environment variable BLUERIG_SKIN
+3) setting skin of the [bluerig] section of the ini file
+4) the skin called default
+.EE
+
+.PP
+Un nome può essere il percorso assoluto di un file di tema (con
+l'estensione .ini o senza). Altrimenti il file del tema viene cercato
+in (fino al primo trovato):
+
+.EX
+1) ~/.local/share/bluerig/skins/
+2) {{sysconfdir}}/bluerig/skins/
+3) {{pkgdatadir}}/skins/
+.EE
+
+.PP
+Il formato dei file di tema è descritto in
+\fB{{pkgdatadir}}/skins/README.txt\fP\&.
+I colori dell'evidenziazione della sintassi vengono dalla sezione
+\fB[syntax]\fP
+del tema: lì uno scope nomina i colori di un tipo di testo, e uno scope e lo
+scope del contesto in cui si trova, i due separati da uno spazio, nominano i
+colori di quel tipo di testo in quel contesto. Vince lo scope più lungo che
+il tema nomina:
+
+.EX
+[syntax]
+    comment = gray
+    keyword = yellow
+    keyword.control = brightmagenta
+    string = green
+    string constant.character.escape = white;red
+    invalid = white;red;bold
+.EE
+
+.PP
+Un tipo di testo che il tema non nomina mantiene i colori che mcedit gli
+dava, quindi un tema può nominare pochi tipi e lasciare il resto. Le regole
+che nominano colori invece di token di scope mantengono i loro colori
+qualunque sia il tema; vedere
+Evidenziazione della sintassi\&.
+
+
+.SH Database dei terminali
+.PP
+bluerig offre un modo per correggere il database dei terminali del sistema
+senza bisogno dei privilegi di root. La finestra
+Impara tasti
+scrive ciò che apprende in
+\fB~/.config/bluerig/term/<TERM>\fP,
+una riga per ogni tasto nella sua sezione
+\fB[keys]\fP\&.
+bluerig cerca anche nel file di sistema
+\fBdefaults.ini\fP
+(in
+\fB{{sysconfdir}}/bluerig\fP
+o
+\fB{{pkgdatadir}}\fP)
+e nel file
+\fB~/.config/bluerig/ini\fP
+la sezione "terminal:nome\-del\-terminale" e poi la sezione
+"terminal:general". Ogni riga della sezione contiene un simbolo di tasto da
+definire, seguito da un segno di uguale e dalla definizione del tasto. Si
+può usare la forma speciale \ee per rappresentare il carattere di escape e
+^x per rappresentare il carattere control\-x. Una riga
+\fIcopy=other\fP
+prende anche ogni tasto della sezione "terminal:other".
+
+.PP
+I simboli di tasto possibili sono:
+
+.EX
+f0 to f20     Function keys f0\-f20
+bs            backspace
+home          home key
+end           end key
+up            up arrow key
+down          down arrow key
+left          left arrow key
+right         right arrow key
+pgdn          page down key
+pgup          page up key
+insert        the insert character
+delete        the delete character
+complete      to do completion
+.EE
+
+.PP
+Per esempio, per definire il tasto insert come Escape + [ + O + p, si
+scrive questo nel file ini:
+
+.EX
+insert=\ee[Op
+.EE
+
+.PP
+Un simbolo di tasto può avere modificatori:
+
+.EX
+    ctrl\-alt\-right=\ee[[1;6C
+    ctrl\-alt\-left=\ee[[1;6D
+.EE
+
+.PP
+Questo significa che ctrl+alt+left invia una sequenza di escape \ee[[1;6D e
+quindi bluerig interpreta "\ee[[1;6D" come Ctrl\-Alt\-Left.
+
+.PP
+Il simbolo di tasto
+\fIcomplete\fP
+rappresenta le sequenze di escape usate per avviare il completamento, che si
+avvia con Alt\-tab, ma si possono definire altri tasti per fare lo stesso
+lavoro (su quelle tastiere piene di bei tasti inutilizzati).
+
+
+.SH Script Lua
+.PP
+Dove bluerig è stato compilato con Lua, esegue script Lua che estendono
+l'editor: azioni associate a tasti e a menu, reazioni agli eventi
+dell'editor (un file viene aperto, salvato, un tasto viene premuto),
+finestre di dialogo e viste a pieno schermo. Diversi comandi dell'editor
+sono script di questo tipo: l'ordinamento delle righe, la formattazione del
+paragrafo, l'inserimento dell'output di un comando, l'inserimento di un
+carattere per il suo codice, l'inserimento della data, la decodifica base64
+e il disegno di tabelle.
+
+.PP
+Gli script di sistema sono in
+\fB{{pkgdatadir}}/lua/scripts/\fP,
+e gli script dell'utente in
+\fB~/.local/share/bluerig/lua/scripts/\fP,
+una directory per ogni script, con il suo
+\fBlua.ini\fP
+e il suo
+\fBinit.lua\fP\&.
+La finestra
+Lua scripts
+li attiva e li disattiva.
+
+.PP
+L'opzione
+\fB\-\-no\-lua\fP,
+o la variabile
+\fBBLUERIG_NO_LUA\fP
+impostata a 1, avvia l'editor senza nessuno script Lua, e
+\fIenabled=false\fP
+nella sezione
+\fB[Lua]\fP
+del file ini lo fa in modo permanente.
+
+.PP
+Come scrivere uno script, e le funzioni che uno script può chiamare, è
+descritto in
+\fBLUA_PLUGINS.md\fP
+e
+\fBLUA_API_REFERENCE.md\fP,
+installati con la documentazione di bluerig.
+
+
+.SH Impostazioni generali
+.PP
+Queste impostazioni della sezione
+\fB[bluerig]\fP
+del file ini riguardano il programma più che l'editor. Salvo dove detto
+altrimenti, 1 attiva un'impostazione e 0 la disattiva.
+
+.TP
+\fIauto_save_setup\fP
+Scrive le impostazioni nel file ini ogni volta che l'editor termina.
+
+.TP
+\fIskin\fP
+Il nome del tema. Vedere Temi\&.
+
+.TP
+\fIshadows\fP
+Disegna un'ombra sotto le finestre di dialogo e i menu a discesa.
+
+.TP
+\fIkeymap\fP
+Il file dei tasti da usare. Vedere Ridefinire i tasti\&.
+
+.TP
+\fIdrop_menus\fP
+Apre subito il primo menu quando si preme F9, invece della sola barra dei
+menu.
+
+.TP
+\fImouse_close_dialog\fP
+Un clic fuori da una finestra di dialogo la chiude.
+
+.TP
+\fImouse_repeat_rate, double_click_speed\fP
+La ripetizione automatica dei pulsanti del mouse, e il tempo entro cui due
+clic fanno un doppio clic, in millisecondi.
+
+.TP
+\fIold_esc_mode, old_esc_mode_timeout\fP
+Con old_esc_mode attivo, un singolo Esc vale come Esc dopo
+old_esc_mode_timeout microsecondi, invece di aspettare il tasto successivo.
+
+.TP
+\fIshow_all_if_ambiguous\fP
+Mostra subito l'elenco dei completamenti possibili quando il completamento
+è ambiguo. Vedere Completamento\&.
+
+.TP
+\fIshell_patterns\fP
+I modelli delle condizioni del menu utente sono modelli della shell (1) o
+espressioni regolari (0).
+
+.TP
+\fInum_history_items_recorded\fP
+Quante voci conserva ogni cronologia di una riga di immissione.
+
+.TP
+\fIconfirm_history_cleanup\fP
+Chiede prima di svuotare una cronologia.
+
+.TP
+\fIclear_before_exec\fP
+Pulisce lo schermo prima che venga eseguito un comando del menu utente.
+
+.TP
+\fIpause_after_run\fP
+Aspetta un tasto dopo l'esecuzione di un comando del menu utente: mai (0),
+solo sui terminali semplici (1, il predefinito) o sempre (2).
+
+.TP
+\fIalternate_plus_minus\fP
+Mantiene i tasti più e meno del tastierino numerico come più e meno.
+
+.TP
+\fIkeybar_modifiers\fP
+Se vero, la barra dei tasti mostra i comandi di Shift, Ctrl o Alt con i
+tasti F mentre si tiene premuto quel modificatore. Serve un terminale con il
+protocollo di tastiera kitty: bluerig gli chiede allora ogni tasto con il
+suo rilascio, e gli eventi di focus. Sugli altri terminali non ha effetto.
+Falso in modo predefinito.
+
+.TP
+\fIverbose\fP
+Mostra l'avanzamento delle operazioni lunghe.
+
+.TP
+\fIkeybar_visible\fP
+Nella sezione
+\fB[Layout]\fP:
+mostra le etichette dei tasti funzione in basso sullo schermo.
+
+
+.SH Impostazioni nel file ini
+.PP
+Con le finestre del menu
+\fBOpzioni\fP
+si fa la maggior parte delle impostazioni, e
+\fBSalva configurazione\fP
+le scrive nella sezione
+\fB[bluerig]\fP
+di
+\fB~/.config/bluerig/ini\fP\&.
+Queste sono le impostazioni dell'editor di quel file: 1 attiva
+un'impostazione, 0 la disattiva, e il valore predefinito viene per ultimo.
+
+.TP
+\fBeditor_tab_spacing\fP
+L'ampiezza di una tabulazione; 8 in modo predefinito. editor_fake_half_tabs dà le mezze tabulazioni
+
+.TP
+\fBeditor_fill_tabs_with_spaces\fP
+Inserisce spazi invece di un carattere di tabulazione; 0
+
+.TP
+\fBeditor_return_does_auto_indent\fP
+Enter rientra come la riga non vuota più vicina sopra; 1
+
+.TP
+\fBeditor_backspace_through_tabs\fP
+Backspace cancella tutto lo spazio vuoto fino al margine sinistro quando tra il cursore e il margine non c'è testo; 0
+
+.TP
+\fBeditor_fake_half_tabs\fP
+Una tabulazione tra il margine sinistro e il testo avanza di 4 colonne, e il file riceve spazi e tabulazioni di 8 colonne; 1
+
+.TP
+\fBeditor_option_save_mode\fP
+Come viene scritto il file, vedere Modifica modalità salvataggio: 0 \- direttamente nel file, e un errore durante la scrittura lo lascia troncato; 1 \- attraverso un file temporaneo; 2 \- con una copia di sicurezza; 0
+
+.TP
+\fBeditor_word_wrap_line_length\fP
+La lunghezza della riga per l'a capo; 72
+
+.TP
+\fBeditor_backup_extension\fP
+Il suffisso del nome di una copia di sicurezza; ~
+
+.TP
+\fBeditor_line_state\fP
+Mostra la colonna di stato delle righe: numeri, ripiegamenti, tratti nascosti; 0. Alt\-n la commuta
+
+.TP
+\fBeditor_visible_spaces\fP
+Mostra gli spazi finali come punti; 1
+
+.TP
+\fBeditor_visible_tabs\fP
+Mostra le tabulazioni come <\-\-\-\->; 1
+
+.TP
+\fBeditor_show_control_chars\fP
+Mostra i caratteri di controllo come ^M, ^L, altrimenti come una cella vuota; 1. Una voce del menu Comandi la commuta
+
+.TP
+\fBeditor_persistent_selections\fP
+Mantiene la selezione dopo che il cursore si è mosso; 1
+
+.TP
+\fBeditor_drop_selection_on_copy\fP
+Toglie la selezione dopo una copia nel file degli appunti; 1
+
+.TP
+\fBeditor_cursor_beyond_eol\fP
+Lascia andare il cursore oltre la fine della riga; 0
+
+.TP
+\fBeditor_cursor_after_inserted_block\fP
+Mette il cursore dopo un blocco inserito; 0
+
+.TP
+\fBeditor_syntax_highlighting\fP
+Attiva l'evidenziazione della sintassi; 1
+
+.TP
+\fBeditor_edit_confirm_save\fP
+Chiede prima di scrivere; 1
+
+.TP
+\fBeditor_option_typewriter_wrap\fP
+Spezza la riga a editor_word_wrap_line_length mentre si scrive; 0
+
+.TP
+\fBeditor_option_auto_para_formatting\fP
+Formatta il paragrafo sotto il cursore mentre si scrive; 0
+
+.TP
+\fBeditor_option_save_position\fP
+Conserva la posizione nel file all'uscita; 1
+
+.TP
+\fBeditor_group_undo\fP
+Annulla in una volta sola più azioni consecutive dello stesso tipo; 0
+
+.TP
+\fBeditor_wordcompletion_collect_entire_file\fP
+Prende le parole per il completamento da tutto il file, non solo fino al cursore; 0
+
+.TP
+\fBeditor_wordcompletion_collect_all_files\fP
+Prende le parole per il completamento da tutti i file aperti; 1
+
+.TP
+\fBeditor_stop_format_chars\fP
+La formattazione dei paragrafi non tocca una riga che comincia con uno di questi caratteri, e le righe dopo di essa; \-+*\e,.;:&>
+
+.TP
+\fBeditor_state_full_filename\fP
+Mostra nella riga di stato il percorso completo, non il nome del file; 0
+
+.TP
+\fBeditor_filesize_threshold\fP
+La dimensione oltre la quale un file viene aperto dopo una domanda, con un suffisso K o M; 64M
+
+.TP
+\fBeditor_show_right_margin\fP
+Segna la colonna editor_word_wrap_line_length come margine destro; 0. Una voce del menu Comandi la commuta
+
+.TP
+\fBeditor_simple_statusbar\fP
+Mostra una riga di stato corta, senza la posizione in byte e il carattere sotto il cursore; 0
+
+.TP
+\fBeditor_check_new_line\fP
+Al salvataggio chiede cosa fare se manca il fine riga finale; 0. Una casella della finestra della modalità di salvataggio la commuta
+
+.TP
+\fBeditor_sticky_windows\fP
+Ridimensiona come una sola le finestre le cui cornici si toccano, vedere menu Finestra; 0
 
 
 .SH AMBIENTE
+.PP
+Le variabili qui sotto sono quelle che bluerig legge. Variabili come
+\fBTERM\fP, \fBSHELL\fP, \fBHOME\fP o \fBPATH\fP non sono elencate qui: il programma
+le legge per sapere dove funziona, non per essere configurato da esse.
+
 .TP
 \fBBLUERIG_DATADIR\fP
-La directory dei file di dati, al posto di {{pkgdatadir}}.
+La directory da cui vengono presi i file di dati, al posto di
+{{pkgdatadir}}. Vedere FILE\&.
 
 .TP
 \fBBLUERIG_PROFILE_ROOT\fP
-La radice dei file dell'utente, al posto della directory personale.
+La radice dei file dell'utente, come percorso assoluto, al posto della
+directory personale. Vedere FILE\&.
 
 .TP
 \fBBLUERIG_SKIN\fP
-Il tema da usare.
+Il tema da usare, per nome o per percorso. Vedere Temi\&.
 
 .TP
 \fBBLUERIG_KEYMAP\fP
-Il file dei tasti da usare.
+Il file dei tasti da usare. Vedere Ridefinire i tasti\&.
 
 .TP
 \fBBLUERIG_TMPDIR\fP, \fBTMPDIR\fP
-La directory dei file temporanei.
+La directory dei file temporanei del programma, la prima delle due che è
+impostata; /tmp se nessuna delle due lo è.
 
 .TP
 \fBBLUERIG_NO_LUA\fP
-Con il valore 1, avviare senza l'ambiente Lua.
+Con il valore 1 avvia senza l'ambiente Lua. Non viene caricato nessuno
+script Lua.
 
 .TP
-\fBBLUERIG_LOG_ENABLE\fP, \fBBLUERIG_LOG_FILE\fP, \fBBLUERIG_SPELL_LOG\fP
-I registri di debug.
+\fBKEYBOARD_KEY_TIMEOUT_US\fP
+Quanto aspettare il resto di una sequenza di escape, in microsecondi.
+
+.TP
+\fBCOLORTERM\fP
+Letta quando vengono scelti i colori. Vedere Colori\&.
+
+.TP
+\fBBLUERIG_LOG_ENABLE\fP, \fBBLUERIG_LOG_FILE\fP
+Un registro di debug viene scritto quando BLUERIG_LOG_ENABLE vale 1. Senza
+\fBBLUERIG_LOG_FILE\fP si usa il file indicato da \fIlogfile\fP nella sezione
+\fI[Logging]\fP del file \fIini\fP, e senza quella voce
+\fI~/.cache/bluerig/bluerig.log\fP\&.
+
+.TP
+\fBBLUERIG_SPELL_LOG\fP
+Il file in cui il controllo ortografico scrive il suo registro di debug.
+Non ha un interruttore proprio: il registro viene scritto quando la
+variabile nomina un file.
 
 
 .SH FILE
+.PP
+I percorsi completi qui sotto possono variare da un'installazione all'altra.
+Sui file di dati influisce anche la variabile d'ambiente
+\fBBLUERIG_DATADIR\fP:
+se è impostata, il suo valore viene usato al posto di {{pkgdatadir}} nei
+percorsi qui sotto. I file dell'utente seguono le directory di base XDG:
+\fI~/.config\fP,
+\fI~/.local/share\fP
+e
+\fI~/.cache\fP
+stanno per
+\fBXDG_CONFIG_HOME\fP,
+\fBXDG_DATA_HOME\fP
+e
+\fBXDG_CACHE_HOME\fP
+dove queste sono impostate.
+
 .TP
 \fI{{pkgdatadir}}/help/bluerig.md\fP
-Il file della guida del programma.
+Il file dell'aiuto del programma, e accanto i file dell'aiuto dei plugin
+dell'editor.
 
 .TP
 \fI{{sysconfdir}}/bluerig/bluerig.ini\fP, \fI{{pkgdatadir}}/bluerig.ini\fP
-Le impostazioni di sistema, usate solo se l'utente non ha
-~/.config/bluerig/ini.
+I file di configurazione di sistema, usati solo se l'utente non ha un suo
+file
+\fB~/.config/bluerig/ini\fP\&.
+Se {{sysconfdir}}/bluerig/bluerig.ini esiste, {{pkgdatadir}}/bluerig.ini non
+viene usato.
 
 .TP
-\fI{{sysconfdir}}/bluerig/keymap.ini\fP, \fI{{sysconfdir}}/bluerig/bluerig.menu\fP
-I tasti e il menu utente di sistema.
+\fI{{sysconfdir}}/bluerig/defaults.ini\fP, \fI{{pkgdatadir}}/defaults.ini\fP
+Le impostazioni globali, che valgono per tutti gli utenti, che abbiano o
+no ~/.config/bluerig/ini. Per ora da esso vengono caricate solo le
+impostazioni del terminale\&.
+
+.TP
+\fI{{sysconfdir}}/bluerig/keymap.ini\fP, \fI{{pkgdatadir}}/keymap.ini\fP
+Le associazioni dei tasti di sistema. Vedere
+Ridefinire i tasti\&.
+
+.TP
+\fI{{sysconfdir}}/bluerig/bluerig.menu\fP, \fI{{pkgdatadir}}/bluerig.menu\fP
+Il menu utente di sistema.
+
+.TP
+\fI{{sysconfdir}}/bluerig/spell.keymap, ctags.keymap\fP
+I tasti dei plugin spell e ctags; un file con lo stesso nome in
+~/.config/bluerig li sostituisce.
 
 .TP
 \fI{{pkgdatadir}}/syntax/*\fP
-I file di sintassi di sistema.
+I file di sintassi di sistema, usati solo se manca il corrispondente file
+dell'utente in
+\fB~/.local/share/bluerig/syntax/\fP\&.
+
+.TP
+\fI{{pkgdatadir}}/skins/*\fP
+I temi forniti con il programma.
+
+.TP
+\fI{{pkgdatadir}}/charsets\fP
+L'elenco delle codifiche.
+
+.TP
+\fI{{pkgdatadir}}/lua/scripts/*\fP
+Gli script Lua forniti con il programma.
+
+.TP
+\fI{{pkgdatadir}}/examples/macros.d/*\fP
+Script di esempio per le macro.
 
 .TP
 \fI{{plugins_dir}}/\fP
-I componenti aggiuntivi dell'editor.
+I plugin dell'editor che vengono caricati durante l'esecuzione.
 
 .TP
-\fI~/.config/bluerig/ini\fP, \fI~/.config/bluerig/keymap.ini\fP, \fI~/.config/bluerig/menu\fP
-Le impostazioni, i tasti e il menu utente propri.
+\fI~/.config/bluerig/ini\fP
+La configurazione dell'utente. Se questo file esiste, la configurazione
+viene caricata da qui invece che dal file di configurazione di sistema.
 
 .TP
-\fI~/.local/share/bluerig/\fP
-La cronologia, le posizioni dei file, gli appunti (clipboard), le macro
-(macros, macros.d/), la sintassi (syntax/Syntax), i temi (skins/) e gli script
-Lua (lua/scripts/) dell'utente.
+\fI~/.config/bluerig/keymap.ini\fP
+Le associazioni dei tasti dell'utente.
 
 .TP
-\fI~/.cache/bluerig/\fP
-Il file del blocco (block) e i file temporanei dell'editor.
+\fI~/.config/bluerig/menu\fP
+Il menu utente personale.
+
+.TP
+\fI~/.config/bluerig/plugins.ini\fP
+I plugin e gli script Lua disattivati.
+
+.TP
+\fI~/.config/bluerig/term/<TERM>\fP
+I tasti insegnati in Impara tasti\&.
+
+.TP
+\fI\&./.bluerig.menu\fP
+Il menu utente della directory corrente. Se questo file è presente nella
+directory corrente, viene usato al posto del menu personale o di sistema.
+
+.TP
+\fI~/.local/share/bluerig/history\fP
+Le cronologie delle righe di immissione.
+
+.TP
+\fI~/.local/share/bluerig/filepos\fP
+I punti in cui i file sono stati lasciati, per
+\fIeditor_option_save_position\fP\&.
+
+.TP
+\fI~/.local/share/bluerig/clipboard\fP
+Il file degli appunti dell'editor.
+
+.TP
+\fI~/.local/share/bluerig/macros\fP
+Le macro registrate.
+
+.TP
+\fI~/.local/share/bluerig/macros.d/macro.N.sh\fP
+Gli script di shell delle macro.
+
+.TP
+\fI~/.local/share/bluerig/syntax/Syntax\fP
+Il file di sintassi dell'utente.
+
+.TP
+\fI~/.local/share/bluerig/skins/\fP
+I temi dell'utente.
+
+.TP
+\fI~/.local/share/bluerig/lua/scripts/\fP
+Gli script Lua dell'utente.
+
+.TP
+\fI~/.cache/bluerig/block\fP
+Il file del blocco su cui lavorano il menu utente e gli script delle
+macro.
+
+.TP
+\fI~/.cache/bluerig/temp\fP
+Un file temporaneo dell'editor.
+
+.PP
+Per cambiare la directory radice dei file dell'utente si può usare la
+variabile d'ambiente
+\fBBLUERIG_PROFILE_ROOT\fP\&.
+Il valore di BLUERIG_PROFILE_ROOT deve essere un percorso assoluto. Se
+BLUERIG_PROFILE_ROOT non è impostata o è vuota, si usa la variabile HOME. Se
+HOME non è impostata o è vuota, le directory vengono prese dalla libreria
+GLib.
+
+
+.SH LICENZA
+.PP
+Questo programma è distribuito secondo i termini della GNU General Public
+License pubblicata dalla Free Software Foundation. Vedere l'aiuto interno
+per i dettagli sulla licenza e sull'assenza di garanzia.
+
+
+.SH DISPONIBILITÀ
+.PP
+L'ultima versione di questo programma si trova all'indirizzo
+\X'tty: link https://github.com/blue\-panels/bluerig/releases'https://github.com/blue\-panels/bluerig/releases\X'tty: link' .
 
 
 .SH VEDERE ANCHE
 .PP
-cooledit(1), aspell(1), ctags(1).
+cooledit(1), aspell(1), hunspell(1), ctags(1), etags(1), gpm(1),
+terminfo(5), sh(1).
+
+
+.SH AUTORI
+.PP
+Paul Sheer (psheer@obsidian.co.za) è l'autore originale di cooledit, che
+bluerig continua. Gli autori e i collaboratori sono elencati nel file AUTHORS
+della distribuzione dei sorgenti.
+
+
+.SH BUG
+.PP
+I bug vanno segnalati all'indirizzo
+\X'tty: link https://github.com/blue\-panels/bluerig/issues'https://github.com/blue\-panels/bluerig/issues\X'tty: link' .
 
 .PP
-Il manuale in inglese, bluerig(1), descrive tutte le funzioni dell'editor.
+Fornire una descrizione dettagliata del bug, la versione del programma in
+uso
+\fI(bluerig \-V\fP
+mostra questa informazione), e il sistema operativo su cui si usa il
+programma. Se il programma va in crash, una traccia dello stack è molto
+gradita.
