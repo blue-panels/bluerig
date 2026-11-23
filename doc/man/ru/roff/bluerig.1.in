@@ -1414,7 +1414,7 @@ Ctrl\-r
 
 .EX
 [editor]
-ctrl\-W=ExecuteScript:25;
+Ctrl\-W=ExecuteScript:25;
 .EE
 
 .PP

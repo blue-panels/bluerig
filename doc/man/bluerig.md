@@ -974,7 +974,7 @@ file like this:
 
 ```
 [editor]
-ctrl-W=ExecuteScript:25;
+Ctrl-W=ExecuteScript:25;
 ```
 
 This means that Ctrl-W runs the

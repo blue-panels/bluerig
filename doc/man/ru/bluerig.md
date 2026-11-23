@@ -884,7 +884,7 @@ Lua, то и движок Lua как плагин вида
 
 ```
 [editor]
-ctrl-W=ExecuteScript:25;
+Ctrl-W=ExecuteScript:25;
 ```
 
 Это значит, что Ctrl-W запускает действие
