@@ -2,21 +2,36 @@ Name:            bluerig
 Version:         @VERSION@
 Release:         1%{?dist}
 Summary:         Terminal IDE, a continuation of cooledit
-License:         GPL-3.0-or-later
+# The program is GPL-3.0-or-later. Taken from gnulib:
+#   lib/strutil/strverscmp.c   LGPL-2.1-or-later
+#   lib/strutil/filevercmp.c   LGPL-3.0-or-later
+# Syntax files installed in %%{_datadir}/bluerig/syntax:
+#   nemerle.syntax             BSD-3-Clause
+#   meson.syntax               MIT
+License:         GPL-3.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-or-later AND BSD-3-Clause AND MIT
 URL:             https://github.com/blue-panels/bluerig
 Source0:         %{url}/releases/download/bluerig-%{version}/bluerig-%{version}.tar.gz
 
-BuildRequires:   check-devel
+# a leaf package: https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+ExcludeArch:     %{ix86}
+
 BuildRequires:   gcc
 BuildRequires:   gettext
-BuildRequires:   glib2-devel
-BuildRequires:   json-glib-devel
-BuildRequires:   gpm-devel
 BuildRequires:   meson >= 0.61
 BuildRequires:   pkgconf-pkg-config
-BuildRequires:   slang-devel
-BuildRequires:   lua-devel
-BuildRequires:   libX11-devel
+BuildRequires:   pkgconfig(check)
+BuildRequires:   pkgconfig(glib-2.0)
+BuildRequires:   pkgconfig(gmodule-2.0)
+BuildRequires:   pkgconfig(json-glib-1.0)
+BuildRequires:   pkgconfig(slang)
+BuildRequires:   pkgconfig(lua)
+BuildRequires:   pkgconfig(x11)
+# gpm has no pkg-config file
+BuildRequires:   gpm-devel
+
+# gnulib is a source library with no shared object to link against; the two
+# files above were copied into the tree by hand.
+Provides:        bundled(gnulib)
 
 Recommends:      %{name}-lua%{?_isa} = %{version}-%{release}
 Suggests:        libX11
@@ -50,7 +65,7 @@ a command.  Without this package bluerig runs, and the features written in Lua
 are absent.
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup
 
 %build
 # The archive carries its version in .tarball-version.
@@ -63,7 +78,7 @@ are absent.
 
 %install
 %meson_install
-%find_lang %{name}
+%find_lang %{name} --with-man
 # The Lua documentation is listed as %%doc below, which puts it in place
 # itself; what the install left behind would be packaged twice.
 rm -rf %{buildroot}%{_docdir}/%{name}
@@ -77,21 +92,13 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 %doc doc/LUA_API_REFERENCE.md doc/LUA_PLUGINS.md doc/lua-api.json
 %{_bindir}/bluerig
 %{_bindir}/brg
-# Owned here so that the directory does not depend on the lua subpackage.
-%dir %{_datadir}/bluerig/
-%{_datadir}/bluerig/charsets
-%{_datadir}/bluerig/defaults.ini
-%{_datadir}/bluerig/examples/
-%{_datadir}/bluerig/help/
-%{_datadir}/bluerig/query/
-%{_datadir}/bluerig/skins/
-%{_datadir}/bluerig/syntax/
+%{_datadir}/bluerig/
+%exclude %{_datadir}/bluerig/lua/
 %dir %{_sysconfdir}/bluerig/
 %config(noreplace) %{_sysconfdir}/bluerig/*
 %{_mandir}/man1/bluerig.1*
 %{_mandir}/man1/brg.1*
-# The translated manuals.
-%{_mandir}/*/man1/bluerig.1*
+# find_lang --with-man takes the translated bluerig.1, not the links to it.
 %{_mandir}/*/man1/brg.1*
 # Owned here so that the directory does not depend on the lua subpackage.
 %dir %{_libdir}/bluerig/
