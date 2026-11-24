@@ -40,6 +40,10 @@ test('debug_config', executable('debug_config', 'debug_config.c',
                                 dependencies: [libinternal_dep, glib_dep, json_glib]),
      suite: 'src/editor')
 # the breakpoints by themselves, the debugger a few functions of the test
+test('debug_values', executable('debug_values', 'debug_values.c',
+                                '../../../src/plugins/debugger/debug-backend.c',
+                                dependencies: [libinternal_dep, glib_dep, json_glib]),
+     suite: 'src/editor')
 test('debug_breakpoints', executable('debug_breakpoints', 'debug_breakpoints.c',
                                      '../../../src/plugins/debugger/debug-backend.c',
                                      '../../../src/plugins/debugger/debug-gdb-mi.c',
