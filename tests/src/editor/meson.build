@@ -39,6 +39,13 @@ test('debug_config', executable('debug_config', 'debug_config.c',
                                 '../../../src/plugins/project/project-core.c',
                                 dependencies: [libinternal_dep, glib_dep, json_glib]),
      suite: 'src/editor')
+# the breakpoints by themselves, the debugger a few functions of the test
+test('debug_breakpoints', executable('debug_breakpoints', 'debug_breakpoints.c',
+                                     '../../../src/plugins/debugger/debug-backend.c',
+                                     '../../../src/plugins/debugger/debug-gdb-mi.c',
+                                     '../../../src/plugins/debugger/gdb-mi.c',
+                                     dependencies: [libinternal_dep, glib_dep, json_glib]),
+     suite: 'src/editor')
 
 if json_glib.found()
   # the servers of the tests are scripts: run them with the python meson runs with, which is
