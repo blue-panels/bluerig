@@ -7,7 +7,7 @@ foreach name : ['edit_buffer_layout', 'edit_clip_codeset', 'edit_complete_word_c
                 'edit_control_chars', 'edit_fold', 'edit_marker', 'edit_insert_column_of_text', 'edit_paste_column',
                 'edit_plugin_etags', 'edit_undo_history', 'edit_undo_modified', 'edit_save_sudo',
                 'edit_replace_cmd', 'edit_window', 'edit_format', 'edit_macros', 'edit_block_cmd', 'nav_probe', 'ctags_parser_tests', 'ctags_index_tests',
-                'ctags_fuzzy_tests', 'ctags_repository_tests', 'etags_parse']
+                'ctags_fuzzy_tests', 'ctags_repository_tests', 'etags_parse', 'lsp_note_wrap']
   test(name,
     executable(name, name + '.c',
       c_args: test_c_args + [
