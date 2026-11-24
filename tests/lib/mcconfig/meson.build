@@ -1,4 +1,4 @@
-foreach name : ['config_string', 'user_configs_path']
+foreach name : ['config_string', 'user_configs_path', 'history_load_save']
   test(name,
     executable(name, name + '.c',
       c_args: test_c_args + ['-DWORKDIR="@0@"'.format(meson.current_build_dir())],
