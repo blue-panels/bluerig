@@ -25,6 +25,14 @@ test('project_core', executable('project_core', 'project_core.c',
 test('gdb_mi', executable('gdb_mi', 'gdb_mi.c',
                          '../../../src/plugins/debugger/gdb-mi.c',
                          dependencies: [glib_dep, screen_deps]), suite: 'src/editor')
+# GDB is a script that answers as it would: one of sh, run as it is
+test('debug_gdb_mi', executable('debug_gdb_mi', 'debug_gdb_mi.c',
+                                '../../../src/plugins/debugger/debug-gdb-mi.c',
+                                '../../../src/plugins/debugger/debug-backend.c',
+                                '../../../src/plugins/debugger/gdb-mi.c',
+                                '../../../lib/glibcompat.c',
+                                c_args: ['-DMOCK_GDB="@0@"'.format(meson.current_source_dir() / 'mock_gdb.sh')],
+                                dependencies: [glib_dep, screen_deps]), suite: 'src/editor')
 
 if json_glib.found()
   # the servers of the tests are scripts: run them with the python meson runs with, which is
