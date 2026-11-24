@@ -1,6 +1,6 @@
 foreach name : ['clipboard_info', 'input_clip_text', 'file_history', 'keymap_reload',
                 'runtime_host__syntax', 'learn_modifiers', 'term_key_merge', 'tty_enter', 'tty_kitty_keyboard', 'tty_mouse_wheel',
-                'usermenu__test_condition', 'usermenu__test_expand_format', 'usermenu__test_line', 'help_md_table', 'help_md_keys', 'help_md_plugins']
+                'usermenu__test_condition', 'usermenu__test_expand_format', 'usermenu__test_line', 'args_setup', 'help_md_table', 'help_md_keys', 'help_md_plugins']
   test(name,
     executable(name, name + '.c',
       c_args: test_c_args + [
