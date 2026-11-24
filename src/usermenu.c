@@ -228,8 +228,8 @@ test_condition (const Widget *edit_widget, char *p, gboolean *condition)
     const WEdit *e = CONST_EDIT (edit_widget);
     const char *edit_filename = e != NULL ? edit_get_file_name (e) : NULL;
 
-    // Handle one condition
-    for (; *p != '\n' && *p != '&' && *p != '|'; p++)
+    // Handle one condition; the last line of the file may have no end
+    for (; *p != '\0' && *p != '\n' && *p != '&' && *p != '|'; p++)
     {
         // support quote space .mnu
         if ((*p == ' ' && *(p - 1) != '\\') || *p == '\t')
@@ -250,17 +250,15 @@ test_condition (const Widget *edit_widget, char *p, gboolean *condition)
             *condition = edit_filename != NULL && mc_search (arg, NULL, edit_filename, search_type);
             break;
         case 'y':  // syntax pattern
-            if (e != NULL)
-            {
-                const char *syntax_type = edit_get_syntax_type (e);
+        {
+            // the pattern is passed by with no syntax too, not read as conditions
+            const char *syntax_type = e != NULL ? edit_get_syntax_type (e) : NULL;
 
-                if (syntax_type != NULL)
-                {
-                    p = extract_arg (p, arg, sizeof (arg));
-                    *condition = mc_search (arg, NULL, syntax_type, MC_SEARCH_T_NORMAL);
-                }
-            }
+            p = extract_arg (p, arg, sizeof (arg));
+            *condition =
+                syntax_type != NULL && mc_search (arg, NULL, syntax_type, MC_SEARCH_T_NORMAL);
             break;
+        }
         case 'd':  // current directory pattern
         {
             char *cwd;
@@ -285,6 +283,8 @@ test_condition (const Widget *edit_widget, char *p, gboolean *condition)
         }
         default:
             debug_error = TRUE;
+            // the next character is the loop's: the end of the line, say
+            str_prev_char (&p);
             break;
         }  // switch
     }  // while
