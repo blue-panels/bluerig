@@ -165,6 +165,9 @@ START_TEST (test_definitions)
     ck_assert_int_eq (entry (found, 0)->line, 30);
     g_ptr_array_free (found, TRUE);
 
+    // found only in the line number and the offset of a tag: no tag of that name
+    ck_assert_ptr_null (etags_set_definition_hash (tagfile, "/work", "345"));
+    ck_assert_ptr_null (etags_set_definition_hash (tagfile, "/work", "99"));
     ck_assert_ptr_null (etags_set_definition_hash (tagfile, "/work", "nothing_like_it"));
     ck_assert_ptr_null (etags_set_definition_hash (tagfile, "/work", NULL));
     ck_assert_ptr_null (etags_set_definition_hash (NULL, "/work", "foo"));
