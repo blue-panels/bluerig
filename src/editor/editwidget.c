@@ -3681,11 +3681,15 @@ edit_startup_option (const char *name)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* bluerig -G is there for git, bluerig -Q for the queries of a database: the plugins of a project
-   are not started, their menus and windows not shown; Manage plugins is not touched */
+/* The plugins of a project are of bluerig -D alone: a plain bluerig is there for its files, bluerig
+   -G for git, bluerig -Q for the queries of a database; the plugins that are off are not started,
+   their menus and windows not shown; Manage plugins is not touched */
 gboolean
 edit_plugin_off_for_session (const char *name)
 {
+    /* git is of bluerig -G and -D; a plain bluerig keeps the tags of the files: Navigate goes by
+       the tags file there is */
+    static const char *const ide_plugins[] = { "project", "build", "debugger", "git", NULL };
     // the terminal stays: the git plugin pushes and pulls in its shell
     static const char *const project_plugins[] = { "project", "build", "debugger",
                                                    "ctags",   "etags", NULL };
@@ -3702,5 +3706,7 @@ edit_plugin_off_for_session (const char *name)
         return edit_startup_option ("query") == NULL;
     if (edit_startup_option ("query") != NULL)
         return g_strv_contains (query_plugins, name);
-    return edit_startup_option ("git") != NULL && g_strv_contains (project_plugins, name);
+    if (edit_startup_option ("git") != NULL)
+        return g_strv_contains (project_plugins, name);
+    return edit_startup_option ("debug") == NULL && g_strv_contains (ide_plugins, name);
 }
