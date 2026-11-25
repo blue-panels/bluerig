@@ -8,6 +8,11 @@ on:
     types: [ opened, synchronize, reopened, labeled ]
   workflow_dispatch:
 
+# Two labels put on at once are two events: the later run takes the place of the earlier one
+concurrency:
+  group: ci-labels-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   coverage:
     if: >-
