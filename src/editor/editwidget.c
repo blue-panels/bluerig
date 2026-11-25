@@ -3689,15 +3689,16 @@ edit_plugin_off_for_session (const char *name)
 {
     /* git is of bluerig -G and -D; a plain bluerig keeps the tags of the files: Navigate goes by
        the tags file there is */
-    static const char *const ide_plugins[] = { "project", "build", "debugger", "git", NULL };
+    static const char *const ide_plugins[] = { "project", "build",    "debugger",
+                                               "git",     "coverage", NULL };
     // the terminal stays: the git plugin pushes and pulls in its shell
-    static const char *const project_plugins[] = { "project", "build", "debugger",
-                                                   "ctags",   "etags", NULL };
+    static const char *const project_plugins[] = { "project", "build",    "debugger", "ctags",
+                                                   "etags",   "coverage", NULL };
     /* mongosh runs the queries; the language server of the queries, mongolsp of lsp.json, and the
        scripts of the user stay */
-    static const char *const query_plugins[] = { "project",  "build", "debugger",
-                                                 "ctags",    "etags", "git",
-                                                 "terminal", "spell", NULL };
+    static const char *const query_plugins[] = { "project",  "build", "debugger", "ctags",
+                                                 "etags",    "git",   "terminal", "spell",
+                                                 "coverage", NULL };
 
     if (name == NULL)
         return FALSE;

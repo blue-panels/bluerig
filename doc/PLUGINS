@@ -107,8 +107,8 @@ program exports; what the program itself does not call it links whole
 (libforplugins in src/meson.build).  The test module_symbols checks
 that the program gives every function a module calls.
 
-The help of a plugin (build.md, ctags.md, debugger.md, etags.md, git.md, project.md,
-query.md, spell.md, terminal.md) is installed into $(pkgdatadir)/help next to the help of the
+The help of a plugin (build.md, coverage.md, ctags.md, debugger.md, etags.md, git.md,
+project.md, query.md, spell.md, terminal.md) is installed into $(pkgdatadir)/help next to the help of the
 program.
 
 
