@@ -1,0 +1,117 @@
+name: CI by label
+
+# Checks that take long, run on a pull request when it has their label, and by hand:
+#   coverage-check  what the tests cover, a report to download and a table in the summary
+#   ASan-check      the tests under AddressSanitizer, its leak detection and UBSan
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, labeled ]
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || contains(github.event.pull_request.labels.*.name, 'coverage-check')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y meson ninja-build check gettext pkg-config python3-venv
+          sudo apt-get install -y libglib2.0-dev libjson-glib-dev libgpm-dev libncurses-dev libslang2-dev libx11-dev liblua5.4-dev
+          python3 -m venv "$RUNNER_TEMP/gcovr"
+          "$RUNNER_TEMP/gcovr/bin/pip" install --quiet 'gcovr>=8,<9'
+
+      - name: Build and test with coverage
+        run: |
+          meson setup build -Db_coverage=true -Dlua=enabled
+          meson compile -C build
+          meson test -C build --print-errorlogs
+
+      - name: Report
+        run: |
+          mkdir -p coverage
+          "$RUNNER_TEMP/gcovr/bin/gcovr" -r . build \
+              --exclude 'tests/' --exclude '.*\.h$' \
+              --gcov-ignore-errors=all --gcov-ignore-parse-errors=all \
+              --html-details coverage/index.html \
+              --json-summary coverage/summary.json \
+              --txt coverage/files.txt \
+              --txt-summary | tee coverage/total.txt
+          {
+            echo '## Coverage'
+            echo
+            echo '```'
+            grep -E '^(lines|functions|branches):' coverage/total.txt
+            echo '```'
+            echo
+            echo '| directory | lines | covered |'
+            echo '|---|---:|---:|'
+            python3 -I - coverage/summary.json <<'EOF'
+          import json, sys
+          dirs = {}
+          for f in json.load(open(sys.argv[1]))["files"]:
+              d = f["filename"].rsplit("/", 1)[0]
+              total, covered = dirs.get(d, (0, 0))
+              dirs[d] = (total + f["line_total"], covered + f["line_covered"])
+          for d, (total, covered) in sorted(dirs.items()):
+              if total:
+                  print("| %s | %d | %.1f%% |" % (d, total, 100.0 * covered / total))
+          EOF
+            echo
+            echo 'Every file: the artifact coverage-report, index.html.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: coverage-report
+          path: coverage/
+
+      - uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: test-logs-coverage
+          path: build/meson-logs/*.txt
+
+  sanitizers:
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || contains(github.event.pull_request.labels.*.name, 'ASan-check')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y meson ninja-build check gettext pkg-config
+          sudo apt-get install -y libglib2.0-dev libjson-glib-dev libgpm-dev libncurses-dev libslang2-dev libx11-dev liblua5.4-dev
+
+      - name: Build and test with AddressSanitizer and UBSan
+        env:
+          ASAN_OPTIONS: detect_leaks=1:abort_on_error=1:strict_string_checks=1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: |
+          # -Db_lundef=false: the plugins are modules, their symbols from the program
+          meson setup build -Db_sanitize=address,undefined -Db_lundef=false -Dlua=enabled
+          meson compile -C build
+          meson test -C build --print-errorlogs
+
+      - uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: test-logs-sanitizers
+          path: build/meson-logs/*.txt
