@@ -12,7 +12,7 @@ endforeach
 
 # the widgets drawn on the virtual screen of S-Lang, on a pseudo-terminal of the test
 if get_option('screen') == 'slang' and have_terminal
-  foreach name : ['screen_dialog']
+  foreach name : ['screen_dialog', 'screen_widgets']
     test(name,
       executable(name, name + '.c',
         c_args: test_c_args + [
