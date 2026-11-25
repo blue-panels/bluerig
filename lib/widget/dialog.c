@@ -554,9 +554,18 @@ dlg_init (WDialog *h)
         history_load (h, NULL);
     }
 
-    // Select the first widget that takes focus
-    while (g->current != NULL && !widget_is_focusable (g->current->data))
-        group_set_current_widget_next (g);
+    // Select the first widget that takes focus; once round when none does
+    if (g->current != NULL)
+    {
+        const GList *first = g->current;
+
+        while (!widget_is_focusable (g->current->data))
+        {
+            group_set_current_widget_next (g);
+            if (g->current == first)
+                break;
+        }
+    }
 
     widget_set_state (wh, WST_ACTIVE, TRUE);
     widget_draw (wh);
