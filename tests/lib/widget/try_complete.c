@@ -103,10 +103,12 @@ setup (void)
     make ("bin/", 0);
     make ("bin/mytool", 0755);
     make ("bin/mytext", 0644);
+    make ("bin2/", 0);
+    make ("bin2/mytool", 0755);
     make ("far/", 0);
     make ("far/zone/", 0);
     bin = g_build_filename (dir, "bin", (char *) NULL);
-    path_env = g_strconcat (bin, ":/nonexistent", (char *) NULL);
+    path_env = g_strconcat (bin, ":/nonexistent:", bin, "2", (char *) NULL);
     g_setenv ("PATH", path_env, TRUE);
     g_free (path_env);
     g_free (bin);
@@ -231,7 +233,7 @@ START_TEST (test_commands)
 
     ck_complete ("whi", 0, flags, "while");
     ck_complete ("ec", 0, flags, "echo");
-    // what can run in PATH, not the other files
+    // what can run in PATH, not the other files; one in two directories of it, once
     ck_complete ("myt", 0, flags, "mytool");
     ck_complete ("ls; myt", 4, flags, "mytool");
     ck_complete ("  myt", 2, flags, "mytool");
@@ -301,14 +303,8 @@ END_TEST
 /* Users after a tilde, with their slash */
 START_TEST (test_users)
 {
-    {
-        int at = 0;
-        char *got = complete ("~roo", &at, INPUT_COMPLETE_USERNAMES);
-
-        // macOS lists root twice
-        ck_assert (g_str_has_prefix (got, "~root/"));
-        g_free (got);
-    }
+    // macOS lists root twice: once here
+    ck_complete ("~roo", 0, INPUT_COMPLETE_USERNAMES, "~root/");
     ck_complete ("~no-such-user-at-all", 0, INPUT_COMPLETE_USERNAMES, "-");
     // a tilde with a slash is a path
     ck_complete ("~root/", 0, INPUT_COMPLETE_USERNAMES, "-");
