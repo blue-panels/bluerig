@@ -200,6 +200,19 @@ END_TEST
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* An indented paragraph shorter than the width: joined, its indent kept, its end where it was */
+START_TEST (test_indent_short)
+{
+    put_text ("  aaa\n  bbb\n\nccc\n", 0);
+
+    format_paragraph (test_edit);
+
+    assert_text ("  aaa bbb\n\nccc\n");
+}
+END_TEST
+
+/* --------------------------------------------------------------------------------------------- */
+
 /* A word longer than the width is not cut: it takes a line of its own */
 START_TEST (test_long_word_whole)
 {
@@ -290,6 +303,7 @@ main (void)
     tcase_add_test (tc_core, test_join_short_lines);
     tcase_add_test (tc_core, test_paragraph_ends_at_blank_line);
     tcase_add_test (tc_core, test_indent_kept);
+    tcase_add_test (tc_core, test_indent_short);
     tcase_add_test (tc_core, test_long_word_whole);
     tcase_add_test (tc_core, test_cursor_kept);
     tcase_add_test (tc_core, test_stop_format_chars);
