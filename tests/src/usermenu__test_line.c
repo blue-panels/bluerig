@@ -151,15 +151,16 @@ teardown (void)
     str_uninit_strings ();
 }
 
-/* The truth of a line of conditions, as the menu file has it: one line, its end with it */
+/* The truth of a line of conditions, as the menu file has it: one line, its end with it, and the
+   end of the line before it, which the parser may look back at */
 static gboolean
 line_is (const char *line, gboolean before)
 {
-    char *text = g_strconcat (line, "\n", (char *) NULL);
+    char *text = g_strconcat ("\n", line, "\n", (char *) NULL);
     gboolean result = before;
     char *end;
 
-    end = test_line (&fake_editor, text, &result);
+    end = test_line (&fake_editor, text + 1, &result);
     // the point just before the end of the line
     ck_assert_int_eq (end[1], '\n');
     g_free (text);

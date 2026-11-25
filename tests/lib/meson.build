@@ -29,10 +29,15 @@ foreach name, source : lib_tests
     suite: 'lib')
 endforeach
 
-# colors come on without a terminal only with S-Lang: ncurses has none before initscr()
+# colors come on without a terminal only with S-Lang: ncurses has none before initscr(), and
+# no characters of its line drawing either
 if get_option('screen') == 'slang'
   test('skin_colors',
     executable('skin_colors', 'skin_colors.c', c_args: test_c_args, dependencies: test_lib_deps),
+    workdir: meson.current_build_dir(),
+    suite: 'lib')
+  test('skin_lines',
+    executable('skin_lines', 'skin_lines.c', c_args: test_c_args, dependencies: test_lib_deps),
     workdir: meson.current_build_dir(),
     suite: 'lib')
 endif

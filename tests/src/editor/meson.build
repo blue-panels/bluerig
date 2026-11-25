@@ -7,7 +7,7 @@ foreach name : ['edit_buffer_layout', 'edit_clip_codeset', 'edit_complete_word_c
                 'edit_control_chars', 'edit_fold', 'edit_marker', 'edit_insert_column_of_text', 'edit_paste_column',
                 'edit_plugin_etags', 'edit_undo_history', 'edit_undo_modified', 'edit_save_sudo',
                 'edit_replace_cmd', 'edit_window', 'edit_format', 'edit_macros', 'edit_block_cmd', 'nav_probe', 'ctags_parser_tests', 'ctags_index_tests',
-                'ctags_fuzzy_tests', 'ctags_repository_tests']
+                'ctags_fuzzy_tests', 'ctags_repository_tests', 'etags_parse', 'lsp_note_wrap']
   test(name,
     executable(name, name + '.c',
       c_args: test_c_args + [
@@ -38,6 +38,17 @@ test('debug_config', executable('debug_config', 'debug_config.c',
                                 '../../../src/plugins/debugger/debug-backend.c',
                                 '../../../src/plugins/project/project-core.c',
                                 dependencies: [libinternal_dep, glib_dep, json_glib]),
+     suite: 'src/editor')
+# the breakpoints by themselves, the debugger a few functions of the test
+test('debug_values', executable('debug_values', 'debug_values.c',
+                                '../../../src/plugins/debugger/debug-backend.c',
+                                dependencies: [libinternal_dep, glib_dep, json_glib]),
+     suite: 'src/editor')
+test('debug_breakpoints', executable('debug_breakpoints', 'debug_breakpoints.c',
+                                     '../../../src/plugins/debugger/debug-backend.c',
+                                     '../../../src/plugins/debugger/debug-gdb-mi.c',
+                                     '../../../src/plugins/debugger/gdb-mi.c',
+                                     dependencies: [libinternal_dep, glib_dep, json_glib]),
      suite: 'src/editor')
 
 if json_glib.found()
