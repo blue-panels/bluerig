@@ -27,6 +27,8 @@
 
 #include <unistd.h>
 
+#include <glib/gstdio.h>
+
 #include "lib/charsets.h"
 #include "lib/fileloc.h"
 #include "lib/mcconfig.h"
@@ -228,11 +230,35 @@ END_TEST
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The directory of the test and all in it */
+static void
+remove_tree (const char *path)
+{
+    GDir *dir = g_dir_open (path, 0, NULL);
+    const char *name;
+
+    if (dir != NULL)
+    {
+        while ((name = g_dir_read_name (dir)) != NULL)
+        {
+            char *child = g_build_filename (path, name, (char *) NULL);
+
+            remove_tree (child);
+            g_free (child);
+        }
+        g_dir_close (dir);
+    }
+    (void) g_remove (path);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 int
 main (void)
 {
     TCase *tc_core;
     char *home;
+    int result;
 
     // the clipfile of the tests is in a directory of their own, not in that of the user
     home = g_dir_make_tmp ("mc-test-paste-column-XXXXXX", NULL);
@@ -249,5 +275,8 @@ main (void)
     tcase_add_test (tc_core, test_column_paste_brings_view_back);
     tcase_add_test (tc_core, test_blank_paste_is_typed);
 
-    return mctest_run_all (tc_core);
+    result = mctest_run_all (tc_core);
+    remove_tree (home);
+    g_free (home);
+    return result;
 }

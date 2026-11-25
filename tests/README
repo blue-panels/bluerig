@@ -12,6 +12,25 @@ testing framework[1] installed.[2] If you have it installed, you will see
 "Unit tests: YES" in the summary of "meson setup"; if you don't see this,
 you won't be able to compile the tests.[3]
 
+Checks by label
+---------------
+
+Two checks of CI run on a pull request only when it has their label, or
+by hand from the Actions tab (.github/workflows/ci-labels.yml):
+
+* coverage-check: the tests built with coverage; the summary of the run
+  has the lines covered by directory, and the artifact coverage-report
+  every file (index.html).  The same at home:
+
+    $ meson setup build-cov -Db_coverage=true
+    $ meson test -C build-cov && gcovr -r . build-cov --exclude tests/
+
+* ASan-check: the tests under AddressSanitizer with its leak detection,
+  and UndefinedBehaviorSanitizer; any error fails the test:
+
+    $ meson setup build-asan -Db_sanitize=address,undefined -Db_lundef=false
+    $ ASAN_OPTIONS=detect_leaks=1 meson test -C build-asan
+
 Tips and tricks
 ---------------
 
