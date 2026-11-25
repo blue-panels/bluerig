@@ -42,6 +42,7 @@
 #include <sys/types.h>  // size_t
 
 #include "lib/global.h"
+#include "lib/util.h"  // MC_PTR_FREE
 
 #include "tty.h"
 #include "color.h"
@@ -80,9 +81,9 @@ static size_t mc_tty_color__lowest_free = 0;
 static void
 mc_color__deinit (tty_color_pair_t *color)
 {
-    g_free (color->fg);
-    g_free (color->bg);
-    g_free (color->attrs);
+    MC_PTR_FREE (color->fg);
+    MC_PTR_FREE (color->bg);
+    MC_PTR_FREE (color->attrs);
 }
 
 /* --------------------------------------------------------------------------------------------- */
