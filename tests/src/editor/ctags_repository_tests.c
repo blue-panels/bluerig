@@ -300,14 +300,14 @@ START_TEST (test_find_in_repos)
     ck_assert_uint_eq (found->len, 2);
     ck_assert (has_entry (found, "helper", "util.c"));
     ck_assert (has_entry (found, "helper", "lib/help.c"));
-    g_ptr_array_free (found, FALSE);
+    g_ptr_array_free (found, TRUE);
 
     // no name in that case: the name in any case
     found = ctags_repos_find_exact (repos, "widget");
     ck_assert_ptr_nonnull (found);
     ck_assert_uint_eq (found->len, 1);
     ck_assert (has_entry (found, "Widget", "widget.h"));
-    g_ptr_array_free (found, FALSE);
+    g_ptr_array_free (found, TRUE);
 
     ck_assert_ptr_null (ctags_repos_find_exact (repos, "nothing"));
     ck_assert_ptr_null (ctags_repos_find_exact (repos, NULL));
@@ -317,12 +317,12 @@ START_TEST (test_find_in_repos)
     ck_assert_ptr_nonnull (found);
     ck_assert_uint_eq (found->len, 3);
     ck_assert (has_entry (found, "helpful", "lib/help.c"));
-    g_ptr_array_free (found, FALSE);
+    g_ptr_array_free (found, TRUE);
 
     found = ctags_repos_find_prefix (repos, "WID", TRUE);
     ck_assert_ptr_nonnull (found);
     ck_assert (has_entry (found, "Widget", "widget.h"));
-    g_ptr_array_free (found, FALSE);
+    g_ptr_array_free (found, TRUE);
     ck_assert_ptr_null (ctags_repos_find_prefix (repos, "WID", FALSE));
     ck_assert_ptr_null (ctags_repos_find_prefix (repos, "", FALSE));
 
@@ -331,7 +331,7 @@ START_TEST (test_find_in_repos)
     ck_assert_ptr_nonnull (found);
     ck_assert_uint_eq (found->len, 2);
     ck_assert (has_entry (found, "helpful", "lib/help.c"));
-    g_ptr_array_free (found, FALSE);
+    g_ptr_array_free (found, TRUE);
     ck_assert_ptr_null (ctags_repos_find_basename (repos, "none.c"));
     ck_assert_ptr_null (ctags_repos_find_basename (repos, ""));
 
