@@ -103,18 +103,21 @@ execute_hooks (hook_t *hook_list)
 void
 delete_hook (hook_t **hook_list, void (*hook_fn) (void *))
 {
-    hook_t *new_list = NULL;
-    hook_t *current, *next;
+    hook_t **link = hook_list;
 
-    for (current = *hook_list; current != NULL; current = next)
+    // the others stay as they were, in their order
+    while (*link != NULL)
     {
-        next = current->next;
+        hook_t *current = *link;
+
         if (current->hook_fn == hook_fn)
+        {
+            *link = current->next;
             g_free (current);
+        }
         else
-            add_hook (&new_list, current->hook_fn, current->hook_data);
+            link = &current->next;
     }
-    *hook_list = new_list;
 }
 
 /* --------------------------------------------------------------------------------------------- */

@@ -243,6 +243,10 @@ str_8bit_conv_gerror_message (GError *mcerror, const char *def_msg)
     GIConv conv;
     gchar *ret;
 
+    // no error: the default, as the other codesets have it
+    if (mcerror == NULL)
+        return g_strdup (def_msg != NULL ? def_msg : "");
+
     // glib messages are in UTF-8 charset
     conv = str_crt_conv_from ("UTF-8");
 

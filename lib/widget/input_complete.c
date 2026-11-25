@@ -760,8 +760,13 @@ completion_matches (const char *text, CompletionFunction entry_function, input_c
             }
         }
 
-        string = g_ptr_array_index (match_list, 0);
-        g_ptr_array_insert (match_list, 0, g_strndup (string, low));
+        /* the same name twice, a program in two directories of PATH: one match, which needs no
+           common part before it */
+        if (match_list->len > 1)
+        {
+            string = g_ptr_array_index (match_list, 0);
+            g_ptr_array_insert (match_list, 0, g_strndup (string, low));
+        }
     }
 
     return match_list;

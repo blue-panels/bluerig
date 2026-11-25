@@ -463,7 +463,8 @@ format_paragraph (WEdit *edit)
     g_free (stop_format_chars);
 
     t2 = (unsigned char *) g_string_free (t, FALSE);
-    format_this (t2, q - p, indent, edit->utf8);
+    // the text without the indents get_paragraph() left out: q - p counts them
+    format_this (t2, size, indent, edit->utf8);
     put_paragraph (edit, t2, p, indent, size);
     g_free ((char *) t2);
 

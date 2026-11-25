@@ -19,6 +19,8 @@ lib_tests = {
   'utilunix__my_system_fork_fail': 'utilunix__my_system-fork_fail.c',
   'utilunix__my_system_fork_child_shell': 'utilunix__my_system-fork_child_shell.c',
   'utilunix__my_system_fork_child': 'utilunix__my_system-fork_child.c',
+  'lib_small': 'lib_small.c',
+  'util_misc': 'util_misc.c',
   'x_basename': 'x_basename.c',
 }
 
