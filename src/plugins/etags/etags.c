@@ -183,6 +183,13 @@ parse_define (const char *buf, char **long_name, char **short_name, long *line)
         c = *buf;
     }
 
+    // the line ended before the line number did: no tag, and nothing kept of it
+    if (longdef != NULL)
+        g_string_free (longdef, TRUE);
+    if (shortdef != NULL)
+        g_string_free (shortdef, TRUE);
+    if (linedef != NULL)
+        g_string_free (linedef, TRUE);
     *long_name = NULL;
     *short_name = NULL;
     *line = 0;
@@ -256,7 +263,13 @@ etags_set_definition_hash (const char *tagfile, const char *start_path, const ch
 
                     def_hash->line = 0;
 
-                    parse_define (chekedstr, &longname, &shortname, &def_hash->line);
+                    // the name found where no tag is, in the line number of one: none
+                    if (!parse_define (chekedstr, &longname, &shortname, &def_hash->line))
+                    {
+                        def_hash->short_define = NULL;
+                        etags_hash_free (def_hash);
+                        break;
+                    }
 
                     if (shortname != NULL && *shortname != '\0')
                     {
