@@ -36,6 +36,7 @@
 
 #include "src/plugins/build/build-core.h"
 #include "src/plugins/build/build-presets.h"
+#include "src/plugins/build/build-profiles.h"
 
 static char *top = NULL;
 
@@ -585,6 +586,144 @@ test_options_cmake (void)
     g_free (dir);
 }
 
+/* --------------------------------------------------------------------------------------------- */
+
+/* Profiles read and written in the file of the project, its other groups kept; the default one
+   of a project without them; a new one made from another; one taken away */
+static void
+test_profiles (void)
+{
+    GKeyFile *keyfile = g_key_file_new ();
+    build_profiles_t *profiles;
+    build_profile_t *p, *cov;
+    char *text, *command;
+    build_info_t found = { BUILD_MESON, (char *) "/src/proj-build", (char *) "meson compile" };
+
+    g_assert_true (g_key_file_load_from_data (
+        keyfile,
+        "[Build]\ncommand=make all\n\n"
+        "[project]\nprofile=Debug\ncoverage_profile=Gone\n\n"
+        "[build:Debug]\ndir=../proj-build\nsystem=meson\n"
+        "setup=-Dbuildtype=debug -Dscreen=slang\nbuild=meson compile -C ../proj-build\n"
+        "test=meson test -C ../proj-build\ntest_after_build=true\n\n"
+        "[build:Plain]\ndir=build\nsystem=make\nbuild=  \n\n"
+        "[build:]\ndir=x\n",
+        -1, G_KEY_FILE_NONE, NULL));
+    profiles = build_profiles_load (keyfile);
+    g_assert_cmpuint (profiles->list->len, ==, 2);
+    g_assert_cmpstr (profiles->active, ==, "Debug");
+    // a profile of coverage that is not there is none
+    g_assert_null (profiles->coverage);
+    p = build_profiles_find (profiles, "Debug");
+    g_assert_cmpint (p->system, ==, BUILD_MESON);
+    g_assert_cmpstr (p->setup, ==, "-Dbuildtype=debug -Dscreen=slang");
+    g_assert_true (p->test_after_build);
+    g_assert_true (build_profiles_active (profiles) == p);
+    command = build_profile_command (p, "/src/proj");
+    g_assert_cmpstr (command, ==, "meson compile -C ../proj-build && meson test -C ../proj-build");
+    g_free (command);
+    text = build_profile_dir (p, "/src/proj");
+    g_assert_cmpstr (text, ==, "/src/proj-build");
+    g_free (text);
+    // an empty command is that of its system
+    p = build_profiles_find (profiles, "Plain");
+    g_assert_null (p->build);
+    g_assert_cmpint (p->system, ==, BUILD_MAKE);
+    command = build_profile_command (p, "/src/proj");
+    g_assert_cmpstr (command, ==, "make");
+    g_free (command);
+
+    // made from Debug: its options and commands, in a directory of its own
+    cov = build_profiles_add (profiles, "/src/proj", "Coverage",
+                              build_profiles_find (profiles, "Debug"), "../proj-build-cov");
+    g_assert_nonnull (cov);
+    g_assert_cmpstr (cov->from, ==, "Debug");
+    g_assert_cmpstr (cov->setup, ==, "-Dbuildtype=debug -Dscreen=slang");
+    g_assert_cmpstr (cov->build, ==, "meson compile -C ../proj-build-cov");
+    g_assert_cmpstr (cov->test, ==, "meson test -C ../proj-build-cov");
+    g_assert_true (cov->test_after_build);
+    {
+        // the directory named absolute and quoted, a whole word only: "build" not in "--build"
+        build_profile_t from = { 0 };
+        build_profile_t *q;
+
+        from.name = (char *) "Abs";
+        from.dir = (char *) "build";
+        from.system = BUILD_CMAKE;
+        from.build = (char *) "cmake --build build && cp build/x '/src/proj/build/y' /src/build";
+        from.test = (char *) "ctest --test-dir '/src/proj/build'";
+        q = build_profiles_add (profiles, "/src/proj", "Abs2", &from, "build/abs2");
+        g_assert_cmpstr (q->build, ==,
+                         "cmake --build build/abs2 && cp build/abs2/x '/src/proj/build/abs2/y' "
+                         "/src/build");
+        g_assert_cmpstr (q->test, ==, "ctest --test-dir '/src/proj/build/abs2'");
+        g_assert_true (build_profiles_remove (profiles, "Abs2"));
+    }
+    // a name taken, empty or with brackets is none
+    g_assert_null (build_profiles_add (profiles, "/src/proj", "Coverage", NULL, "x"));
+    g_assert_null (build_profiles_add (profiles, "/src/proj", "", NULL, "x"));
+    g_assert_null (build_profiles_add (profiles, "/src/proj", "a]b", NULL, "x"));
+    profiles->coverage = g_strdup ("Coverage");
+    g_free (profiles->active);
+    profiles->active = g_strdup ("Coverage");
+
+    // written back: the group of before kept, the names in their places
+    build_profiles_store (profiles, keyfile);
+    text = g_key_file_get_string (keyfile, "Build", "command", NULL);
+    g_assert_cmpstr (text, ==, "make all");
+    g_free (text);
+    build_profiles_free (profiles);
+    profiles = build_profiles_load (keyfile);
+    g_assert_cmpuint (profiles->list->len, ==, 3);
+    g_assert_cmpstr (profiles->coverage, ==, "Coverage");
+    g_assert_cmpstr (build_profiles_active (profiles)->name, ==, "Coverage");
+    g_assert_cmpstr (build_profiles_find (profiles, "Coverage")->dir, ==, "../proj-build-cov");
+    g_assert_null (build_profiles_find (profiles, "Plain")->build);
+
+    // taken away: active and coverage go with it, the first is active then
+    g_assert_true (build_profiles_remove (profiles, "Coverage"));
+    g_assert_false (build_profiles_remove (profiles, "Coverage"));
+    g_assert_null (profiles->active);
+    g_assert_null (profiles->coverage);
+    g_assert_cmpstr (build_profiles_active (profiles)->name, ==, "Debug");
+    build_profiles_store (profiles, keyfile);
+    g_assert_false (g_key_file_has_group (keyfile, "build:Coverage"));
+    g_assert_false (g_key_file_has_key (keyfile, "project", "profile", NULL));
+    build_profiles_free (profiles);
+    g_key_file_free (keyfile);
+
+    // none in the file: none; a project without them gets Default, the command given kept
+    profiles = build_profiles_load (NULL);
+    g_assert_cmpuint (profiles->list->len, ==, 0);
+    g_assert_null (build_profiles_active (profiles));
+    build_profiles_free (profiles);
+    profiles = build_profiles_default ("/src/proj", &found, "make -j4");
+    p = build_profiles_active (profiles);
+    g_assert_cmpstr (p->name, ==, BUILD_PROFILES_DEFAULT);
+    g_assert_cmpstr (p->dir, ==, "/src/proj-build");
+    g_assert_cmpint (p->system, ==, BUILD_MESON);
+    g_assert_cmpstr (p->build, ==, "make -j4");
+    build_profiles_free (profiles);
+    profiles = build_profiles_default ("/src/proj", &found, NULL);
+    command = build_profile_command (build_profiles_active (profiles), "/src/proj");
+    g_assert_cmpstr (command, ==, "meson compile -C '/src/proj-build'");
+    g_free (command);
+    build_profiles_free (profiles);
+    profiles = build_profiles_default ("/src/proj", NULL, NULL);
+    p = build_profiles_active (profiles);
+    g_assert_cmpstr (p->dir, ==, "/src/proj");
+    g_assert_cmpint (p->system, ==, BUILD_NONE);
+    g_assert_null (build_profile_command (p, "/src/proj"));
+    build_profiles_free (profiles);
+
+    command = build_profile_test_command (BUILD_CMAKE, "/b d");
+    g_assert_cmpstr (command, ==, "ctest --test-dir '/b d'");
+    g_free (command);
+    g_assert_null (build_profile_test_command (BUILD_NONE, "/b"));
+    g_assert_cmpint (build_system_of_name (build_system_name (BUILD_CMAKE)), ==, BUILD_CMAKE);
+    g_assert_cmpint (build_system_of_name ("scons"), ==, BUILD_NONE);
+}
+
 static void
 remove_tree (const char *path)
 {
@@ -619,6 +758,7 @@ main (int argc, char **argv)
     g_test_add_func ("/build/presets", test_presets);
     g_test_add_func ("/build/options-meson", test_options_meson);
     g_test_add_func ("/build/options-cmake", test_options_cmake);
+    g_test_add_func ("/build/profiles", test_profiles);
     result = g_test_run ();
     remove_tree (top);
     g_free (top);
