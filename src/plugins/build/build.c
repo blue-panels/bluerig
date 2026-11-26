@@ -1414,6 +1414,24 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
                                    : info->system == BUILD_MESON ? "meson"
                                    : info->system == BUILD_CMAKE ? "cmake"
                                                                  : "make");
+        // what the build directory is built for: buildtype, coverage, sanitize
+        if (info != NULL)
+        {
+            GPtrArray *options = build_options_read (info->build_dir, info->system);
+
+            if (options != NULL)
+            {
+                build_summary_t *summary = build_summary_of (options, info->system);
+
+                if (summary->buildtype != NULL)
+                    g_variant_dict_insert (&reply, "buildtype", "s", summary->buildtype);
+                g_variant_dict_insert (&reply, "coverage", "b", summary->coverage);
+                if (summary->sanitize != NULL)
+                    g_variant_dict_insert (&reply, "sanitize", "s", summary->sanitize);
+                build_summary_free (summary);
+                g_ptr_array_free (options, TRUE);
+            }
+        }
         programs = build_find_programs (dir);
         g_variant_dict_insert_value (
             &reply, "programs",
