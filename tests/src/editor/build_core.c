@@ -356,6 +356,235 @@ test_presets (void)
     g_free (system);
 }
 
+/* --------------------------------------------------------------------------------------------- */
+
+/* The options of a meson build: their types, values, lists, choices, what the user gave, the
+   defaults of the source, and what they say the build is for */
+static void
+test_options_meson (void)
+{
+    char *dir = at ("opt-meson");
+    GPtrArray *options;
+    const build_option_t *o;
+    build_summary_t *summary;
+    char *text;
+
+    write_file (
+        "opt-meson/meson-info/intro-buildoptions.json",
+        "[{\"name\": \"buildtype\", \"value\": \"debug\", \"section\": \"core\", "
+        "\"machine\": \"any\", \"choices\": [\"plain\", \"debug\", \"release\"], "
+        "\"type\": \"combo\", \"description\": \"Build type to use\"},\n"
+        " {\"name\": \"werror\", \"value\": false, \"section\": \"core\", \"type\": \"boolean\"},\n"
+        " {\"name\": \"b_coverage\", \"value\": true, \"section\": \"base\", \"type\": "
+        "\"boolean\"},\n"
+        " {\"name\": \"b_sanitize\", \"value\": \"address,undefined\", \"section\": \"base\", "
+        "\"choices\": [\"none\", \"address\", \"address,undefined\"], \"type\": \"combo\"},\n"
+        " {\"name\": \"c_args\", \"value\": [\"-DX=1\", \"-O1\"], \"section\": \"compiler\", "
+        "\"type\": \"array\"},\n"
+        " {\"name\": \"backend_max_links\", \"value\": 0, \"section\": \"backend\", "
+        "\"type\": \"integer\"},\n"
+        " {\"name\": \"lua\", \"value\": \"auto\", \"section\": \"user\", \"type\": \"feature\", "
+        "\"choices\": [\"enabled\", \"disabled\", \"auto\"]},\n"
+        " {\"name\": \"motd\", \"value\": \"caf\\u00e9 \\\"x\\\"\\n\\ud83d\\ude00\", "
+        "\"section\": \"user\", \"type\": \"string\", \"description\": null},\n"
+        " {\"value\": \"no name: left out\"}]\n");
+    write_file ("opt-meson/meson-private/cmd_line.txt",
+                "[options]\nbuildtype = debug\nb_coverage = true\n\n[properties]\n");
+
+    options = build_options_read (dir, BUILD_MESON);
+    g_assert_nonnull (options);
+    g_assert_cmpuint (options->len, ==, 8);
+
+    o = build_options_find (options, "buildtype");
+    g_assert_nonnull (o);
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_COMBO);
+    g_assert_cmpstr (o->value, ==, "debug");
+    g_assert_cmpstr (o->section, ==, "core");
+    g_assert_cmpstr (o->description, ==, "Build type to use");
+    g_assert_cmpuint (g_strv_length (o->choices), ==, 3);
+    g_assert_cmpstr (o->choices[2], ==, "release");
+    g_assert_true (o->set_by_user);
+    g_assert_null (o->default_value);
+
+    o = build_options_find (options, "werror");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_BOOLEAN);
+    g_assert_cmpstr (o->value, ==, "false");
+    g_assert_false (o->set_by_user);
+    g_assert_null (o->choices);
+    o = build_options_find (options, "c_args");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_ARRAY);
+    g_assert_cmpstr (o->value, ==, "-DX=1,-O1");
+    o = build_options_find (options, "backend_max_links");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_INTEGER);
+    g_assert_cmpstr (o->value, ==, "0");
+    o = build_options_find (options, "lua");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_FEATURE);
+    // the escapes of JSON, a pair of surrogates one character
+    o = build_options_find (options, "motd");
+    g_assert_cmpstr (o->value, ==, "caf\xc3\xa9 \"x\"\n\xf0\x9f\x98\x80");
+    g_assert_null (o->description);
+    g_assert_null (build_options_find (options, "none"));
+
+    summary = build_summary_of (options, BUILD_MESON);
+    text = build_summary_text (summary);
+    g_assert_cmpstr (text, ==, "debug, coverage, address,undefined");
+    g_free (text);
+    build_summary_free (summary);
+
+    // the defaults of the source: those it names, the others not known
+    g_assert_true (build_options_set_defaults (
+        options,
+        "[{\"name\": \"buildtype\", \"value\": \"plain\", \"type\": \"combo\"},"
+        " {\"name\": \"werror\", \"value\": true, \"type\": \"boolean\"},"
+        " {\"name\": \"only_in_source\", \"value\": 1, \"type\": \"integer\"}]"));
+    g_assert_cmpstr (build_options_find (options, "buildtype")->default_value, ==, "plain");
+    g_assert_cmpstr (build_options_find (options, "werror")->default_value, ==, "true");
+    g_assert_null (build_options_find (options, "lua")->default_value);
+    g_assert_null (build_options_find (options, "only_in_source"));
+    // what is no list of options changes nothing
+    g_assert_false (build_options_set_defaults (options, "{\"name\": \"x\"}"));
+    g_assert_false (build_options_set_defaults (options, "[{\"name\": \"x\", \"value\": tru}]"));
+    g_assert_false (build_options_set_defaults (options, "[1, 2] trailing"));
+    g_assert_cmpstr (build_options_find (options, "buildtype")->default_value, ==, "plain");
+    g_ptr_array_free (options, TRUE);
+
+    // meson 1.8 gives b_sanitize as a list; nothing on: no sanitizer, no coverage
+    write_file ("opt-meson/meson-info/intro-buildoptions.json",
+                "[{\"name\": \"b_sanitize\", \"value\": [\"address\", \"undefined\"], "
+                "\"type\": \"array\"},"
+                " {\"name\": \"buildtype\", \"value\": \"release\", \"type\": \"combo\"}]");
+    options = build_options_read (dir, BUILD_MESON);
+    summary = build_summary_of (options, BUILD_MESON);
+    g_assert_cmpstr (summary->sanitize, ==, "address,undefined");
+    g_assert_false (summary->coverage);
+    build_summary_free (summary);
+    g_ptr_array_free (options, TRUE);
+    write_file ("opt-meson/meson-info/intro-buildoptions.json",
+                "[{\"name\": \"b_sanitize\", \"value\": \"none\", \"type\": \"combo\"},"
+                " {\"name\": \"b_coverage\", \"value\": false, \"type\": \"boolean\"}]");
+    options = build_options_read (dir, BUILD_MESON);
+    summary = build_summary_of (options, BUILD_MESON);
+    text = build_summary_text (summary);
+    g_assert_cmpstr (text, ==, "");
+    g_free (text);
+    build_summary_free (summary);
+    g_ptr_array_free (options, TRUE);
+
+    // a broken file, a directory without meson-info, a system with no options
+    write_file ("opt-meson/meson-info/intro-buildoptions.json", "[{\"name\": \"x\",");
+    g_assert_null (build_options_read (dir, BUILD_MESON));
+    g_assert_null (build_options_read (top, BUILD_MESON));
+    g_assert_null (build_options_read (dir, BUILD_MAKE));
+    g_assert_null (build_options_read (NULL, BUILD_MESON));
+    g_free (dir);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The options of a cmake build: help, types, advanced ones, the values a STRING takes, and the
+   flags that make coverage and sanitizers */
+static void
+test_options_cmake (void)
+{
+    char *dir = at ("opt-cmake");
+    GPtrArray *options;
+    const build_option_t *o;
+    build_summary_t *summary;
+    char *text;
+
+    write_file ("opt-cmake/CMakeCache.txt",
+                "# This is the CMakeCache file.\n"
+                "\n"
+                "########################\n"
+                "# EXTERNAL cache entries\n"
+                "########################\n"
+                "\n"
+                "//Choose the type of build, options are: None Debug Release\n"
+                "// RelWithDebInfo MinSizeRel ...\n"
+                "CMAKE_BUILD_TYPE:STRING=Debug\n"
+                "\n"
+                "//Flags used by the C compiler during all build types.\n"
+                "CMAKE_C_FLAGS:STRING=-Wall --coverage -fsanitize=address\n"
+                "\n"
+                "CMAKE_CXX_FLAGS_DEBUG:STRING=-g -fsanitize=undefined,address\n"
+                "\n"
+                "//Build the tests\n"
+                "BUILD_TESTING:BOOL=ON\n"
+                "\n"
+                "//Where zlib is\n"
+                "ZLIB_INCLUDE_DIR:PATH=/usr/include\n"
+                "\n"
+                "\"ODD NAME\":STRING=x=y\n"
+                "\n"
+                "SCREEN:STRING=slang\n"
+                "\n"
+                "WITH_THING:UNINITIALIZED=1\n"
+                "\n"
+                "CMAKE_HOME:STATIC=/src\n"
+                "\n"
+                "########################\n"
+                "# INTERNAL cache entries\n"
+                "########################\n"
+                "\n"
+                "//ADVANCED property for variable: ZLIB_INCLUDE_DIR\n"
+                "ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1\n"
+                "CMAKE_C_FLAGS-ADVANCED:INTERNAL=0\n"
+                "SCREEN-STRINGS:INTERNAL=slang;ncurses\n"
+                "CMAKE_HOME_DIRECTORY:INTERNAL=/src\n");
+
+    options = build_options_read (dir, BUILD_CMAKE);
+    g_assert_nonnull (options);
+    g_assert_cmpuint (options->len, ==, 8);
+
+    o = build_options_find (options, "CMAKE_BUILD_TYPE");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_STRING);
+    g_assert_cmpstr (o->section, ==, "cmake");
+    g_assert_cmpstr (o->description, ==,
+                     "Choose the type of build, options are: None Debug Release RelWithDebInfo "
+                     "MinSizeRel ...");
+    o = build_options_find (options, "CMAKE_CXX_FLAGS_DEBUG");
+    g_assert_null (o->description);
+    o = build_options_find (options, "BUILD_TESTING");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_BOOLEAN);
+    g_assert_cmpstr (o->value, ==, "ON");
+    g_assert_cmpstr (o->section, ==, "user");
+    o = build_options_find (options, "ZLIB_INCLUDE_DIR");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_PATH);
+    g_assert_true (o->advanced);
+    g_assert_false (build_options_find (options, "CMAKE_C_FLAGS")->advanced);
+    o = build_options_find (options, "ODD NAME");
+    g_assert_cmpstr (o->value, ==, "x=y");
+    o = build_options_find (options, "SCREEN");
+    g_assert_cmpint (o->type, ==, BUILD_OPTION_COMBO);
+    g_assert_cmpuint (g_strv_length (o->choices), ==, 2);
+    g_assert_cmpstr (o->choices[1], ==, "ncurses");
+    g_assert_nonnull (build_options_find (options, "WITH_THING"));
+    // the static and internal entries are no options
+    g_assert_null (build_options_find (options, "CMAKE_HOME"));
+    g_assert_null (build_options_find (options, "CMAKE_HOME_DIRECTORY"));
+    g_assert_null (build_options_find (options, "SCREEN-STRINGS"));
+
+    // the flags of all builds and of the build type, each sanitizer once
+    summary = build_summary_of (options, BUILD_CMAKE);
+    text = build_summary_text (summary);
+    g_assert_cmpstr (text, ==, "debug, coverage, address,undefined");
+    g_free (text);
+    build_summary_free (summary);
+    g_ptr_array_free (options, TRUE);
+
+    write_file ("opt-cmake/CMakeCache.txt",
+                "CMAKE_BUILD_TYPE:STRING=\nCMAKE_C_FLAGS:STRING=-O2\n"
+                "MODE:STRING=x\nMODE-STRINGS:INTERNAL=\n");
+    options = build_options_read (dir, BUILD_CMAKE);
+    summary = build_summary_of (options, BUILD_CMAKE);
+    g_assert_null (summary->buildtype);
+    g_assert_false (summary->coverage);
+    g_assert_null (summary->sanitize);
+    build_summary_free (summary);
+    g_ptr_array_free (options, TRUE);
+    g_free (dir);
+}
+
 static void
 remove_tree (const char *path)
 {
@@ -388,6 +617,8 @@ main (int argc, char **argv)
     g_test_add_func ("/build/elf", test_elf);
     g_test_add_func ("/build/diagnostic", test_diagnostic);
     g_test_add_func ("/build/presets", test_presets);
+    g_test_add_func ("/build/options-meson", test_options_meson);
+    g_test_add_func ("/build/options-cmake", test_options_cmake);
     result = g_test_run ();
     remove_tree (top);
     g_free (top);

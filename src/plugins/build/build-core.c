@@ -372,6 +372,722 @@ build_walk_programs (const char *dir, int depth, GArray *programs)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+/* JSON, enough for what meson says of a build: a value as a GVariant, an object a{sv}, a list
+   av, a string s, a number x or d, true and false b, null an empty maybe; json-glib is not
+   there in every build */
+
+#define BUILD_JSON_DEPTH 64
+
+static GVariant *build_json_value (const char **p, int depth);
+
+static void
+build_json_space (const char **p)
+{
+    while (**p == ' ' || **p == '\t' || **p == '\n' || **p == '\r')
+        (*p)++;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static int
+build_json_hex4 (const char *p)
+{
+    int v = 0;
+    int i;
+
+    for (i = 0; i < 4; i++)
+    {
+        const int d = g_ascii_xdigit_value (p[i]);
+
+        if (d < 0)
+            return -1;
+        v = v * 16 + d;
+    }
+    return v;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The string at @p, after its opening quote; NULL when it does not end */
+static char *
+build_json_string_at (const char **p)
+{
+    GString *out = g_string_new (NULL);
+    const char *s = *p;
+
+    while (*s != '"')
+    {
+        if (*s == '\0')
+        {
+            g_string_free (out, TRUE);
+            return NULL;
+        }
+        if (*s != '\\')
+        {
+            g_string_append_c (out, *s++);
+            continue;
+        }
+        s++;
+        switch (*s)
+        {
+        case 'b':
+            g_string_append_c (out, '\b');
+            break;
+        case 'f':
+            g_string_append_c (out, '\f');
+            break;
+        case 'n':
+            g_string_append_c (out, '\n');
+            break;
+        case 'r':
+            g_string_append_c (out, '\r');
+            break;
+        case 't':
+            g_string_append_c (out, '\t');
+            break;
+        case 'u':
+        {
+            int c = build_json_hex4 (s + 1);
+
+            if (c < 0)
+            {
+                g_string_free (out, TRUE);
+                return NULL;
+            }
+            s += 4;
+            // a pair of surrogates is one character
+            if (c >= 0xd800 && c < 0xdc00 && s[1] == '\\' && s[2] == 'u')
+            {
+                const int low = build_json_hex4 (s + 3);
+
+                if (low >= 0xdc00 && low < 0xe000)
+                {
+                    c = 0x10000 + ((c - 0xd800) << 10) + (low - 0xdc00);
+                    s += 6;
+                }
+            }
+            // a surrogate alone is no character, a NUL would end the string early
+            if (c >= 0xd800 && c < 0xe000)
+                c = 0xfffd;
+            if (c != 0)
+                g_string_append_unichar (out, (gunichar) c);
+            break;
+        }
+        case '\0':
+            g_string_free (out, TRUE);
+            return NULL;
+        default:
+            // \" \\ \/
+            g_string_append_c (out, *s);
+            break;
+        }
+        s++;
+    }
+    *p = s + 1;
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static GVariant *
+build_json_object (const char **p, int depth)
+{
+    GVariantBuilder b;
+
+    g_variant_builder_init (&b, G_VARIANT_TYPE ("a{sv}"));
+    build_json_space (p);
+    if (**p == '}')
+    {
+        (*p)++;
+        return g_variant_builder_end (&b);
+    }
+    while (TRUE)
+    {
+        char *key;
+        GVariant *value;
+
+        build_json_space (p);
+        if (**p != '"')
+            break;
+        (*p)++;
+        key = build_json_string_at (p);
+        if (key == NULL)
+            break;
+        build_json_space (p);
+        if (**p != ':')
+        {
+            g_free (key);
+            break;
+        }
+        (*p)++;
+        value = build_json_value (p, depth + 1);
+        if (value == NULL)
+        {
+            g_free (key);
+            break;
+        }
+        g_variant_builder_add (&b, "{sv}", key, value);
+        g_free (key);
+        build_json_space (p);
+        if (**p == ',')
+        {
+            (*p)++;
+            continue;
+        }
+        if (**p == '}')
+        {
+            (*p)++;
+            return g_variant_builder_end (&b);
+        }
+        break;
+    }
+    g_variant_builder_clear (&b);
+    return NULL;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static GVariant *
+build_json_array (const char **p, int depth)
+{
+    GVariantBuilder b;
+
+    g_variant_builder_init (&b, G_VARIANT_TYPE ("av"));
+    build_json_space (p);
+    if (**p == ']')
+    {
+        (*p)++;
+        return g_variant_builder_end (&b);
+    }
+    while (TRUE)
+    {
+        GVariant *value = build_json_value (p, depth + 1);
+
+        if (value == NULL)
+            break;
+        g_variant_builder_add (&b, "v", value);
+        build_json_space (p);
+        if (**p == ',')
+        {
+            (*p)++;
+            continue;
+        }
+        if (**p == ']')
+        {
+            (*p)++;
+            return g_variant_builder_end (&b);
+        }
+        break;
+    }
+    g_variant_builder_clear (&b);
+    return NULL;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static GVariant *
+build_json_value (const char **p, int depth)
+{
+    if (depth > BUILD_JSON_DEPTH)
+        return NULL;
+    build_json_space (p);
+    switch (**p)
+    {
+    case '{':
+        (*p)++;
+        return build_json_object (p, depth);
+    case '[':
+        (*p)++;
+        return build_json_array (p, depth);
+    case '"':
+    {
+        char *s;
+
+        (*p)++;
+        s = build_json_string_at (p);
+        return s == NULL ? NULL : g_variant_new_take_string (s);
+    }
+    case 't':
+        if (strncmp (*p, "true", 4) != 0)
+            return NULL;
+        *p += 4;
+        return g_variant_new_boolean (TRUE);
+    case 'f':
+        if (strncmp (*p, "false", 5) != 0)
+            return NULL;
+        *p += 5;
+        return g_variant_new_boolean (FALSE);
+    case 'n':
+        if (strncmp (*p, "null", 4) != 0)
+            return NULL;
+        *p += 4;
+        return g_variant_new_maybe (G_VARIANT_TYPE_VARIANT, NULL);
+    default:
+    {
+        const char *start = *p;
+        char *end;
+
+        if (**p != '-' && !g_ascii_isdigit (**p))
+            return NULL;
+        while (**p == '-' || **p == '+' || g_ascii_isdigit (**p))
+            (*p)++;
+        if (**p == '.' || **p == 'e' || **p == 'E')
+        {
+            const double d = g_ascii_strtod (start, &end);
+
+            *p = end;
+            return g_variant_new_double (d);
+        }
+        return g_variant_new_int64 (g_ascii_strtoll (start, &end, 10));
+    }
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The JSON @text as a GVariant, NULL when it is none */
+static GVariant *
+build_json_parse (const char *text)
+{
+    const char *p = text;
+    GVariant *value = build_json_value (&p, 0);
+
+    if (value == NULL)
+        return NULL;
+    g_variant_ref_sink (value);
+    build_json_space (&p);
+    if (*p != '\0')
+    {
+        g_variant_unref (value);
+        return NULL;
+    }
+    return value;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/* The options of a build directory */
+
+static void
+build_option_free (gpointer p)
+{
+    build_option_t *o = (build_option_t *) p;
+
+    g_free (o->name);
+    g_free (o->section);
+    g_free (o->value);
+    g_free (o->default_value);
+    g_strfreev (o->choices);
+    g_strfreev (o->items);
+    g_free (o->description);
+    g_free (o);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A value of meson as text: a list joined by ',' */
+static char *
+build_option_text (GVariant *v)
+{
+    if (g_variant_is_of_type (v, G_VARIANT_TYPE_VARIANT))
+    {
+        GVariant *inner = g_variant_get_variant (v);
+        char *text = build_option_text (inner);
+
+        g_variant_unref (inner);
+        return text;
+    }
+    if (g_variant_is_of_type (v, G_VARIANT_TYPE_BOOLEAN))
+        return g_strdup (g_variant_get_boolean (v) ? "true" : "false");
+    if (g_variant_is_of_type (v, G_VARIANT_TYPE_INT64))
+        return g_strdup_printf ("%" G_GINT64_FORMAT, g_variant_get_int64 (v));
+    if (g_variant_is_of_type (v, G_VARIANT_TYPE_DOUBLE))
+    {
+        char buf[G_ASCII_DTOSTR_BUF_SIZE];
+
+        return g_strdup (g_ascii_dtostr (buf, sizeof (buf), g_variant_get_double (v)));
+    }
+    if (g_variant_is_of_type (v, G_VARIANT_TYPE_STRING))
+        return g_variant_dup_string (v, NULL);
+    if (g_variant_is_of_type (v, G_VARIANT_TYPE ("av")))
+    {
+        GString *out = g_string_new (NULL);
+        gsize i;
+
+        for (i = 0; i < g_variant_n_children (v); i++)
+        {
+            GVariant *item = g_variant_get_child_value (v, i);
+            char *text = build_option_text (item);
+
+            if (i > 0)
+                g_string_append_c (out, ',');
+            g_string_append (out, text);
+            g_free (text);
+            g_variant_unref (item);
+        }
+        return g_string_free (out, FALSE);
+    }
+    return g_strdup ("");
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static build_option_type_t
+build_option_type_of_meson (const char *type)
+{
+    static const struct
+    {
+        const char *name;
+        build_option_type_t type;
+    } types[] = {
+        { "boolean", BUILD_OPTION_BOOLEAN }, { "combo", BUILD_OPTION_COMBO },
+        { "integer", BUILD_OPTION_INTEGER }, { "array", BUILD_OPTION_ARRAY },
+        { "feature", BUILD_OPTION_FEATURE },
+    };
+    size_t i;
+
+    for (i = 0; type != NULL && i < G_N_ELEMENTS (types); i++)
+        if (strcmp (type, types[i].name) == 0)
+            return types[i].type;
+    return BUILD_OPTION_STRING;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A string of the object @o of meson, NULL when it has none */
+static char *
+build_meson_string (GVariant *o, const char *key)
+{
+    const char *s = NULL;
+
+    return g_variant_lookup (o, key, "&s", &s) ? g_strdup (s) : NULL;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The options in @json, what meson-info/intro-buildoptions.json has; NULL when it has none */
+static GPtrArray *
+build_options_of_meson_json (const char *json)
+{
+    GVariant *list = build_json_parse (json);
+    GPtrArray *options;
+    gsize i;
+
+    if (list == NULL || !g_variant_is_of_type (list, G_VARIANT_TYPE ("av")))
+    {
+        if (list != NULL)
+            g_variant_unref (list);
+        return NULL;
+    }
+    options = g_ptr_array_new_with_free_func (build_option_free);
+    for (i = 0; i < g_variant_n_children (list); i++)
+    {
+        GVariant *item = g_variant_get_child_value (list, i);
+        GVariant *o = g_variant_get_variant (item);
+        GVariant *value, *choices;
+        build_option_t *opt;
+        char *type;
+
+        g_variant_unref (item);
+        if (!g_variant_is_of_type (o, G_VARIANT_TYPE ("a{sv}")))
+        {
+            g_variant_unref (o);
+            continue;
+        }
+        opt = g_new0 (build_option_t, 1);
+        opt->name = build_meson_string (o, "name");
+        if (opt->name == NULL)
+        {
+            g_free (opt);
+            g_variant_unref (o);
+            continue;
+        }
+        opt->section = build_meson_string (o, "section");
+        opt->description = build_meson_string (o, "description");
+        type = build_meson_string (o, "type");
+        opt->type = build_option_type_of_meson (type);
+        g_free (type);
+        value = g_variant_lookup_value (o, "value", NULL);
+        opt->value = value != NULL ? build_option_text (value) : g_strdup ("");
+        // a list keeps its items: one may have a ',' in it
+        if (value != NULL)
+        {
+            GVariant *inner = g_variant_is_of_type (value, G_VARIANT_TYPE_VARIANT)
+                ? g_variant_get_variant (value)
+                : g_variant_ref (value);
+
+            if (g_variant_is_of_type (inner, G_VARIANT_TYPE ("av")))
+            {
+                const gsize n = g_variant_n_children (inner);
+                gsize j;
+
+                opt->items = g_new0 (char *, n + 1);
+                for (j = 0; j < n; j++)
+                {
+                    GVariant *child = g_variant_get_child_value (inner, j);
+
+                    opt->items[j] = build_option_text (child);
+                    g_variant_unref (child);
+                }
+            }
+            g_variant_unref (inner);
+            g_variant_unref (value);
+        }
+        choices = g_variant_lookup_value (o, "choices", G_VARIANT_TYPE ("av"));
+        if (choices != NULL)
+        {
+            gsize n = g_variant_n_children (choices), j;
+
+            opt->choices = g_new0 (char *, n + 1);
+            for (j = 0; j < n; j++)
+            {
+                GVariant *c = g_variant_get_child_value (choices, j);
+
+                opt->choices[j] = build_option_text (c);
+                g_variant_unref (c);
+            }
+            g_variant_unref (choices);
+        }
+        g_ptr_array_add (options, opt);
+        g_variant_unref (o);
+    }
+    g_variant_unref (list);
+    return options;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static GPtrArray *
+build_options_read_meson (const char *dir)
+{
+    char *path = g_build_filename (dir, "meson-info", "intro-buildoptions.json", (char *) NULL);
+    char *json = build_read_text (path);
+    GPtrArray *options;
+    GKeyFile *given;
+
+    g_free (path);
+    if (json == NULL)
+        return NULL;
+    options = build_options_of_meson_json (json);
+    g_free (json);
+    if (options == NULL)
+        return NULL;
+
+    // what was given to setup and configure: meson keeps it for the next setup
+    path = g_build_filename (dir, "meson-private", "cmd_line.txt", (char *) NULL);
+    given = g_key_file_new ();
+    if (g_key_file_load_from_file (given, path, G_KEY_FILE_NONE, NULL))
+    {
+        guint i;
+
+        for (i = 0; i < options->len; i++)
+        {
+            build_option_t *o = (build_option_t *) g_ptr_array_index (options, i);
+
+            o->set_by_user = g_key_file_has_key (given, "options", o->name, NULL);
+        }
+    }
+    g_key_file_free (given);
+    g_free (path);
+    return options;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static build_option_t *
+build_options_find_rw (GPtrArray *options, const char *name)
+{
+    guint i;
+
+    for (i = 0; i < options->len; i++)
+    {
+        build_option_t *o = (build_option_t *) g_ptr_array_index (options, i);
+
+        if (strcmp (o->name, name) == 0)
+            return o;
+    }
+    return NULL;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* CMakeCache.txt: "NAME:TYPE=VALUE" with the lines "//" of its help before it; the INTERNAL
+   entries NAME-ADVANCED and NAME-STRINGS say which are advanced and what a STRING takes */
+static GPtrArray *
+build_options_read_cmake (const char *dir)
+{
+    static const char *const cmake_given[] = {
+        "CMAKE_BUILD_TYPE",
+        "CMAKE_C_FLAGS",
+        "CMAKE_CXX_FLAGS",
+        "CMAKE_EXE_LINKER_FLAGS",
+        "CMAKE_SHARED_LINKER_FLAGS",
+        "CMAKE_INSTALL_PREFIX",
+        NULL,
+    };
+    char *path = g_build_filename (dir, "CMakeCache.txt", (char *) NULL);
+    char *text = build_read_text (path);
+    GPtrArray *options;
+    GHashTable *advanced, *strings;
+    GString *help;
+    char **lines, **l;
+    guint i;
+
+    g_free (path);
+    if (text == NULL)
+        return NULL;
+    options = g_ptr_array_new_with_free_func (build_option_free);
+    advanced = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+    strings = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+    help = g_string_new (NULL);
+    lines = g_strsplit (text, "\n", -1);
+    g_free (text);
+    for (l = lines; *l != NULL; l++)
+    {
+        char *line = g_strchomp (*l);
+        char *name, *type, *value, *colon, *equal;
+
+        if (g_str_has_prefix (line, "//"))
+        {
+            if (help->len > 0)
+                g_string_append_c (help, ' ');
+            g_string_append (help, g_strstrip (line + 2));
+            continue;
+        }
+        if (line[0] == '\0' || line[0] == '#')
+        {
+            g_string_truncate (help, 0);
+            continue;
+        }
+        // a name with odd characters is quoted
+        if (line[0] == '"')
+        {
+            char *close = strchr (line + 1, '"');
+
+            if (close == NULL)
+                continue;
+            name = g_strndup (line + 1, (gsize) (close - line - 1));
+            colon = close + 1;
+            if (*colon != ':')
+            {
+                g_free (name);
+                continue;
+            }
+        }
+        else
+        {
+            colon = strchr (line, ':');
+            if (colon == NULL)
+                continue;
+            name = g_strndup (line, (gsize) (colon - line));
+        }
+        equal = strchr (colon, '=');
+        if (equal == NULL)
+        {
+            g_free (name);
+            continue;
+        }
+        type = g_strndup (colon + 1, (gsize) (equal - colon - 1));
+        value = equal + 1;
+
+        if (strcmp (type, "INTERNAL") == 0)
+        {
+            if (g_str_has_suffix (name, "-ADVANCED"))
+            {
+                if (strcmp (value, "1") == 0)
+                    g_hash_table_add (advanced,
+                                      g_strndup (name, strlen (name) - strlen ("-ADVANCED")));
+            }
+            else if (g_str_has_suffix (name, "-STRINGS"))
+                g_hash_table_replace (strings,
+                                      g_strndup (name, strlen (name) - strlen ("-STRINGS")),
+                                      g_strdup (value));
+        }
+        else if (strcmp (type, "STATIC") != 0)
+        {
+            build_option_t *o = g_new0 (build_option_t, 1);
+
+            o->name = name;
+            name = NULL;
+            o->section = g_strdup (g_str_has_prefix (o->name, "CMAKE_") ? "cmake" : "user");
+            o->type = strcmp (type, "BOOL") == 0 ? BUILD_OPTION_BOOLEAN
+                : strcmp (type, "PATH") == 0 || strcmp (type, "FILEPATH") == 0
+                ? BUILD_OPTION_PATH
+                : BUILD_OPTION_STRING;
+            o->value = g_strdup (value);
+            o->description = help->len > 0 ? g_strdup (help->str) : NULL;
+            g_ptr_array_add (options, o);
+        }
+        g_string_truncate (help, 0);
+        g_free (name);
+        g_free (type);
+    }
+    g_strfreev (lines);
+    g_string_free (help, TRUE);
+
+    for (i = 0; i < options->len; i++)
+    {
+        build_option_t *o = (build_option_t *) g_ptr_array_index (options, i);
+        const char *choices = (const char *) g_hash_table_lookup (strings, o->name);
+
+        o->advanced = g_hash_table_contains (advanced, o->name);
+        // an empty list of choices is none: any value goes
+        if (choices != NULL && *choices != '\0' && o->type == BUILD_OPTION_STRING)
+        {
+            o->type = BUILD_OPTION_COMBO;
+            o->choices = g_strsplit (choices, ";", -1);
+        }
+        /* the cache says not what was given: what sets another directory up the same is the
+           build type and the flags given, and the options of the project, not the paths CMake
+           found */
+        if (g_str_has_prefix (o->name, "CMAKE_"))
+            o->set_by_user = *o->value != '\0' && g_strv_contains (cmake_given, o->name);
+        else
+            o->set_by_user = !o->advanced && o->type != BUILD_OPTION_PATH;
+    }
+    g_hash_table_destroy (advanced);
+    g_hash_table_destroy (strings);
+    return options;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The words of the flags of cmake that make coverage or a sanitizer */
+static void
+build_summary_of_flags (build_summary_t *s, const char *flags, GPtrArray *sanitizers)
+{
+    char **words;
+    char **w;
+
+    if (flags == NULL)
+        return;
+    words = g_strsplit_set (flags, " \t", -1);
+    for (w = words; *w != NULL; w++)
+    {
+        if (strcmp (*w, "--coverage") == 0 || strcmp (*w, "-fprofile-arcs") == 0
+            || strcmp (*w, "-fprofile-instr-generate") == 0)
+            s->coverage = TRUE;
+        else if (g_str_has_prefix (*w, "-fsanitize="))
+        {
+            char **names = g_strsplit (*w + strlen ("-fsanitize="), ",", -1);
+            char **n;
+
+            for (n = names; *n != NULL; n++)
+            {
+                guint i;
+                gboolean known = FALSE;
+
+                for (i = 0; i < sanitizers->len && !known; i++)
+                    known = strcmp (g_ptr_array_index (sanitizers, i), *n) == 0;
+                if (**n != '\0' && !known)
+                    g_ptr_array_add (sanitizers, g_strdup (*n));
+            }
+            g_strfreev (names);
+        }
+    }
+    g_strfreev (words);
+}
+
+/* --------------------------------------------------------------------------------------------- */
 /*** public functions ****************************************************************************/
 /* --------------------------------------------------------------------------------------------- */
 
@@ -662,6 +1378,188 @@ build_diagnostic_free (build_diagnostic_t *d)
     g_free (d->file);
     g_free (d->message);
     g_free (d);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+GPtrArray *
+build_options_read (const char *dir, build_system_t system)
+{
+    if (dir == NULL)
+        return NULL;
+    switch (system)
+    {
+    case BUILD_MESON:
+        return build_options_read_meson (dir);
+    case BUILD_CMAKE:
+        return build_options_read_cmake (dir);
+    default:
+        return NULL;
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+gboolean
+build_options_set_defaults (GPtrArray *options, const char *json)
+{
+    GPtrArray *defaults;
+    guint i;
+
+    if (options == NULL || json == NULL)
+        return FALSE;
+    defaults = build_options_of_meson_json (json);
+    if (defaults == NULL)
+        return FALSE;
+    for (i = 0; i < defaults->len; i++)
+    {
+        const build_option_t *d = (const build_option_t *) g_ptr_array_index (defaults, i);
+        build_option_t *o = build_options_find_rw (options, d->name);
+
+        if (o != NULL)
+        {
+            g_free (o->default_value);
+            o->default_value = g_strdup (d->value);
+        }
+    }
+    g_ptr_array_free (defaults, TRUE);
+    return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+const build_option_t *
+build_options_find (const GPtrArray *options, const char *name)
+{
+    return options == NULL || name == NULL ? NULL
+                                           : build_options_find_rw ((GPtrArray *) options, name);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_option_meson_list (const char *const *items)
+{
+    GString *out = g_string_new ("[");
+    const char *const *i;
+
+    for (i = items; i != NULL && *i != NULL; i++)
+    {
+        const char *c;
+
+        if (i != items)
+            g_string_append (out, ", ");
+        g_string_append_c (out, '\'');
+        for (c = *i; *c != '\0'; c++)
+        {
+            if (*c == '\'' || *c == '\\')
+                g_string_append_c (out, '\\');
+            g_string_append_c (out, *c);
+        }
+        g_string_append_c (out, '\'');
+    }
+    g_string_append_c (out, ']');
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_option_arg (const build_option_t *o)
+{
+    if (o->type == BUILD_OPTION_ARRAY && o->items != NULL)
+        return build_option_meson_list ((const char *const *) o->items);
+    return g_strdup (o->value);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+build_summary_t *
+build_summary_of (const GPtrArray *options, build_system_t system)
+{
+    build_summary_t *s = g_new0 (build_summary_t, 1);
+    const build_option_t *o;
+
+    if (system == BUILD_MESON)
+    {
+        o = build_options_find (options, "buildtype");
+        if (o != NULL && o->value[0] != '\0')
+            s->buildtype = g_strdup (o->value);
+        o = build_options_find (options, "b_coverage");
+        s->coverage = o != NULL && strcmp (o->value, "true") == 0;
+        // a word until meson 1.7, a list from 1.8: "address,undefined" either way
+        o = build_options_find (options, "b_sanitize");
+        if (o != NULL && o->value[0] != '\0' && strcmp (o->value, "none") != 0)
+            s->sanitize = g_strdup (o->value);
+    }
+    else if (system == BUILD_CMAKE)
+    {
+        static const char *const flags[] = {
+            "CMAKE_C_FLAGS",
+            "CMAKE_CXX_FLAGS",
+            "CMAKE_EXE_LINKER_FLAGS",
+            "CMAKE_SHARED_LINKER_FLAGS",
+        };
+        GPtrArray *sanitizers = g_ptr_array_new_with_free_func (g_free);
+        size_t i;
+
+        o = build_options_find (options, "CMAKE_BUILD_TYPE");
+        if (o != NULL && o->value[0] != '\0')
+            s->buildtype = g_ascii_strdown (o->value, -1);
+        for (i = 0; i < G_N_ELEMENTS (flags); i++)
+        {
+            o = build_options_find (options, flags[i]);
+            build_summary_of_flags (s, o != NULL ? o->value : NULL, sanitizers);
+            // the flags of the build type too: CMAKE_C_FLAGS_DEBUG
+            if (s->buildtype != NULL)
+            {
+                char *upper = g_ascii_strup (s->buildtype, -1);
+                char *name = g_strconcat (flags[i], "_", upper, (char *) NULL);
+
+                o = build_options_find (options, name);
+                build_summary_of_flags (s, o != NULL ? o->value : NULL, sanitizers);
+                g_free (name);
+                g_free (upper);
+            }
+        }
+        if (sanitizers->len > 0)
+        {
+            g_ptr_array_add (sanitizers, NULL);
+            s->sanitize = g_strjoinv (",", (char **) sanitizers->pdata);
+        }
+        g_ptr_array_free (sanitizers, TRUE);
+    }
+    return s;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_summary_text (const build_summary_t *summary)
+{
+    GString *out = g_string_new (NULL);
+
+    if (summary == NULL)
+        return g_string_free (out, FALSE);
+    if (summary->buildtype != NULL)
+        g_string_append (out, summary->buildtype);
+    if (summary->coverage)
+        g_string_append_printf (out, "%scoverage", out->len > 0 ? ", " : "");
+    if (summary->sanitize != NULL)
+        g_string_append_printf (out, "%s%s", out->len > 0 ? ", " : "", summary->sanitize);
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+build_summary_free (build_summary_t *summary)
+{
+    if (summary == NULL)
+        return;
+    g_free (summary->buildtype);
+    g_free (summary->sanitize);
+    g_free (summary);
 }
 
 /* --------------------------------------------------------------------------------------------- */
