@@ -329,6 +329,54 @@ build_profiles_replace (const char *text, const char *old_rel, const char *old_a
 }
 
 /* --------------------------------------------------------------------------------------------- */
+
+/* The name of the option of @word, "-Dname=value" -> "name"; NULL for another word */
+static char *
+build_profile_option_name (const char *word)
+{
+    const char *equal;
+
+    if (!g_str_has_prefix (word, "-D") || (equal = strchr (word, '=')) == NULL)
+        return NULL;
+    return g_strndup (word + 2, (gsize) (equal - word - 2));
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* @words joined, each quoted when it needs it */
+static char *
+build_profile_join (GPtrArray *words)
+{
+    GString *out = g_string_new (NULL);
+    guint i;
+
+    for (i = 0; i < words->len; i++)
+    {
+        const char *w = (const char *) g_ptr_array_index (words, i);
+
+        if (out->len > 0)
+            g_string_append_c (out, ' ');
+        if (*w != '\0'
+            && strspn (w, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_=.,/+:")
+                == strlen (w))
+            g_string_append (out, w);
+        // a list of meson, '-Dx=[\'a\', \'b\']', reads best in double quotes
+        else if (strchr (w, '\'') != NULL && strpbrk (w, "\"$`\\!") == NULL)
+            g_string_append_printf (out, "\"%s\"", w);
+        else
+        {
+            char *quoted = g_shell_quote (w);
+
+            g_string_append (out, quoted);
+            g_free (quoted);
+        }
+    }
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------------- */
 /*** public functions ****************************************************************************/
 /* --------------------------------------------------------------------------------------------- */
 
@@ -737,37 +785,73 @@ char *
 build_profile_setup_of (const char *dir, build_system_t system)
 {
     GPtrArray *options = build_options_read (dir, system);
-    GString *setup;
+    GPtrArray *words;
+    char *setup;
     guint i;
 
     if (options == NULL)
         return NULL;
-    setup = g_string_new (NULL);
+    words = g_ptr_array_new_with_free_func (g_free);
     for (i = 0; i < options->len; i++)
     {
         const build_option_t *o = (const build_option_t *) g_ptr_array_index (options, i);
-        char *arg, *quoted;
 
-        if (!o->set_by_user)
-            continue;
-        arg = g_strdup_printf ("-D%s=%s", o->name, o->value);
-        quoted = g_shell_quote (arg);
-        // a word that needs no quotes goes as it is
-        if (strspn (arg, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_=.,/+:")
-            == strlen (arg))
-            g_string_append_printf (setup, "%s%s", setup->len > 0 ? " " : "", arg);
-        else
-            g_string_append_printf (setup, "%s%s", setup->len > 0 ? " " : "", quoted);
-        g_free (quoted);
-        g_free (arg);
+        if (o->set_by_user)
+        {
+            char *arg = build_option_arg (o);
+
+            g_ptr_array_add (words, g_strdup_printf ("-D%s=%s", o->name, arg));
+            g_free (arg);
+        }
     }
     g_ptr_array_free (options, TRUE);
-    if (setup->len == 0)
-    {
-        g_string_free (setup, TRUE);
+    setup = words->len > 0 ? build_profile_join (words) : NULL;
+    g_ptr_array_free (words, TRUE);
+    return setup;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_setup_merge (const char *setup, const char *more)
+{
+    char **base = NULL, **add = NULL, **w;
+    GPtrArray *words;
+    char *joined;
+
+    if (setup == NULL && more == NULL)
         return NULL;
+    if (setup != NULL && *setup != '\0' && !g_shell_parse_argv (setup, NULL, &base, NULL))
+        base = NULL;
+    if (more != NULL && *more != '\0' && !g_shell_parse_argv (more, NULL, &add, NULL))
+        add = NULL;
+    words = g_ptr_array_new ();
+    for (w = base; w != NULL && *w != NULL; w++)
+    {
+        char *name = build_profile_option_name (*w);
+        gboolean replaced = FALSE;
+        char **a;
+
+        for (a = add; name != NULL && a != NULL && *a != NULL && !replaced; a++)
+        {
+            char *other = build_profile_option_name (*a);
+
+            replaced = g_strcmp0 (name, other) == 0;
+            g_free (other);
+        }
+        if (!replaced)
+            g_ptr_array_add (words, *w);
+        g_free (name);
     }
-    return g_string_free (setup, FALSE);
+    for (w = add; w != NULL && *w != NULL; w++)
+        g_ptr_array_add (words, *w);
+    joined = build_profile_join (words);
+    g_ptr_array_free (words, TRUE);
+    g_strfreev (base);
+    g_strfreev (add);
+    if (*joined == '\0')
+        g_clear_pointer (&joined, g_free);
+    return joined;
 }
 
 /* --------------------------------------------------------------------------------------------- */

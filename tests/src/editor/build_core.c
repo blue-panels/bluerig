@@ -565,6 +565,15 @@ test_options_cmake (void)
     g_assert_null (build_options_find (options, "CMAKE_HOME_DIRECTORY"));
     g_assert_null (build_options_find (options, "SCREEN-STRINGS"));
 
+    /* what sets another directory up the same: the build type and the flags given, the options of
+       the project; not the paths found, nor the flags of a build type cmake gives */
+    text = build_profile_setup_of (dir, BUILD_CMAKE);
+    g_assert_cmpstr (
+        text, ==,
+        "-DCMAKE_BUILD_TYPE=Debug '-DCMAKE_C_FLAGS=-Wall --coverage -fsanitize=address' "
+        "-DBUILD_TESTING=ON '-DODD NAME=x=y' -DSCREEN=slang -DWITH_THING=1");
+    g_free (text);
+
     // the flags of all builds and of the build type, each sanitizer once
     summary = build_summary_of (options, BUILD_CMAKE);
     text = build_summary_text (summary);
@@ -824,7 +833,7 @@ test_profiles (void)
         write_file ("prof-build/meson-private/cmd_line.txt",
                     "[options]\nbuildtype = debug\nc_args = -DA=1,'-DB=a b'\n");
         text = build_profile_setup_of (dir, BUILD_MESON);
-        g_assert_cmpstr (text, ==, "-Dbuildtype=debug '-Dc_args=-DA=1,-DB=a b'");
+        g_assert_cmpstr (text, ==, "-Dbuildtype=debug \"-Dc_args=['-DA=1', '-DB=a b']\"");
         g_free (text);
         g_assert_null (build_profile_setup_of (top, BUILD_MESON));
         g_assert_cmpint (build_system_of_dir (top), ==, BUILD_NONE);
@@ -854,6 +863,27 @@ test_profiles (void)
             g_assert_cmpstr (text, ==, cases[i][2]);
             g_free (text);
         }
+    }
+
+    {
+        // the options added take the place of those of the same name, the rest kept in order
+        static const char *const cases[][3] = {
+            { "-Dx=1 -Db_coverage=false -Dy=2", "-Db_coverage=true",
+              "-Dx=1 -Dy=2 -Db_coverage=true" },
+            { NULL, "-Db_coverage=true", "-Db_coverage=true" },
+            { "-Dx=1", NULL, "-Dx=1" },
+            { "'-Dc_args=a b' -Dx=1", "-Dx=2 -Wno", "'-Dc_args=a b' -Dx=2 -Wno" },
+            { "", "", NULL },
+        };
+        size_t i;
+
+        for (i = 0; i < G_N_ELEMENTS (cases); i++)
+        {
+            text = build_profile_setup_merge (cases[i][0], cases[i][1]);
+            g_assert_cmpstr (text, ==, cases[i][2]);
+            g_free (text);
+        }
+        g_assert_null (build_profile_setup_merge (NULL, NULL));
     }
 
     command = build_profile_test_command (BUILD_CMAKE, "/b d");

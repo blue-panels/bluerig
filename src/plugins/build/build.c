@@ -2051,26 +2051,45 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
 {
     build_t *build = (build_t *) data;
     GVariantDict reply;
-    const char *root = NULL, *path = NULL, *project = NULL;
+    const char *root = NULL, *path = NULL, *project = NULL, *profile = NULL;
 
     if (args != NULL)
     {
         (void) g_variant_lookup (args, "root", "&s", &root);
         (void) g_variant_lookup (args, "path", "&s", &path);
         (void) g_variant_lookup (args, "project", "&s", &project);
+        // a profile of the project by its name, the active one when not given
+        (void) g_variant_lookup (args, "profile", "&s", &profile);
+    }
+    // a profile named that is not there is an error, not another profile quietly
+    if (profile != NULL && root != NULL
+        && (strcmp (method, "info") == 0 || strcmp (method, "run") == 0
+            || strcmp (method, "configure") == 0 || strcmp (method, "window") == 0))
+    {
+        build_profiles_t *profiles = build_profiles_of (root);
+        const gboolean there = build_profiles_find (profiles, profile) != NULL;
+
+        build_profiles_free (profiles);
+        if (!there)
+        {
+            g_set_error (error, MC_SERVICE_ERROR, MC_SERVICE_ERROR_ARGS,
+                         "build: no profile %s in the project", profile);
+            return NULL;
+        }
     }
     g_variant_dict_init (&reply, NULL);
 
     if (strcmp (method, "info") == 0 && root != NULL)
     {
-        // how the project is built, by its active profile, and the programs it has built
+        // how the project is built, by its profile, and the programs it has built
         build_profiles_t *profiles = build_profiles_of (root);
-        const build_profile_t *p = build_profiles_active (profiles);
+        const build_profile_t *p = profile != NULL ? build_profiles_find (profiles, profile)
+                                                   : build_profiles_active (profiles);
         const build_system_t system = p != NULL ? p->system : BUILD_NONE;
         char *command = NULL, *dir = NULL;
         GPtrArray *programs;
 
-        (void) build_plan (build, root, NULL, &command, &dir);
+        (void) build_plan (build, root, p != NULL ? p->name : NULL, &command, &dir);
         if (command != NULL)
             g_variant_dict_insert (&reply, "command", "s", command);
         g_variant_dict_insert (&reply, "dir", "s", dir);
@@ -2172,10 +2191,101 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
     }
     else if (strcmp (method, "run") == 0 && root != NULL)
     {
-        const gboolean started = build_start (build, root, NULL);
+        const gboolean started = build_start (build, root, profile);
 
         build->quiet = started;
         g_variant_dict_insert (&reply, "started", "b", started);
+    }
+    else if (strcmp (method, "profiles") == 0 && root != NULL)
+    {
+        // the names of the profiles, the active one, that of coverage
+        build_profiles_t *profiles = build_profiles_of (root);
+        const build_profile_t *active = build_profiles_active (profiles);
+        GPtrArray *names = g_ptr_array_new ();
+        guint i;
+
+        for (i = 0; i < profiles->list->len; i++)
+            g_ptr_array_add (names,
+                             ((build_profile_t *) g_ptr_array_index (profiles->list, i))->name);
+        g_variant_dict_insert_value (
+            &reply, "names",
+            g_variant_new_strv ((const gchar *const *) names->pdata, (gssize) names->len));
+        if (active != NULL)
+            g_variant_dict_insert (&reply, "active", "s", active->name);
+        if (profiles->coverage != NULL)
+            g_variant_dict_insert (&reply, "coverage", "s", profiles->coverage);
+        g_ptr_array_free (names, TRUE);
+        build_profiles_free (profiles);
+    }
+    else if (strcmp (method, "create") == 0 && root != NULL && profile != NULL)
+    {
+        /* a profile @profile made from "from", the active one when not given, in "dir", else
+           next to that of the other one; "setup" the options it adds to those of the other one,
+           "-Db_coverage=true"; "coverage" makes it the profile of coverage.  Its directory is set
+           up by its first build. */
+        build_profiles_t *profiles = build_profiles_of (root);
+        const char *from_name = NULL, *dir = NULL, *setup = NULL;
+        gboolean coverage = FALSE;
+        const build_profile_t *from;
+        build_profile_t *p;
+        char *offer = NULL;
+
+        (void) g_variant_lookup (args, "from", "&s", &from_name);
+        (void) g_variant_lookup (args, "dir", "&s", &dir);
+        (void) g_variant_lookup (args, "setup", "&s", &setup);
+        (void) g_variant_lookup (args, "coverage", "b", &coverage);
+        from = from_name != NULL ? build_profiles_find (profiles, from_name)
+                                 : build_profiles_active (profiles);
+        // a profile to make it from that is not there: an error, not a profile of nothing
+        if (from_name != NULL && from == NULL)
+        {
+            build_profiles_free (profiles);
+            g_variant_dict_clear (&reply);
+            g_set_error (error, MC_SERVICE_ERROR, MC_SERVICE_ERROR_ARGS,
+                         "build: no profile %s in the project", from_name);
+            return NULL;
+        }
+        if (dir == NULL)
+            dir = offer = build_profile_offer_dir (profiles, from, root, profile);
+        // a directory of another profile is not shared: its setup would not be done again
+        else if (build_profile_dir_owner (profiles, NULL, root, dir) != NULL)
+        {
+            g_variant_dict_insert (&reply, "ok", "b", FALSE);
+            g_variant_dict_insert (&reply, "error", "s",
+                                   _ ("Another profile builds in that directory."));
+            build_profiles_free (profiles);
+            return g_variant_dict_end (&reply);
+        }
+        p = build_profiles_add (profiles, root, profile, from, dir);
+        if (p != NULL)
+        {
+            char *from_dir = from != NULL ? build_profile_dir (from, root) : NULL;
+            char *abs = build_profile_dir (p, root);
+            if (p->setup == NULL && from_dir != NULL)
+                p->setup = build_profile_setup_of (from_dir, from->system);
+            if (setup != NULL && *setup != '\0')
+            {
+                char *both = build_profile_setup_merge (p->setup, setup);
+
+                g_free (p->setup);
+                p->setup = both;
+            }
+            if (p->test == NULL)
+                p->test = build_profile_test_command (p->system, abs);
+            if (coverage)
+            {
+                g_free (profiles->coverage);
+                profiles->coverage = g_strdup (p->name);
+            }
+            g_variant_dict_insert (&reply, "ok", "b", build_profiles_save (build, root, profiles));
+            g_variant_dict_insert (&reply, "dir", "s", abs);
+            g_free (abs);
+            g_free (from_dir);
+        }
+        else
+            g_variant_dict_insert (&reply, "ok", "b", FALSE);
+        g_free (offer);
+        build_profiles_free (profiles);
     }
     else if (strcmp (method, "running") == 0)
         g_variant_dict_insert (&reply, "running", "b", build_running (build));

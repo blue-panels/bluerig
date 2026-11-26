@@ -92,6 +92,10 @@ build_system_t build_system_of_dir (const char *dir);
    "-Dbuildtype=debug -Dscreen=slang"; NULL when none are known */
 char *build_profile_setup_of (const char *dir, build_system_t system);
 
+/* The options @setup with those of @more: one of @more takes the place of the one of the same
+   name, "-Dx=1 -Dy=2" and "-Dy=3" are "-Dx=1 -Dy=3"; NULL when both are NULL */
+char *build_profile_setup_merge (const char *setup, const char *more);
+
 /* The command that runs the tests of @system in @dir, offered to a new profile */
 char *build_profile_test_command (build_system_t system, const char *dir);
 
