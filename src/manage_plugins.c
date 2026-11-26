@@ -872,7 +872,7 @@ mp_invoke_settings (const mp_ctx_t *ctx)
 /* --------------------------------------------------------------------------------------------- */
 
 /* The plugins that make an IDE of the editor: on together, off together */
-static const char *const mp_ide_plugins[] = { "project", "build", "debugger", NULL };
+static const char *const mp_ide_plugins[] = { "project", "build", "debugger", "coverage", NULL };
 
 static int
 mp_ide_toggle (WButton *button, int action)

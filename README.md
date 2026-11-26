@@ -24,6 +24,8 @@ Site: <https://blue-panels.github.io/bluerig/> - wiki:
   ([project.md](src/plugins/project/project.md)).
 - Build with meson, cmake or make, the errors marked in the file
   ([build.md](src/plugins/build/build.md)).
+- Test coverage in the gutter: the lines that ran and those that did not, from gcov or lcov
+  ([coverage.md](src/plugins/coverage/coverage.md)).
 - Debugger: gdb, and debug adapters for Python, bash, Go and JavaScript
   ([debugger.md](src/plugins/debugger/debugger.md)).
 - Git: status, commit, log, branches

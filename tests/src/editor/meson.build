@@ -143,6 +143,10 @@ test('build_core', executable('build_core', 'build_core.c',
                                 meson.project_source_root() / 'misc' / 'presets.ini')],
                               dependencies: [glib_dep]), suite: 'src/editor')
 
+test('coverage_core', executable('coverage_core', 'coverage_core.c',
+                                 '../../../src/plugins/coverage/coverage-core.c',
+                                 dependencies: [glib_dep]), suite: 'src/editor')
+
 test('git_core', executable('git_core', 'git_core.c',
                             '../../../src/plugins/git/git-core.c',
                             c_args: ['-DGIT_MENU_INI="@0@"'.format(
