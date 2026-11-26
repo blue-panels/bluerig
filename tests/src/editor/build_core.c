@@ -577,6 +577,9 @@ test_options_cmake (void)
                 "CMAKE_BUILD_TYPE:STRING=\nCMAKE_C_FLAGS:STRING=-O2\n"
                 "MODE:STRING=x\nMODE-STRINGS:INTERNAL=\n");
     options = build_options_read (dir, BUILD_CMAKE);
+    // an empty list of the values it takes: any value goes
+    g_assert_cmpint (build_options_find (options, "MODE")->type, ==, BUILD_OPTION_STRING);
+    g_assert_null (build_options_find (options, "MODE")->choices);
     summary = build_summary_of (options, BUILD_CMAKE);
     g_assert_null (summary->buildtype);
     g_assert_false (summary->coverage);
@@ -639,7 +642,8 @@ test_profiles (void)
     g_assert_nonnull (cov);
     g_assert_cmpstr (cov->from, ==, "Debug");
     g_assert_cmpstr (cov->setup, ==, "-Dbuildtype=debug -Dscreen=slang");
-    g_assert_cmpstr (cov->build, ==, "meson compile -C ../proj-build-cov");
+    // "meson compile -C ../proj-build" is what meson does: the new one sets its directory up
+    g_assert_null (cov->build);
     g_assert_cmpstr (cov->test, ==, "meson test -C ../proj-build-cov");
     g_assert_true (cov->test_after_build);
     {
@@ -657,7 +661,51 @@ test_profiles (void)
                          "cmake --build build/abs2 && cp build/abs2/x '/src/proj/build/abs2/y' "
                          "/src/build");
         g_assert_cmpstr (q->test, ==, "ctest --test-dir '/src/proj/build/abs2'");
+        // the command of its system for it: none, the new one sets its directory up first
+        from.system = BUILD_MESON;
+        from.dir = (char *) "../proj-build";
+        from.build = NULL;
+        text = build_profile_build_command (&from, "/src/proj");
+        from.build = text;
+        q = build_profiles_add (profiles, "/src/proj", "Abs3", &from, "../proj-build-3");
+        g_assert_null (q->build);
+        g_free (text);
+        // a command of its own: the directory after an option, after "=" or as a path only
+        from.dir = (char *) "build";
+        from.build = (char *) "cd build && ninja -j 4 B=build && ninja -C 'build' x && ./build.sh";
+        from.test = (char *) "cd build && meson test";
+        q = build_profiles_add (profiles, "/src/proj", "Abs4", &from, "build/x");
+        g_assert_cmpstr (
+            q->build, ==,
+            "cd build/x && ninja -j 4 B=build/x && ninja -C 'build/x' x && ./build.sh");
+        g_assert_cmpstr (q->test, ==, "cd build/x && meson test");
+        // "./build" is "build"; a new directory with a space is quoted where it stands alone
+        from.build = (char *) "cd ./build && ninja -j 4";
+        from.test = NULL;
+        q = build_profiles_add (profiles, "/src/proj", "Abs7", &from, "build coverage");
+        g_assert_cmpstr (q->build, ==, "cd 'build coverage' && ninja -j 4");
+        g_assert_true (build_profiles_remove (profiles, "Abs7"));
+        /* "build" of "make build" may be the directory or a target: not told for sure, the new
+           profile builds as its system does, its tests by their command of the system */
+        from.build = (char *) "make build";
+        from.test = (char *) "make -C build check && ls build";
+        from.system = BUILD_MESON;
+        q = build_profiles_add (profiles, "/src/proj", "Abs6", &from, "build/y");
+        g_assert_null (q->build);
+        g_assert_cmpstr (q->test, ==, "meson test -C '/src/proj/build/y'");
+        g_assert_true (build_profiles_remove (profiles, "Abs6"));
+        from.system = BUILD_CMAKE;
+        // a profile in the root: its commands name no build directory, they stay
+        from.dir = (char *) ".";
+        from.build = (char *) "./run_tests.sh . && make";
+        from.test = (char *) "make check";
+        q = build_profiles_add (profiles, "/src/proj", "Abs5", &from, "build/y");
+        g_assert_cmpstr (q->build, ==, "./run_tests.sh . && make");
+        g_assert_cmpstr (q->test, ==, "make check");
         g_assert_true (build_profiles_remove (profiles, "Abs2"));
+        g_assert_true (build_profiles_remove (profiles, "Abs3"));
+        g_assert_true (build_profiles_remove (profiles, "Abs4"));
+        g_assert_true (build_profiles_remove (profiles, "Abs5"));
     }
     // a name taken, empty or with brackets is none
     g_assert_null (build_profiles_add (profiles, "/src/proj", "Coverage", NULL, "x"));

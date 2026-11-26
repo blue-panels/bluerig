@@ -51,6 +51,7 @@
 
 #include "build-core.h"
 #include "build-presets.h"
+#include "build-profiles.h"
 #include "build.h"
 
 /*** global variables ****************************************************************************/
@@ -329,20 +330,78 @@ build_project_write (build_t *build, const char *root, GKeyFile *keyfile)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The command the user gives the project, kept in it */
+/* The profiles of the project of @root, in the file of the project in the configuration of the
+   user; a project without them has Default, the build found in it built by the command the
+   user gave it before, until a profile is changed and they are kept */
+static build_profiles_t *
+build_profiles_of (const char *root)
+{
+    GKeyFile *keyfile = g_key_file_new ();
+    char *path = build_config_path (root);
+    build_profiles_t *profiles;
+
+    if (!g_key_file_load_from_file (keyfile, path, G_KEY_FILE_KEEP_COMMENTS, NULL))
+        g_clear_pointer (&keyfile, g_key_file_free);
+    profiles = build_profiles_load (keyfile);
+    if (keyfile != NULL)
+        g_key_file_free (keyfile);
+    g_free (path);
+    if (profiles->list->len == 0)
+    {
+        build_info_t *found = build_detect (root);
+        char *command = build_saved_command (root);
+
+        build_profiles_free (profiles);
+        profiles = build_profiles_default (root, found, command);
+        g_free (command);
+        build_info_free (found);
+    }
+    return profiles;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The profiles of the project of @root kept, the rest of its file as it was */
+static gboolean
+build_profiles_save (build_t *build, const char *root, const build_profiles_t *profiles)
+{
+    GKeyFile *keyfile = g_key_file_new ();
+    char *path = build_config_path (root);
+    char *dir = g_path_get_dirname (path);
+    GError *error = NULL;
+    gboolean done;
+
+    (void) g_key_file_load_from_file (keyfile, path, G_KEY_FILE_KEEP_COMMENTS, NULL);
+    build_profiles_store (profiles, keyfile);
+    (void) g_mkdir_with_parents (dir, 0700);
+    done = g_key_file_save_to_file (keyfile, path, &error);
+    if (!done)
+    {
+        build->host->message (build->host, D_ERROR, _ ("Build"), error->message);
+        g_error_free (error);
+    }
+    g_key_file_free (keyfile);
+    g_free (dir);
+    g_free (path);
+    return done;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The command the user gives the project: that of its active profile, kept */
 static void
 build_save_command (build_t *build, const char *root, const char *command)
 {
-    GKeyFile *keyfile = g_key_file_new ();
-    gboolean there;
+    build_profiles_t *profiles = build_profiles_of (root);
+    build_profile_t *p = build_profiles_active (profiles);
 
-    if (build_project_read (build, root, keyfile, &there))
+    if (p != NULL)
     {
-        g_key_file_set_string (keyfile, BUILD_PROJECT_GROUP, "command",
-                               command != NULL ? command : "");
-        (void) build_project_write (build, root, keyfile);
+        g_free (p->build);
+        p->build = command != NULL && *command != '\0' ? g_strdup (command) : NULL;
+        (void) build_profiles_save (build, root, profiles);
     }
-    g_key_file_free (keyfile);
+    build_profiles_free (profiles);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -433,18 +492,18 @@ build_front_file (build_t *build, const char *root)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* How the project is built: the command the user gave it, else the one of its build system,
-   else that of its language, by its markers or the file in front; the directory the compiler
+/* How the project is built: by its active profile, its command or that of its build system,
+   else by that of its language, by its markers or the file in front; the directory the compiler
    runs in */
 static gboolean
 build_plan (build_t *build, const char *root, char **command, char **dir)
 {
-    build_info_t *info = build_detect (root);
+    build_profiles_t *profiles = build_profiles_of (root);
+    const build_profile_t *p = build_profiles_active (profiles);
 
-    *command = build_saved_command (root);
-    *dir = info != NULL && info->build_dir != NULL ? g_strdup (info->build_dir) : g_strdup (root);
-    if (*command == NULL && info != NULL)
-        *command = g_strdup (info->command);
+    *command = p != NULL ? build_profile_command (p, root) : NULL;
+    *dir = p != NULL ? build_profile_dir (p, root) : g_strdup (root);
+    build_profiles_free (profiles);
     if (*command == NULL)
     {
         GPtrArray *presets = build_presets_load (build, root);
@@ -456,7 +515,6 @@ build_plan (build_t *build, const char *root, char **command, char **dir)
         g_ptr_array_free (presets, TRUE);
         g_free (file);
     }
-    build_info_free (info);
     return *command != NULL;
 }
 
@@ -488,40 +546,44 @@ build_where (const build_t *build, const build_diagnostic_t *d)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The title of the window of the output: what the build of @root is, "Build: ../coole-build,
-   meson, debug, coverage", the directory from the root; "Build" when it has none.  On the frame
-   it stays in sight however far the output goes. */
+/* The title of the window of the output: the active profile of @root and what its build is,
+   "Build [Coverage]: ../coole-build-cov, meson, debug, coverage", the directory from the root,
+   the name left out for a lone Default; "Build" when it has no build system.  On the frame it
+   stays in sight however far the output goes. */
 static char *
 build_output_title (const char *root)
 {
-    build_info_t *info = build_detect (root);
+    build_profiles_t *profiles = build_profiles_of (root);
+    const build_profile_t *p = build_profiles_active (profiles);
     GPtrArray *options;
     GString *head;
-    char *parent, *summary = NULL;
-    const char *system;
+    char *dir, *parent, *summary = NULL;
 
-    if (info == NULL || info->system == BUILD_NONE)
+    if (p == NULL || p->system == BUILD_NONE)
     {
-        build_info_free (info);
+        build_profiles_free (profiles);
         return g_strdup (_ ("Build"));
     }
-    system = info->system == BUILD_MESON ? "meson" : info->system == BUILD_CMAKE ? "cmake" : "make";
-    head = g_string_new (_ ("Build: "));
+    head = g_string_new (_ ("Build"));
+    if (profiles->list->len > 1 || strcmp (p->name, BUILD_PROFILES_DEFAULT) != 0)
+        g_string_append_printf (head, " [%s]", p->name);
+    g_string_append (head, ": ");
+    dir = build_profile_dir (p, root);
     parent = g_path_get_dirname (root);
-    if (strcmp (info->build_dir, root) == 0)
+    if (strcmp (dir, root) == 0)
         g_string_append (head, ".");
-    else if (g_str_has_prefix (info->build_dir, root) && info->build_dir[strlen (root)] == '/')
-        g_string_append (head, info->build_dir + strlen (root) + 1);
-    else if (g_str_has_prefix (info->build_dir, parent) && info->build_dir[strlen (parent)] == '/')
-        g_string_append_printf (head, "../%s", info->build_dir + strlen (parent) + 1);
+    else if (g_str_has_prefix (dir, root) && dir[strlen (root)] == '/')
+        g_string_append (head, dir + strlen (root) + 1);
+    else if (g_str_has_prefix (dir, parent) && dir[strlen (parent)] == '/')
+        g_string_append_printf (head, "../%s", dir + strlen (parent) + 1);
     else
-        g_string_append (head, info->build_dir);
+        g_string_append (head, dir);
     g_free (parent);
-    g_string_append_printf (head, ", %s", system);
-    options = build_options_read (info->build_dir, info->system);
+    g_string_append_printf (head, ", %s", build_system_name (p->system));
+    options = build_options_read (dir, p->system);
     if (options != NULL)
     {
-        build_summary_t *s = build_summary_of (options, info->system);
+        build_summary_t *s = build_summary_of (options, p->system);
 
         summary = build_summary_text (s);
         build_summary_free (s);
@@ -530,7 +592,8 @@ build_output_title (const char *root)
     if (summary != NULL && *summary != '\0')
         g_string_append_printf (head, ", %s", summary);
     g_free (summary);
-    build_info_free (info);
+    g_free (dir);
+    build_profiles_free (profiles);
     return g_string_free (head, FALSE);
 }
 
@@ -1285,16 +1348,19 @@ build_act_configure (void *data, void *edit)
 {
     build_t *build = (build_t *) data;
     char *root = build_root_of (build, edit);
-    char *command = NULL, *dir = NULL, *chosen;
+    build_profiles_t *profiles = build_profiles_of (root);
+    const build_profile_t *p = build_profiles_active (profiles);
+    char *command = p != NULL ? build_profile_build_command (p, root) : NULL;
+    char *chosen;
 
-    (void) build_plan (build, root, &command, &dir);
+    // the command of the active profile, its tests left out: they run after it by themselves
     chosen = input_dialog (_ ("Build"), _ ("Command that builds the project:"), "build-command",
                            command != NULL ? command : "make", INPUT_COMPLETE_COMMANDS);
     if (chosen != NULL)
         build_save_command (build, root, chosen);
+    build_profiles_free (profiles);
     g_free (chosen);
     g_free (command);
-    g_free (dir);
     g_free (root);
     return MC_EPR_OK;
 }
@@ -1461,8 +1527,10 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
 
     if (strcmp (method, "info") == 0 && root != NULL)
     {
-        // how the project is built, and the programs it has built
-        build_info_t *info = build_detect (root);
+        // how the project is built, by its active profile, and the programs it has built
+        build_profiles_t *profiles = build_profiles_of (root);
+        const build_profile_t *p = build_profiles_active (profiles);
+        const build_system_t system = p != NULL ? p->system : BUILD_NONE;
         char *command = NULL, *dir = NULL;
         GPtrArray *programs;
 
@@ -1470,19 +1538,17 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
         if (command != NULL)
             g_variant_dict_insert (&reply, "command", "s", command);
         g_variant_dict_insert (&reply, "dir", "s", dir);
-        g_variant_dict_insert (&reply, "system", "s",
-                               info == NULL                      ? "none"
-                                   : info->system == BUILD_MESON ? "meson"
-                                   : info->system == BUILD_CMAKE ? "cmake"
-                                                                 : "make");
+        g_variant_dict_insert (&reply, "system", "s", build_system_name (system));
+        if (p != NULL)
+            g_variant_dict_insert (&reply, "profile", "s", p->name);
         // what the build directory is built for: buildtype, coverage, sanitize
-        if (info != NULL)
+        if (system != BUILD_NONE)
         {
-            GPtrArray *options = build_options_read (info->build_dir, info->system);
+            GPtrArray *options = build_options_read (dir, system);
 
             if (options != NULL)
             {
-                build_summary_t *summary = build_summary_of (options, info->system);
+                build_summary_t *summary = build_summary_of (options, system);
 
                 if (summary->buildtype != NULL)
                     g_variant_dict_insert (&reply, "buildtype", "s", summary->buildtype);
@@ -1498,7 +1564,7 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
             &reply, "programs",
             g_variant_new_strv ((const gchar *const *) programs->pdata, (gssize) programs->len));
         g_ptr_array_free (programs, TRUE);
-        build_info_free (info);
+        build_profiles_free (profiles);
         g_free (command);
         g_free (dir);
     }

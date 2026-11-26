@@ -111,42 +111,219 @@ build_profiles_set (GKeyFile *keyfile, const char *group, const char *key, const
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* @text with each of the names @olds, NULL ended, made the one of @news at its place: a whole
-   name only, between the start, a space, a quote or '=' and the end, a space, a quote, '/' or
-   one of ;&|), the name "build" not in "--build"; the longest name first where two fit */
+/* The absolute @dir as it is named from the absolute @root, whatever the way: "../../opt/b" */
 static char *
-build_profiles_replace (const char *text, const char *const *olds, const char *const *news)
+build_profiles_from_root (const char *root, const char *dir)
+{
+    char **r = g_strsplit (root, "/", -1);
+    char **d = g_strsplit (dir, "/", -1);
+    GString *out = g_string_new (NULL);
+    guint i = 0, j;
+
+    while (r[i] != NULL && d[i] != NULL && strcmp (r[i], d[i]) == 0)
+        i++;
+    for (j = i; r[j] != NULL; j++)
+        if (*r[j] != '\0')
+            g_string_append (out, out->len > 0 ? "/.." : "..");
+    for (j = i; d[j] != NULL; j++)
+        if (*d[j] != '\0')
+        {
+            if (out->len > 0)
+                g_string_append_c (out, '/');
+            g_string_append (out, d[j]);
+        }
+    if (out->len == 0)
+        g_string_append_c (out, '.');
+    g_strfreev (r);
+    g_strfreev (d);
+    return g_string_free (out, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether @p of @text follows -C or -B glued to it, the option a word of its own: "-C../build" */
+static gboolean
+build_profiles_glued (const char *text, const char *p)
+{
+    return p - text >= 2 && p[-2] == '-' && (p[-1] == 'C' || p[-1] == 'B')
+        && (p - 2 == text || p[-3] == ' ');
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether a word at @p is @dir, or a path in it: "dir", "dir/x", "./dir" */
+static gboolean
+build_profiles_word_in (const char *p, const char *dir)
+{
+    const gsize len = dir != NULL ? strlen (dir) : 0;
+
+    // "./build" is "build"
+    if (len > 0 && dir[0] != '.' && dir[0] != '/' && p[0] == '.' && p[1] == '/')
+        p += 2;
+
+    return len > 0 && strncmp (p, dir, len) == 0
+        && (p[len] == '\0' || strchr (" '\"/;&|)", p[len]) != NULL);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether @text names the directory @old_rel or @old_abs as a word, or a path in it, "dir/x",
+   but for the new one, @new_rel or @new_abs, which may be in it; @old_rel NULL: only the
+   absolute one */
+static gboolean
+build_profiles_names_dir (const char *text, const char *old_rel, const char *old_abs,
+                          const char *new_rel, const char *new_abs)
+{
+    const char *const olds[] = { old_abs, old_rel };
+    const char *p;
+    gsize i;
+
+    for (p = text; text != NULL && *p != '\0'; p++)
+    {
+        if (p != text && strchr (" '\"=", p[-1]) == NULL && !build_profiles_glued (text, p))
+            continue;
+        if (build_profiles_word_in (p, new_abs) || build_profiles_word_in (p, new_rel))
+            continue;
+        for (i = 0; i < G_N_ELEMENTS (olds); i++)
+        {
+            const gsize len = olds[i] != NULL ? strlen (olds[i]) : 0;
+
+            if (len > 0 && strncmp (p, olds[i], len) == 0
+                && (p[len] == '\0' || strchr (" '\"/;&|)", p[len]) != NULL))
+                return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether @command only builds the directory @dir, absolute, of @root as its system does:
+   "meson compile -C DIR", "cmake --build DIR", "ninja -C DIR", the directory named in any way;
+   a profile made from one with it builds its own directory as its system does, set up first */
+static gboolean
+build_profiles_plain_command (const char *command, const char *root, const char *dir)
+{
+    char **argv = NULL;
+    const char *named = NULL;
+    int argc = 0;
+    gboolean plain = FALSE;
+
+    if (command == NULL || !g_shell_parse_argv (command, &argc, &argv, NULL))
+        return FALSE;
+    if (argc == 4 && strcmp (argv[0], "meson") == 0 && strcmp (argv[1], "compile") == 0
+        && strcmp (argv[2], "-C") == 0)
+        named = argv[3];
+    else if (argc == 3 && strcmp (argv[0], "cmake") == 0 && strcmp (argv[1], "--build") == 0)
+        named = argv[2];
+    else if (argc == 3 && strcmp (argv[0], "ninja") == 0 && strcmp (argv[1], "-C") == 0)
+        named = argv[2];
+    if (named != NULL)
+    {
+        char *a = g_canonicalize_filename (named, root);
+        char *b = g_canonicalize_filename (dir, root);
+
+        plain = strcmp (a, b) == 0;
+        g_free (a);
+        g_free (b);
+    }
+    g_strfreev (argv);
+    return plain;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether the word at @p of @text follows an option that takes a directory: -C, -B, --build,
+   --test-dir, or cd, given as a word of its own, or "=" */
+static gboolean
+build_profiles_after_dir_option (const char *text, const char *p)
+{
+    static const char *const options[] = { "-C", "-B", "--build", "--test-dir", "cd", NULL };
+    const char *end = p;
+    int i;
+
+    if (end > text && (end[-1] == '\'' || end[-1] == '"'))
+        end--;
+    if (end > text && end[-1] == '=')
+        return TRUE;
+    // glued to its option: -C../build
+    if (build_profiles_glued (text, end))
+        return TRUE;
+    if (end == text || end[-1] != ' ')
+        return FALSE;
+    while (end > text && end[-1] == ' ')
+        end--;
+    for (i = 0; options[i] != NULL; i++)
+    {
+        const gsize len = strlen (options[i]);
+
+        if ((gsize) (end - text) >= len && strncmp (end - len, options[i], len) == 0
+            && (end - len == text || end[-len - 1] == ' '))
+            return TRUE;
+    }
+    return FALSE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* @text with the directory @old_abs, absolute, made @new_abs where it is a whole word or the start
+   of a path, and @old_rel, as the profile names it, made @new_rel only where it is surely the
+   directory: after an option that takes one or at the start of a path, "dir/x"; so the word
+   "build" of "make build" stays.  @old_rel NULL: only the absolute one. */
+static char *
+build_profiles_replace (const char *text, const char *old_rel, const char *old_abs,
+                        const char *new_rel, const char *new_abs)
 {
     GString *out;
     const char *p;
+    const gsize rel_len = old_rel != NULL ? strlen (old_rel) : 0;
+    const gsize abs_len = strlen (old_abs);
 
     if (text == NULL)
         return NULL;
     out = g_string_new (NULL);
     for (p = text; *p != '\0';)
     {
-        gsize best = 0;
-        int which = -1, i;
+        const gboolean starts =
+            p == text || strchr (" '\"=", p[-1]) != NULL || build_profiles_glued (text, p);
+        // "./build" is "build"
+        const gsize dot =
+            starts && rel_len > 0 && old_rel[0] != '.' && p[0] == '.' && p[1] == '/' ? 2 : 0;
+        const char *with = NULL;
+        gsize len = 0;
 
-        if (p == text || strchr (" '\"=", p[-1]) != NULL)
-            for (i = 0; olds[i] != NULL; i++)
-            {
-                const gsize len = strlen (olds[i]);
-
-                if (len > best && strncmp (p, olds[i], len) == 0
-                    && (p[len] == '\0' || strchr (" '\"/;&|)", p[len]) != NULL))
-                {
-                    best = len;
-                    which = i;
-                }
-            }
-        if (which >= 0)
+        if (starts && strncmp (p, old_abs, abs_len) == 0
+            && (p[abs_len] == '\0' || strchr (" '\"/;&|)", p[abs_len]) != NULL))
         {
-            g_string_append (out, news[which]);
-            p += best;
+            with = new_abs;
+            len = abs_len;
         }
-        else
+        else if (starts && rel_len > 0 && strncmp (p + dot, old_rel, rel_len) == 0
+                 && (p[dot + rel_len] == '/'
+                     || ((p[dot + rel_len] == '\0' || strchr (" '\";&|)", p[dot + rel_len]) != NULL)
+                         && build_profiles_after_dir_option (text, p))))
+        {
+            with = new_rel;
+            len = dot + rel_len;
+        }
+        if (with == NULL)
             g_string_append_c (out, *p++);
+        else
+        {
+            // a word of its own, not in quotes, is quoted when the new directory needs it
+            const gboolean quoted = p != text && (p[-1] == '\'' || p[-1] == '"');
+
+            if (!quoted && with[strcspn (with, " \t'\"\\$`&|;()<>*?[]#~")] != '\0')
+            {
+                char *q = g_shell_quote (with);
+
+                g_string_append (out, q);
+                g_free (q);
+            }
+            else
+                g_string_append (out, with);
+            p += len;
+        }
     }
     return g_string_free (out, FALSE);
 }
@@ -333,17 +510,46 @@ build_profiles_add (build_profiles_t *profiles, const char *root, const char *na
     p->dir = g_strdup (dir != NULL ? dir : from != NULL ? from->dir : NULL);
     if (from != NULL)
     {
-        // its directory, as it is given and absolute, is the new one in the commands
+        /* its directory, as it is given and absolute, is the new one in the commands; none of
+           a profile that builds in the root, whose commands name no build directory */
         char *from_abs = build_profile_dir (from, root);
         char *new_abs = build_profile_dir (p, root);
-        const char *olds[] = { from->dir != NULL ? from->dir : from_abs, from_abs, NULL };
-        const char *news[] = { p->dir != NULL ? p->dir : new_abs, new_abs, NULL };
+        const gboolean in_root = strcmp (from_abs, root) == 0;
+        // an absolute directory may be named from the root too, "../../opt/b/proj"
+        char *old_rel = from->dir != NULL && !g_path_is_absolute (from->dir)
+            ? g_strdup (from->dir)
+            : build_profiles_from_root (root, from_abs);
+        const char *new_rel = p->dir != NULL ? p->dir : new_abs;
+
+        build_profile_t plain = *from;
+        char *usual;
 
         p->system = from->system;
         p->from = g_strdup (from->name);
         p->setup = g_strdup (from->setup);
-        p->build = build_profiles_replace (from->build, olds, news);
-        p->test = build_profiles_replace (from->test, olds, news);
+        // the command its system has for it is none: that of the new one sets its directory up
+        plain.build = NULL;
+        usual = build_profile_build_command (&plain, root);
+        if (from->build != NULL && g_strcmp0 (from->build, usual) != 0
+            && !build_profiles_plain_command (from->build, root, from_abs))
+            p->build = in_root
+                ? g_strdup (from->build)
+                : build_profiles_replace (from->build, old_rel, from_abs, new_rel, new_abs);
+        p->test = in_root || from->test == NULL
+            ? g_strdup (from->test)
+            : build_profiles_replace (from->test, old_rel, from_abs, new_rel, new_abs);
+        /* a command that names the directory of @from still, where it could not be told for
+           sure that it is the directory: none of it, the new profile builds its own directory
+           as its system does, its tests as their command of the system */
+        if (!in_root && build_profiles_names_dir (p->build, old_rel, from_abs, new_rel, new_abs))
+            g_clear_pointer (&p->build, g_free);
+        if (!in_root && build_profiles_names_dir (p->test, old_rel, from_abs, new_rel, new_abs))
+        {
+            g_free (p->test);
+            p->test = build_profile_test_command (p->system, new_abs);
+        }
+        g_free (usual);
+        g_free (old_rel);
         g_free (new_abs);
         g_free (from_abs);
         p->test_after_build = from->test_after_build;
@@ -381,9 +587,9 @@ build_profile_dir (const build_profile_t *profile, const char *root)
 /* --------------------------------------------------------------------------------------------- */
 
 char *
-build_profile_command (const build_profile_t *profile, const char *root)
+build_profile_build_command (const build_profile_t *profile, const char *root)
 {
-    char *build = NULL, *command;
+    char *build = NULL;
 
     if (profile->build != NULL)
         build = g_strdup (profile->build);
@@ -409,6 +615,17 @@ build_profile_command (const build_profile_t *profile, const char *root)
         g_free (quoted);
         g_free (dir);
     }
+    return build;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_command (const build_profile_t *profile, const char *root)
+{
+    char *build = build_profile_build_command (profile, root);
+    char *command;
+
     if (build == NULL || !profile->test_after_build || profile->test == NULL)
         return build;
     command = g_strconcat (build, " && ", profile->test, (char *) NULL);

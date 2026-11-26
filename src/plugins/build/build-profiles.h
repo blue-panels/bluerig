@@ -67,7 +67,8 @@ build_profile_t *build_profiles_find (const build_profiles_t *profiles, const ch
 build_profile_t *build_profiles_active (const build_profiles_t *profiles);
 /* A new profile @name of the project of @root made from @from, its options and commands, in
    @dir; NULL when the name is taken or empty.  The commands of @from that name its directory,
-   as given or absolute, name @dir. */
+   as given or absolute, name @dir; the command its system has for @from is none for the new
+   one, which sets its directory up then. */
 build_profile_t *build_profiles_add (build_profiles_t *profiles, const char *root, const char *name,
                                      const build_profile_t *from, const char *dir);
 /* The profile @name gone, and the active one and that of coverage when it was one of them */
@@ -75,8 +76,10 @@ gboolean build_profiles_remove (build_profiles_t *profiles, const char *name);
 
 /* The build directory of @profile, absolute */
 char *build_profile_dir (const build_profile_t *profile, const char *root);
-/* The command that builds @profile, its tests after it when it says so: "meson compile -C dir"
-   when it has none of its own; NULL when its system has no command either */
+/* The command that builds @profile: its own, else that of its system, "meson compile -C dir";
+   NULL when its system has none either */
+char *build_profile_build_command (const build_profile_t *profile, const char *root);
+/* That command and its tests after it, when the profile says so */
 char *build_profile_command (const build_profile_t *profile, const char *root);
 /* The command that runs the tests of @system in @dir, offered to a new profile */
 char *build_profile_test_command (build_system_t system, const char *dir);
