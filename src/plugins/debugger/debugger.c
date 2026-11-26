@@ -936,6 +936,8 @@ debug_start (void *data, void *edit)
         debug_error (debug, _ ("The working directory does not exist."));
         return MC_EPR_FAILED;
     }
+    // the program of the active build profile, when it goes with the profile
+    debug_launch_resolve (debug, launch);
     absolute = g_canonicalize_filename (launch->executable, debug->project_dir);
     // what an adapter runs may be a script, of Python or of the shell
     if (!g_file_test (absolute, dap ? G_FILE_TEST_EXISTS : G_FILE_TEST_IS_EXECUTABLE))
