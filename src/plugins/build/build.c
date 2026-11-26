@@ -2353,6 +2353,21 @@ build_view_change (build_options_view_t *view)
     else
         g_hash_table_insert (view->changes, g_strdup (o->name), value);
     view->state = g_hash_table_size (view->changes) > 0 ? BUILD_VIEW_CHANGED : BUILD_VIEW_SHOWN;
+    // a build for coverage gives its data when its tests run: they run after it, as asked
+    if (view->system == BUILD_MESON && strcmp (o->name, "b_coverage") == 0
+        && strcmp (build_view_value (view, o), "true") == 0)
+    {
+        if (input_is_empty (view->in_test))
+        {
+            char *test = build_profile_test_command (view->system, view->where);
+
+            if (test != NULL)
+                input_assign_text (view->in_test, test);
+            g_free (test);
+        }
+        view->after->state = TRUE;
+        widget_draw (WIDGET (view->after));
+    }
 }
 
 /* --------------------------------------------------------------------------------------------- */

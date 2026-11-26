@@ -122,7 +122,8 @@ test -C* or *ctest --test-dir* with the directory. Empty: no tests.
 
 **Run the tests after the build**
 : Ctrl-F9 runs the test command after the build. The coverage of the tests
-comes from a build with *b_coverage* and its tests run.
+comes from a build with *b_coverage* and its tests run: *b_coverage* made
+*true* checks the box, and fills an empty test command.
 
 The options of the directory, meson or cmake, show a value and a default; a
 value that is not its default has another color. The frame says what the
