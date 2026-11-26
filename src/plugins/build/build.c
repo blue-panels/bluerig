@@ -101,6 +101,7 @@ typedef struct
     GPid pid;
     int output_fd;
     GString *output;
+    char *title;       /* of the window of the output: "Build: ../coole-build, meson, debug" */
     GString *pending;  // a line not ended yet
     GString *partial;  // the bytes of a character a read has cut, for the next read
     gint64 window;
@@ -487,6 +488,54 @@ build_where (const build_t *build, const build_diagnostic_t *d)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The title of the window of the output: what the build of @root is, "Build: ../coole-build,
+   meson, debug, coverage", the directory from the root; "Build" when it has none.  On the frame
+   it stays in sight however far the output goes. */
+static char *
+build_output_title (const char *root)
+{
+    build_info_t *info = build_detect (root);
+    GPtrArray *options;
+    GString *head;
+    char *parent, *summary = NULL;
+    const char *system;
+
+    if (info == NULL || info->system == BUILD_NONE)
+    {
+        build_info_free (info);
+        return g_strdup (_ ("Build"));
+    }
+    system = info->system == BUILD_MESON ? "meson" : info->system == BUILD_CMAKE ? "cmake" : "make";
+    head = g_string_new (_ ("Build: "));
+    parent = g_path_get_dirname (root);
+    if (strcmp (info->build_dir, root) == 0)
+        g_string_append (head, ".");
+    else if (g_str_has_prefix (info->build_dir, root) && info->build_dir[strlen (root)] == '/')
+        g_string_append (head, info->build_dir + strlen (root) + 1);
+    else if (g_str_has_prefix (info->build_dir, parent) && info->build_dir[strlen (parent)] == '/')
+        g_string_append_printf (head, "../%s", info->build_dir + strlen (parent) + 1);
+    else
+        g_string_append (head, info->build_dir);
+    g_free (parent);
+    g_string_append_printf (head, ", %s", system);
+    options = build_options_read (info->build_dir, info->system);
+    if (options != NULL)
+    {
+        build_summary_t *s = build_summary_of (options, info->system);
+
+        summary = build_summary_text (s);
+        build_summary_free (s);
+        g_ptr_array_free (options, TRUE);
+    }
+    if (summary != NULL && *summary != '\0')
+        g_string_append_printf (head, ", %s", summary);
+    g_free (summary);
+    build_info_free (info);
+    return g_string_free (head, FALSE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static void
 build_output_show (build_t *build)
 {
@@ -509,14 +558,24 @@ build_output_show (build_t *build)
         if (reply == NULL)
             build->window = 0;
         else
+        {
             g_variant_unref (reply);
+            g_variant_dict_init (&dict, NULL);
+            g_variant_dict_insert (&dict, "id", "x", build->window);
+            g_variant_dict_insert (&dict, "title", "s",
+                                   build->title != NULL ? build->title : _ ("Build"));
+            reply = build_viewer (build, "set_title", &dict);
+            if (reply != NULL)
+                g_variant_unref (reply);
+        }
     }
     if (build->window == 0)
     {
         g_variant_dict_init (&dict, NULL);
         g_variant_dict_insert (&dict, "text", "s", text);
         g_variant_dict_insert (&dict, "cursorline", "b", build->listed);
-        g_variant_dict_insert (&dict, "title", "s", _ ("Build"));
+        g_variant_dict_insert (&dict, "title", "s",
+                               build->title != NULL ? build->title : _ ("Build"));
         g_variant_dict_insert (&dict, "place", "s", "bottom");
         g_variant_dict_insert (&dict, "size", "i", 30);
         g_variant_dict_insert (&dict, "focus", "b", FALSE);
@@ -897,6 +956,8 @@ build_start (build_t *build, const char *root)
     build->listed = FALSE;
     build->current = -1;
     build_marks_clear (build);
+    g_free (build->title);
+    build->title = build_output_title (root);
     g_string_printf (build->output, "$ %s\n", command);
     g_string_truncate (build->pending, 0);
 
@@ -1613,6 +1674,7 @@ build_close (void *data)
     g_string_free (build->list, TRUE);
     g_array_free (build->rows, TRUE);
     g_string_free (build->output, TRUE);
+    g_free (build->title);
     g_string_free (build->pending, TRUE);
     g_string_free (build->partial, TRUE);
     g_free (build->root);
@@ -1643,7 +1705,14 @@ build_act_output (void *data, void *edit)
 {
     build_t *build = (build_t *) data;
 
-    (void) edit;
+    // the options may have changed since the last build: the title found again
+    {
+        char *root = build_root_of (build, edit);
+
+        g_free (build->title);
+        build->title = build_output_title (root);
+        g_free (root);
+    }
     if (build->output->len == 0)
         g_string_assign (build->output, _ ("No build yet: Ctrl-F9 builds the project.\n"));
     build->quiet = FALSE;
