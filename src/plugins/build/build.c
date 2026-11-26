@@ -142,6 +142,10 @@ static void build_list_cursor (build_t *build);
 static void build_options_view_done (struct build_options_view *view, gboolean ok);
 static void build_options_view_redraw (struct build_options_view *view);
 static void build_options_view_wait (struct build_options_view *view);
+/* The profile whose data of coverage is read: that of coverage, else the active one when it
+   builds for coverage, else the first one that does; NULL when none does */
+static const build_profile_t *build_coverage_profile (const build_profiles_t *profiles,
+                                                      const char *root);
 static gboolean build_profile_window (build_t *build, const char *root, const char *name,
                                       gboolean is_new, char **saved_as);
 static void build_note_clear (build_t *build);
@@ -1675,9 +1679,14 @@ static char *
 build_profile_offer_dir (const build_profiles_t *profiles, const build_profile_t *from,
                          const char *root, const char *name)
 {
-    char *first = build_profile_offer_dir_first (from, root, name);
-    char *offer = g_strdup (first);
+    char *first, *offer;
     int i;
+
+    // make and the others build in the tree of the sources: the same one, there is no other
+    if (from != NULL && from->system != BUILD_MESON && from->system != BUILD_CMAKE)
+        return g_strdup (from->dir != NULL ? from->dir : ".");
+    first = build_profile_offer_dir_first (from, root, name);
+    offer = g_strdup (first);
 
     for (i = 2; i < 100; i++)
     {
@@ -2999,6 +3008,19 @@ build_act_profiles (void *data, void *edit)
             char *where, *what;
 
             build_profile_describe (q, root, &where, &what);
+            // make builds in the tree of the sources: another profile there builds it too
+            if (q->system != BUILD_MESON && q->system != BUILD_CMAKE)
+            {
+                char *abs = build_profile_dir (q, root);
+                const build_profile_t *other = build_profile_dir_owner (profiles, q, root, abs);
+
+                if (other != NULL)
+                {
+                    g_free (what);
+                    what = g_strdup_printf (_ ("shares the source tree with %s"), other->name);
+                }
+                g_free (abs);
+            }
             g_ptr_array_add (cells, g_strdup (q == active ? "*" : ""));
             g_ptr_array_add (cells, g_strdup (q->name));
             g_ptr_array_add (cells, where);
@@ -3013,7 +3035,15 @@ build_act_profiles (void *data, void *edit)
         frame_set_footer (FRAME (dlg->bg), "F4 F5 Ins Del Space");
         table = table_new (1, 1, rows_h + 1, dlg_w - 2, BUILD_PROFILE_COLS, defs);
         table_set_column_sizing (table, 0, 1, FALSE);
-        table_set_column_sizing (table, 1, 8, FALSE);
+        {
+            // as wide as the longest name
+            int name_w = 8;
+
+            for (i = 0; i < cells->len; i += BUILD_PROFILE_COLS)
+                name_w =
+                    MAX (name_w, str_term_width1 ((const char *) g_ptr_array_index (cells, i + 1)));
+            table_set_column_sizing (table, 1, MIN (name_w, dlg_w / 3), FALSE);
+        }
         table_set_column_sizing (table, 2, 12, TRUE);
         table_set_column_sizing (table, 3, 6, FALSE);
         table_set_column_sizing (table, 4, 10, TRUE);
@@ -3280,6 +3310,58 @@ build_project_startup (void *data)
 /* The service */
 /* --------------------------------------------------------------------------------------------- */
 
+/* Whether @p builds for coverage: its directory says so, or its options will when it is set up */
+static gboolean
+build_profile_for_coverage (const build_profile_t *p, const char *root)
+{
+    char *dir;
+    GPtrArray *options;
+    gboolean coverage = FALSE;
+
+    if (p == NULL)
+        return FALSE;
+    dir = build_profile_dir (p, root);
+    options = build_options_read (dir, p->system);
+    if (options != NULL)
+    {
+        build_summary_t *s = build_summary_of (options, p->system);
+
+        coverage = s->coverage;
+        build_summary_free (s);
+        g_ptr_array_free (options, TRUE);
+    }
+    else if (p->setup != NULL)
+        coverage = strstr (p->setup, "-Db_coverage=true") != NULL
+            || strstr (p->setup, "--coverage") != NULL;
+    g_free (dir);
+    return coverage;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static const build_profile_t *
+build_coverage_profile (const build_profiles_t *profiles, const char *root)
+{
+    const build_profile_t *p = build_profiles_find (profiles, profiles->coverage);
+    guint i;
+
+    // the profile of coverage no more built for it: another one that is
+    if (p != NULL && !build_profile_for_coverage (p, root))
+        p = NULL;
+    if (p == NULL && build_profile_for_coverage (build_profiles_active (profiles), root))
+        p = build_profiles_active (profiles);
+    for (i = 0; p == NULL && i < profiles->list->len; i++)
+    {
+        const build_profile_t *q = (const build_profile_t *) g_ptr_array_index (profiles->list, i);
+
+        if (build_profile_for_coverage (q, root))
+            p = q;
+    }
+    return p;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static GVariant *
 build_call (void *data, const char *method, GVariant *args, GError **error)
 {
@@ -3321,11 +3403,23 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
                                                    : build_profiles_active (profiles);
         const build_system_t system = p != NULL ? p->system : BUILD_NONE;
         char *command = NULL, *dir = NULL;
+        gboolean want_programs = TRUE;
         GPtrArray *programs;
 
         (void) build_plan (build, root, p != NULL ? p->name : NULL, &command, &dir);
         if (command != NULL)
             g_variant_dict_insert (&reply, "command", "s", command);
+        // its steps apart: the build, and the tests when it has them
+        if (p != NULL)
+        {
+            char *step = build_profile_build_command (p, root);
+
+            if (step != NULL)
+                g_variant_dict_insert (&reply, "build", "s", step);
+            if (p->test != NULL)
+                g_variant_dict_insert (&reply, "test", "s", p->test);
+            g_free (step);
+        }
         g_variant_dict_insert (&reply, "dir", "s", dir);
         g_variant_dict_insert (&reply, "system", "s", build_system_name (system));
         if (p != NULL)
@@ -3348,11 +3442,15 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
                 g_ptr_array_free (options, TRUE);
             }
         }
-        programs = build_find_programs (dir);
-        g_variant_dict_insert_value (
-            &reply, "programs",
-            g_variant_new_strv ((const gchar *const *) programs->pdata, (gssize) programs->len));
-        g_ptr_array_free (programs, TRUE);
+        // "programs" FALSE: not looked for, the whole build directory looked through for them
+        if (!g_variant_lookup (args, "programs", "b", &want_programs) || want_programs)
+        {
+            programs = build_find_programs (dir);
+            g_variant_dict_insert_value (&reply, "programs",
+                                         g_variant_new_strv ((const gchar *const *) programs->pdata,
+                                                             (gssize) programs->len));
+            g_ptr_array_free (programs, TRUE);
+        }
         build_profiles_free (profiles);
         g_free (command);
         g_free (dir);
@@ -3475,11 +3573,11 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
     {
         /* a profile @profile made from "from", the active one when not given, in "dir", else
            next to that of the other one; "setup" the options it adds to those of the other one,
-           "-Db_coverage=true"; "coverage" makes it the profile of coverage.  Its directory is set
-           up by its first build. */
+           "-Db_coverage=true"; "coverage" makes it the profile of coverage, "tests" runs its
+           tests after its build.  Its directory is set up by its first build. */
         build_profiles_t *profiles = build_profiles_of (root);
         const char *from_name = NULL, *dir = NULL, *setup = NULL;
-        gboolean coverage = FALSE;
+        gboolean coverage = FALSE, tests = FALSE, append = FALSE;
         const build_profile_t *from;
         build_profile_t *p;
         char *offer = NULL;
@@ -3488,6 +3586,9 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
         (void) g_variant_lookup (args, "dir", "&s", &dir);
         (void) g_variant_lookup (args, "setup", "&s", &setup);
         (void) g_variant_lookup (args, "coverage", "b", &coverage);
+        (void) g_variant_lookup (args, "tests", "b", &tests);
+        // "append": the options of "setup" add to the values the other one has, flags
+        (void) g_variant_lookup (args, "append", "b", &append);
         from = from_name != NULL ? build_profiles_find (profiles, from_name)
                                  : build_profiles_active (profiles);
         // a profile to make it from that is not there: an error, not a profile of nothing
@@ -3520,7 +3621,8 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
                 p->setup = build_profile_setup_of (from_dir, from->system);
             if (setup != NULL && *setup != '\0')
             {
-                char *both = build_profile_setup_merge (p->setup, setup);
+                char *both = append ? build_profile_setup_append (p->setup, setup)
+                                    : build_profile_setup_merge (p->setup, setup);
 
                 g_free (p->setup);
                 p->setup = both;
@@ -3532,15 +3634,55 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
                 g_free (profiles->coverage);
                 profiles->coverage = g_strdup (p->name);
             }
+            if (tests && p->test != NULL)
+                p->test_after_build = TRUE;
             g_variant_dict_insert (&reply, "ok", "b", build_profiles_save (build, root, profiles));
             g_variant_dict_insert (&reply, "dir", "s", abs);
             g_free (abs);
             g_free (from_dir);
         }
         else
+        {
+            // the name taken or not one: "taken" lets a caller try another
             g_variant_dict_insert (&reply, "ok", "b", FALSE);
+            g_variant_dict_insert (&reply, "taken", "b", TRUE);
+        }
         g_free (offer);
         build_profiles_free (profiles);
+    }
+    else if (strcmp (method, "coverage") == 0 && root != NULL)
+    {
+        /* the profile whose data of coverage is read, and its directory: that of coverage, else
+           the active one when it is built for coverage, else the first one that is; none when no
+           profile is */
+        build_profiles_t *profiles = build_profiles_of (root);
+        const build_profile_t *p = build_coverage_profile (profiles, root);
+        char *dir = NULL;
+
+        if (p != NULL)
+        {
+            dir = build_profile_dir (p, root);
+            g_variant_dict_insert (&reply, "profile", "s", p->name);
+            g_variant_dict_insert (&reply, "dir", "s", dir);
+            g_variant_dict_insert (&reply, "tests", "b", p->test_after_build);
+        }
+        g_free (dir);
+        build_profiles_free (profiles);
+    }
+    else if (strcmp (method, "window") == 0 && root != NULL && profile != NULL)
+    {
+        /* the window of the profile; "new" when it was made for it: it goes again when the
+           window is closed unsaved.  "saved" tells, and "profile" the name it was saved by. */
+        gboolean is_new = FALSE;
+        char *saved_as = NULL;
+
+        (void) g_variant_lookup (args, "new", "b", &is_new);
+        g_variant_dict_insert (&reply, "saved", "b",
+                               build_profile_window (build, root, profile, is_new, &saved_as));
+        // the name it was saved by: the window may have renamed it
+        if (saved_as != NULL)
+            g_variant_dict_insert (&reply, "profile", "s", saved_as);
+        g_free (saved_as);
     }
     else if (strcmp (method, "running") == 0)
         g_variant_dict_insert (&reply, "running", "b", build_running (build));
