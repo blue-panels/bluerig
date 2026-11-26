@@ -209,6 +209,7 @@ typedef struct
     // a start waits for the build; the build is done for this start
     gboolean start_after_build;
     gboolean built_for_start;
+    char *build_profile;  // the profile built for the start, NULL when it has none
     guint build_signal;
     guint project_signal;  // the project chosen or closed by the project plugin
     // debug mode: the file windows take the keys of the debugger, F3 to F8, whether the program

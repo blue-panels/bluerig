@@ -109,6 +109,14 @@ void build_profile_setup_apply (GPtrArray *options, const char *setup);
 char *build_profile_configure_command (const build_profile_t *profile, const char *root,
                                        const char *changes);
 
+/* @command with the build directory @old_dir made @new_dir where it surely names it, the
+   directories as given or absolute from @root; @command as it is for a build in the root */
+char *build_profile_follow_dir (const char *command, const char *root, const char *old_dir,
+                                const char *new_dir);
+/* The test command of @system for @new_dir when @test is the one for @old_dir, "meson test -C
+   DIR", the directories absolute or from @root; NULL when @test is another command */
+char *build_profile_test_follow (const char *test, build_system_t system, const char *root,
+                                 const char *old_dir, const char *new_dir);
 /* The command that runs the tests of @system in @dir, offered to a new profile */
 char *build_profile_test_command (build_system_t system, const char *dir);
 

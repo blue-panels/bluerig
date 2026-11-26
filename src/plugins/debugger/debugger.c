@@ -912,9 +912,14 @@ debug_start (void *data, void *edit)
         GVariant *reply = debug_build_call (debug, "run", "root", debug->project_dir);
         gboolean started = FALSE;
 
+        g_clear_pointer (&debug->build_profile, g_free);
         if (reply != NULL)
         {
+            const char *profile = NULL;
+
             (void) g_variant_lookup (reply, "started", "b", &started);
+            if (started && g_variant_lookup (reply, "profile", "&s", &profile))
+                debug->build_profile = g_strdup (profile);
             g_variant_unref (reply);
         }
         if (started)
@@ -1337,14 +1342,18 @@ debug_build_finished (const char *name, const char *signal, GVariant *args, void
 {
     debugger_t *debug = (debugger_t *) user_data;
     gboolean ok = FALSE;
-    const char *root = NULL;
+    const char *root = NULL, *step = NULL, *profile = NULL;
 
     (void) name;
     if (strcmp (signal, "finished") != 0 || !debug->start_after_build)
         return;
     (void) g_variant_lookup (args, "ok", "b", &ok);
     (void) g_variant_lookup (args, "root", "&s", &root);
-    if (g_strcmp0 (root, debug->project_dir) != 0)
+    (void) g_variant_lookup (args, "step", "&s", &step);
+    (void) g_variant_lookup (args, "profile", "&s", &profile);
+    // the build of the start, not a setup or the build of another profile
+    if (g_strcmp0 (root, debug->project_dir) != 0 || (step != NULL && strcmp (step, "build") != 0)
+        || (debug->build_profile != NULL && g_strcmp0 (profile, debug->build_profile) != 0))
         return;
     debug->start_after_build = FALSE;
     debug_session_refresh (debug);
@@ -1354,6 +1363,23 @@ debug_build_finished (const char *name, const char *signal, GVariant *args, void
                      _ ("The build failed: the lines with errors are marked, and\n"
                         "Alt-J goes from one to the next."));
         return;
+    }
+    // another profile made active while it built: its program is not the one built
+    if (debug->build_profile != NULL)
+    {
+        char *active = NULL;
+        char *dir = debug_build_dir (debug, &active);
+        const gboolean same = g_strcmp0 (active, debug->build_profile) == 0;
+
+        g_free (dir);
+        g_free (active);
+        if (!same)
+        {
+            debug_error (debug,
+                         _ ("The active build profile changed while it built:\n"
+                            "F5 builds the one active now and starts."));
+            return;
+        }
     }
     debug->built_for_start = TRUE;
     (void) debug_start (debug, NULL);
@@ -1463,6 +1489,7 @@ debug_close (void *data)
     g_ptr_array_free (debug->watches, TRUE);
     g_ptr_array_unref (debug->frames);
     g_free (debug->project_dir);
+    g_free (debug->build_profile);
     g_free (debug->current_file);
     if (debug->build_signal != 0)
         debug->host->service_disconnect (debug->host, debug->build_signal);

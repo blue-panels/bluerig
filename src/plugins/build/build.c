@@ -34,6 +34,7 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -126,11 +127,23 @@ typedef struct
     char *presets_told;  // what was wrong in the presets of the user, said once
     guint project_signal;
     guint viewer_signal;
+    gboolean configuring;             // the job sets the directory up, it does not build it
+    gboolean with_tests;              // the build asked for runs the tests after it
+    char *changes;                    // the options it gives the directory, "-Dx=1"
+    struct build_options_view *view;  // the window of the options open, NULL when none
+    char *defaults_root;              // the project of the defaults below
+    char *defaults;                   // the options of its meson.build, as meson prints them
+    gint64 defaults_time;             // build_meson_time () when they were read
 } build_t;
 
 /*** forward declarations (file scope functions) *************************************************/
 
 static void build_list_cursor (build_t *build);
+static void build_options_view_done (struct build_options_view *view, gboolean ok);
+static void build_options_view_redraw (struct build_options_view *view);
+static void build_options_view_wait (struct build_options_view *view);
+static gboolean build_profile_window (build_t *build, const char *root, const char *name,
+                                      gboolean is_new, char **saved_as);
 static void build_note_clear (build_t *build);
 static mc_ep_window_state_t build_output_state (void *data);
 
@@ -390,12 +403,42 @@ build_profiles_save (build_t *build, const char *root, const build_profiles_t *p
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The command the user gives the project: that of its active profile, kept */
+/* The profile Default made from the build found and the command= of before kept in the file of
+   the user, when it has no profiles yet */
 static void
-build_save_command (build_t *build, const char *root, const char *command)
+build_profiles_keep_default (build_t *build, const char *root)
+{
+    GKeyFile *keyfile = g_key_file_new ();
+    char *path = build_config_path (root);
+    build_profiles_t *stored;
+    gboolean none;
+
+    if (!g_key_file_load_from_file (keyfile, path, G_KEY_FILE_KEEP_COMMENTS, NULL))
+        g_clear_pointer (&keyfile, g_key_file_free);
+    stored = build_profiles_load (keyfile);
+    none = stored->list->len == 0;
+    build_profiles_free (stored);
+    if (keyfile != NULL)
+        g_key_file_free (keyfile);
+    g_free (path);
+    if (none)
+    {
+        build_profiles_t *profiles = build_profiles_of (root);
+
+        (void) build_profiles_save (build, root, profiles);
+        build_profiles_free (profiles);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The command the user gives the profile @name of the project, NULL for the active one, kept */
+static void
+build_save_command (build_t *build, const char *root, const char *name, const char *command)
 {
     build_profiles_t *profiles = build_profiles_of (root);
-    build_profile_t *p = build_profiles_active (profiles);
+    build_profile_t *p =
+        name != NULL ? build_profiles_find (profiles, name) : build_profiles_active (profiles);
 
     if (p != NULL)
     {
@@ -504,8 +547,22 @@ build_plan (build_t *build, const char *root, const char *name, char **command, 
     const build_profile_t *p =
         name != NULL ? build_profiles_find (profiles, name) : build_profiles_active (profiles);
 
-    *command = p != NULL ? build_profile_command (p, root) : NULL;
     *dir = p != NULL ? build_profile_dir (p, root) : g_strdup (root);
+    *command = NULL;
+    if (p != NULL && build->with_tests)
+    {
+        // its tests after it whatever the profile says: their command, else that of its system
+        build_profile_t tested = *p;
+        char *test = p->test == NULL ? build_profile_test_command (p->system, *dir) : NULL;
+
+        if (test != NULL)
+            tested.test = test;
+        tested.test_after_build = TRUE;
+        *command = build_profile_command (&tested, root);
+        g_free (test);
+    }
+    else if (p != NULL)
+        *command = build_profile_command (p, root);
     build_profiles_free (profiles);
     if (*command == NULL)
     {
@@ -686,6 +743,9 @@ build_output_show (build_t *build)
     }
     // the cursor of a list, and the view with it, on the error gone to
     build_list_cursor (build);
+    // the window of the options stays on top of the output of its setup
+    if (build->view != NULL)
+        build_options_view_redraw (build->view);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -839,21 +899,61 @@ build_list_cursor (build_t *build)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The options the directory of the profile of the setup just done has: what sets it up again,
+   kept in the profile; without them, the changes go into the options it had.  FALSE when the
+   profile is no more or could not be written: the user is told by the writing */
+static gboolean
+build_profile_keep_setup (build_t *build)
+{
+    build_profiles_t *profiles = build_profiles_of (build->root);
+    build_profile_t *p = build_profiles_find (profiles, build->profile);
+    gboolean kept = FALSE;
+
+    if (p != NULL)
+    {
+        const build_system_t system = build_system_of_dir (build->dir);
+        char *now = system != BUILD_NONE ? build_profile_setup_of (build->dir, system) : NULL;
+        /* what it had, what the directory has now over it, the changes over that: an option the
+           directory does not tell, a toolchain file of cmake, is kept */
+        char *both = build_profile_setup_merge (p->setup, now);
+        char *setup = build_profile_setup_merge (both, build->changes);
+
+        g_free (both);
+        g_free (now);
+        if (system != BUILD_NONE)
+            p->system = system;
+        g_free (p->setup);
+        p->setup = setup;
+        kept = build_profiles_save (build, build->root, profiles);
+    }
+    build_profiles_free (profiles);
+    return kept;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static void
 build_finished (build_t *build, int status)
 {
+    const gboolean ok = WIFEXITED (status) && WEXITSTATUS (status) == 0;
+    gboolean kept = TRUE;
     guint errors = 0, i;
     char *summary;
 
     for (i = 0; i < build->diagnostics->len; i++)
         if (((build_diagnostic_t *) g_ptr_array_index (build->diagnostics, i))->error)
             errors++;
-    if (WIFEXITED (status) && WEXITSTATUS (status) == 0)
+    if (build->configuring)
+        summary = g_strdup (ok ? _ ("\nSet up.\n") : _ ("\nThe setup failed.\n"));
+    else if (ok)
         summary =
             g_strdup_printf (_ ("\nBuilt. Warnings: %u.\n"), build->diagnostics->len - errors);
     else
         summary = g_strdup_printf (_ ("\nThe build failed. Errors: %u, warnings: %u.\n"), errors,
                                    build->diagnostics->len - errors);
+    // the options the directory has now set it up again: its profile keeps them
+    if (build->configuring && ok && build->profile != NULL)
+        kept = build_profile_keep_setup (build);
     g_string_append (build->output, summary);
     // a directory the build set up says now what it is built for
     g_free (build->title);
@@ -864,7 +964,7 @@ build_finished (build_t *build, int status)
         build_note_clear (build);
     g_free (summary);
     build_output_show (build);
-    if (build->quiet && WIFEXITED (status) && WEXITSTATUS (status) == 0 && build->window != 0)
+    if (build->quiet && ok && build->window != 0)
     {
         GVariantDict dict;
         GVariant *reply;
@@ -886,12 +986,16 @@ build_finished (build_t *build, int status)
         if (build->profile != NULL)
             g_variant_dict_insert (&dict, "profile", "s", build->profile);
         g_variant_dict_insert (&dict, "dir", "s", build->dir);
-        g_variant_dict_insert (&dict, "ok", "b", WIFEXITED (status) && WEXITSTATUS (status) == 0);
+        // "configure": the directory set up; "build": built, its tests run when it says so
+        g_variant_dict_insert (&dict, "step", "s", build->configuring ? "configure" : "build");
+        g_variant_dict_insert (&dict, "ok", "b", ok);
         g_variant_dict_insert (&dict, "errors", "i", (gint32) errors);
         build->host->service_emit (build->host, BUILD_SERVICE, "finished",
                                    g_variant_dict_end (&dict));
     }
     widget_draw (WIDGET (build->host->host_data));
+    if (build->view != NULL)
+        build_options_view_done (build->view, ok && kept);
     tty_refresh ();
 }
 
@@ -968,6 +1072,14 @@ build_output_ready (int fd, void *data)
             g_spawn_close_pid (build->pid);
             build->pid = 0;
             build_finished (build, status);
+            // the loop of the dialog runs then, not at the next key: a window waits for the end
+            return 1;
+        }
+        // a window waiting for the end waits for the process
+        if (build->view != NULL)
+        {
+            build_options_view_wait (build->view);
+            return 1;
         }
     }
     return 0;
@@ -1004,41 +1116,49 @@ build_running (build_t *build)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* Build the project of @root by its profile @name, NULL for the active one; FALSE when it could
-   not start */
+/* Whether a job runs, told the user: the build of a profile or its setup, one at a time */
 static gboolean
-build_start (build_t *build, const char *root, const char *name)
+build_busy (build_t *build)
 {
-    char *command = NULL, *dir = NULL, *shell_command;
+    char *text;
+
+    if (!build_running (build))
+        return FALSE;
+    if (build->profile == NULL)
+        text = g_strdup (_ ("The build is running."));
+    else if (build->configuring)
+        text = g_strdup_printf (_ ("The setup of %s is running."), build->profile);
+    else
+        text = g_strdup_printf (_ ("The build of %s is running."), build->profile);
+    build->host->message (build->host, D_NORMAL, _ ("Build"), text);
+    g_free (text);
+    return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether the job running is that of the profile @name of @root, told the user: the profile
+   stays as it is meanwhile */
+static gboolean
+build_busy_with (build_t *build, const char *root, const char *name)
+{
+    if (!build_running (build) || g_strcmp0 (build->root, root) != 0
+        || g_strcmp0 (build->profile, name) != 0)
+        return FALSE;
+    return build_busy (build);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Run @command in @root, the job of the profile @name, NULL for the active one, whose compiler
+   names the files from @dir; both taken; FALSE when it could not start */
+static gboolean
+build_spawn (build_t *build, const char *root, const char *name, char *command, char *dir)
+{
+    char *shell_command;
     char *argv[4];
     GError *error = NULL;
     int out;
-
-    if (build_running (build))
-    {
-        build->host->message (build->host, D_NORMAL, _ ("Build"), _ ("The build is running."));
-        return FALSE;
-    }
-    if (!build_plan (build, root, name, &command, &dir))
-    {
-        g_free (command);
-        command = input_dialog (_ ("Build"), _ ("Command that builds the project:"),
-                                "build-command", "make", INPUT_COMPLETE_COMMANDS);
-        if (command == NULL || *command == '\0')
-        {
-            g_free (command);
-            g_free (dir);
-            return FALSE;
-        }
-        build_save_command (build, root, command);
-    }
-    if (build->host->save_modified_files != NULL
-        && !build->host->save_modified_files (build->host, root))
-    {
-        g_free (command);
-        g_free (dir);
-        return FALSE;
-    }
 
     g_free (build->root);
     build->root = g_strdup (root);
@@ -1088,6 +1208,77 @@ build_start (build_t *build, const char *root, const char *name)
     add_select_channel (out, build_output_ready, build);
     build_output_show (build);
     return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Build the project of @root by its profile @name, NULL for the active one; FALSE when it could
+   not start */
+static gboolean
+build_start (build_t *build, const char *root, const char *name)
+{
+    char *command = NULL, *dir = NULL;
+
+    if (build_busy (build))
+        return FALSE;
+    if (!build_plan (build, root, name, &command, &dir))
+    {
+        g_free (command);
+        command = input_dialog (_ ("Build"), _ ("Command that builds the project:"),
+                                "build-command", "make", INPUT_COMPLETE_COMMANDS);
+        if (command == NULL || *command == '\0')
+        {
+            g_free (command);
+            g_free (dir);
+            return FALSE;
+        }
+        build_save_command (build, root, name, command);
+    }
+    if (build->host->save_modified_files != NULL
+        && !build->host->save_modified_files (build->host, root))
+    {
+        g_free (command);
+        g_free (dir);
+        return FALSE;
+    }
+    build->configuring = FALSE;
+    MC_PTR_FREE (build->changes);
+    return build_spawn (build, root, name, command, dir);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Give the build directory of the profile @name of @root the options @changes, "-Dx=1", NULL for
+   none: set up when it is not yet; FALSE when it could not start, said why */
+static gboolean
+build_configure (build_t *build, const char *root, const char *name, const char *changes)
+{
+    build_profiles_t *profiles;
+    const build_profile_t *p;
+    char *command = NULL, *dir = NULL;
+
+    if (build_busy (build))
+        return FALSE;
+    profiles = build_profiles_of (root);
+    p = name != NULL ? build_profiles_find (profiles, name) : build_profiles_active (profiles);
+    if (p != NULL)
+    {
+        command = build_profile_configure_command (p, root, changes);
+        dir = build_profile_dir (p, root);
+    }
+    build_profiles_free (profiles);
+    if (command == NULL)
+    {
+        build->host->message (build->host, D_ERROR, _ ("Build"),
+                              _ ("Only a build of meson or cmake has options to set."));
+        g_free (dir);
+        return FALSE;
+    }
+    build->configuring = TRUE;
+    g_free (build->changes);
+    build->changes = g_strdup (changes);
+    build->quiet = FALSE;
+    return build_spawn (build, root, name, command, dir);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1504,135 +1695,13 @@ build_profile_offer_dir (const build_profiles_t *profiles, const build_profile_t
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The form of the profile @p of @profiles: its name, directory, commands; changed on OK, FALSE
-   on Cancel */
-static gboolean
-build_profile_form (build_t *build, const char *root, build_profiles_t *profiles,
-                    build_profile_t *p)
-{
-    char *title = g_strdup_printf (_ ("Build profile: %s"), p->name);
-    gboolean done = FALSE;
-
-    while (!done)
-    {
-        char *name = NULL, *dir = NULL, *command = NULL, *test = NULL;
-        gboolean after = p->test_after_build;
-        const char *problem = NULL;
-        int ret;
-        quick_widget_t widgets[] = {
-            QUICK_LABELED_INPUT (_ ("Name:"), input_label_above, p->name, "build-profile-name",
-                                 &name, NULL, FALSE, FALSE, INPUT_COMPLETE_NONE),
-            QUICK_LABELED_INPUT (_ ("Build directory, from the root of the project:"),
-                                 input_label_above, p->dir != NULL ? p->dir : "",
-                                 "build-profile-dir", &dir, NULL, FALSE, FALSE,
-                                 INPUT_COMPLETE_FILENAMES | INPUT_COMPLETE_CD),
-            QUICK_LABELED_INPUT (_ ("Build command (empty: that of the build system):"),
-                                 input_label_above, p->build != NULL ? p->build : "",
-                                 "build-command", &command, NULL, FALSE, FALSE,
-                                 INPUT_COMPLETE_COMMANDS),
-            QUICK_LABELED_INPUT (_ ("Test command:"), input_label_above,
-                                 p->test != NULL ? p->test : "", "build-profile-test", &test, NULL,
-                                 FALSE, FALSE, INPUT_COMPLETE_COMMANDS),
-            QUICK_CHECKBOX (_ ("&Run the tests after the build"), &after, NULL),
-            QUICK_BUTTONS_OK_CANCEL,
-            QUICK_END,
-        };
-        WRect r = { -1, -1, 0, MIN (76, COLS - 4) };
-        quick_dialog_t qdlg = {
-            .rect = r,
-            .title = title,
-            .help = "[Build]",
-            .help_file = "build.md",
-            .widgets = widgets,
-            .callback = NULL,
-            .mouse_callback = NULL,
-        };
-
-        ret = quick_dialog (&qdlg);
-        if (ret == B_CANCEL || ret == B_EXIT)
-        {
-            g_free (name);
-            g_free (dir);
-            g_free (command);
-            g_free (test);
-            break;
-        }
-        (void) g_strstrip (name);
-        (void) g_strstrip (dir);
-        if (*name == '\0' || strchr (name, '[') != NULL || strchr (name, ']') != NULL)
-            problem = _ ("A profile needs a name, without [ and ].");
-        else if (strcmp (name, p->name) != 0 && build_profiles_find (profiles, name) != NULL)
-            problem = _ ("There is a profile of that name.");
-        else if (*dir == '\0')
-            problem = _ ("A profile needs a build directory.");
-        if (problem != NULL)
-        {
-            build->host->message (build->host, D_ERROR, _ ("Build"), problem);
-            g_free (name);
-            g_free (dir);
-            g_free (command);
-            g_free (test);
-            continue;
-        }
-        // a new name: the profiles that name it name the new one
-        if (strcmp (name, p->name) != 0)
-        {
-            guint i;
-
-            if (g_strcmp0 (profiles->active, p->name) == 0)
-            {
-                g_free (profiles->active);
-                profiles->active = g_strdup (name);
-            }
-            if (g_strcmp0 (profiles->coverage, p->name) == 0)
-            {
-                g_free (profiles->coverage);
-                profiles->coverage = g_strdup (name);
-            }
-            for (i = 0; i < profiles->list->len; i++)
-            {
-                build_profile_t *o = (build_profile_t *) g_ptr_array_index (profiles->list, i);
-
-                if (g_strcmp0 (o->from, p->name) == 0)
-                {
-                    g_free (o->from);
-                    o->from = g_strdup (name);
-                }
-            }
-            g_free (p->name);
-            p->name = name;
-        }
-        else
-            g_free (name);
-        g_free (p->dir);
-        p->dir = dir;
-        {
-            // the system of the directory when it is set up, else the one it had
-            char *abs = build_profile_dir (p, root);
-            const build_system_t system = build_system_of_dir (abs);
-
-            if (system != BUILD_NONE)
-                p->system = system;
-            g_free (abs);
-        }
-        g_free (p->build);
-        p->build = *g_strstrip (command) != '\0' ? command : (g_free (command), NULL);
-        g_free (p->test);
-        p->test = *g_strstrip (test) != '\0' ? test : (g_free (test), NULL);
-        p->test_after_build = after;
-        done = TRUE;
-    }
-    g_free (title);
-    return done;
-}
-
-/* --------------------------------------------------------------------------------------------- */
-
-/* A new profile made from @from, its name asked; its form after it; FALSE when none is made */
+/* A new profile made from @from, its name asked; its window after it; FALSE when none is made.
+   @profiles are those read before: the file has the profiles now */
 static gboolean
 build_profile_new (build_t *build, const char *root, build_profiles_t *profiles,
                    const build_profile_t *from)
 {
+    gboolean made;
     char *name, *dir, *from_dir;
     build_profile_t *p;
 
@@ -1666,15 +1735,1139 @@ build_profile_new (build_t *build, const char *root, build_profiles_t *profiles,
     }
     g_free (from_dir);
     g_free (name);
-    if (!build_profile_form (build, root, profiles, p))
-    {
-        char *gone = g_strdup (p->name);
+    // kept for the window to read it; it takes it away again when it is closed unsaved
+    if (!build_profiles_save (build, root, profiles))
+        return FALSE;
+    name = g_strdup (p->name);
+    made = build_profile_window (build, root, name, TRUE, NULL);
+    g_free (name);
+    return made;
+}
 
-        (void) build_profiles_remove (profiles, gone);
-        g_free (gone);
+/* --------------------------------------------------------------------------------------------- */
+/* The window of the options of a profile */
+
+typedef enum
+{
+    BUILD_VIEW_SHOWN,    // as the directory has them
+    BUILD_VIEW_CHANGED,  // changes not applied
+    BUILD_VIEW_APPLYING,
+    BUILD_VIEW_FAILED,
+    BUILD_VIEW_APPLIED
+} build_view_state_t;
+
+/* Which options the table shows; F3 goes to the next one */
+typedef enum
+{
+    BUILD_VIEW_MAIN,    // those set by the user, of the project, and what a build is for
+    BUILD_VIEW_DIFFER,  // those off their default, or changed
+    BUILD_VIEW_ALL,
+    BUILD_VIEW_MODES
+} build_view_mode_t;
+
+#define BUILD_VIEW_COLS 4
+
+struct build_options_view
+{
+    build_t *build;
+    char *root;
+    char *name;   // of the profile
+    char *dir;    // absolute
+    char *where;  // as the user names it, "../coole-build"
+    build_system_t system;
+    GPtrArray *options;   // build_option_t; NULL when none are known
+    GHashTable *changes;  // name -> value, not applied yet
+    GArray *rows;         // guint: the option of each row shown
+    build_view_mode_t mode;
+    build_view_state_t state;
+    gboolean close_after;  // closed once the changes are applied
+    gboolean closing;      // they are: the loop of the window closes it
+    int introspect_fd;     // meson introspect telling the defaults, -1 when it is not running
+    GString *introspect;
+    WDialog *dlg;
+    WInput *in_name;
+    WInput *in_dir;
+    WInput *in_build;
+    WInput *in_test;
+    WCheck *after;
+    WHLine *mode_line;
+    WTable *table;
+    WLabel *about;
+    WLabel *choices;
+    gboolean is_new;  // made for the window: gone when it is closed unsaved
+    gboolean saved;
+    // the fields as the profile has them
+    char *old_dir;
+    char *old_build;
+    char *old_test;
+    gboolean old_after;
+};
+
+typedef struct build_options_view build_options_view_t;
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether @o is shown: changed or all of them; those off their default; or in the first sight,
+   what the user set, the options of the project and the few that say what a build is for */
+static gboolean
+build_option_main (const build_options_view_t *view, const build_option_t *o)
+{
+    static const char *const meson[] = {
+        "buildtype",  "optimization", "debug",    "werror", "b_coverage",
+        "b_sanitize", "b_lundef",     "b_ndebug", NULL,
+    };
+    static const char *const cmake[] = {
+        "CMAKE_BUILD_TYPE", "CMAKE_C_FLAGS", "CMAKE_CXX_FLAGS", "CMAKE_INSTALL_PREFIX", NULL,
+    };
+
+    if (g_hash_table_contains (view->changes, o->name) || view->mode == BUILD_VIEW_ALL)
+        return TRUE;
+    if (view->mode == BUILD_VIEW_DIFFER)
+        return o->default_value != NULL ? strcmp (o->value, o->default_value) != 0 : o->set_by_user;
+    if (view->system == BUILD_MESON)
+        return o->set_by_user || g_strcmp0 (o->section, "user") == 0
+            || g_strv_contains (meson, o->name);
+    return !o->advanced
+        && (!g_str_has_prefix (o->name, "CMAKE_") || g_strv_contains (cmake, o->name));
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static const build_option_t *
+build_view_option (const build_options_view_t *view, int row)
+{
+    if (view->options == NULL || row < 0 || (guint) row >= view->rows->len)
+        return NULL;
+    return (const build_option_t *) g_ptr_array_index (view->options,
+                                                       g_array_index (view->rows, guint, row));
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The value of @o as it will be: changed, else as it is */
+static const char *
+build_view_value (const build_options_view_t *view, const build_option_t *o)
+{
+    const char *changed = (const char *) g_hash_table_lookup (view->changes, o->name);
+
+    return changed != NULL ? changed : o->value;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static int
+build_view_rows (const void *data)
+{
+    return (int) ((const build_options_view_t *) data)->rows->len;
+}
+
+static const char *
+build_view_cell (const void *data, int row, int col)
+{
+    const build_options_view_t *view = (const build_options_view_t *) data;
+    const build_option_t *o = build_view_option (view, row);
+
+    if (o == NULL)
+        return "";
+    switch (col)
+    {
+    case 0:
+        // a change not applied
+        return g_hash_table_contains (view->changes, o->name) ? "*" : "";
+    case 1:
+        return o->name;
+    case 2:
+        return build_view_value (view, o);
+    default:
+        return o->default_value != NULL ? o->default_value : "";
+    }
+}
+
+/* An option that differs from its default stands out */
+static int
+build_view_cell_color (void *data, int row, int col)
+{
+    const build_options_view_t *view = (const build_options_view_t *) data;
+    const build_option_t *o = build_view_option (view, row);
+
+    (void) col;
+    if (o == NULL || o->default_value == NULL
+        || strcmp (build_view_value (view, o), o->default_value) == 0)
+        return -1;
+    return dialog_colors[DLG_COLOR_HOT_NORMAL];
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The rows shown: the main options or all of them, by name; the cursor on the option @name, NULL
+   for the one it is on */
+static int
+build_view_compare (gconstpointer a, gconstpointer b, gpointer data)
+{
+    const GPtrArray *options = (const GPtrArray *) data;
+    const build_option_t *x =
+        (const build_option_t *) g_ptr_array_index (options, *(const guint *) a);
+    const build_option_t *y =
+        (const build_option_t *) g_ptr_array_index (options, *(const guint *) b);
+
+    return strcmp (x->name, y->name);
+}
+
+static void
+build_view_fill (build_options_view_t *view, const char *name)
+{
+    const build_option_t *current = name == NULL && view->table != NULL
+        ? build_view_option (view, table_get_current (view->table))
+        : NULL;
+    char *keep = g_strdup (name != NULL ? name : current != NULL ? current->name : NULL);
+    int at = 0;
+    guint i;
+
+    g_array_set_size (view->rows, 0);
+    for (i = 0; view->options != NULL && i < view->options->len; i++)
+        if (build_option_main (view, (const build_option_t *) g_ptr_array_index (view->options, i)))
+            g_array_append_val (view->rows, i);
+    if (view->options != NULL)
+        g_array_sort_with_data (view->rows, build_view_compare, view->options);
+    for (i = 0; keep != NULL && i < view->rows->len; i++)
+        if (strcmp (build_view_option (view, (int) i)->name, keep) == 0)
+            at = (int) i;
+    g_free (keep);
+    if (view->table != NULL)
+    {
+        table_quick_search_stop (view->table);
+        table_set_current (view->table, at);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The options as the directory has them now, else as the profile will set it up */
+static void
+build_view_load (build_options_view_t *view)
+{
+    build_t *build = view->build;
+    const gboolean set_up = build_system_of_dir (view->dir) == view->system;
+    const char *defaults =
+        g_strcmp0 (build->defaults_root, view->root) == 0 ? build->defaults : NULL;
+    // the rows are indexes into the options there: the cursor is kept by the name of its option
+    const build_option_t *current =
+        view->table != NULL ? build_view_option (view, table_get_current (view->table)) : NULL;
+    char *keep = current != NULL ? g_strdup (current->name) : NULL;
+
+    g_array_set_size (view->rows, 0);
+    if (view->options != NULL)
+        g_ptr_array_free (view->options, TRUE);
+    view->options = NULL;
+    if (set_up)
+    {
+        view->options = build_options_read (view->dir, view->system);
+        if (view->options != NULL && defaults != NULL)
+            (void) build_options_set_defaults (view->options, defaults);
+    }
+    else if (view->system == BUILD_MESON && defaults != NULL)
+    {
+        build_profiles_t *profiles = build_profiles_of (view->root);
+        const build_profile_t *p = build_profiles_find (profiles, view->name);
+
+        view->options = build_options_of_source (defaults);
+        if (p != NULL)
+            build_profile_setup_apply (view->options, p->setup);
+        build_profiles_free (profiles);
+    }
+    build_view_fill (view, keep);
+    g_free (keep);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* What the field with the focus is, on the two lines under the table; FALSE when no field has
+   the focus */
+static gboolean
+build_view_field_help (build_options_view_t *view, int width)
+{
+    Widget *current =
+        GROUP (view->dlg)->current != NULL ? WIDGET (GROUP (view->dlg)->current->data) : NULL;
+    char *first = NULL, *second = NULL;
+
+    if (current == WIDGET (view->in_name))
+    {
+        first = g_strdup (_ ("The name of the profile, without [ and ]."));
+        second = g_strdup ("");
+    }
+    else if (current == WIDGET (view->in_dir))
+    {
+        first = g_strdup (_ ("The build directory, from the root of the project or absolute."));
+        second = g_strdup (_ ("One not set up yet is set up by F2 or by the first build."));
+    }
+    else if (current == WIDGET (view->in_build))
+    {
+        build_profiles_t *profiles = build_profiles_of (view->root);
+        const build_profile_t *p = build_profiles_find (profiles, view->name);
+        char *usual = NULL;
+
+        if (p != NULL)
+        {
+            build_profile_t plain = *p;
+
+            plain.build = NULL;
+            usual = build_profile_build_command (&plain, view->root);
+            // the directory as the profile names it, short enough for the line
+            if (usual != NULL)
+            {
+                char *quoted = g_shell_quote (view->dir);
+                char **parts = g_strsplit (usual, quoted, -1);
+
+                g_free (usual);
+                usual = g_strjoinv (view->where, parts);
+                g_strfreev (parts);
+                g_free (quoted);
+            }
+        }
+        first = g_strdup (_ ("The command that builds the profile, run in the root of the "
+                             "project."));
+        second = g_strdup_printf (_ ("Empty: that of the build system, %s"),
+                                  usual != NULL ? usual : _ ("none"));
+        g_free (usual);
+        build_profiles_free (profiles);
+    }
+    else if (current == WIDGET (view->in_test))
+    {
+        first = g_strdup (_ ("The command that runs the tests, run in the root of the project."));
+        second = g_strdup (_ ("Empty: no tests. Ctrl-F9 runs them after the build when the box "
+                              "under it is checked."));
+    }
+    else if (current == WIDGET (view->after))
+    {
+        first = g_strdup (_ ("Run the test command after each build of the profile."));
+        second = g_strdup (_ ("The coverage of the tests comes from a build with coverage and its "
+                              "tests run."));
+    }
+    if (first == NULL)
+        return FALSE;
+    label_set_text (view->about, str_trunc (first, width));
+    label_set_text (view->choices, str_trunc (second, width));
+    g_free (first);
+    g_free (second);
+    return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* What the lines under the table say: the option of the cursor, the state, the keys */
+static void
+build_view_show (build_options_view_t *view)
+{
+    const int width = WIDGET (view->dlg)->rect.cols - 4;
+    const build_option_t *o = build_view_option (view, table_get_current (view->table));
+    const gboolean set_up = build_system_of_dir (view->dir) == view->system;
+    const char *state, *footer;
+    char *text, *title, *padded;
+    WFrame *frame;
+
+    // a field with the focus: what it is, under the table where the option is said else
+    if (build_view_field_help (view, width))
+        goto frame;
+    if (o != NULL)
+        text = g_strdup_printf ("%s: %s", o->name, o->description != NULL ? o->description : "");
+    else if (view->system != BUILD_MESON && view->system != BUILD_CMAKE)
+        text = g_strdup (_ ("Only a build of meson or cmake has options to set."));
+    else if (view->introspect_fd >= 0)
+        text = g_strdup (_ ("Reading the options of meson.build..."));
+    else if (!set_up)
+        text = g_strdup (_ ("The directory is not set up yet: F2 sets it up."));
+    else
+        text = g_strdup ("");
+    label_set_text (view->about, str_trunc (text, width));
+    g_free (text);
+    if (o != NULL && o->choices != NULL)
+    {
+        char *joined = g_strjoinv (", ", o->choices);
+
+        text = g_strdup_printf (_ ("One of: %s"), joined);
+        g_free (joined);
+    }
+    else if (o != NULL && o->type == BUILD_OPTION_FEATURE)
+        text = g_strdup (_ ("One of: enabled, disabled, auto"));
+    else if (o != NULL && o->type == BUILD_OPTION_ARRAY)
+        text = g_strdup (_ ("A list, its items joined by ','"));
+    else
+        text = g_strdup ("");
+    label_set_text (view->choices, str_trunc (text, width));
+    g_free (text);
+frame:
+    // where it is and how it goes on the frame, as the Build window says what it builds
+    switch (view->state)
+    {
+    case BUILD_VIEW_CHANGED:
+        state = _ ("changed, not applied");
+        break;
+    case BUILD_VIEW_APPLYING:
+        state = _ ("applying, see Build output");
+        break;
+    case BUILD_VIEW_FAILED:
+        state = _ ("failed, see Build output");
+        break;
+    case BUILD_VIEW_APPLIED:
+        state = _ ("applied");
+        break;
+    default:
+        state = NULL;
+        break;
+    }
+    text = g_strdup_printf (_ ("Build profile: %s (%s, %s%s)%s%s"), view->name, view->where,
+                            build_system_name (view->system), set_up ? "" : _ (", not set up"),
+                            state != NULL ? ": " : "", state != NULL ? state : "");
+    // the keys of the window, the same whatever has the focus; the help says what they do
+    footer = "Del F2 F3 F4";
+    {
+        static const char *const modes[BUILD_VIEW_MODES] = {
+            N_ ("Main options"),
+            N_ ("Options off their default"),
+            N_ ("All options"),
+        };
+
+        char *line = g_strdup_printf (" %s ", _ (modes[view->mode]));
+
+        hline_set_text (view->mode_line, line);
+        g_free (line);
+    }
+    /* the frame drawn again paints over the whole window: set when the text is another one, and
+       the window drawn again then */
+    frame = FRAME (view->dlg->bg);
+    title = g_strdup_printf (" %s ", text);
+    padded = g_strdup_printf (" %s ", footer);
+    if (g_strcmp0 (frame->title, title) != 0 || g_strcmp0 (frame->footer, padded) != 0)
+    {
+        frame_set_title (frame, text);
+        frame_set_footer (frame, footer);
+        widget_draw (WIDGET (view->dlg));
+    }
+    g_free (padded);
+    g_free (title);
+    g_free (text);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The process of the setup has not ended with its output: the loop of the window waits for it */
+static void
+build_options_view_wait (build_options_view_t *view)
+{
+    widget_idle (WIDGET (view->dlg), TRUE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static void
+build_options_view_redraw (build_options_view_t *view)
+{
+    widget_draw (WIDGET (view->dlg));
+    tty_refresh ();
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The setup has ended: the options the directory has now, or the changes kept to try again */
+static void
+build_options_view_done (build_options_view_t *view, gboolean ok)
+{
+    if (view->state != BUILD_VIEW_APPLYING)
+        return;
+    if (ok)
+    {
+        g_hash_table_remove_all (view->changes);
+        view->state = BUILD_VIEW_APPLIED;
+        build_view_load (view);
+        if (view->close_after)
+        {
+            /* closed by the loop of the window, not from inside the reading of the output: the
+               list under it is drawn again then */
+            view->closing = TRUE;
+            widget_idle (WIDGET (view->dlg), TRUE);
+            return;
+        }
+    }
+    else
+    {
+        view->state = BUILD_VIEW_FAILED;
+        view->close_after = FALSE;
+    }
+    build_view_show (view);
+    build_options_view_redraw (view);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The time of the newest of the files that give a meson project its options, meson.build,
+   meson_options.txt and meson.options; 0 without meson.build */
+static gint64
+build_meson_time (const char *root)
+{
+    static const char *const names[] = { "meson.build", "meson_options.txt", "meson.options" };
+    gint64 newest = 0;
+    gsize i;
+
+    for (i = 0; i < G_N_ELEMENTS (names); i++)
+    {
+        char *file = g_build_filename (root, names[i], (char *) NULL);
+        struct stat st;
+
+        if (stat (file, &st) == 0)
+            newest = MAX (newest, (gint64) st.st_mtime);
+        else if (i == 0)
+        {
+            g_free (file);
+            return 0;
+        }
+        g_free (file);
+    }
+    return newest;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The defaults meson tells: read when it has told them all */
+static int
+build_view_introspect_ready (int fd, void *data)
+{
+    build_options_view_t *view = (build_options_view_t *) data;
+    char buf[4096];
+    const ssize_t n = read (fd, buf, sizeof (buf));
+
+    if (n > 0)
+    {
+        g_string_append_len (view->introspect, buf, n);
+        return 0;
+    }
+    if (n < 0 && (errno == EAGAIN || errno == EINTR))
+        return 0;
+    delete_select_channel (fd);
+    close (fd);
+    view->introspect_fd = -1;
+    if (view->introspect->str[0] == '[')
+    {
+        build_t *build = view->build;
+
+        g_free (build->defaults_root);
+        build->defaults_root = g_strdup (view->root);
+        g_free (build->defaults);
+        build->defaults = g_string_free (view->introspect, FALSE);
+        view->introspect = g_string_new (NULL);
+        build->defaults_time = build_meson_time (view->root);
+        build_view_load (view);
+    }
+    build_view_show (view);
+    build_options_view_redraw (view);
+    return 1;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Ask meson for the defaults of the options of the project, once for its meson.build as it is */
+static void
+build_view_introspect (build_options_view_t *view)
+{
+    build_t *build = view->build;
+    char *argv[] = { (char *) "meson", (char *) "introspect", (char *) "--buildoptions",
+                     (char *) "meson.build", NULL };
+    const gint64 time = build_meson_time (view->root);
+    int out;
+
+    if (view->system != BUILD_MESON || time == 0
+        || (g_strcmp0 (build->defaults_root, view->root) == 0 && build->defaults_time == time))
+        return;
+    if (g_spawn_async_with_pipes (view->root, argv, NULL,
+                                  G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL, NULL, NULL,
+                                  NULL, NULL, &out, NULL, NULL))
+    {
+        view->introspect_fd = out;
+        (void) fcntl (out, F_SETFL, fcntl (out, F_GETFL) | O_NONBLOCK);
+        add_select_channel (out, build_view_introspect_ready, view);
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A new value for the option of the cursor: a boolean the other one, one of the choices from a
+   list, else as typed */
+static void
+build_view_change (build_options_view_t *view)
+{
+    const build_option_t *o = build_view_option (view, table_get_current (view->table));
+    static const char *const feature[] = { "enabled", "disabled", "auto", NULL };
+    char *name, *now;
+    char *value = NULL;
+
+    if (o == NULL || view->state == BUILD_VIEW_APPLYING)
+        return;
+    /* the options may be read again while a dialog below is up, when meson tells the defaults:
+       what the dialogs need is copied, the option looked up again after them */
+    name = g_strdup (o->name);
+    now = g_strdup (build_view_value (view, o));
+    if (o->type == BUILD_OPTION_BOOLEAN)
+        value = g_strdup (build_option_toggled (now));
+    else if ((o->choices != NULL && o->choices[0] != NULL) || o->type == BUILD_OPTION_FEATURE)
+    {
+        char **choices = g_strdupv (
+            o->choices != NULL && o->choices[0] != NULL ? o->choices : (char **) feature);
+        const int count = (int) g_strv_length (choices);
+        Listbox *list = listbox_window_new (MIN (count, 16), MIN (COLS - 8, 40), name, NULL);
+        int i, at = 0;
+        const char *chosen;
+
+        for (i = 0; i < count; i++)
+        {
+            LISTBOX_APPEND_TEXT (list, 0, choices[i], (void *) choices[i], FALSE);
+            if (strcmp (choices[i], now) == 0)
+                at = i;
+        }
+        listbox_set_current (list->list, at);
+        chosen = (const char *) listbox_run_with_data (list, NULL);
+        value = g_strdup (chosen);
+        g_strfreev (choices);
+    }
+    else
+    {
+        char *prompt = g_strdup_printf ("%s:", name);
+
+        value = input_dialog (_ ("Build"), prompt, "build-option", now, INPUT_COMPLETE_NONE);
+        g_free (prompt);
+    }
+    g_free (now);
+    o = build_options_find (view->options, name);
+    g_free (name);
+    if (value == NULL || o == NULL)
+    {
+        g_free (value);
+        return;
+    }
+    // back to what the directory has: no change
+    if (strcmp (value, o->value) == 0)
+    {
+        g_free (value);
+        (void) g_hash_table_remove (view->changes, o->name);
+    }
+    else
+        g_hash_table_insert (view->changes, g_strdup (o->name), value);
+    view->state = g_hash_table_size (view->changes) > 0 ? BUILD_VIEW_CHANGED : BUILD_VIEW_SHOWN;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Set the directory up with the changes, "-Da=1 -Db=2" in the order of the names */
+static void
+build_view_apply (build_options_view_t *view)
+{
+    GList *names, *l;
+    char *changes = NULL;
+
+    // make and the others have no options: their fields alone are saved
+    if (view->state == BUILD_VIEW_APPLYING
+        || (view->system != BUILD_MESON && view->system != BUILD_CMAKE))
+    {
+        view->close_after = FALSE;
+        return;
+    }
+    names = g_list_sort (g_hash_table_get_keys (view->changes), (GCompareFunc) strcmp);
+    for (l = names; l != NULL; l = g_list_next (l))
+    {
+        const char *value = (const char *) g_hash_table_lookup (view->changes, l->data);
+        const build_option_t *o = build_options_find (view->options, (const char *) l->data);
+        char *arg = NULL, *more;
+
+        // a list of meson typed "a,b" goes as a list, its items apart: "['a', 'b']"
+        if (view->system == BUILD_MESON && o != NULL && o->type == BUILD_OPTION_ARRAY
+            && *value != '[')
+        {
+            char **items = *value != '\0' ? g_strsplit (value, ",", -1) : g_new0 (char *, 1);
+
+            arg = build_option_meson_list ((const char *const *) items);
+            g_strfreev (items);
+        }
+        more = build_profile_setup_add (changes, (const char *) l->data, arg != NULL ? arg : value);
+        g_free (arg);
+        g_free (changes);
+        changes = more;
+    }
+    g_list_free (names);
+    // nothing to change in a directory set up: nothing to do
+    if (changes == NULL && build_system_of_dir (view->dir) == view->system)
+    {
+        view->close_after = FALSE;
+        return;
+    }
+    if (build_configure (view->build, view->root, view->name, changes))
+        view->state = BUILD_VIEW_APPLYING;
+    else
+        view->close_after = FALSE;
+    g_free (changes);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Whether the fields differ from what the profile has */
+static gboolean
+build_view_fields_changed (const build_options_view_t *view)
+{
+    return strcmp (input_get_ctext (view->in_name), view->name) != 0
+        || g_strcmp0 (input_get_ctext (view->in_dir), view->old_dir) != 0
+        || g_strcmp0 (input_get_ctext (view->in_build), view->old_build) != 0
+        || g_strcmp0 (input_get_ctext (view->in_test), view->old_test) != 0
+        || view->after->state != view->old_after;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The fields into the profile, kept: the profiles that name it name its new name; FALSE when
+   they are wrong, said why */
+static gboolean
+build_view_save_fields (build_options_view_t *view)
+{
+    build_t *build = view->build;
+    char *name = g_strstrip (g_strdup (input_get_ctext (view->in_name)));
+    char *dir = g_strstrip (g_strdup (input_get_ctext (view->in_dir)));
+    char *command = g_strstrip (g_strdup (input_get_ctext (view->in_build)));
+    char *test = g_strstrip (g_strdup (input_get_ctext (view->in_test)));
+    build_profiles_t *profiles = build_profiles_of (view->root);
+    build_profile_t *p = build_profiles_find (profiles, view->name);
+    const char *problem = NULL;
+    gboolean moved;
+
+    // its name and directory stay while it is built or set up
+    if (p != NULL && (strcmp (name, p->name) != 0 || g_strcmp0 (dir, p->dir) != 0)
+        && build_busy_with (build, view->root, p->name))
+    {
+        g_free (name);
+        g_free (dir);
+        g_free (command);
+        g_free (test);
+        build_profiles_free (profiles);
         return FALSE;
     }
+    if (p == NULL)
+        problem = _ ("The profile is no more.");
+    else if (*name == '\0' || strchr (name, '[') != NULL || strchr (name, ']') != NULL)
+        problem = _ ("A profile needs a name, without [ and ].");
+    else if (strcmp (name, p->name) != 0 && build_profiles_find (profiles, name) != NULL)
+        problem = _ ("There is a profile of that name.");
+    else if (*dir == '\0')
+        problem = _ ("A profile needs a build directory.");
+    else if ((p->system == BUILD_MESON || p->system == BUILD_CMAKE)
+             && build_profile_dir_owner (profiles, p, view->root, dir) != NULL)
+        problem = _ ("Another profile builds in that directory.");
+    if (problem != NULL)
+    {
+        build->host->message (build->host, D_ERROR, _ ("Build"), problem);
+        g_free (name);
+        g_free (dir);
+        g_free (command);
+        g_free (test);
+        build_profiles_free (profiles);
+        return FALSE;
+    }
+    // a new name: the profiles that name it name the new one
+    if (strcmp (name, p->name) != 0)
+    {
+        guint i;
+
+        if (g_strcmp0 (profiles->active, p->name) == 0)
+        {
+            g_free (profiles->active);
+            profiles->active = g_strdup (name);
+        }
+        if (g_strcmp0 (profiles->coverage, p->name) == 0)
+        {
+            g_free (profiles->coverage);
+            profiles->coverage = g_strdup (name);
+        }
+        for (i = 0; i < profiles->list->len; i++)
+        {
+            build_profile_t *o = (build_profile_t *) g_ptr_array_index (profiles->list, i);
+
+            if (g_strcmp0 (o->from, p->name) == 0)
+            {
+                g_free (o->from);
+                o->from = g_strdup (name);
+            }
+        }
+        g_free (p->name);
+        p->name = g_strdup (name);
+    }
+    moved = g_strcmp0 (p->dir, dir) != 0;
+    // a command of its own follows the directory where it surely names it
+    if (moved && *command != '\0' && p->dir != NULL)
+    {
+        char *follows = build_profile_follow_dir (command, view->root, p->dir, dir);
+
+        g_free (command);
+        command = follows;
+    }
+    // the test command of its system follows the directory, one of the user's own stays
+    if (moved && *test != '\0')
+    {
+        char *old_abs = build_profile_dir (p, view->root);
+        char *new_abs = g_canonicalize_filename (dir, view->root);
+        char *follows = build_profile_test_follow (test, p->system, view->root, old_abs, new_abs);
+
+        if (follows != NULL)
+        {
+            g_free (test);
+            test = follows;
+        }
+        g_free (new_abs);
+        g_free (old_abs);
+    }
+    g_free (p->dir);
+    p->dir = dir;
+    {
+        // the system of the directory when it is set up, else the one it had
+        char *abs = build_profile_dir (p, view->root);
+        const build_system_t system = build_system_of_dir (abs);
+
+        if (system != BUILD_NONE)
+            p->system = system;
+        g_free (abs);
+    }
+    g_free (p->build);
+    p->build = *command != '\0' ? command : (g_free (command), NULL);
+    g_free (p->test);
+    p->test = *test != '\0' ? test : (g_free (test), NULL);
+    p->test_after_build = view->after->state;
+    // not written: not saved, the window stays with what is in it (the user was told why)
+    if (!build_profiles_save (build, view->root, profiles))
+    {
+        g_free (name);
+        build_profiles_free (profiles);
+        return FALSE;
+    }
+
+    g_free (view->name);
+    view->name = name;
+    g_free (view->old_dir);
+    view->old_dir = g_strdup (p->dir);
+    g_free (view->old_build);
+    view->old_build = g_strdup (p->build != NULL ? p->build : "");
+    g_free (view->old_test);
+    view->old_test = g_strdup (p->test != NULL ? p->test : "");
+    view->old_after = p->test_after_build;
+    view->system = p->system;
+    view->saved = TRUE;
+    // the fields show what is saved: a test command that followed the directory, the spaces cut
+    input_assign_text (view->in_name, view->name);
+    input_assign_text (view->in_dir, view->old_dir);
+    input_assign_text (view->in_build, view->old_build);
+    input_assign_text (view->in_test, view->old_test);
+    if (moved)
+    {
+        // another directory: its options
+        g_free (view->dir);
+        view->dir = build_profile_dir (p, view->root);
+        g_free (view->where);
+        view->where = build_profile_relative (view->root, view->dir);
+        build_view_load (view);
+    }
+    build_profiles_free (profiles);
     return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Save the fields, apply the changes of the options, and close the window when it is done:
+   now when there is nothing to apply, else once the setup ends well */
+static void
+build_view_save (build_options_view_t *view)
+{
+    if (view->state == BUILD_VIEW_APPLYING || !build_view_save_fields (view))
+        return;
+    if (g_hash_table_size (view->changes) == 0)
+    {
+        view->dlg->ret_value = B_ENTER;
+        dlg_close (view->dlg);
+        return;
+    }
+    view->close_after = TRUE;
+    build_view_apply (view);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+static cb_ret_t
+build_view_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data)
+{
+    WDialog *dlg = DIALOG (w);
+    build_options_view_t *view = (build_options_view_t *) dlg->data.p;
+    gboolean in_table;
+
+    if (view == NULL)
+        return dlg_default_callback (w, sender, msg, parm, data);
+    in_table = widget_get_state (WIDGET (view->table), WST_FOCUSED);
+    switch (msg)
+    {
+    case MSG_IDLE:
+        /* the output of the setup has ended before its process: it is waited for here, a little
+           at a time, nothing else polling it while the window is up */
+        if (view->state == BUILD_VIEW_APPLYING && build_running (view->build))
+        {
+            g_usleep (10 * 1000);
+            return MSG_HANDLED;
+        }
+        widget_idle (w, FALSE);
+        // the setup the window waited for is done well
+        if (view->closing)
+        {
+            dlg->ret_value = B_ENTER;
+            dlg_close (dlg);
+        }
+        return MSG_HANDLED;
+    case MSG_CHANGED_FOCUS:
+        // the lines under the table say what has the focus
+        build_view_show (view);
+        break;
+    case MSG_NOTIFY:
+        if (sender != WIDGET (view->table))
+            break;
+        // Enter saves, as in the fields: F4 changes the option
+        if (parm == CK_Enter)
+        {
+            build_view_save (view);
+            build_view_show (view);
+            build_options_view_redraw (view);
+            return MSG_HANDLED;
+        }
+        build_view_show (view);
+        return MSG_HANDLED;
+    case MSG_UNHANDLED_KEY:
+        switch (parm)
+        {
+        case KEY_F (4):
+            if (!in_table)
+                return MSG_NOT_HANDLED;
+            build_view_change (view);
+            break;
+        case KEY_DC:
+        {
+            const build_option_t *o = build_view_option (view, table_get_current (view->table));
+
+            if (!in_table)
+                return MSG_NOT_HANDLED;
+            if (o == NULL || view->state == BUILD_VIEW_APPLYING)
+                return MSG_HANDLED;
+            (void) g_hash_table_remove (view->changes, o->name);
+            if (g_hash_table_size (view->changes) == 0)
+                view->state = BUILD_VIEW_SHOWN;
+            break;
+        }
+        case KEY_F (3):
+            if (!in_table)
+                return MSG_NOT_HANDLED;
+            view->mode = (view->mode + 1) % BUILD_VIEW_MODES;
+            build_view_fill (view, NULL);
+            break;
+        case KEY_F (2):
+            // the fields first: the options go to the directory they name
+            if (view->state != BUILD_VIEW_APPLYING && build_view_save_fields (view))
+                build_view_apply (view);
+            break;
+        default:
+            return MSG_NOT_HANDLED;
+        }
+        build_view_show (view);
+        build_options_view_redraw (view);
+        return MSG_HANDLED;
+    case MSG_ACTION:
+        // Enter in the fields saves them, and applies the options
+        if (parm == CK_Ok)
+        {
+            build_view_save (view);
+            build_view_show (view);
+            build_options_view_redraw (view);
+            return MSG_HANDLED;
+        }
+        // what is not saved is not lost unasked; a setup going on goes on without the window
+        if (parm == CK_Cancel && view->state != BUILD_VIEW_APPLYING
+            && (g_hash_table_size (view->changes) > 0 || build_view_fields_changed (view)))
+        {
+            switch (query_dialog (_ ("Build"), _ ("The profile is changed, not saved."), D_NORMAL,
+                                  3, _ ("&Save"), _ ("&Discard"), _ ("&Cancel")))
+            {
+            case 0:
+                build_view_save (view);
+                build_view_show (view);
+                build_options_view_redraw (view);
+                return MSG_HANDLED;
+            case 1:
+                break;
+            default:
+                return MSG_HANDLED;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    return dlg_default_callback (w, sender, msg, parm, data);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The window of the profile @name: its name, directory, commands, and under them the options of
+   its build directory, changed and applied while it stays: the setup goes into Build output, the
+   options read again from the directory after it.  A profile @is_new is gone when the window is
+   closed without saving it.  TRUE when it was saved; its name then in @saved_as, NULL for none,
+   which it may have changed. */
+static gboolean
+build_profile_window (build_t *build, const char *root, const char *name, gboolean is_new,
+                      char **saved_as)
+{
+    build_profiles_t *profiles = build_profiles_of (root);
+    const build_profile_t *p = build_profiles_find (profiles, name);
+    static const table_column_def_t defs[BUILD_VIEW_COLS] = {
+        { 1, J_CENTER, TABLE_COL_TEXT },
+        { 0, J_LEFT, TABLE_COL_TEXT },
+        { 0, J_LEFT, TABLE_COL_TEXT },
+        { 0, J_LEFT, TABLE_COL_TEXT },
+    };
+    const char *titles[BUILD_VIEW_COLS + 1] = { "", _ ("Name"), _ ("Value"), _ ("Default"), NULL };
+    const char *l_name = _ ("Name:"), *l_dir = _ ("Directory:"), *l_build = _ ("Build command:");
+    const char *l_test = _ ("Test command:");
+    build_options_view_t view = { 0 };
+    table_datasource_t ds = { 0 };
+    WGroup *g;
+    WHLine *search;
+    int dlg_w, dlg_h, x, lw;
+    gboolean saved;
+
+    if (p == NULL)
+    {
+        build_profiles_free (profiles);
+        return FALSE;
+    }
+    // one window of a profile at a time: the setup it starts tells that one its end
+    if (build->view != NULL)
+    {
+        build->host->message (build->host, D_ERROR, _ ("Build"),
+                              _ ("The window of a build profile is open already."));
+        // one made for the window is not made
+        if (is_new && build_profiles_remove (profiles, name))
+            (void) build_profiles_save (build, root, profiles);
+        build_profiles_free (profiles);
+        return FALSE;
+    }
+    view.build = build;
+    view.root = g_strdup (root);
+    view.name = g_strdup (p->name);
+    view.dir = build_profile_dir (p, root);
+    view.system = p->system;
+    view.changes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+    view.rows = g_array_new (FALSE, FALSE, sizeof (guint));
+    view.introspect_fd = -1;
+    view.introspect = g_string_new (NULL);
+    view.where = build_profile_relative (root, view.dir);
+    view.is_new = is_new;
+    view.old_dir = g_strdup (p->dir != NULL ? p->dir : "");
+    view.old_build = g_strdup (p->build != NULL ? p->build : "");
+    view.old_test = g_strdup (p->test != NULL ? p->test : "");
+    view.old_after = p->test_after_build;
+
+    dlg_w = MIN (COLS - 4, 100);
+    dlg_h = MIN (LINES - 2, 34);
+    view.dlg = dlg_create (TRUE, 0, 0, dlg_h, dlg_w, WPOS_CENTER, TRUE, dialog_colors,
+                           build_view_callback, NULL, "[Build profile]", _ ("Build profile"));
+    view.dlg->help_file = "build.md";
+    view.dlg->data.p = &view;
+    g = GROUP (view.dlg);
+    // the fields: the labels of a width, the name and the directory on one line
+    lw = MAX (str_term_width1 (l_build), str_term_width1 (l_test)) + 1;
+    group_add_widget (g, label_new (1, 2, l_name));
+    view.in_name =
+        input_new (1, 2 + lw, input_colors, 20, p->name, "build-profile-name", INPUT_COMPLETE_NONE);
+    group_add_widget (g, view.in_name);
+    x = 2 + lw + 20 + 2;
+    group_add_widget (g, label_new (1, x, l_dir));
+    x += str_term_width1 (l_dir) + 1;
+    view.in_dir = input_new (1, x, input_colors, MAX (dlg_w - x - 2, 10), view.old_dir,
+                             "build-profile-dir", INPUT_COMPLETE_FILENAMES | INPUT_COMPLETE_CD);
+    group_add_widget (g, view.in_dir);
+    group_add_widget (g, label_new (2, 2, l_build));
+    view.in_build = input_new (2, 2 + lw, input_colors, dlg_w - lw - 4, view.old_build,
+                               "build-command", INPUT_COMPLETE_COMMANDS);
+    group_add_widget (g, view.in_build);
+    group_add_widget (g, label_new (3, 2, l_test));
+    view.in_test = input_new (3, 2 + lw, input_colors, dlg_w - lw - 4, view.old_test,
+                              "build-profile-test", INPUT_COMPLETE_COMMANDS);
+    group_add_widget (g, view.in_test);
+    view.after = check_new (4, 2, view.old_after, _ ("&Run the tests after the build"));
+    group_add_widget (g, view.after);
+    build_profiles_free (profiles);
+
+    // the options: which of them on the line over them, the rows, the search, the option
+    view.mode_line = hline_new (5, -1, -1);
+    group_add_widget (g, view.mode_line);
+    view.table = table_new (6, 1, MAX (dlg_h - 10, 2), dlg_w - 2, BUILD_VIEW_COLS, defs);
+    table_set_column_sizing (view.table, 0, 1, FALSE);
+    table_set_column_sizing (view.table, 1, 20, TRUE);
+    table_set_column_sizing (view.table, 2, 12, TRUE);
+    table_set_column_sizing (view.table, 3, 8, TRUE);
+    ds.get_nrows = build_view_rows;
+    ds.get_text = build_view_cell;
+    ds.data = &view;
+    table_set_datasource (view.table, ds);
+    table_set_header (view.table, titles);
+    table_set_cell_color (view.table, build_view_cell_color);
+    view.table->scrollbar = TRUE;
+    // letters narrow the list to the names that have them in their order
+    table_set_quick_search (view.table, 1, TRUE, FALSE);
+    table_set_quick_filter_fuzzy (view.table, TRUE, NULL);
+    search = hline_new (dlg_h - 4, -1, -1);
+    search->text_align = J_LEFT;
+    table_set_quick_search_label (view.table, search);
+    group_add_widget (g, view.table);
+    group_add_widget (g, search);
+    view.about = label_new (dlg_h - 3, 2, "");
+    view.choices = label_new (dlg_h - 2, 2, "");
+    group_add_widget (g, view.about);
+    group_add_widget (g, view.choices);
+
+    build->view = &view;
+    build_view_introspect (&view);
+    build_view_load (&view);
+    table_layout (view.table);
+    // a profile just made is named first, one there has its options looked at
+    widget_select (is_new ? WIDGET (view.in_name) : WIDGET (view.table));
+    build_view_show (&view);
+    (void) dlg_run (view.dlg);
+    build->view = NULL;
+    if (view.introspect_fd >= 0)
+    {
+        delete_select_channel (view.introspect_fd);
+        close (view.introspect_fd);
+    }
+    widget_destroy (WIDGET (view.dlg));
+    saved = view.saved;
+    if (saved_as != NULL)
+        *saved_as = saved ? g_strdup (view.name) : NULL;
+    if (is_new && !saved)
+    {
+        // closed unsaved: not made
+        profiles = build_profiles_of (root);
+        if (build_profiles_remove (profiles, view.name))
+            (void) build_profiles_save (build, root, profiles);
+        build_profiles_free (profiles);
+    }
+    if (view.options != NULL)
+        g_ptr_array_free (view.options, TRUE);
+    g_hash_table_destroy (view.changes);
+    g_array_free (view.rows, TRUE);
+    g_string_free (view.introspect, TRUE);
+    g_free (view.root);
+    g_free (view.name);
+    g_free (view.dir);
+    g_free (view.where);
+    g_free (view.old_dir);
+    g_free (view.old_build);
+    g_free (view.old_test);
+    return saved;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1708,7 +2901,7 @@ enum
 };
 
 /* Space makes the profile of the cursor the active one, Enter too and closes the window, Ins
-   makes a new one from it, F4 edits it, Del deletes it, F5 builds it */
+   makes a new one from it, F4 edits it and its options, Del deletes it, F5 builds it */
 static cb_ret_t
 build_profiles_dialog_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data)
 {
@@ -1747,9 +2940,9 @@ build_profiles_dialog_callback (Widget *w, Widget *sender, widget_msg_t msg, int
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The profiles of the project in one dialog, by keys: the active one is marked; Space and Enter
-   make the one of the cursor it, Ins makes one from it, F4 and Del change it, F5 builds it and
-   leaves the active one.  The dialog comes back after all but Enter and F5 */
+/* The profiles of the project in one dialog, by keys: the active one is marked; Enter makes the
+   one of the cursor it, Ins makes one from it, F4 and Del change it, F5 builds it
+   and leaves the active one.  The dialog comes back after all but Enter and F5 */
 static mc_ep_result_t
 build_act_profiles (void *data, void *edit)
 {
@@ -1845,19 +3038,23 @@ build_act_profiles (void *data, void *edit)
             break;
         case BUILD_B_NEW:
             if (build_profile_new (build, root, profiles, p))
-            {
-                (void) build_profiles_save (build, root, profiles);
                 cursor = profiles->list->len - 1;
-            }
             build_profiles_free (profiles);
             continue;
         case BUILD_B_EDIT:
-            if (p != NULL && build_profile_form (build, root, profiles, p))
-                (void) build_profiles_save (build, root, profiles);
-            build_profiles_free (profiles);
+            if (p != NULL)
+            {
+                char *name = g_strdup (p->name);
+
+                build_profiles_free (profiles);
+                (void) build_profile_window (build, root, name, FALSE, NULL);
+                g_free (name);
+            }
+            else
+                build_profiles_free (profiles);
             continue;
         case BUILD_B_DELETE:
-            if (p != NULL
+            if (p != NULL && !build_busy_with (build, root, p->name)
                 && query_dialog (_ ("Build"), _ ("Delete the profile? Its build directory stays."),
                                  D_NORMAL, 2, _ ("&Delete"), _ ("&Cancel"))
                     == 0)
@@ -1901,17 +3098,17 @@ build_act_configure (void *data, void *edit)
     char *root = build_root_of (build, edit);
     build_profiles_t *profiles = build_profiles_of (root);
     const build_profile_t *p = build_profiles_active (profiles);
-    char *command = p != NULL ? build_profile_build_command (p, root) : NULL;
-    char *chosen;
+    char *name = p != NULL ? g_strdup (p->name) : NULL;
 
-    // the command of the active profile, its tests left out: they run after it by themselves
-    chosen = input_dialog (_ ("Build"), _ ("Command that builds the project:"), "build-command",
-                           command != NULL ? command : "make", INPUT_COMPLETE_COMMANDS);
-    if (chosen != NULL)
-        build_save_command (build, root, chosen);
+    // the window of the active profile: its command, its tests, its options
     build_profiles_free (profiles);
-    g_free (chosen);
-    g_free (command);
+    if (name != NULL)
+    {
+        // a Default made from what was found is kept first, the window reads it from the file
+        build_profiles_keep_default (build, root);
+        (void) build_profile_window (build, root, name, FALSE, NULL);
+    }
+    g_free (name);
     g_free (root);
     return MC_EPR_OK;
 }
@@ -1927,8 +3124,13 @@ build_project_adopt (build_t *build, const char *root, gboolean again)
     GPtrArray *presets = NULL;
     const build_preset_t *preset = NULL;
     gboolean has = FALSE;
-    const gboolean readable = build_project_read (build, root, keyfile, &has);
-    gboolean done = FALSE;
+    gboolean readable, done = FALSE;
+
+    /* the command= of before, from which Default is made while the user has no profiles, goes
+       with the copy made again: Default is kept first, the command with it */
+    if (again)
+        build_profiles_keep_default (build, root);
+    readable = build_project_read (build, root, keyfile, &has);
 
     if (readable && !again && has
         && g_key_file_has_key (keyfile, BUILD_PROJECT_GROUP, "language", NULL))
@@ -2206,9 +3408,29 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
     }
     else if (strcmp (method, "run") == 0 && root != NULL)
     {
-        const gboolean started = build_start (build, root, profile);
+        gboolean started;
 
+        // "tests": the tests run after the build, whatever the profile says
+        (void) g_variant_lookup (args, "tests", "b", &build->with_tests);
+        started = build_start (build, root, profile);
+        build->with_tests = FALSE;
         build->quiet = started;
+        g_variant_dict_insert (&reply, "started", "b", started);
+        // the profile it builds: "finished" names it, the active one may be another by then
+        if (started && build->profile != NULL)
+            g_variant_dict_insert (&reply, "profile", "s", build->profile);
+    }
+    else if (strcmp (method, "configure") == 0 && root != NULL)
+    {
+        /* the directory of the profile set up, the active one when not given, with "setup" the
+           options it changes, "-Db_coverage=true"; set up as the profile says when it is not
+           yet.  "finished" tells the end, its "step" "configure". */
+        const char *setup = NULL;
+        gboolean started;
+
+        (void) g_variant_lookup (args, "setup", "&s", &setup);
+        started =
+            build_configure (build, root, profile, setup != NULL && *setup != '\0' ? setup : NULL);
         g_variant_dict_insert (&reply, "started", "b", started);
     }
     else if (strcmp (method, "profiles") == 0 && root != NULL)
@@ -2276,6 +3498,7 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
         {
             char *from_dir = from != NULL ? build_profile_dir (from, root) : NULL;
             char *abs = build_profile_dir (p, root);
+
             if (p->setup == NULL && from_dir != NULL)
                 p->setup = build_profile_setup_of (from_dir, from->system);
             if (setup != NULL && *setup != '\0')
@@ -2409,6 +3632,9 @@ build_close (void *data)
     g_free (build->command);
     g_free (build->dir);
     g_free (build->presets_told);
+    g_free (build->changes);
+    g_free (build->defaults_root);
+    g_free (build->defaults);
     g_free (build);
 }
 

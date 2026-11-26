@@ -721,6 +721,21 @@ test_profiles (void)
         q = build_profiles_add (profiles, "/src/proj", "Abs7", &from, "build coverage");
         g_assert_cmpstr (q->build, ==, "cd 'build coverage' && ninja -j 4");
         g_assert_true (build_profiles_remove (profiles, "Abs7"));
+        // an absolute directory named from the root; an option glued to the directory
+        from.dir = (char *) "/opt/b/proj";
+        from.build = (char *) "meson compile -C ../../opt/b/proj -j4 && ninja -C../../opt/b/proj";
+        q = build_profiles_add (profiles, "/src/proj", "Abs8", &from, "/opt/b/proj2");
+        g_assert_cmpstr (q->build, ==, "meson compile -C /opt/b/proj2 -j4 && ninja -C/opt/b/proj2");
+        g_assert_true (build_profiles_remove (profiles, "Abs8"));
+        from.dir = (char *) "build";
+        // the window moves the directory of a profile: its command follows
+        text = build_profile_follow_dir ("meson compile -C ../proj-build-new -j4", "/src/proj",
+                                         "../proj-build-new", "../x");
+        g_assert_cmpstr (text, ==, "meson compile -C ../x -j4");
+        g_free (text);
+        text = build_profile_follow_dir ("./run.sh && make", "/src/proj", ".", "build/x");
+        g_assert_cmpstr (text, ==, "./run.sh && make");
+        g_free (text);
         /* "build" of "make build" may be the directory or a target: not told for sure, the new
            profile builds as its system does, its tests by their command of the system */
         from.build = (char *) "make build";
@@ -984,6 +999,30 @@ test_configure (void)
         list = build_option_meson_list (NULL);
         g_assert_cmpstr (list, ==, "[]");
         g_free (list);
+        // flags added to those there, once; an option not there is added as it is
+        text =
+            build_profile_setup_append ("-DCMAKE_CXX_FLAGS=-stdlib=libc++ -DX=1",
+                                        "-DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage");
+        g_assert_cmpstr (text, ==,
+                         "-DX=1 '-DCMAKE_CXX_FLAGS=-stdlib=libc++ --coverage' "
+                         "-DCMAKE_C_FLAGS=--coverage");
+        setup = build_profile_setup_append (text, "-DCMAKE_C_FLAGS=--coverage");
+        g_assert_cmpstr (setup, ==, text);
+        g_free (setup);
+        g_free (text);
+        // the test command of the system follows the directory, another one stays
+        text = build_profile_test_follow ("meson test -C '/src/proj/build'", BUILD_MESON,
+                                          "/src/proj", "build", "/src/proj/build-2");
+        g_assert_cmpstr (text, ==, "meson test -C '/src/proj/build-2'");
+        g_free (text);
+        text = build_profile_test_follow ("ctest --test-dir build", BUILD_CMAKE, "/src/proj",
+                                          "/src/proj/build", "/b");
+        g_assert_cmpstr (text, ==, "ctest --test-dir '/b'");
+        g_free (text);
+        g_assert_null (build_profile_test_follow ("meson test -C build --suite x", BUILD_MESON,
+                                                  "/src/proj", "build", "/b"));
+        g_assert_null (build_profile_test_follow ("meson test -C other", BUILD_MESON, "/src/proj",
+                                                  "build", "/b"));
         text = build_profile_setup_add (NULL, "c_args", "['-O1', '-g']");
         g_assert_cmpstr (text, ==, "\"-Dc_args=['-O1', '-g']\"");
         g_free (text);

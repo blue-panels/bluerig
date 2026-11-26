@@ -995,6 +995,70 @@ build_profile_configure_command (const build_profile_t *profile, const char *roo
 /* --------------------------------------------------------------------------------------------- */
 
 char *
+build_profile_follow_dir (const char *command, const char *root, const char *old_dir,
+                          const char *new_dir)
+{
+    char *old_abs, *new_abs, *old_rel, *new_rel, *follows;
+
+    if (command == NULL || old_dir == NULL || new_dir == NULL)
+        return g_strdup (command);
+    old_abs = g_canonicalize_filename (old_dir, root);
+    new_abs = g_canonicalize_filename (new_dir, root);
+    // a build in the root names no directory of its own: the command stays
+    if (strcmp (old_abs, root) == 0)
+        follows = g_strdup (command);
+    else
+    {
+        old_rel = g_path_is_absolute (old_dir) ? build_profiles_from_root (root, old_abs)
+                                               : g_strdup (old_dir);
+        new_rel = g_path_is_absolute (new_dir) ? g_strdup (new_abs) : g_strdup (new_dir);
+        follows = build_profiles_replace (command, old_rel, old_abs, new_rel, new_abs);
+        g_free (old_rel);
+        g_free (new_rel);
+    }
+    g_free (old_abs);
+    g_free (new_abs);
+    return follows;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_test_follow (const char *test, build_system_t system, const char *root,
+                           const char *old_dir, const char *new_dir)
+{
+    char **argv = NULL;
+    const char *named = NULL;
+    int argc = 0;
+    char *follows = NULL;
+
+    // "meson test -C DIR", "ctest --test-dir DIR", the directory named in any way
+    if (test == NULL || old_dir == NULL || new_dir == NULL
+        || !g_shell_parse_argv (test, &argc, &argv, NULL))
+        return NULL;
+    if (system == BUILD_MESON && argc == 4 && strcmp (argv[0], "meson") == 0
+        && strcmp (argv[1], "test") == 0 && strcmp (argv[2], "-C") == 0)
+        named = argv[3];
+    else if (system == BUILD_CMAKE && argc == 3 && strcmp (argv[0], "ctest") == 0
+             && strcmp (argv[1], "--test-dir") == 0)
+        named = argv[2];
+    if (named != NULL)
+    {
+        char *a = g_canonicalize_filename (named, root);
+        char *b = g_canonicalize_filename (old_dir, root);
+
+        if (strcmp (a, b) == 0)
+            follows = build_profile_test_command (system, new_dir);
+        g_free (a);
+        g_free (b);
+    }
+    g_strfreev (argv);
+    return follows;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
 build_profile_test_command (build_system_t system, const char *dir)
 {
     char *quoted = g_shell_quote (dir);
