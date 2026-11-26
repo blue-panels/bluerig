@@ -74,13 +74,24 @@ build_profile_t *build_profiles_add (build_profiles_t *profiles, const char *roo
 /* The profile @name gone, and the active one and that of coverage when it was one of them */
 gboolean build_profiles_remove (build_profiles_t *profiles, const char *name);
 
+/* @dir as it is named from @root: "build" in it, "../coole-build" next to it, "." for the root
+   itself, else as it is */
+char *build_profile_relative (const char *root, const char *dir);
 /* The build directory of @profile, absolute */
 char *build_profile_dir (const build_profile_t *profile, const char *root);
-/* The command that builds @profile: its own, else that of its system, "meson compile -C dir";
-   NULL when its system has none either */
+/* The command that builds @profile: its own, else that of its system, "meson compile -C dir",
+   the directory set up first with the options of the profile when it is not yet; NULL when its
+   system has none either */
 char *build_profile_build_command (const build_profile_t *profile, const char *root);
-/* That command and its tests after it, when the profile says so */
+/* That command and its tests after it, when the profile says so; a command of the user's own in
+   a subshell, "(cd build && ninja\n) && meson test -C build" */
 char *build_profile_command (const build_profile_t *profile, const char *root);
+/* The build system of the build directory @dir, as it is set up: none when it is not yet */
+build_system_t build_system_of_dir (const char *dir);
+/* What sets the build directory @dir of @system up again: the options given to its setup,
+   "-Dbuildtype=debug -Dscreen=slang"; NULL when none are known */
+char *build_profile_setup_of (const char *dir, build_system_t system);
+
 /* The command that runs the tests of @system in @dir, offered to a new profile */
 char *build_profile_test_command (build_system_t system, const char *dir);
 

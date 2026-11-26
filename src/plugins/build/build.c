@@ -82,6 +82,7 @@ enum
     BUILD_ACT_NEXT,
     BUILD_ACT_PREV,
     BUILD_ACT_CONFIGURE,
+    BUILD_ACT_PROFILES,
     BUILD_ACT_OUTPUT,
     BUILD_ACT_DEFAULTS
 };
@@ -98,6 +99,7 @@ typedef struct
     mc_editor_host_t *host;
     char *root;     // of the build going on, or of the last one
     char *command;  // that it runs
+    char *profile;  // the profile it builds, NULL when it has none
     char *dir;      // where the compiler runs: the names it gives are from there
     GPid pid;
     int output_fd;
@@ -492,14 +494,15 @@ build_front_file (build_t *build, const char *root)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* How the project is built: by its active profile, its command or that of its build system,
-   else by that of its language, by its markers or the file in front; the directory the compiler
-   runs in */
+/* How the project is built: by its profile @name, NULL for the active one, its command or that of
+   its build system, else by that of its language, by its markers or the file in front; the
+   directory the compiler runs in */
 static gboolean
-build_plan (build_t *build, const char *root, char **command, char **dir)
+build_plan (build_t *build, const char *root, const char *name, char **command, char **dir)
 {
     build_profiles_t *profiles = build_profiles_of (root);
-    const build_profile_t *p = build_profiles_active (profiles);
+    const build_profile_t *p =
+        name != NULL ? build_profiles_find (profiles, name) : build_profiles_active (profiles);
 
     *command = p != NULL ? build_profile_command (p, root) : NULL;
     *dir = p != NULL ? build_profile_dir (p, root) : g_strdup (root);
@@ -546,40 +549,17 @@ build_where (const build_t *build, const build_diagnostic_t *d)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The title of the window of the output: the active profile of @root and what its build is,
-   "Build [Coverage]: ../coole-build-cov, meson, debug, coverage", the directory from the root,
-   the name left out for a lone Default; "Build" when it has no build system.  On the frame it
-   stays in sight however far the output goes. */
-static char *
-build_output_title (const char *root)
+/* What the build of @p is, in parts: its directory from the root of the project,
+   "../coole-build-cov", and what it is built for, "debug, coverage", from its options, or "not
+   set up"; to be freed */
+static void
+build_profile_describe (const build_profile_t *p, const char *root, char **where, char **what)
 {
-    build_profiles_t *profiles = build_profiles_of (root);
-    const build_profile_t *p = build_profiles_active (profiles);
     GPtrArray *options;
-    GString *head;
-    char *dir, *parent, *summary = NULL;
+    char *dir = build_profile_dir (p, root);
+    char *summary = NULL;
 
-    if (p == NULL || p->system == BUILD_NONE)
-    {
-        build_profiles_free (profiles);
-        return g_strdup (_ ("Build"));
-    }
-    head = g_string_new (_ ("Build"));
-    if (profiles->list->len > 1 || strcmp (p->name, BUILD_PROFILES_DEFAULT) != 0)
-        g_string_append_printf (head, " [%s]", p->name);
-    g_string_append (head, ": ");
-    dir = build_profile_dir (p, root);
-    parent = g_path_get_dirname (root);
-    if (strcmp (dir, root) == 0)
-        g_string_append (head, ".");
-    else if (g_str_has_prefix (dir, root) && dir[strlen (root)] == '/')
-        g_string_append (head, dir + strlen (root) + 1);
-    else if (g_str_has_prefix (dir, parent) && dir[strlen (parent)] == '/')
-        g_string_append_printf (head, "../%s", dir + strlen (parent) + 1);
-    else
-        g_string_append (head, dir);
-    g_free (parent);
-    g_string_append_printf (head, ", %s", build_system_name (p->system));
+    *where = build_profile_relative (root, dir);
     options = build_options_read (dir, p->system);
     if (options != NULL)
     {
@@ -589,10 +569,55 @@ build_output_title (const char *root)
         build_summary_free (s);
         g_ptr_array_free (options, TRUE);
     }
-    if (summary != NULL && *summary != '\0')
-        g_string_append_printf (head, ", %s", summary);
-    g_free (summary);
+    // a directory not set up yet says so
+    else if (p->system != BUILD_NONE && build_system_of_dir (dir) != p->system)
+        summary = g_strdup (_ ("not set up"));
+    *what = summary != NULL ? summary : g_strdup ("");
     g_free (dir);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* What the build of @p is: "../coole-build-cov, meson, debug, coverage" */
+static char *
+build_profile_brief (const build_profile_t *p, const char *root)
+{
+    char *where, *what, *brief;
+
+    build_profile_describe (p, root, &where, &what);
+    brief = g_strdup_printf ("%s, %s%s%s", where, build_system_name (p->system),
+                             *what != '\0' ? ", " : "", what);
+    g_free (where);
+    g_free (what);
+    return brief;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The title of the window of the output: the profile @name of @root, NULL for the active one,
+   and what its build is, "Build Coverage: ../coole-build-cov, meson, debug, coverage", the
+   name left out for a lone Default; "Build" when it has no build system.  On the frame it stays
+   in sight however far the output goes. */
+static char *
+build_output_title (const char *root, const char *name)
+{
+    build_profiles_t *profiles = build_profiles_of (root);
+    const build_profile_t *p =
+        name != NULL ? build_profiles_find (profiles, name) : build_profiles_active (profiles);
+    GString *head;
+    char *brief;
+
+    if (p == NULL || p->system == BUILD_NONE)
+    {
+        build_profiles_free (profiles);
+        return g_strdup (_ ("Build"));
+    }
+    head = g_string_new (_ ("Build"));
+    if (profiles->list->len > 1 || strcmp (p->name, BUILD_PROFILES_DEFAULT) != 0)
+        g_string_append_printf (head, " %s", p->name);
+    brief = build_profile_brief (p, root);
+    g_string_append_printf (head, ": %s", brief);
+    g_free (brief);
     build_profiles_free (profiles);
     return g_string_free (head, FALSE);
 }
@@ -830,6 +855,9 @@ build_finished (build_t *build, int status)
         summary = g_strdup_printf (_ ("\nThe build failed. Errors: %u, warnings: %u.\n"), errors,
                                    build->diagnostics->len - errors);
     g_string_append (build->output, summary);
+    // a directory the build set up says now what it is built for
+    g_free (build->title);
+    build->title = build_output_title (build->root, build->profile);
     // the error gone to while the build ran stays the one of the list, its note in the list now
     build_list (build, g_strstrip (summary));
     if (build->listed)
@@ -854,6 +882,10 @@ build_finished (build_t *build, int status)
 
         g_variant_dict_init (&dict, NULL);
         g_variant_dict_insert (&dict, "root", "s", build->root);
+        // which profile, in which directory: a plugin listens to the builds of one
+        if (build->profile != NULL)
+            g_variant_dict_insert (&dict, "profile", "s", build->profile);
+        g_variant_dict_insert (&dict, "dir", "s", build->dir);
         g_variant_dict_insert (&dict, "ok", "b", WIFEXITED (status) && WEXITSTATUS (status) == 0);
         g_variant_dict_insert (&dict, "errors", "i", (gint32) errors);
         build->host->service_emit (build->host, BUILD_SERVICE, "finished",
@@ -972,9 +1004,10 @@ build_running (build_t *build)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* Build the project of @root; FALSE when it could not start */
+/* Build the project of @root by its profile @name, NULL for the active one; FALSE when it could
+   not start */
 static gboolean
-build_start (build_t *build, const char *root)
+build_start (build_t *build, const char *root, const char *name)
 {
     char *command = NULL, *dir = NULL, *shell_command;
     char *argv[4];
@@ -986,7 +1019,7 @@ build_start (build_t *build, const char *root)
         build->host->message (build->host, D_NORMAL, _ ("Build"), _ ("The build is running."));
         return FALSE;
     }
-    if (!build_plan (build, root, &command, &dir))
+    if (!build_plan (build, root, name, &command, &dir))
     {
         g_free (command);
         command = input_dialog (_ ("Build"), _ ("Command that builds the project:"),
@@ -1020,7 +1053,16 @@ build_start (build_t *build, const char *root)
     build->current = -1;
     build_marks_clear (build);
     g_free (build->title);
-    build->title = build_output_title (root);
+    build->title = build_output_title (root, name);
+    {
+        build_profiles_t *profiles = build_profiles_of (root);
+        const build_profile_t *p =
+            name != NULL ? build_profiles_find (profiles, name) : build_profiles_active (profiles);
+
+        g_free (build->profile);
+        build->profile = p != NULL ? g_strdup (p->name) : NULL;
+        build_profiles_free (profiles);
+    }
     g_string_printf (build->output, "$ %s\n", command);
     g_string_truncate (build->pending, 0);
 
@@ -1246,7 +1288,7 @@ build_run_command (build_t *build, int cmd, void *edit)
         char *root =
             build_root_of (build, edit != NULL ? edit : build->host->window_top_file (build->host));
 
-        (void) build_start (build, root);
+        (void) build_start (build, root, NULL);
         g_free (root);
         return TRUE;
     }
@@ -1339,6 +1381,500 @@ static mc_ep_result_t
 build_act_prev (void *data, void *edit)
 {
     return build_run_command (data, BUILD_CMD_PREV, edit) ? MC_EPR_OK : MC_EPR_FAILED;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------------- */
+/* The window of the profiles */
+
+/* @name as a part of the name of a directory: lower case, '-' for what is no letter or digit */
+static char *
+build_profile_dir_part (const char *name)
+{
+    char *part = g_ascii_strdown (name, -1);
+    char *p;
+
+    for (p = part; *p != '\0'; p++)
+        if (!g_ascii_isalnum (*p))
+            *p = '-';
+    return part;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The directory offered to the profile @name made from @from: next to that of @from, its name
+   after it, "../coole-build" -> "../coole-build-coverage"; "build/coverage" in the root when
+   @from builds in the root itself */
+static char *
+build_profile_offer_dir_first (const build_profile_t *from, const char *root, const char *name)
+{
+    char *part = build_profile_dir_part (name);
+    char *dir = from != NULL ? build_profile_dir (from, root) : g_strdup (root);
+    char *offer;
+
+    if (from == NULL || from->dir == NULL || strcmp (dir, root) == 0)
+        offer = g_build_filename ("build", part, (char *) NULL);
+    else
+    {
+        char *given = g_strdup (from->dir);
+        gsize len = strlen (given);
+
+        while (len > 1 && given[len - 1] == '/')
+            given[--len] = '\0';
+        offer = g_strconcat (given, "-", part, (char *) NULL);
+        g_free (given);
+    }
+    g_free (dir);
+    g_free (part);
+    return offer;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* @dir from @root as the system has it: its links followed when it is there */
+static char *
+build_profile_real_dir (const char *dir, const char *root)
+{
+    char *path = g_canonicalize_filename (dir, root);
+    char *real = realpath (path, NULL);
+
+    if (real == NULL)
+        return path;
+    g_free (path);
+    path = g_strdup (real);
+    free (real);
+    return path;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The profile of @profiles other than @self whose directory is @dir, absolute, a link to it as
+   well; NULL for none */
+static const build_profile_t *
+build_profile_dir_owner (const build_profiles_t *profiles, const build_profile_t *self,
+                         const char *root, const char *dir)
+{
+    char *want = build_profile_real_dir (dir, root);
+    const build_profile_t *owner = NULL;
+    guint i;
+
+    for (i = 0; owner == NULL && i < profiles->list->len; i++)
+    {
+        const build_profile_t *q = (const build_profile_t *) g_ptr_array_index (profiles->list, i);
+        char *abs = build_profile_dir (q, root);
+        char *have = build_profile_real_dir (abs, root);
+
+        if (q != self && strcmp (have, want) == 0)
+            owner = q;
+        g_free (have);
+        g_free (abs);
+    }
+    g_free (want);
+    return owner;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The directory offered to the profile @name made from @from, one no profile of @profiles has
+   and that is not there yet: "-2", "-3" after it when it is taken */
+static char *
+build_profile_offer_dir (const build_profiles_t *profiles, const build_profile_t *from,
+                         const char *root, const char *name)
+{
+    char *first = build_profile_offer_dir_first (from, root, name);
+    char *offer = g_strdup (first);
+    int i;
+
+    for (i = 2; i < 100; i++)
+    {
+        char *abs = g_canonicalize_filename (offer, root);
+        const gboolean taken = build_profile_dir_owner (profiles, NULL, root, abs) != NULL
+            || g_file_test (abs, G_FILE_TEST_EXISTS);
+
+        g_free (abs);
+        if (!taken)
+            break;
+        g_free (offer);
+        offer = g_strdup_printf ("%s-%d", first, i);
+    }
+    g_free (first);
+    return offer;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The form of the profile @p of @profiles: its name, directory, commands; changed on OK, FALSE
+   on Cancel */
+static gboolean
+build_profile_form (build_t *build, const char *root, build_profiles_t *profiles,
+                    build_profile_t *p)
+{
+    char *title = g_strdup_printf (_ ("Build profile: %s"), p->name);
+    gboolean done = FALSE;
+
+    while (!done)
+    {
+        char *name = NULL, *dir = NULL, *command = NULL, *test = NULL;
+        gboolean after = p->test_after_build;
+        const char *problem = NULL;
+        int ret;
+        quick_widget_t widgets[] = {
+            QUICK_LABELED_INPUT (_ ("Name:"), input_label_above, p->name, "build-profile-name",
+                                 &name, NULL, FALSE, FALSE, INPUT_COMPLETE_NONE),
+            QUICK_LABELED_INPUT (_ ("Build directory, from the root of the project:"),
+                                 input_label_above, p->dir != NULL ? p->dir : "",
+                                 "build-profile-dir", &dir, NULL, FALSE, FALSE,
+                                 INPUT_COMPLETE_FILENAMES | INPUT_COMPLETE_CD),
+            QUICK_LABELED_INPUT (_ ("Build command (empty: that of the build system):"),
+                                 input_label_above, p->build != NULL ? p->build : "",
+                                 "build-command", &command, NULL, FALSE, FALSE,
+                                 INPUT_COMPLETE_COMMANDS),
+            QUICK_LABELED_INPUT (_ ("Test command:"), input_label_above,
+                                 p->test != NULL ? p->test : "", "build-profile-test", &test, NULL,
+                                 FALSE, FALSE, INPUT_COMPLETE_COMMANDS),
+            QUICK_CHECKBOX (_ ("&Run the tests after the build"), &after, NULL),
+            QUICK_BUTTONS_OK_CANCEL,
+            QUICK_END,
+        };
+        WRect r = { -1, -1, 0, MIN (76, COLS - 4) };
+        quick_dialog_t qdlg = {
+            .rect = r,
+            .title = title,
+            .help = "[Build]",
+            .help_file = "build.md",
+            .widgets = widgets,
+            .callback = NULL,
+            .mouse_callback = NULL,
+        };
+
+        ret = quick_dialog (&qdlg);
+        if (ret == B_CANCEL || ret == B_EXIT)
+        {
+            g_free (name);
+            g_free (dir);
+            g_free (command);
+            g_free (test);
+            break;
+        }
+        (void) g_strstrip (name);
+        (void) g_strstrip (dir);
+        if (*name == '\0' || strchr (name, '[') != NULL || strchr (name, ']') != NULL)
+            problem = _ ("A profile needs a name, without [ and ].");
+        else if (strcmp (name, p->name) != 0 && build_profiles_find (profiles, name) != NULL)
+            problem = _ ("There is a profile of that name.");
+        else if (*dir == '\0')
+            problem = _ ("A profile needs a build directory.");
+        if (problem != NULL)
+        {
+            build->host->message (build->host, D_ERROR, _ ("Build"), problem);
+            g_free (name);
+            g_free (dir);
+            g_free (command);
+            g_free (test);
+            continue;
+        }
+        // a new name: the profiles that name it name the new one
+        if (strcmp (name, p->name) != 0)
+        {
+            guint i;
+
+            if (g_strcmp0 (profiles->active, p->name) == 0)
+            {
+                g_free (profiles->active);
+                profiles->active = g_strdup (name);
+            }
+            if (g_strcmp0 (profiles->coverage, p->name) == 0)
+            {
+                g_free (profiles->coverage);
+                profiles->coverage = g_strdup (name);
+            }
+            for (i = 0; i < profiles->list->len; i++)
+            {
+                build_profile_t *o = (build_profile_t *) g_ptr_array_index (profiles->list, i);
+
+                if (g_strcmp0 (o->from, p->name) == 0)
+                {
+                    g_free (o->from);
+                    o->from = g_strdup (name);
+                }
+            }
+            g_free (p->name);
+            p->name = name;
+        }
+        else
+            g_free (name);
+        g_free (p->dir);
+        p->dir = dir;
+        {
+            // the system of the directory when it is set up, else the one it had
+            char *abs = build_profile_dir (p, root);
+            const build_system_t system = build_system_of_dir (abs);
+
+            if (system != BUILD_NONE)
+                p->system = system;
+            g_free (abs);
+        }
+        g_free (p->build);
+        p->build = *g_strstrip (command) != '\0' ? command : (g_free (command), NULL);
+        g_free (p->test);
+        p->test = *g_strstrip (test) != '\0' ? test : (g_free (test), NULL);
+        p->test_after_build = after;
+        done = TRUE;
+    }
+    g_free (title);
+    return done;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A new profile made from @from, its name asked; its form after it; FALSE when none is made */
+static gboolean
+build_profile_new (build_t *build, const char *root, build_profiles_t *profiles,
+                   const build_profile_t *from)
+{
+    char *name, *dir, *from_dir;
+    build_profile_t *p;
+
+    name = input_dialog (_ ("Build"), _ ("Name of the new profile:"), "build-profile-name", "",
+                         INPUT_COMPLETE_NONE);
+    if (name == NULL || *g_strstrip (name) == '\0')
+    {
+        g_free (name);
+        return FALSE;
+    }
+    dir = build_profile_offer_dir (profiles, from, root, name);
+    p = build_profiles_add (profiles, root, name, from, dir);
+    g_free (dir);
+    if (p == NULL)
+    {
+        build->host->message (build->host, D_ERROR, _ ("Build"),
+                              _ ("There is a profile of that name, or the name has [ or ]."));
+        g_free (name);
+        return FALSE;
+    }
+    // what set up the directory of the other one sets up this one
+    from_dir = from != NULL ? build_profile_dir (from, root) : NULL;
+    if (p->setup == NULL && from_dir != NULL)
+        p->setup = build_profile_setup_of (from_dir, from->system);
+    if (p->test == NULL)
+    {
+        char *abs = build_profile_dir (p, root);
+
+        p->test = build_profile_test_command (p->system, abs);
+        g_free (abs);
+    }
+    g_free (from_dir);
+    g_free (name);
+    if (!build_profile_form (build, root, profiles, p))
+    {
+        char *gone = g_strdup (p->name);
+
+        (void) build_profiles_remove (profiles, gone);
+        g_free (gone);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The cells of the table of the profiles, a row of BUILD_PROFILE_COLS for each */
+#define BUILD_PROFILE_COLS 5
+
+static int
+build_profiles_rows (const void *data)
+{
+    return (int) (((const GPtrArray *) data)->len / BUILD_PROFILE_COLS);
+}
+
+static const char *
+build_profiles_cell (const void *data, int row, int col)
+{
+    const GPtrArray *cells = (const GPtrArray *) data;
+    const guint at = (guint) (row * BUILD_PROFILE_COLS + col);
+
+    return at < cells->len ? (const char *) g_ptr_array_index (cells, at) : "";
+}
+
+/* Enter in the table is Make active, the button of the dialog it would press */
+static cb_ret_t
+build_profiles_dialog_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data)
+{
+    if (msg == MSG_NOTIFY && parm == CK_Enter)
+    {
+        DIALOG (w)->ret_value = B_ENTER;
+        dlg_close (DIALOG (w));
+        return MSG_HANDLED;
+    }
+    return dlg_default_callback (w, sender, msg, parm, data);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The profiles of the project in one dialog, as Debug configurations are: the active one is
+   marked; Make active makes the one of the cursor it, New makes one from it, Edit and Delete
+   change it, Build builds it and leaves the active one.  The dialog comes back after New, Edit
+   and Delete */
+static mc_ep_result_t
+build_act_profiles (void *data, void *edit)
+{
+    build_t *build = (build_t *) data;
+    char *root = build_root_of (build, edit);
+    enum
+    {
+        BUILD_B_NEW = B_USER,
+        BUILD_B_EDIT,
+        BUILD_B_DELETE,
+        BUILD_B_BUILD
+    };
+    static const struct
+    {
+        int action;
+        int flags;
+        const char *label;
+    } buttons[] = {
+        { B_ENTER, DEFPUSH_BUTTON, N_ ("&Make active") },
+        { BUILD_B_NEW, NORMAL_BUTTON, N_ ("&New") },
+        { BUILD_B_EDIT, NORMAL_BUTTON, N_ ("&Edit") },
+        { BUILD_B_DELETE, NORMAL_BUTTON, N_ ("&Delete") },
+        { BUILD_B_BUILD, NORMAL_BUTTON, N_ ("&Build") },
+        { B_CANCEL, NORMAL_BUTTON, N_ ("&Close") },
+    };
+    guint cursor = 0;
+
+    while (TRUE)
+    {
+        build_profiles_t *profiles = build_profiles_of (root);
+        const build_profile_t *active = build_profiles_active (profiles);
+        const int rows_h = (int) MIN (profiles->list->len, 12);
+        const int dlg_w = MIN (COLS - 4, 78);
+        // the frame, the header and the rows, a line, the buttons, the frame
+        const int dlg_h = rows_h + 5;
+        static const table_column_def_t defs[BUILD_PROFILE_COLS] = {
+            { 1, J_CENTER, TABLE_COL_TEXT }, { 0, J_LEFT, TABLE_COL_TEXT },
+            { 0, J_LEFT, TABLE_COL_TEXT },   { 0, J_LEFT, TABLE_COL_TEXT },
+            { 0, J_LEFT, TABLE_COL_TEXT },
+        };
+        const char *titles[BUILD_PROFILE_COLS + 1] = {
+            "", _ ("Name"), _ ("Directory"), _ ("System"), _ ("Built for"), NULL,
+        };
+        GPtrArray *cells = g_ptr_array_new_with_free_func (g_free);
+        table_datasource_t ds = { 0 };
+        WDialog *dlg;
+        WTable *table;
+        build_profile_t *p = NULL;
+        int ret, x, row;
+        guint i;
+
+        for (i = 0; i < profiles->list->len; i++)
+        {
+            const build_profile_t *q =
+                (const build_profile_t *) g_ptr_array_index (profiles->list, i);
+            char *where, *what;
+
+            build_profile_describe (q, root, &where, &what);
+            g_ptr_array_add (cells, g_strdup (q == active ? "*" : ""));
+            g_ptr_array_add (cells, g_strdup (q->name));
+            g_ptr_array_add (cells, where);
+            g_ptr_array_add (cells, g_strdup (build_system_name (q->system)));
+            g_ptr_array_add (cells, what);
+        }
+
+        dlg = dlg_create (TRUE, 0, 0, dlg_h, dlg_w, WPOS_CENTER, TRUE, dialog_colors,
+                          build_profiles_dialog_callback, NULL, "[Build]", _ ("Build profiles"));
+        table = table_new (1, 1, rows_h + 1, dlg_w - 2, BUILD_PROFILE_COLS, defs);
+        table_set_column_sizing (table, 0, 1, FALSE);
+        table_set_column_sizing (table, 1, 8, FALSE);
+        table_set_column_sizing (table, 2, 12, TRUE);
+        table_set_column_sizing (table, 3, 6, FALSE);
+        table_set_column_sizing (table, 4, 10, TRUE);
+        ds.get_nrows = build_profiles_rows;
+        ds.get_text = build_profiles_cell;
+        ds.data = cells;
+        table_set_datasource (table, ds);
+        table_set_header (table, titles);
+        table->scrollbar = TRUE;
+        table_set_current (table, (int) MIN (cursor, profiles->list->len - 1));
+        group_add_widget (GROUP (dlg), table);
+        group_add_widget (GROUP (dlg), hline_new (dlg_h - 3, -1, -1));
+        x = 2;
+        for (i = 0; i < G_N_ELEMENTS (buttons); i++)
+        {
+            WButton *b = button_new (dlg_h - 2, x, buttons[i].action, buttons[i].flags,
+                                     _ (buttons[i].label), NULL);
+
+            group_add_widget (GROUP (dlg), b);
+            x += button_get_width (b) + 1;
+        }
+        widget_select (WIDGET (table));
+        ret = dlg_run (dlg);
+        row = table_get_current (table);
+        if (row >= 0 && (guint) row < profiles->list->len)
+        {
+            cursor = (guint) row;
+            p = (build_profile_t *) g_ptr_array_index (profiles->list, cursor);
+        }
+        widget_destroy (WIDGET (dlg));
+        g_ptr_array_free (cells, TRUE);
+
+        switch (ret)
+        {
+        case B_ENTER:
+            if (p != NULL)
+            {
+                g_free (profiles->active);
+                profiles->active = g_strdup (p->name);
+                (void) build_profiles_save (build, root, profiles);
+            }
+            break;
+        case BUILD_B_NEW:
+            if (build_profile_new (build, root, profiles, p))
+            {
+                (void) build_profiles_save (build, root, profiles);
+                cursor = profiles->list->len - 1;
+            }
+            build_profiles_free (profiles);
+            continue;
+        case BUILD_B_EDIT:
+            if (p != NULL && build_profile_form (build, root, profiles, p))
+                (void) build_profiles_save (build, root, profiles);
+            build_profiles_free (profiles);
+            continue;
+        case BUILD_B_DELETE:
+            if (p != NULL
+                && query_dialog (_ ("Build"), _ ("Delete the profile? Its build directory stays."),
+                                 D_NORMAL, 2, _ ("&Delete"), _ ("&Cancel"))
+                    == 0)
+            {
+                char *gone = g_strdup (p->name);
+
+                (void) build_profiles_remove (profiles, gone);
+                (void) build_profiles_save (build, root, profiles);
+                g_free (gone);
+                if (cursor > 0)
+                    cursor--;
+            }
+            build_profiles_free (profiles);
+            continue;
+        case BUILD_B_BUILD:
+            if (p != NULL)
+            {
+                char *name = g_strdup (p->name);
+
+                build->quiet = FALSE;
+                (void) build_start (build, root, name);
+                g_free (name);
+            }
+            break;
+        default:
+            break;
+        }
+        build_profiles_free (profiles);
+        break;
+    }
+    g_free (root);
+    return MC_EPR_OK;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1534,7 +2070,7 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
         char *command = NULL, *dir = NULL;
         GPtrArray *programs;
 
-        (void) build_plan (build, root, &command, &dir);
+        (void) build_plan (build, root, NULL, &command, &dir);
         if (command != NULL)
             g_variant_dict_insert (&reply, "command", "s", command);
         g_variant_dict_insert (&reply, "dir", "s", dir);
@@ -1636,7 +2172,7 @@ build_call (void *data, const char *method, GVariant *args, GError **error)
     }
     else if (strcmp (method, "run") == 0 && root != NULL)
     {
-        const gboolean started = build_start (build, root);
+        const gboolean started = build_start (build, root, NULL);
 
         build->quiet = started;
         g_variant_dict_insert (&reply, "started", "b", started);
@@ -1741,6 +2277,7 @@ build_close (void *data)
     g_array_free (build->rows, TRUE);
     g_string_free (build->output, TRUE);
     g_free (build->title);
+    g_free (build->profile);
     g_string_free (build->pending, TRUE);
     g_string_free (build->partial, TRUE);
     g_free (build->root);
@@ -1771,12 +2308,13 @@ build_act_output (void *data, void *edit)
 {
     build_t *build = (build_t *) data;
 
-    // the options may have changed since the last build: the title found again
+    /* the options may have changed since the last build: the title found again, of the profile
+       the output is of; before any build, of the active one of the project in front */
     {
-        char *root = build_root_of (build, edit);
+        char *root = build->root != NULL ? g_strdup (build->root) : build_root_of (build, edit);
 
         g_free (build->title);
-        build->title = build_output_title (root);
+        build->title = build_output_title (root, build->root != NULL ? build->profile : NULL);
         g_free (root);
     }
     if (build->output->len == 0)
@@ -1878,9 +2416,13 @@ static const mc_ep_window_kind_t build_output_kind = {
 };
 
 static const mc_ep_action_t build_actions[] = {
-    { "Build", build_act_run },           { "Next error", build_act_next },
-    { "Previous error", build_act_prev }, { "Configure", build_act_configure },
-    { "Output", build_act_output },       { "Language defaults", build_act_defaults },
+    { "Build", build_act_run },
+    { "Next error", build_act_next },
+    { "Previous error", build_act_prev },
+    { "Configure", build_act_configure },
+    { "Profiles", build_act_profiles },
+    { "Output", build_act_output },
+    { "Language defaults", build_act_defaults },
 };
 
 /* The key of a menu entry, that of the command of its action */
@@ -1909,7 +2451,7 @@ build_menu_shortcut (int action_index)
 static const mc_ep_cmd_menu_entry_t build_menu[] = {
     { MC_EP_MENU_PROJECT, NULL, 0, NULL },
     { MC_EP_MENU_PROJECT, N_ ("B&uild project"), BUILD_ACT_RUN, NULL },
-    { MC_EP_MENU_PROJECT, N_ ("Build &command..."), BUILD_ACT_CONFIGURE, NULL },
+    { MC_EP_MENU_PROJECT, N_ ("Build profile&s..."), BUILD_ACT_PROFILES, NULL },
     { MC_EP_MENU_PROJECT, N_ ("Bu&ild output"), BUILD_ACT_OUTPUT, NULL },
     { MC_EP_MENU_PROJECT, N_ ("&Next build error"), BUILD_ACT_NEXT, NULL },
     { MC_EP_MENU_PROJECT, N_ ("&Previous build error"), BUILD_ACT_PREV, NULL },

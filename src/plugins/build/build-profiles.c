@@ -448,6 +448,27 @@ build_profiles_free (build_profiles_t *profiles)
 
 /* --------------------------------------------------------------------------------------------- */
 
+char *
+build_profile_relative (const char *root, const char *dir)
+{
+    char *parent;
+    char *rel;
+
+    if (strcmp (dir, root) == 0)
+        return g_strdup (".");
+    if (g_str_has_prefix (dir, root) && dir[strlen (root)] == '/')
+        return g_strdup (dir + strlen (root) + 1);
+    parent = g_path_get_dirname (root);
+    if (strcmp (parent, "/") != 0 && g_str_has_prefix (dir, parent) && dir[strlen (parent)] == '/')
+        rel = g_strconcat ("..", dir + strlen (parent), (char *) NULL);
+    else
+        rel = g_strdup (dir);
+    g_free (parent);
+    return rel;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 build_profiles_t *
 build_profiles_default (const char *root, const build_info_t *found, const char *command)
 {
@@ -455,7 +476,8 @@ build_profiles_default (const char *root, const build_info_t *found, const char 
     build_profile_t *profile = g_new0 (build_profile_t, 1);
 
     profile->name = g_strdup (BUILD_PROFILES_DEFAULT);
-    profile->dir = g_strdup (found != NULL && found->build_dir != NULL ? found->build_dir : root);
+    profile->dir = build_profile_relative (
+        root, found != NULL && found->build_dir != NULL ? found->build_dir : root);
     profile->system = found != NULL ? found->system : BUILD_NONE;
     profile->build = command != NULL && *command != '\0' ? g_strdup (command) : NULL;
     g_ptr_array_add (profiles->list, profile);
@@ -586,25 +608,71 @@ build_profile_dir (const build_profile_t *profile, const char *root)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The command that sets the directory @dir of @profile up with its options, "meson setup DIR
+   -Dx=1", "cmake -S ROOT -B DIR -Dx=1"; NULL for a system without one */
+static char *
+build_profile_setup_command (const build_profile_t *profile, const char *root, const char *dir)
+{
+    char *quoted = g_shell_quote (dir);
+    const char *setup = profile->setup != NULL ? profile->setup : "";
+    const char *space = profile->setup != NULL ? " " : "";
+    char *command = NULL;
+
+    if (profile->system == BUILD_MESON)
+        command = g_strdup_printf ("meson setup %s%s%s", quoted, space, setup);
+    else if (profile->system == BUILD_CMAKE)
+    {
+        char *source = g_shell_quote (root);
+
+        command = g_strdup_printf ("cmake -S %s -B %s%s%s", source, quoted, space, setup);
+        g_free (source);
+    }
+    g_free (quoted);
+    return command;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 char *
 build_profile_build_command (const build_profile_t *profile, const char *root)
 {
+    char *dir = build_profile_dir (profile, root);
+    const gboolean set_up = build_system_of_dir (dir) == profile->system;
+    char *setup = set_up ? NULL : build_profile_setup_command (profile, root, dir);
     char *build = NULL;
 
     if (profile->build != NULL)
-        build = g_strdup (profile->build);
+    {
+        /* a command of its own that builds the directory, "meson compile -C DIR -j 4", the
+           directory not set up yet: set up first, as the command of its system would */
+        char *rel = profile->dir != NULL && !g_path_is_absolute (profile->dir)
+            ? g_strdup (profile->dir)
+            : build_profiles_from_root (root, dir);
+        // names it as a word or a path in it, not as a part of another word
+        const gboolean names = build_profiles_names_dir (profile->build, rel, dir, NULL, NULL);
+
+        g_free (rel);
+        if (setup != NULL && names && strstr (profile->build, "meson setup") == NULL
+            && strstr (profile->build, "cmake -S") == NULL
+            && strstr (profile->build, "cmake -B") == NULL)
+            build = g_strdup_printf ("%s && %s", setup, profile->build);
+        else
+            build = g_strdup (profile->build);
+    }
     else
     {
-        char *dir = build_profile_dir (profile, root);
         char *quoted = g_shell_quote (dir);
 
+        // a directory not set up yet, that of a new profile: set up first
         switch (profile->system)
         {
         case BUILD_MESON:
-            build = g_strdup_printf ("meson compile -C %s", quoted);
+            build = setup == NULL ? g_strdup_printf ("meson compile -C %s", quoted)
+                                  : g_strdup_printf ("%s && meson compile -C %s", setup, quoted);
             break;
         case BUILD_CMAKE:
-            build = g_strdup_printf ("cmake --build %s", quoted);
+            build = setup == NULL ? g_strdup_printf ("cmake --build %s", quoted)
+                                  : g_strdup_printf ("%s && cmake --build %s", setup, quoted);
             break;
         case BUILD_MAKE:
             build = g_strdup ("make");
@@ -613,8 +681,9 @@ build_profile_build_command (const build_profile_t *profile, const char *root)
             break;
         }
         g_free (quoted);
-        g_free (dir);
     }
+    g_free (setup);
+    g_free (dir);
     return build;
 }
 
@@ -628,9 +697,77 @@ build_profile_command (const build_profile_t *profile, const char *root)
 
     if (build == NULL || !profile->test_after_build || profile->test == NULL)
         return build;
-    command = g_strconcat (build, " && ", profile->test, (char *) NULL);
+    /* a command of the user's own in a shell of its own, which ends on a new line: its cd does not
+       move the tests, a comment at its end does not take them in */
+    if (profile->build != NULL)
+        command = g_strconcat ("(", build, "\n) && ", profile->test, (char *) NULL);
+    else
+        command = g_strconcat (build, " && ", profile->test, (char *) NULL);
     g_free (build);
     return command;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+build_system_t
+build_system_of_dir (const char *dir)
+{
+    char *path;
+    build_system_t system = BUILD_NONE;
+
+    if (dir == NULL)
+        return BUILD_NONE;
+    path = g_build_filename (dir, "meson-info", "meson-info.json", (char *) NULL);
+    if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
+        system = BUILD_MESON;
+    g_free (path);
+    if (system == BUILD_NONE)
+    {
+        path = g_build_filename (dir, "CMakeCache.txt", (char *) NULL);
+        if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
+            system = BUILD_CMAKE;
+        g_free (path);
+    }
+    return system;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_setup_of (const char *dir, build_system_t system)
+{
+    GPtrArray *options = build_options_read (dir, system);
+    GString *setup;
+    guint i;
+
+    if (options == NULL)
+        return NULL;
+    setup = g_string_new (NULL);
+    for (i = 0; i < options->len; i++)
+    {
+        const build_option_t *o = (const build_option_t *) g_ptr_array_index (options, i);
+        char *arg, *quoted;
+
+        if (!o->set_by_user)
+            continue;
+        arg = g_strdup_printf ("-D%s=%s", o->name, o->value);
+        quoted = g_shell_quote (arg);
+        // a word that needs no quotes goes as it is
+        if (strspn (arg, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_=.,/+:")
+            == strlen (arg))
+            g_string_append_printf (setup, "%s%s", setup->len > 0 ? " " : "", arg);
+        else
+            g_string_append_printf (setup, "%s%s", setup->len > 0 ? " " : "", quoted);
+        g_free (quoted);
+        g_free (arg);
+    }
+    g_ptr_array_free (options, TRUE);
+    if (setup->len == 0)
+    {
+        g_string_free (setup, TRUE);
+        return NULL;
+    }
+    return g_string_free (setup, FALSE);
 }
 
 /* --------------------------------------------------------------------------------------------- */

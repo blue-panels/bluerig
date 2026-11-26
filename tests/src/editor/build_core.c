@@ -622,9 +622,36 @@ test_profiles (void)
     g_assert_cmpstr (p->setup, ==, "-Dbuildtype=debug -Dscreen=slang");
     g_assert_true (p->test_after_build);
     g_assert_true (build_profiles_active (profiles) == p);
+    // its own command, its directory not set up yet: set up first with its options
     command = build_profile_command (p, "/src/proj");
-    g_assert_cmpstr (command, ==, "meson compile -C ../proj-build && meson test -C ../proj-build");
+    g_assert_cmpstr (command, ==,
+                     "(meson setup '/src/proj-build' -Dbuildtype=debug -Dscreen=slang && "
+                     "meson compile -C ../proj-build\n) && meson test -C ../proj-build");
     g_free (command);
+    // a command that sets up itself, or one that names no build directory, as it is
+    {
+        char *own = p->build;
+        char *had = p->setup;
+
+        // the setup with "&&" in a value in quotes stays whole
+        p->setup = (char *) "'-Dlabel=A && B'";
+        command = build_profile_build_command (p, "/src/proj");
+        g_assert_cmpstr (command, ==,
+                         "meson setup '/src/proj-build' '-Dlabel=A && B' && "
+                         "meson compile -C ../proj-build");
+        g_free (command);
+        p->setup = had;
+
+        p->build = (char *) "meson setup ../proj-build && meson compile -C ../proj-build";
+        command = build_profile_build_command (p, "/src/proj");
+        g_assert_cmpstr (command, ==, p->build);
+        g_free (command);
+        p->build = (char *) "make";
+        command = build_profile_build_command (p, "/src/proj");
+        g_assert_cmpstr (command, ==, "make");
+        g_free (command);
+        p->build = own;
+    }
     text = build_profile_dir (p, "/src/proj");
     g_assert_cmpstr (text, ==, "/src/proj-build");
     g_free (text);
@@ -748,21 +775,86 @@ test_profiles (void)
     profiles = build_profiles_default ("/src/proj", &found, "make -j4");
     p = build_profiles_active (profiles);
     g_assert_cmpstr (p->name, ==, BUILD_PROFILES_DEFAULT);
-    g_assert_cmpstr (p->dir, ==, "/src/proj-build");
+    // named from the root, as the user names it
+    g_assert_cmpstr (p->dir, ==, "../proj-build");
     g_assert_cmpint (p->system, ==, BUILD_MESON);
     g_assert_cmpstr (p->build, ==, "make -j4");
     build_profiles_free (profiles);
+    // a directory not set up yet is set up first, with the options of the profile
     profiles = build_profiles_default ("/src/proj", &found, NULL);
     command = build_profile_command (build_profiles_active (profiles), "/src/proj");
-    g_assert_cmpstr (command, ==, "meson compile -C '/src/proj-build'");
+    g_assert_cmpstr (command, ==,
+                     "meson setup '/src/proj-build' && meson compile -C '/src/proj-build'");
+    g_free (command);
+    p = build_profiles_active (profiles);
+    p->setup = g_strdup ("-Db_coverage=true");
+    command = build_profile_command (p, "/src/proj");
+    g_assert_cmpstr (command, ==,
+                     "meson setup '/src/proj-build' -Db_coverage=true && "
+                     "meson compile -C '/src/proj-build'");
+    g_free (command);
+    p->system = BUILD_CMAKE;
+    command = build_profile_command (p, "/src/proj");
+    g_assert_cmpstr (command, ==,
+                     "cmake -S '/src/proj' -B '/src/proj-build' -Db_coverage=true && "
+                     "cmake --build '/src/proj-build'");
     g_free (command);
     build_profiles_free (profiles);
+    {
+        // set up already: built as it is
+        char *dir = at ("prof-build");
+        build_info_t there = { BUILD_MESON, dir, NULL };
+
+        write_file ("prof-build/meson-info/meson-info.json", "{}");
+        g_assert_cmpint (build_system_of_dir (dir), ==, BUILD_MESON);
+        profiles = build_profiles_default ("/src/proj", &there, NULL);
+        command = build_profile_command (build_profiles_active (profiles), "/src/proj");
+        text = g_strdup_printf ("meson compile -C '%s'", dir);
+        g_assert_cmpstr (command, ==, text);
+        g_free (text);
+        g_free (command);
+        build_profiles_free (profiles);
+
+        // what set it up: the options given, those with odd characters quoted
+        write_file ("prof-build/meson-info/intro-buildoptions.json",
+                    "[{\"name\": \"buildtype\", \"value\": \"debug\", \"type\": \"combo\"},"
+                    " {\"name\": \"c_args\", \"value\": [\"-DA=1\", \"-DB=a b\"], "
+                    "\"type\": \"array\"},"
+                    " {\"name\": \"werror\", \"value\": false, \"type\": \"boolean\"}]");
+        write_file ("prof-build/meson-private/cmd_line.txt",
+                    "[options]\nbuildtype = debug\nc_args = -DA=1,'-DB=a b'\n");
+        text = build_profile_setup_of (dir, BUILD_MESON);
+        g_assert_cmpstr (text, ==, "-Dbuildtype=debug '-Dc_args=-DA=1,-DB=a b'");
+        g_free (text);
+        g_assert_null (build_profile_setup_of (top, BUILD_MESON));
+        g_assert_cmpint (build_system_of_dir (top), ==, BUILD_NONE);
+        g_free (dir);
+    }
     profiles = build_profiles_default ("/src/proj", NULL, NULL);
     p = build_profiles_active (profiles);
-    g_assert_cmpstr (p->dir, ==, "/src/proj");
+    g_assert_cmpstr (p->dir, ==, ".");
     g_assert_cmpint (p->system, ==, BUILD_NONE);
     g_assert_null (build_profile_command (p, "/src/proj"));
     build_profiles_free (profiles);
+
+    {
+        static const char *const cases[][3] = {
+            { "/src/proj", "/src/proj", "." },
+            { "/src/proj", "/src/proj/build", "build" },
+            { "/src/proj", "/src/proj-build", "../proj-build" },
+            { "/src/proj", "/src/projx/b", "../projx/b" },
+            { "/src/proj", "/other/b", "/other/b" },
+            { "/proj", "/proj-build", "/proj-build" },
+        };
+        size_t i;
+
+        for (i = 0; i < G_N_ELEMENTS (cases); i++)
+        {
+            text = build_profile_relative (cases[i][0], cases[i][1]);
+            g_assert_cmpstr (text, ==, cases[i][2]);
+            g_free (text);
+        }
+    }
 
     command = build_profile_test_command (BUILD_CMAKE, "/b d");
     g_assert_cmpstr (command, ==, "ctest --test-dir '/b d'");
