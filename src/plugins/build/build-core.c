@@ -1428,6 +1428,44 @@ build_options_set_defaults (GPtrArray *options, const char *json)
 
 /* --------------------------------------------------------------------------------------------- */
 
+GPtrArray *
+build_options_of_source (const char *json)
+{
+    GPtrArray *options = json != NULL ? build_options_of_meson_json (json) : NULL;
+    guint i;
+
+    for (i = 0; options != NULL && i < options->len; i++)
+    {
+        build_option_t *o = (build_option_t *) g_ptr_array_index (options, i);
+
+        o->default_value = g_strdup (o->value);
+    }
+    return options;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+const char *
+build_option_toggled (const char *value)
+{
+    static const char *const pairs[][2] = {
+        { "true", "false" }, { "ON", "OFF" }, { "on", "off" }, { "TRUE", "FALSE" },
+        { "YES", "NO" },     { "yes", "no" }, { "1", "0" },
+    };
+    gsize i;
+
+    for (i = 0; i < G_N_ELEMENTS (pairs); i++)
+    {
+        if (strcmp (value, pairs[i][0]) == 0)
+            return pairs[i][1];
+        if (strcmp (value, pairs[i][1]) == 0)
+            return pairs[i][0];
+    }
+    return "true";
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 const build_option_t *
 build_options_find (const GPtrArray *options, const char *name)
 {

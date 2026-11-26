@@ -117,6 +117,11 @@ const build_option_t *build_options_find (const GPtrArray *options, const char *
 char *build_option_meson_list (const char *const *items);
 /* The value of @o as -Dname= takes it: a list of meson as a list, the items kept apart */
 char *build_option_arg (const build_option_t *o);
+/* The options of the source of a meson project from @json, what "meson introspect --buildoptions
+   meson.build" prints, each with its default for its value; NULL when it is no list of options */
+GPtrArray *build_options_of_source (const char *json);
+/* The other value of a boolean: "true" and "false", "ON" and "OFF", ...; "true" for another */
+const char *build_option_toggled (const char *value);
 
 /* What @options of @system say the directory is built for */
 build_summary_t *build_summary_of (const GPtrArray *options, build_system_t system);

@@ -330,15 +330,19 @@ build_profiles_replace (const char *text, const char *old_rel, const char *old_a
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The name of the option of @word, "-Dname=value" -> "name"; NULL for another word */
+/* The name of the option of @word, "-Dname=value" and "-DNAME:BOOL=ON" -> "name", "NAME"; NULL
+   for another word; its value in @value when it is not NULL */
 static char *
-build_profile_option_name (const char *word)
+build_profile_option_name (const char *word, const char **value)
 {
-    const char *equal;
+    const char *equal, *colon;
 
     if (!g_str_has_prefix (word, "-D") || (equal = strchr (word, '=')) == NULL)
         return NULL;
-    return g_strndup (word + 2, (gsize) (equal - word - 2));
+    if (value != NULL)
+        *value = equal + 1;
+    colon = memchr (word + 2, ':', (gsize) (equal - word - 2));
+    return g_strndup (word + 2, (gsize) ((colon != NULL ? colon : equal) - word - 2));
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -828,13 +832,13 @@ build_profile_setup_merge (const char *setup, const char *more)
     words = g_ptr_array_new ();
     for (w = base; w != NULL && *w != NULL; w++)
     {
-        char *name = build_profile_option_name (*w);
+        char *name = build_profile_option_name (*w, NULL);
         gboolean replaced = FALSE;
         char **a;
 
         for (a = add; name != NULL && a != NULL && *a != NULL && !replaced; a++)
         {
-            char *other = build_profile_option_name (*a);
+            char *other = build_profile_option_name (*a, NULL);
 
             replaced = g_strcmp0 (name, other) == 0;
             g_free (other);
@@ -852,6 +856,140 @@ build_profile_setup_merge (const char *setup, const char *more)
     if (*joined == '\0')
         g_clear_pointer (&joined, g_free);
     return joined;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_setup_append (const char *setup, const char *more)
+{
+    char **base = NULL, **add = NULL, **w;
+    char *result = setup != NULL ? g_strdup (setup) : NULL;
+
+    if (more == NULL || *more == '\0' || !g_shell_parse_argv (more, NULL, &add, NULL))
+        return result;
+    if (setup != NULL && *setup != '\0' && !g_shell_parse_argv (setup, NULL, &base, NULL))
+        base = NULL;
+    for (w = add; *w != NULL; w++)
+    {
+        const char *value = NULL, *had = NULL;
+        char *name = build_profile_option_name (*w, &value);
+        char **b, *joined, *next;
+
+        if (name == NULL)
+            continue;
+        for (b = base; b != NULL && *b != NULL && had == NULL; b++)
+        {
+            const char *v = NULL;
+            char *other = build_profile_option_name (*b, &v);
+
+            if (g_strcmp0 (other, name) == 0)
+                had = v;
+            g_free (other);
+        }
+        // the value the option had, the new one after it once
+        if (had == NULL || *had == '\0')
+            joined = g_strdup (value);
+        else
+        {
+            char **words = g_strsplit (had, " ", -1);
+
+            joined = g_strv_contains ((const char *const *) words, value)
+                ? g_strdup (had)
+                : g_strconcat (had, " ", value, (char *) NULL);
+            g_strfreev (words);
+        }
+        next = build_profile_setup_add (result, name, joined);
+        g_free (result);
+        result = next;
+        g_free (joined);
+        g_free (name);
+    }
+    g_strfreev (base);
+    g_strfreev (add);
+    return result;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_setup_add (const char *setup, const char *name, const char *value)
+{
+    GPtrArray *words = g_ptr_array_new_with_free_func (g_free);
+    char *more, *merged;
+
+    g_ptr_array_add (words, g_strdup_printf ("-D%s=%s", name, value));
+    more = build_profile_join (words);
+    g_ptr_array_free (words, TRUE);
+    merged = build_profile_setup_merge (setup, more);
+    g_free (more);
+    return merged;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+build_profile_setup_apply (GPtrArray *options, const char *setup)
+{
+    char **words = NULL, **w;
+    guint i;
+
+    if (options == NULL || setup == NULL || *setup == '\0'
+        || !g_shell_parse_argv (setup, NULL, &words, NULL))
+        return;
+    for (w = words; *w != NULL; w++)
+    {
+        const char *value = NULL;
+        char *name = build_profile_option_name (*w, &value);
+
+        for (i = 0; name != NULL && i < options->len; i++)
+        {
+            build_option_t *o = (build_option_t *) g_ptr_array_index (options, i);
+
+            if (strcmp (o->name, name) == 0)
+            {
+                g_free (o->value);
+                o->value = g_strdup (value);
+                o->set_by_user = TRUE;
+                break;
+            }
+        }
+        g_free (name);
+    }
+    g_strfreev (words);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+char *
+build_profile_configure_command (const build_profile_t *profile, const char *root,
+                                 const char *changes)
+{
+    char *dir, *quoted, *command = NULL, *setup;
+    gboolean set_up;
+
+    if (profile->system != BUILD_MESON && profile->system != BUILD_CMAKE)
+        return NULL;
+    dir = build_profile_dir (profile, root);
+    quoted = g_shell_quote (dir);
+    set_up = build_system_of_dir (dir) == profile->system;
+    // a directory set up takes the changes alone, one not yet all the options of the profile
+    setup = set_up ? g_strdup (changes) : build_profile_setup_merge (profile->setup, changes);
+    if (profile->system == BUILD_MESON)
+        command = g_strdup_printf ("meson %s %s%s%s", set_up ? "configure" : "setup", quoted,
+                                   setup != NULL ? " " : "", setup != NULL ? setup : "");
+    else
+    {
+        char *source = g_shell_quote (root);
+
+        command = g_strdup_printf ("cmake -S %s -B %s%s%s", source, quoted,
+                                   setup != NULL ? " " : "", setup != NULL ? setup : "");
+        g_free (source);
+    }
+    g_free (setup);
+    g_free (quoted);
+    g_free (dir);
+    return command;
 }
 
 /* --------------------------------------------------------------------------------------------- */

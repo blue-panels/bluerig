@@ -95,6 +95,19 @@ char *build_profile_setup_of (const char *dir, build_system_t system);
 /* The options @setup with those of @more: one of @more takes the place of the one of the same
    name, "-Dx=1 -Dy=2" and "-Dy=3" are "-Dx=1 -Dy=3"; NULL when both are NULL */
 char *build_profile_setup_merge (const char *setup, const char *more);
+/* @setup with each option of @more added to the value it has there, after a space, once:
+   "-DCMAKE_C_FLAGS=-O2" and "-DCMAKE_C_FLAGS=--coverage" are "'-DCMAKE_C_FLAGS=-O2 --coverage'" */
+char *build_profile_setup_append (const char *setup, const char *more);
+/* @setup with the option @name set to @value, "-Dname=value" quoted when it needs it */
+char *build_profile_setup_add (const char *setup, const char *name, const char *value);
+/* The values @setup gives to @options, those options set by the user then: what a directory not
+   set up yet will have */
+void build_profile_setup_apply (GPtrArray *options, const char *setup);
+/* The command that gives the build directory of @profile the options @changes, "-Dx=1 -Dy=2":
+   "meson configure DIR -Dx=1" when it is set up, else "meson setup DIR" with the options of the
+   profile and the changes; cmake -S ROOT -B DIR likewise; NULL for a system without options */
+char *build_profile_configure_command (const build_profile_t *profile, const char *root,
+                                       const char *changes);
 
 /* The command that runs the tests of @system in @dir, offered to a new profile */
 char *build_profile_test_command (build_system_t system, const char *dir);

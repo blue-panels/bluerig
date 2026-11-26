@@ -894,6 +894,102 @@ test_profiles (void)
     g_assert_cmpint (build_system_of_name ("scons"), ==, BUILD_NONE);
 }
 
+/* --------------------------------------------------------------------------------------------- */
+
+static void
+test_configure (void)
+{
+    build_profile_t p = { 0 };
+    char *dir = at ("conf-build");
+    char *text, *setup;
+    GPtrArray *options;
+    const build_option_t *o;
+
+    // an option added, one of a type, one with a space: each its own word
+    setup = build_profile_setup_add ("-Dx=1 -DCMAKE_BUILD_TYPE:STRING=Debug", "x", "2");
+    g_assert_cmpstr (setup, ==, "-DCMAKE_BUILD_TYPE:STRING=Debug -Dx=2");
+    text = build_profile_setup_add (setup, "CMAKE_BUILD_TYPE", "Release");
+    g_assert_cmpstr (text, ==, "-Dx=2 -DCMAKE_BUILD_TYPE=Release");
+    g_free (text);
+    text = build_profile_setup_add (NULL, "c_args", "-DA=a b");
+    g_assert_cmpstr (text, ==, "'-Dc_args=-DA=a b'");
+    g_free (text);
+    g_free (setup);
+
+    // not set up: the options of the profile and the changes; set up: the changes alone
+    p.name = (char *) "Cov";
+    p.dir = dir;
+    p.system = BUILD_MESON;
+    p.setup = (char *) "-Dbuildtype=debug -Db_coverage=false";
+    text = build_profile_configure_command (&p, "/src/proj", "-Db_coverage=true");
+    setup = g_strdup_printf ("meson setup '%s' -Dbuildtype=debug -Db_coverage=true", dir);
+    g_assert_cmpstr (text, ==, setup);
+    g_free (setup);
+    g_free (text);
+    write_file ("conf-build/meson-info/meson-info.json", "{}");
+    text = build_profile_configure_command (&p, "/src/proj", "-Db_coverage=true");
+    setup = g_strdup_printf ("meson configure '%s' -Db_coverage=true", dir);
+    g_assert_cmpstr (text, ==, setup);
+    g_free (setup);
+    g_free (text);
+    p.system = BUILD_CMAKE;
+    p.setup = NULL;
+    text = build_profile_configure_command (&p, "/src/proj", NULL);
+    setup = g_strdup_printf ("cmake -S '/src/proj' -B '%s'", dir);
+    g_assert_cmpstr (text, ==, setup);
+    g_free (setup);
+    g_free (text);
+    p.system = BUILD_MAKE;
+    g_assert_null (build_profile_configure_command (&p, "/src/proj", "-Dx=1"));
+    g_free (dir);
+
+    // the options of the source, their defaults the values; the setup of the profile on them
+    options = build_options_of_source (
+        "[{\"name\": \"buildtype\", \"value\": \"debug\", \"type\": \"combo\", "
+        "\"choices\": [\"plain\", \"debug\", \"release\"]},"
+        " {\"name\": \"b_coverage\", \"value\": false, \"type\": \"boolean\"}]");
+    g_assert_nonnull (options);
+    build_profile_setup_apply (options, "-Db_coverage=true -Dnone=1");
+    o = build_options_find (options, "b_coverage");
+    g_assert_cmpstr (o->value, ==, "true");
+    g_assert_cmpstr (o->default_value, ==, "false");
+    g_assert_true (o->set_by_user);
+    o = build_options_find (options, "buildtype");
+    g_assert_cmpstr (o->value, ==, o->default_value);
+    g_assert_false (o->set_by_user);
+    g_assert_cmpstr (o->choices[2], ==, "release");
+    g_ptr_array_free (options, TRUE);
+    // a surrogate alone is U+FFFD, a NUL is left out
+    options = build_options_of_source (
+        "[{\"name\": \"s\", \"value\": \"a\\ud800b\\u0000c\", \"type\": \"string\"}]");
+    g_assert_nonnull (options);
+    g_assert_cmpstr (build_options_find (options, "s")->value, ==,
+                     "a\xef\xbf\xbd"
+                     "bc");
+    g_ptr_array_free (options, TRUE);
+    g_assert_null (build_options_of_source ("{}"));
+    g_assert_null (build_options_of_source (NULL));
+
+    g_assert_cmpstr (build_option_toggled ("true"), ==, "false");
+    g_assert_cmpstr (build_option_toggled ("OFF"), ==, "ON");
+    g_assert_cmpstr (build_option_toggled ("maybe"), ==, "true");
+
+    {
+        // a list of meson keeps its items apart, quotes and backslashes in them escaped
+        static const char *const items[] = { "-O1", "-DX='a b'", "c\\d", NULL };
+        char *list = build_option_meson_list (items);
+
+        g_assert_cmpstr (list, ==, "['-O1', '-DX=\\'a b\\'', 'c\\\\d']");
+        g_free (list);
+        list = build_option_meson_list (NULL);
+        g_assert_cmpstr (list, ==, "[]");
+        g_free (list);
+        text = build_profile_setup_add (NULL, "c_args", "['-O1', '-g']");
+        g_assert_cmpstr (text, ==, "\"-Dc_args=['-O1', '-g']\"");
+        g_free (text);
+    }
+}
+
 static void
 remove_tree (const char *path)
 {
@@ -928,6 +1024,7 @@ main (int argc, char **argv)
     g_test_add_func ("/build/presets", test_presets);
     g_test_add_func ("/build/options-meson", test_options_meson);
     g_test_add_func ("/build/options-cmake", test_options_cmake);
+    g_test_add_func ("/build/configure", test_configure);
     g_test_add_func ("/build/profiles", test_profiles);
     result = g_test_run ();
     remove_tree (top);
