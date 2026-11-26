@@ -564,11 +564,13 @@ git_branches (git_window_t *win)
 
     dlg_w = MIN (COLS - 4, 120);
     list_h = MAX (5, LINES - 12);
-    dlg_h = list_h + 6;
+    dlg_h = list_h + 4;
     dlg =
         dlg_create (TRUE, (LINES - dlg_h) / 2, (COLS - dlg_w) / 2, dlg_h, dlg_w, WPOS_KEEP_DEFAULT,
                     TRUE, dialog_colors, git_br_callback, NULL, "[Git]", _ ("Branches"));
     dlg->help_file = "git.md";
+    // the keys on the frame, as the other lists of bluerig have them
+    frame_set_footer (FRAME (dlg->bg), hint);
     g = GROUP (dlg);
     checks_w = str_term_width1 (l_local) + str_term_width1 (l_remote) + str_term_width1 (l_tags)
         + str_term_width1 (l_extended) + 4 * 5 + 2;
@@ -592,8 +594,6 @@ git_branches (git_window_t *win)
     group_add_widget (g, hline_new (2, -1, -1));
     git_br.list = listbox_new (3, 1, list_h, dlg_w - 2, FALSE, NULL);
     group_add_widget (g, git_br.list);
-    group_add_widget (g, hline_new (dlg_h - 3, -1, -1));
-    group_add_widget (g, label_new (dlg_h - 2, 2, hint));
     g_clear_pointer (&git_br.last, g_free);
     git_br_refilter (TRUE);
 
