@@ -18,8 +18,17 @@ with their lines while the file is edited, until the data is read again.
 
 |  |  |
 |--|--|
-| gcov | the *.gcda* files in the meson or cmake build directory, else in the project root |
+| gcov | the *.gcda* files in the build directory of the profile of coverage, else in the meson or cmake build directory, else in the project root |
 | lcov | *coverage.info*, *lcov.info* or *coverage/lcov.info* in the project root, *meson-logs/coverage.info* in the build directory |
+
+The profile of coverage is a build profile, see Build profiles in the help
+of the plugin Build: the one the plugin made, else the active profile when
+it builds for coverage, else the first profile that does. Without data the
+plugin offers to make it, from the active profile with *-Db_coverage=true*
+and its tests run after its build, in a directory of its own: its window
+opens, and once it is saved the plugin offers to build it and run the
+tests. When the profile is there, the plugin offers to build it and run its
+tests.
 
 The *.gcda* files appear when a program built with *-Db_coverage=true*
 (meson) or *--coverage* (gcc, clang) exits. Without them the first lcov
@@ -32,10 +41,10 @@ stop even on a large project.
 
 **When the data is read again**
 
-The plugin reads the data again after a build, after a command in the
-terminal window and when a file window comes to the front, at most once in
-two seconds. When the coverage files have not changed since the last
-reading, gcov does not run.
+The plugin reads the data again after a build of the profile of coverage,
+not of another profile, after a command in the terminal window and when a
+file window comes to the front, at most once in two seconds. When the
+coverage files have not changed since the last reading, gcov does not run.
 
 The keys *coverage-covered-char* and *coverage-missed-char* of the
 *[widget-editor]* section of the skin set the marks, *coveragecovered* and

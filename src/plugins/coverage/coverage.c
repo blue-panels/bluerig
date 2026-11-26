@@ -107,6 +107,8 @@ typedef struct coverage_t
     GString *pending;      /* the output after its last newline */
     coverage_reader_t *reader;
     char *root;
+    char *profile; /* the build profile whose data is read, NULL for none */
+    char *dir;     /* the directory it was read from */
     gint64 looked; /* when the data was looked at the last time */
 
     GHashTable *files; /* coverage_reader_finish (), NULL before the first data */
@@ -131,10 +133,11 @@ static const mc_ep_marker_kind_t coverage_mark_kinds[COVERAGE_MARK_COUNT] = {
 /* What finds the data and prints it, the head first: $1 the build directory, $2 the root, $3 the
    stamp of the last reading, $4 1 to read it whatever the stamp says; $3.new stamps this reading,
    to be the stamp once its output is all read.  gcov of the .gcda files of
-   the build, else the first lcov tracefile there is */
+   the build, else the first lcov tracefile there is, the build directory there or not */
 static const char coverage_script[] =
-    "cd \"$1\" 2>/dev/null || exit 0\n"
-    "if [ -n \"$(find . -name '*.gcda' -print 2>/dev/null | head -n 1)\" ]; then\n"
+    "if cd \"$1\" 2>/dev/null && [ -n \"$(find . -name '*.gcda' -print 2>/dev/null | head -n 1)\" "
+    "]; "
+    "then\n"
     "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ -z \"$(find . -name '*.gcda' -newer \"$3\" "
     "-print 2>/dev/null | head -n 1)\" ]; then\n"
     "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
@@ -209,6 +212,246 @@ coverage_root_of (coverage_t *coverage, void *edit)
         root = file != NULL ? g_path_get_dirname (file) : g_get_current_dir ();
     g_free (file);
     return root;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A call of the service build about the project of @root, @profile NULL for none; NULL when
+   there is no such service or it says no */
+static GVariant *
+coverage_build_call (coverage_t *coverage, const char *method, const char *root,
+                     const char *profile, GVariantDict *more)
+{
+    GVariantDict own;
+    GVariantDict *args = more != NULL ? more : &own;
+    GVariant *in;
+
+    if (more == NULL)
+        g_variant_dict_init (&own, NULL);
+    if (coverage->host->service_call == NULL)
+    {
+        g_variant_dict_clear (args);
+        return NULL;
+    }
+    g_variant_dict_insert (args, "root", "s", root);
+    if (profile != NULL)
+        g_variant_dict_insert (args, "profile", "s", profile);
+    in = g_variant_dict_end (args);
+    return coverage->host->service_call (coverage->host, "build", method, in, NULL);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The directory of the data of the project of @root: that of its profile of coverage, which
+   @profile gets, NULL for none; without one the build directory found in it, else the root */
+static char *
+coverage_data_dir (coverage_t *coverage, const char *root, char **profile)
+{
+    GVariant *reply = coverage_build_call (coverage, "coverage", root, NULL, NULL);
+    const char *dir = NULL, *name = NULL;
+    char *found;
+
+    *profile = NULL;
+    if (reply != NULL && g_variant_lookup (reply, "dir", "&s", &dir)
+        && g_variant_lookup (reply, "profile", "&s", &name))
+    {
+        found = g_strdup (dir);
+        *profile = g_strdup (name);
+    }
+    else
+    {
+        build_info_t *info = build_detect (root);
+
+        found = g_strdup (info != NULL && info->build_dir != NULL ? info->build_dir : root);
+        build_info_free (info);
+    }
+    if (reply != NULL)
+        g_variant_unref (reply);
+    return found;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Build the profile @name of @root, its tests after it whatever the profile says: they make the
+   data */
+static void
+coverage_build (coverage_t *coverage, const char *root, const char *name)
+{
+    GVariantDict more;
+    GVariant *reply;
+
+    g_variant_dict_init (&more, NULL);
+    g_variant_dict_insert (&more, "tests", "b", TRUE);
+    reply = coverage_build_call (coverage, "run", root, name, &more);
+
+    if (reply != NULL)
+        g_variant_unref (reply);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The options that make the build of the active profile of @root one for coverage: b_coverage
+   of meson, --coverage in the flags of cmake; NULL, said why, for another build system, which
+   has no build directory of its own to set up */
+static const char *
+coverage_setup_of (coverage_t *coverage, const char *root)
+{
+    GVariant *reply = coverage_build_call (coverage, "info", root, NULL, NULL);
+    const char *system = NULL, *setup = NULL;
+
+    if (reply != NULL)
+        (void) g_variant_lookup (reply, "system", "&s", &system);
+    if (g_strcmp0 (system, "meson") == 0)
+        setup = "-Db_coverage=true";
+    else if (g_strcmp0 (system, "cmake") == 0)
+        setup = "-DCMAKE_C_FLAGS=--coverage -DCMAKE_CXX_FLAGS=--coverage "
+                "-DCMAKE_EXE_LINKER_FLAGS=--coverage -DCMAKE_SHARED_LINKER_FLAGS=--coverage";
+    else
+        coverage->host->message (
+            coverage->host, D_NORMAL, _ ("Coverage"),
+            _ ("Only a build of meson or cmake has a build directory of its own for coverage.\n"
+               "Build the project with --coverage (gcc, clang) and run the tests: the data is\n"
+               "read in the project."));
+    if (reply != NULL)
+        g_variant_unref (reply);
+    return setup;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A profile of coverage for the project of @root, made from the active one with b_coverage and
+   its tests after its build, in its window; built when the user says so.  One there is opened
+   in its window. */
+static void
+coverage_make_profile (coverage_t *coverage, const char *root)
+{
+    GVariant *reply = coverage_build_call (coverage, "coverage", root, NULL, NULL);
+    const char *there = NULL;
+    char *name = NULL;
+    gboolean is_new = FALSE, saved = FALSE;
+
+    if (reply == NULL)
+    {
+        coverage->host->message (coverage->host, D_ERROR, _ ("Coverage"),
+                                 _ ("The plugin Build makes the profiles: it is not loaded."));
+        return;
+    }
+    if (g_variant_lookup (reply, "profile", "&s", &there))
+        name = g_strdup (there);
+    g_variant_unref (reply);
+    // a new one, by a name not taken, its options for coverage those of its build system
+    if (name == NULL)
+    {
+        const char *setup = coverage_setup_of (coverage, root);
+        gboolean taken = TRUE;
+        int i;
+
+        if (setup == NULL)
+            return;
+
+        // the next name while the one tried is taken; another failure, said by build, ends it
+        for (i = 1; name == NULL && taken && i < 100; i++)
+        {
+            GVariantDict more;
+            gboolean ok = FALSE;
+            char *candidate = i == 1 ? g_strdup ("Coverage") : g_strdup_printf ("Coverage %d", i);
+
+            g_variant_dict_init (&more, NULL);
+            g_variant_dict_insert (&more, "setup", "s", setup);
+            // the flags of cmake take --coverage after those they have; b_coverage is set
+            g_variant_dict_insert (&more, "append", "b", strstr (setup, "_FLAGS=") != NULL);
+            g_variant_dict_insert (&more, "coverage", "b", TRUE);
+            g_variant_dict_insert (&more, "tests", "b", TRUE);
+            reply = coverage_build_call (coverage, "create", root, candidate, &more);
+            taken = FALSE;
+            if (reply != NULL && g_variant_lookup (reply, "ok", "b", &ok) && ok)
+                name = candidate;
+            else
+            {
+                if (reply != NULL)
+                    (void) g_variant_lookup (reply, "taken", "b", &taken);
+                g_free (candidate);
+            }
+            if (reply != NULL)
+                g_variant_unref (reply);
+        }
+        is_new = TRUE;
+        if (name == NULL)
+        {
+            coverage->host->message (coverage->host, D_ERROR, _ ("Coverage"),
+                                     _ ("No profile of coverage could be made: see Build "
+                                        "profiles."));
+            return;
+        }
+    }
+    {
+        GVariantDict more;
+
+        g_variant_dict_init (&more, NULL);
+        g_variant_dict_insert (&more, "new", "b", is_new);
+        reply = coverage_build_call (coverage, "window", root, name, &more);
+        if (reply != NULL)
+        {
+            const char *saved_as = NULL;
+
+            (void) g_variant_lookup (reply, "saved", "b", &saved);
+            // renamed in the window: built by its name now
+            if (saved && g_variant_lookup (reply, "profile", "&s", &saved_as))
+            {
+                g_free (name);
+                name = g_strdup (saved_as);
+            }
+            g_variant_unref (reply);
+        }
+    }
+    if (saved || !is_new)
+    {
+        char *text = g_strdup_printf (_ ("Build %s and run its tests now?"), name);
+
+        if (query_dialog (_ ("Coverage"), text, D_NORMAL, 2, _ ("&Build"), _ ("&Later")) == 0)
+        {
+            coverage->shown = TRUE;
+            coverage_build (coverage, root, name);
+        }
+        g_free (text);
+    }
+    g_free (name);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* No data in the project of @root: what makes it */
+static void
+coverage_no_data (coverage_t *coverage, const char *root)
+{
+    char *profile = NULL;
+    char *dir = coverage_data_dir (coverage, root, &profile);
+
+    if (profile != NULL)
+    {
+        char *text = g_strdup_printf (_ ("No coverage data in %s, the build profile of coverage:\n"
+                                         "its tests have not run yet."),
+                                      profile);
+
+        if (query_dialog (_ ("Coverage"), text, D_NORMAL, 2, _ ("&Build and test"), _ ("&Cancel"))
+            == 0)
+            coverage_build (coverage, root, profile);
+        g_free (text);
+    }
+    else if (coverage->host->service_call != NULL
+             && query_dialog (_ ("Coverage"),
+                              _ ("No coverage data: no build profile of the project builds for "
+                                 "coverage."),
+                              D_NORMAL, 2, _ ("&Make a coverage profile"), _ ("&Cancel"))
+                 == 0)
+        coverage_make_profile (coverage, root);
+    else if (coverage->host->service_call == NULL)
+        coverage->host->message (
+            coverage->host, D_NORMAL, _ ("Coverage"),
+            _ ("No coverage data in the project: no .gcda files in the build directory,\n"
+               "no coverage.info or lcov.info. Build with coverage and run the tests."));
+    g_free (profile);
+    g_free (dir);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -409,11 +652,14 @@ coverage_read_done (coverage_t *coverage)
             coverage->files = NULL;
             coverage_clear (coverage);
         }
-        if (forced && coverage->shown)
-            coverage->host->message (
-                coverage->host, D_NORMAL, _ ("Coverage"),
-                _ ("No coverage data in the project: no .gcda files in the build directory,\n"
-                   "no coverage.info or lcov.info. Build with coverage and run the tests."));
+        if (forced && coverage->shown && coverage->root != NULL)
+        {
+            // a copy: a reading the dialogs let run in the meantime takes the root of before
+            char *root = g_strdup (coverage->root);
+
+            coverage_no_data (coverage, root);
+            g_free (root);
+        }
     }
 
     if (coverage->again)
@@ -455,6 +701,8 @@ coverage_read_ready (int fd, void *data)
         close (fd);
         coverage->fd = -1;
         coverage_read_done (coverage);
+        // the loop of the editor runs then: the marks are set while it is idle, not at a key
+        return 1;
     }
     return 0;
 }
@@ -476,7 +724,6 @@ static void
 coverage_read (coverage_t *coverage, gboolean forced)
 {
     char *root, *dir;
-    build_info_t *info;
     const char *argv[9];
     GError *error = NULL;
     int out = -1;
@@ -491,9 +738,14 @@ coverage_read (coverage_t *coverage, gboolean forced)
     // a project of another root: its data, whatever the stamp of it says
     if (g_strcmp0 (root, coverage->root) != 0)
         forced = TRUE;
-    info = build_detect (root);
-    dir = g_strdup (info != NULL && info->build_dir != NULL ? info->build_dir : root);
-    build_info_free (info);
+    // the directory of the profile of coverage, it is the one whose builds are waited for
+    g_free (coverage->profile);
+    dir = coverage_data_dir (coverage, root, &coverage->profile);
+    // another directory, of another profile: its data, whatever the stamp of the last one says
+    if (g_strcmp0 (dir, coverage->dir) != 0)
+        forced = TRUE;
+    g_free (coverage->dir);
+    coverage->dir = g_strdup (dir);
 
     // $0 is the name of the script, $1 to $4 its arguments
     argv[0] = "/bin/sh";
@@ -535,9 +787,43 @@ coverage_signal (const char *name, const char *signal, GVariant *args, void *use
 {
     coverage_t *coverage = (coverage_t *) user_data;
 
-    (void) args;
     if (!coverage->shown || strcmp (signal, "finished") != 0)
         return;
+    // a build of another project or profile, or a setup, leaves the data as it is
+    if (strcmp (name, "build") == 0 && args != NULL)
+    {
+        const char *step = NULL, *profile = NULL, *root = NULL;
+
+        if (g_variant_lookup (args, "step", "&s", &step) && strcmp (step, "build") != 0)
+            return;
+        // the project read again is that of the window in front: the build is of it, or not
+        if (g_variant_lookup (args, "root", "&s", &root))
+        {
+            char *front =
+                coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
+            const gboolean other = g_strcmp0 (root, front) != 0;
+
+            g_free (front);
+            if (other)
+                return;
+        }
+        // the profile of coverage by its name now: it may have been renamed since the reading
+        if (coverage->profile != NULL && g_variant_lookup (args, "profile", "&s", &profile)
+            && strcmp (profile, coverage->profile) != 0)
+        {
+            char *front =
+                coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
+            char *now = NULL;
+            char *dir = coverage_data_dir (coverage, front, &now);
+            const gboolean other = g_strcmp0 (profile, now) != 0;
+
+            g_free (dir);
+            g_free (now);
+            g_free (front);
+            if (other)
+                return;
+        }
+    }
     // a build makes the lines of the data others: read it whatever the stamp says
     coverage_read (coverage, strcmp (name, "build") == 0);
 }
@@ -658,6 +944,8 @@ coverage_close (void *data)
     }
     g_free (coverage->stamp);
     g_free (coverage->root);
+    g_free (coverage->profile);
+    g_free (coverage->dir);
     g_free (coverage);
 }
 
