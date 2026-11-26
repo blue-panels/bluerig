@@ -1697,60 +1697,75 @@ build_profiles_cell (const void *data, int row, int col)
     return at < cells->len ? (const char *) g_ptr_array_index (cells, at) : "";
 }
 
-/* Enter in the table is Make active, the button of the dialog it would press */
+/* What the keys of the window of the profiles do to the one of the cursor, as in Far */
+enum
+{
+    BUILD_B_NEW = B_USER,
+    BUILD_B_EDIT,
+    BUILD_B_DELETE,
+    BUILD_B_BUILD,
+    BUILD_B_ACTIVATE
+};
+
+/* Space makes the profile of the cursor the active one, Enter too and closes the window, Ins
+   makes a new one from it, F4 edits it, Del deletes it, F5 builds it */
 static cb_ret_t
 build_profiles_dialog_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data)
 {
+    int ret = B_CANCEL;
+
     if (msg == MSG_NOTIFY && parm == CK_Enter)
-    {
-        DIALOG (w)->ret_value = B_ENTER;
-        dlg_close (DIALOG (w));
-        return MSG_HANDLED;
-    }
-    return dlg_default_callback (w, sender, msg, parm, data);
+        ret = B_ENTER;
+    else if (msg == MSG_UNHANDLED_KEY)
+        switch (parm)
+        {
+        case KEY_IC:
+            ret = BUILD_B_NEW;
+            break;
+        case KEY_F (4):
+            ret = BUILD_B_EDIT;
+            break;
+        case KEY_DC:
+        case KEY_F (8):
+            ret = BUILD_B_DELETE;
+            break;
+        case KEY_F (5):
+            ret = BUILD_B_BUILD;
+            break;
+        case ' ':
+            ret = BUILD_B_ACTIVATE;
+            break;
+        default:
+            break;
+        }
+    if (ret == B_CANCEL)
+        return dlg_default_callback (w, sender, msg, parm, data);
+    DIALOG (w)->ret_value = ret;
+    dlg_close (DIALOG (w));
+    return MSG_HANDLED;
 }
 
 /* --------------------------------------------------------------------------------------------- */
 
-/* The profiles of the project in one dialog, as Debug configurations are: the active one is
-   marked; Make active makes the one of the cursor it, New makes one from it, Edit and Delete
-   change it, Build builds it and leaves the active one.  The dialog comes back after New, Edit
-   and Delete */
+/* The profiles of the project in one dialog, by keys: the active one is marked; Space and Enter
+   make the one of the cursor it, Ins makes one from it, F4 and Del change it, F5 builds it and
+   leaves the active one.  The dialog comes back after all but Enter and F5 */
 static mc_ep_result_t
 build_act_profiles (void *data, void *edit)
 {
     build_t *build = (build_t *) data;
     char *root = build_root_of (build, edit);
-    enum
-    {
-        BUILD_B_NEW = B_USER,
-        BUILD_B_EDIT,
-        BUILD_B_DELETE,
-        BUILD_B_BUILD
-    };
-    static const struct
-    {
-        int action;
-        int flags;
-        const char *label;
-    } buttons[] = {
-        { B_ENTER, DEFPUSH_BUTTON, N_ ("&Make active") },
-        { BUILD_B_NEW, NORMAL_BUTTON, N_ ("&New") },
-        { BUILD_B_EDIT, NORMAL_BUTTON, N_ ("&Edit") },
-        { BUILD_B_DELETE, NORMAL_BUTTON, N_ ("&Delete") },
-        { BUILD_B_BUILD, NORMAL_BUTTON, N_ ("&Build") },
-        { B_CANCEL, NORMAL_BUTTON, N_ ("&Close") },
-    };
     guint cursor = 0;
 
     while (TRUE)
     {
         build_profiles_t *profiles = build_profiles_of (root);
         const build_profile_t *active = build_profiles_active (profiles);
-        const int rows_h = (int) MIN (profiles->list->len, 12);
+        // room for a dozen profiles, more as many as the screen holds
+        const int rows_h = MIN (MAX ((int) profiles->list->len, 12), MAX (LINES - 8, 3));
         const int dlg_w = MIN (COLS - 4, 78);
-        // the frame, the header and the rows, a line, the buttons, the frame
-        const int dlg_h = rows_h + 5;
+        // the frame, the header and the rows, the frame
+        const int dlg_h = rows_h + 3;
         static const table_column_def_t defs[BUILD_PROFILE_COLS] = {
             { 1, J_CENTER, TABLE_COL_TEXT }, { 0, J_LEFT, TABLE_COL_TEXT },
             { 0, J_LEFT, TABLE_COL_TEXT },   { 0, J_LEFT, TABLE_COL_TEXT },
@@ -1764,7 +1779,7 @@ build_act_profiles (void *data, void *edit)
         WDialog *dlg;
         WTable *table;
         build_profile_t *p = NULL;
-        int ret, x, row;
+        int ret, row;
         guint i;
 
         for (i = 0; i < profiles->list->len; i++)
@@ -1782,7 +1797,10 @@ build_act_profiles (void *data, void *edit)
         }
 
         dlg = dlg_create (TRUE, 0, 0, dlg_h, dlg_w, WPOS_CENTER, TRUE, dialog_colors,
-                          build_profiles_dialog_callback, NULL, "[Build]", _ ("Build profiles"));
+                          build_profiles_dialog_callback, NULL, "[Build profiles]",
+                          _ ("Build profiles"));
+        dlg->help_file = "build.md";
+        frame_set_footer (FRAME (dlg->bg), "F4 F5 Ins Del Space");
         table = table_new (1, 1, rows_h + 1, dlg_w - 2, BUILD_PROFILE_COLS, defs);
         table_set_column_sizing (table, 0, 1, FALSE);
         table_set_column_sizing (table, 1, 8, FALSE);
@@ -1797,16 +1815,6 @@ build_act_profiles (void *data, void *edit)
         table->scrollbar = TRUE;
         table_set_current (table, (int) MIN (cursor, profiles->list->len - 1));
         group_add_widget (GROUP (dlg), table);
-        group_add_widget (GROUP (dlg), hline_new (dlg_h - 3, -1, -1));
-        x = 2;
-        for (i = 0; i < G_N_ELEMENTS (buttons); i++)
-        {
-            WButton *b = button_new (dlg_h - 2, x, buttons[i].action, buttons[i].flags,
-                                     _ (buttons[i].label), NULL);
-
-            group_add_widget (GROUP (dlg), b);
-            x += button_get_width (b) + 1;
-        }
         widget_select (WIDGET (table));
         ret = dlg_run (dlg);
         row = table_get_current (table);
@@ -1821,11 +1829,18 @@ build_act_profiles (void *data, void *edit)
         switch (ret)
         {
         case B_ENTER:
+        case BUILD_B_ACTIVATE:
             if (p != NULL)
             {
                 g_free (profiles->active);
                 profiles->active = g_strdup (p->name);
                 (void) build_profiles_save (build, root, profiles);
+            }
+            // Space stays in the window, the mark on the profile made active
+            if (ret == BUILD_B_ACTIVATE)
+            {
+                build_profiles_free (profiles);
+                continue;
             }
             break;
         case BUILD_B_NEW:
