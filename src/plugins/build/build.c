@@ -622,6 +622,8 @@ build_profile_describe (const build_profile_t *p, const char *root, char **where
     {
         build_summary_t *s = build_summary_of (options, p->system);
 
+        // built for coverage says whether the tests have left their data yet
+        s->coverage_missing = s->coverage && !build_coverage_data (dir);
         summary = build_summary_text (s);
         build_summary_free (s);
         g_ptr_array_free (options, TRUE);

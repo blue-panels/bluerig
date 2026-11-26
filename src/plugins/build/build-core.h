@@ -80,7 +80,8 @@ typedef struct
 {
     char *buildtype; /* debug, release, ...; NULL when it is not known */
     gboolean coverage;
-    char *sanitize; /* address, undefined, ...; NULL for none */
+    gboolean coverage_missing; /* built for coverage, but the tests left no data yet */
+    char *sanitize;            /* address, undefined, ...; NULL for none */
 } build_summary_t;
 
 /*** global variables defined in .c file *********************************************************/
@@ -125,7 +126,9 @@ const char *build_option_toggled (const char *value);
 
 /* What @options of @system say the directory is built for */
 build_summary_t *build_summary_of (const GPtrArray *options, build_system_t system);
-/* "debug, coverage, address,undefined"; to be freed */
+/* Whether the build directory @dir has data of coverage: a .gcda file, a few levels down */
+gboolean build_coverage_data (const char *dir);
+/* "debug, coverage, address,undefined", "coverage, no data" when it is missing; to be freed */
 char *build_summary_text (const build_summary_t *summary);
 void build_summary_free (build_summary_t *summary);
 

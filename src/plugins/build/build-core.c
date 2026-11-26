@@ -1572,6 +1572,45 @@ build_summary_of (const GPtrArray *options, build_system_t system)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* Whether @dir or a directory under it, @depth levels down, has a .gcda file */
+static gboolean
+build_coverage_data_in (const char *dir, int depth)
+{
+    GDir *d = g_dir_open (dir, 0, NULL);
+    const char *name;
+    gboolean found = FALSE;
+
+    if (d == NULL)
+        return FALSE;
+    while (!found && (name = g_dir_read_name (d)) != NULL)
+    {
+        if (g_str_has_suffix (name, ".gcda"))
+            found = TRUE;
+        else if (depth > 0 && name[0] != '.')
+        {
+            char *path = g_build_filename (dir, name, (char *) NULL);
+
+            if (g_file_test (path, G_FILE_TEST_IS_DIR)
+                && !g_file_test (path, G_FILE_TEST_IS_SYMLINK))
+                found = build_coverage_data_in (path, depth - 1);
+            g_free (path);
+        }
+    }
+    g_dir_close (d);
+    return found;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+gboolean
+build_coverage_data (const char *dir)
+{
+    // the objects of meson are in <target>.p/ under the directories of the sources
+    return dir != NULL && build_coverage_data_in (dir, 6);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 char *
 build_summary_text (const build_summary_t *summary)
 {
@@ -1582,7 +1621,8 @@ build_summary_text (const build_summary_t *summary)
     if (summary->buildtype != NULL)
         g_string_append (out, summary->buildtype);
     if (summary->coverage)
-        g_string_append_printf (out, "%scoverage", out->len > 0 ? ", " : "");
+        g_string_append_printf (out, "%s%s", out->len > 0 ? ", " : "",
+                                summary->coverage_missing ? _ ("coverage, no data") : "coverage");
     if (summary->sanitize != NULL)
         g_string_append_printf (out, "%s%s", out->len > 0 ? ", " : "", summary->sanitize);
     return g_string_free (out, FALSE);

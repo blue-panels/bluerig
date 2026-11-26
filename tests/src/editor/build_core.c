@@ -430,7 +430,22 @@ test_options_meson (void)
     text = build_summary_text (summary);
     g_assert_cmpstr (text, ==, "debug, coverage, address,undefined");
     g_free (text);
+    // built for coverage, the tests not run yet
+    summary->coverage_missing = TRUE;
+    text = build_summary_text (summary);
+    g_assert_cmpstr (text, ==, "debug, coverage, no data, address,undefined");
+    g_free (text);
     build_summary_free (summary);
+    {
+        char *cov = at ("cov-data");
+
+        write_file ("cov-data/src/bluerig.p/main.c.gcno", "");
+        g_assert_false (build_coverage_data (cov));
+        write_file ("cov-data/src/bluerig.p/main.c.gcda", "");
+        g_assert_true (build_coverage_data (cov));
+        g_assert_false (build_coverage_data (NULL));
+        g_free (cov);
+    }
 
     // the defaults of the source: those it names, the others not known
     g_assert_true (build_options_set_defaults (
