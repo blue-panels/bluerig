@@ -89,6 +89,12 @@ frame_draw (const WFrame *f)
         widget_gotoyx (f, d, (w->cols - str_term_width1 (f->title)) / 2);
         tty_print_string (f->title);
     }
+    if (f->footer != NULL && w->lines > 2 * d && w->cols > 2 * d + 4)
+    {
+        tty_setcolor (colors[FRAME_COLOR_TITLE]);
+        widget_gotoyx (f, w->lines - 1 - d, d + 2);
+        tty_print_string (str_trunc (f->footer, w->cols - 2 * d - 4));
+    }
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -110,6 +116,7 @@ frame_new (int y, int x, int lines, int cols, const char *title, gboolean single
     f->compact = compact;
 
     f->title = NULL;
+    f->footer = NULL;
     frame_set_title (f, title);
 
     return f;
@@ -134,6 +141,7 @@ frame_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *dat
 
     case MSG_DESTROY:
         g_free (f->title);
+        g_free (f->footer);
         return MSG_HANDLED;
 
     default:
@@ -159,6 +167,17 @@ frame_set_title (WFrame *f, const char *title)
         g_free (t);
     }
 
+    widget_draw (WIDGET (f));
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+frame_set_footer (WFrame *f, const char *footer)
+{
+    MC_PTR_FREE (f->footer);
+    if (footer != NULL && *footer != '\0')
+        f->footer = g_strdup_printf (" %s ", footer);
     widget_draw (WIDGET (f));
 }
 

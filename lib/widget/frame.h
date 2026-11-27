@@ -28,6 +28,7 @@ typedef struct
     char *title;
     gboolean single;
     gboolean compact;
+    char *footer; /* on the bottom line, at its left: the keys of the dialog */
 } WFrame;
 
 /*** global variables defined in .c file *********************************************************/
@@ -38,6 +39,8 @@ WFrame *frame_new (int y, int x, int lines, int cols, const char *title, gboolea
                    gboolean compact);
 cb_ret_t frame_callback (Widget *w, Widget *sender, widget_msg_t msg, int parm, void *data);
 void frame_set_title (WFrame *f, const char *title);
+/* A text on the bottom line of the frame, at its left, as "F4 edit   Del remove"; NULL for none */
+void frame_set_footer (WFrame *f, const char *footer);
 
 /*** inline functions ****************************************************************************/
 

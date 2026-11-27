@@ -61,6 +61,9 @@ typedef struct
 {
     char *name;
     char *executable;
+    // the program by its path in the build directory of the active build profile, "src/bluerig":
+    // the profile changed, the program of its build runs; NULL: executable as it is given
+    char *program_in_build;
     char *arguments;
     char *directory;
     char *environment;
@@ -206,6 +209,7 @@ typedef struct
     // a start waits for the build; the build is done for this start
     gboolean start_after_build;
     gboolean built_for_start;
+    char *build_profile;  // the profile built for the start, NULL when it has none
     guint build_signal;
     guint project_signal;  // the project chosen or closed by the project plugin
     // debug mode: the file windows take the keys of the debugger, F3 to F8, whether the program
@@ -285,6 +289,8 @@ GVariant *debug_build_call (debugger_t *debug, const char *method, const char *k
 
 /* debug-config.c */
 void debug_launch_free (gpointer data);
+char *debug_build_dir (debugger_t *debug, char **profile);
+void debug_launch_resolve (debugger_t *debug, debug_launch_t *launch);
 debug_launch_t *debug_active_launch (const debugger_t *debug);
 void debug_config_save (debugger_t *debug);
 char *debug_project_of (debugger_t *debug, void *edit);

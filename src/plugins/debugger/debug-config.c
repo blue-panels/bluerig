@@ -66,6 +66,7 @@ debug_launch_free (gpointer data)
 
     g_free (launch->name);
     g_free (launch->executable);
+    g_free (launch->program_in_build);
     g_free (launch->arguments);
     g_free (launch->directory);
     g_free (launch->environment);
@@ -197,6 +198,9 @@ debug_launches_write (const debugger_t *debug, GKeyFile *keyfile, gboolean relat
 
         g_key_file_set_string (keyfile, group, "name", launch->name);
         g_key_file_set_string (keyfile, group, "executable", executable);
+        // empty: the program as it is given, a choice too
+        g_key_file_set_string (keyfile, group, "program_of_profile",
+                               launch->program_in_build != NULL ? launch->program_in_build : "");
         g_key_file_set_string (keyfile, group, "arguments",
                                launch->arguments != NULL ? launch->arguments : "");
         g_key_file_set_string (keyfile, group, "directory", directory);
@@ -285,6 +289,25 @@ debug_launches_read (debugger_t *debug, GKeyFile *keyfile)
         launch->exception_filters = debug_exception_filters_read (keyfile, group);
         if (executable != NULL && *executable != '\0')
             launch->executable = g_canonicalize_filename (executable, debug->project_dir);
+        if (g_key_file_has_key (keyfile, group, "program_of_profile", NULL))
+        {
+            launch->program_in_build =
+                g_key_file_get_string (keyfile, group, "program_of_profile", NULL);
+            if (launch->program_in_build != NULL && *launch->program_in_build == '\0')
+                g_clear_pointer (&launch->program_in_build, g_free);
+        }
+        else if (launch->executable != NULL)
+        {
+            // from before the build profiles: a program in the build directory goes with it
+            char *dir = debug_build_dir (debug, NULL);
+
+            // a build in the root itself has no directory of its own: the program stays as given
+            if (dir != NULL && g_strcmp0 (dir, debug->project_dir) != 0
+                && g_str_has_prefix (launch->executable, dir)
+                && launch->executable[strlen (dir)] == '/')
+                launch->program_in_build = g_strdup (launch->executable + strlen (dir) + 1);
+            g_free (dir);
+        }
         launch->directory = g_canonicalize_filename (
             directory != NULL && *directory != '\0' ? directory : ".", debug->project_dir);
         g_free (executable);
@@ -714,6 +737,7 @@ debug_project_status (void *data, void *edit)
     char *message_text;
 
     (void) edit;
+    debug_launch_resolve (debug, (debug_launch_t *) launch);
     message_text = g_strdup_printf (_ ("Project: %s\nConfiguration: %s\nExecutable: %s"),
                                     debug->project_dir != NULL ? debug->project_dir : _ ("<none>"),
                                     launch != NULL ? launch->name : _ ("<none>"),
@@ -764,6 +788,7 @@ debug_launch_copy (debug_launch_t *to, const debug_launch_t *from)
 {
     to->name = g_strdup (from->name);
     to->executable = g_strdup (from->executable);
+    to->program_in_build = g_strdup (from->program_in_build);
     to->arguments = g_strdup (from->arguments);
     to->directory = g_strdup (from->directory);
     to->environment = g_strdup (from->environment);
@@ -784,6 +809,7 @@ debug_launch_clear (debug_launch_t *launch)
 {
     g_free (launch->name);
     g_free (launch->executable);
+    g_free (launch->program_in_build);
     g_free (launch->arguments);
     g_free (launch->directory);
     g_free (launch->environment);
@@ -797,6 +823,61 @@ debug_launch_clear (debug_launch_t *launch)
         g_ptr_array_unref (launch->exception_filters);
     memset (launch, 0, sizeof (*launch));
 }
+
+/* The build directory of the active build profile of the project, and its name in @profile
+   when it is not NULL; NULL without the build plugin or a project */
+char *
+debug_build_dir (debugger_t *debug, char **profile)
+{
+    GVariant *reply;
+    const char *dir = NULL, *name = NULL;
+    char *result = NULL;
+
+    if (profile != NULL)
+        *profile = NULL;
+    if (debug->project_dir == NULL || debug->host->service_call == NULL)
+        return NULL;
+    {
+        GVariantDict args;
+
+        // the directory alone: not the programs in it, a look through all of the build
+        g_variant_dict_init (&args, NULL);
+        g_variant_dict_insert (&args, "root", "s", debug->project_dir);
+        g_variant_dict_insert (&args, "programs", "b", FALSE);
+        reply = debug->host->service_call (debug->host, "build", "info", g_variant_dict_end (&args),
+                                           NULL);
+    }
+    if (reply == NULL)
+        return NULL;
+    if (g_variant_lookup (reply, "dir", "&s", &dir) && *dir != '\0')
+        result = g_strdup (dir);
+    if (profile != NULL && g_variant_lookup (reply, "profile", "&s", &name))
+        *profile = g_strdup (name);
+    g_variant_unref (reply);
+    return result;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The program of @launch now: in the build directory of the active profile when it goes with
+   the profile */
+void
+debug_launch_resolve (debugger_t *debug, debug_launch_t *launch)
+{
+    char *dir;
+
+    if (launch == NULL || launch->program_in_build == NULL)
+        return;
+    dir = debug_build_dir (debug, NULL);
+    if (dir != NULL)
+    {
+        g_free (launch->executable);
+        launch->executable = g_canonicalize_filename (launch->program_in_build, dir);
+    }
+    g_free (dir);
+}
+
+/* --------------------------------------------------------------------------------------------- */
 
 /* What the build plugin knows of a program: whether it has debug information, and whether the
    compiler optimized it; a word of advice when it is not fit for debugging */
@@ -1351,6 +1432,7 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
 {
     // the options of the index of the symbols, when the plugin ctags is there
     char *index_options = NULL;
+    int program_kept;
     gboolean result = FALSE;
 
     if (debug->project_dir != NULL)
@@ -1369,6 +1451,10 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
         }
     }
 
+    // what the form shows: the program of the active build profile now
+    debug_launch_resolve (debug, launch);
+    // the choice of the program, kept for the form again after a problem with it
+    program_kept = launch->program_in_build != NULL ? 1 : 0;
     while (TRUE)
     {
         char *name = NULL, *executable = NULL, *arguments = NULL, *directory = NULL;
@@ -1378,6 +1464,15 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
         GPtrArray *exception_filters;
         char *debugger_before, *debugger_now;
         gboolean build = launch->build, keep = *in_project, terminal = launch->terminal;
+        // the program as given, or by its path in the build directory of the profile
+        const char *program_items[] = { _ ("Program as &given"),
+                                        _ ("Program of the build &profile") };
+        int program_kind = program_kept;
+        char *profile_name = NULL;
+        char *build_dir = debug_build_dir (debug, &profile_name);
+        char *build_label = profile_name != NULL
+            ? g_strdup_printf (_ ("&Build the project before the start: profile %s"), profile_name)
+            : g_strdup (_ ("&Build the project before the start"));
         const char *backend_items[] = { _ ("&GDB"), _ ("Debug &adapter") };
         int backend = debug_launch_is_dap (launch) ? 1 : 0;
         // of what the form had the last round
@@ -1394,6 +1489,7 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
                                      launch->executable != NULL ? launch->executable : "",
                                      "debug-program", &executable, NULL, FALSE, FALSE,
                                      INPUT_COMPLETE_FILENAMES),
+                QUICK_RADIO (2, program_items, &program_kind, NULL),
                 QUICK_LABELED_INPUT (_ ("Arguments:"), input_label_above,
                                      launch->arguments != NULL ? launch->arguments : "",
                                      "debug-arguments", &arguments, NULL, FALSE, FALSE,
@@ -1428,7 +1524,7 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
                                      "debug-ctags", &ctags, NULL, FALSE, FALSE,
                                      INPUT_COMPLETE_NONE),
                 QUICK_SEPARATOR (TRUE),
-                QUICK_CHECKBOX (_ ("&Build the project before the start"), &build, NULL),
+                QUICK_CHECKBOX (build_label, &build, NULL),
                 QUICK_CHECKBOX (_ ("Run in a &terminal window: its screen and keys"), &terminal,
                                 NULL),
                 QUICK_CHECKBOX (_ ("&Keep in the project, in .bluerig/debug.ini"), &keep, NULL),
@@ -1441,7 +1537,7 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
             // without the plugin ctags its line is not there
             if (index_options == NULL)
             {
-                const size_t at = 10;
+                const size_t at = 11;
 
                 memmove (&widgets[at], &widgets[at + 1],
                          sizeof (widgets) - (at + 1) * sizeof (widgets[0]));
@@ -1459,8 +1555,11 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
             ret = quick_dialog (&qdlg);
         }
         g_free (title);
+        g_free (build_label);
+        g_free (profile_name);
         if (ret == B_CANCEL)
         {
+            g_free (build_dir);
             g_free (name);
             g_free (executable);
             g_free (arguments);
@@ -1492,6 +1591,14 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
             ? g_canonicalize_filename (executable, debug->project_dir)
             : g_strdup ("");
         g_free (executable);
+        program_kept = program_kind;
+        // of the profile: its path in the build directory, which the next profile changes
+        if (program_kind == 1 && build_dir != NULL
+            && g_str_has_prefix (launch->executable, build_dir)
+            && launch->executable[strlen (build_dir)] == '/')
+            launch->program_in_build = g_strdup (launch->executable + strlen (build_dir) + 1);
+        else if (program_kind == 1)
+            problem = _ ("The program of the build profile is in its build directory.");
         launch->arguments = arguments;
         launch->directory = g_canonicalize_filename (
             *g_strstrip (directory) != '\0' ? directory : debug->project_dir, debug->project_dir);
@@ -1564,6 +1671,7 @@ debug_launch_form (debugger_t *debug, debug_launch_t *launch, const debug_launch
             problem = "";
         g_strfreev (entries);
         g_free (problem_text);
+        g_free (build_dir);
         if (problem == NULL)
         {
             result = TRUE;
@@ -1602,7 +1710,17 @@ debug_configure_impl (debugger_t *debug, void *edit, gboolean create_new)
     if (existing != NULL)
         debug_launch_copy (&form, existing);
     else
+    {
+        char *dir;
+
         debug_launch_guess (debug, &form, edit);
+        // a program the build made goes with the build profile
+        dir = debug_build_dir (debug, NULL);
+        if (dir != NULL && g_strcmp0 (dir, debug->project_dir) != 0 && form.executable != NULL
+            && g_str_has_prefix (form.executable, dir) && form.executable[strlen (dir)] == '/')
+            form.program_in_build = g_strdup (form.executable + strlen (dir) + 1);
+        g_free (dir);
+    }
     in_project = debug->launches_in_project;
 
     if (!debug_launch_form (debug, &form, existing, &in_project))
@@ -1727,9 +1845,12 @@ debug_configurations (void *data, void *edit)
         list = listbox_new (2, 2, list_h, dlg_w - 4, FALSE, NULL);
         for (i = 0; i < debug->launches->len; i++)
         {
-            const debug_launch_t *launch = g_ptr_array_index (debug->launches, i);
-            char *label = g_strdup_printf ("%c %s  %s", i == debug->active_launch ? '*' : ' ',
-                                           launch->name, launch->executable);
+            debug_launch_t *launch = g_ptr_array_index (debug->launches, i);
+            char *label;
+
+            debug_launch_resolve (debug, launch);
+            label = g_strdup_printf ("%c %s  %s", i == debug->active_launch ? '*' : ' ',
+                                     launch->name, launch->executable);
 
             listbox_add_item (list, LISTBOX_APPEND_AT_END, 0, label, GUINT_TO_POINTER (i + 1),
                               FALSE);
