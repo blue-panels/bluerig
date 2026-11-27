@@ -103,6 +103,26 @@ build_json_string (const char *text, const char *key)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* Whether @a and @b are one directory: the same name, or the same once their links are followed,
+   the root of a project opened through a link and the real name meson and cmake keep */
+static gboolean
+build_same_dir (const char *a, const char *b)
+{
+    char *ra, *rb;
+    gboolean same;
+
+    if (strcmp (a, b) == 0)
+        return TRUE;
+    ra = realpath (a, NULL);
+    rb = realpath (b, NULL);
+    same = ra != NULL && rb != NULL && strcmp (ra, rb) == 0;
+    free (ra);
+    free (rb);
+    return same;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 /* Whether a directory is a build directory of meson, or of cmake, for that source */
 static build_system_t
 build_dir_of (const char *dir, const char *root)
@@ -116,7 +136,7 @@ build_dir_of (const char *dir, const char *root)
     if (text != NULL)
     {
         source = build_json_string (text, "source");
-        if (source != NULL && strcmp (source, root) == 0)
+        if (source != NULL && build_same_dir (source, root))
             system = BUILD_MESON;
         g_free (source);
         g_free (text);
@@ -136,7 +156,7 @@ build_dir_of (const char *dir, const char *root)
             const char *end = strchr (start, '\n');
 
             source = end != NULL ? g_strndup (start, (gsize) (end - start)) : g_strdup (start);
-            if (strcmp (source, root) == 0)
+            if (build_same_dir (source, root))
                 system = BUILD_CMAKE;
             g_free (source);
         }
@@ -152,18 +172,27 @@ static build_system_t
 build_find_dir (const char *root, char **found)
 {
     char *parent = g_path_get_dirname (root);
-    const char *places[] = { root, parent, NULL };
+    // a root through a link: the build may be next to the real directory, not to the link
+    char *real = realpath (root, NULL);
+    char *real_parent = real != NULL && strcmp (real, root) != 0 ? g_path_get_dirname (real) : NULL;
+    const char *places[] = { root, parent, NULL, NULL };
     build_system_t best_system = BUILD_NONE;
     gint64 best_time = 0;
     int i;
 
     *found = NULL;
+    /* the real directory has another parent: the link is elsewhere; not the same one through a
+       link above them both, /var and /private/var of macOS, which would find a build twice */
+    if (real_parent != NULL && !build_same_dir (real_parent, parent))
+        places[2] = real_parent;
     // the root itself: a build in the tree
     best_system = build_dir_of (root, root);
     if (best_system != BUILD_NONE)
     {
         *found = g_strdup (root);
         g_free (parent);
+        g_free (real_parent);
+        free (real);
         return best_system;
     }
 
@@ -181,7 +210,7 @@ build_find_dir (const char *root, char **found)
             struct stat st;
 
             if (name[0] != '.' && g_file_test (candidate, G_FILE_TEST_IS_DIR)
-                && strcmp (candidate, root) != 0
+                && strcmp (candidate, root) != 0 && g_strcmp0 (candidate, real) != 0
                 && (system = build_dir_of (candidate, root)) != BUILD_NONE
                 && stat (candidate, &st) == 0 && (gint64) st.st_mtime >= best_time)
             {
@@ -196,6 +225,8 @@ build_find_dir (const char *root, char **found)
         g_dir_close (dir);
     }
     g_free (parent);
+    g_free (real_parent);
+    free (real);
     return best_system;
 }
 

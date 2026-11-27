@@ -29,7 +29,9 @@
    g_assert () check nothing, and the checks are the point of a test */
 #undef G_DISABLE_ASSERT
 
+#include <stdlib.h>  // realpath()
 #include <string.h>
+#include <unistd.h>  // symlink()
 
 #include <glib.h>
 #include <glib/gstdio.h>
@@ -82,6 +84,80 @@ test_detect (void)
     g_assert_cmpstr (info->build_dir, ==, build);
     g_assert_nonnull (strstr (info->command, "meson compile -C"));
     build_info_free (info);
+
+    {
+        // the root opened through a link: meson names the real one as the source
+        char *via = at ("via");
+        char *inner;
+
+        json = g_strdup_printf ("{\"directories\": {\"source\": \"%s\"}}", root);
+        write_file ("proj/b/meson-info/meson-info.json", json);
+        g_free (json);
+        g_assert_cmpint (symlink (root, via), ==, 0);
+        info = build_detect (via);
+        g_assert_nonnull (info);
+        g_assert_cmpint (info->system, ==, BUILD_MESON);
+        // one of its own: in it, or the one next to it that names it, the newest
+        inner = g_build_filename (via, "b", (char *) NULL);
+        g_assert_true (strcmp (info->build_dir, inner) == 0
+                       || strcmp (info->build_dir, build) == 0);
+        build_info_free (info);
+        g_free (inner);
+        g_free (via);
+    }
+    {
+        // a link from elsewhere: the build next to the real directory
+        char *links = at ("links");
+        char *via = at ("links/proj");
+
+        char *inner = at ("proj/b/meson-info/meson-info.json");
+
+        // the one in the root gone: only the one next to the real directory is there
+        g_assert_cmpint (g_remove (inner), ==, 0);
+        g_assert_cmpint (g_mkdir_with_parents (links, 0700), ==, 0);
+        g_assert_cmpint (symlink (root, via), ==, 0);
+        info = build_detect (via);
+        g_assert_nonnull (info);
+        g_assert_cmpint (info->system, ==, BUILD_MESON);
+        {
+            // by its real name: /tmp may itself be a link, /var to /private/var on macOS
+            char *got = realpath (info->build_dir, NULL);
+            char *want = realpath (build, NULL);
+
+            g_assert_cmpstr (got, ==, want);
+            free (want);
+            free (got);
+        }
+        g_free (inner);
+        build_info_free (info);
+        g_free (via);
+        g_free (links);
+    }
+
+    {
+        /* a link above the root and its build, /var to /private/var on macOS: the build found
+           by the name through the link, not twice */
+        char *outer = at ("outer");
+        char *above = at ("above");
+        char *linked_root = at ("above/proj");
+        char *linked_build = at ("above/proj-build");
+        char *real_root = at ("outer/proj");
+
+        write_file ("outer/proj/meson.build", "project('x', 'c')\n");
+        json = g_strdup_printf ("{\"directories\": {\"source\": \"%s\"}}", real_root);
+        write_file ("outer/proj-build/meson-info/meson-info.json", json);
+        g_free (json);
+        g_assert_cmpint (symlink (outer, above), ==, 0);
+        info = build_detect (linked_root);
+        g_assert_nonnull (info);
+        g_assert_cmpstr (info->build_dir, ==, linked_build);
+        build_info_free (info);
+        g_free (real_root);
+        g_free (linked_build);
+        g_free (linked_root);
+        g_free (above);
+        g_free (outer);
+    }
 
     // make
     write_file ("mk/Makefile", "all:\n");
