@@ -134,39 +134,6 @@ static const mc_ep_marker_kind_t coverage_mark_kinds[COVERAGE_MARK_COUNT] = {
       2, "yellow" },
 };
 
-/* What finds the data and prints it, the head first: $1 the build directory, $2 the root, $3 the
-   stamp of the last reading, $4 1 to read it whatever the stamp says; $3.new stamps this reading,
-   to be the stamp once its output is all read.  gcov of the .gcda files of
-   the build, else the first lcov tracefile there is, the build directory there or not */
-static const char coverage_script[] =
-    "if cd \"$1\" 2>/dev/null && [ -n \"$(find . -name '*.gcda' -print 2>/dev/null | head -n 1)\" "
-    "]; "
-    "then\n"
-    "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ -z \"$(find . -name '*.gcda' -newer \"$3\" "
-    "-print 2>/dev/null | head -n 1)\" ]; then\n"
-    "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
-    "        exit 0\n"
-    "    fi\n"
-    "    touch \"$3.new\"\n"
-    "    echo '" COVERAGE_HEAD_GCOV "'\n"
-    "    find . -name '*.gcda' -exec gcov -t {} + 2>/dev/null\n"
-    "    exit 0\n"
-    "fi\n"
-    "for f in \"$2/coverage.info\" \"$2/lcov.info\" \"$2/coverage/lcov.info\" "
-    "\"$1/meson-logs/coverage.info\"; do\n"
-    "    [ -f \"$f\" ] || continue\n"
-    "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ -z \"$(find \"$f\" -newer \"$3\" -print)\" ]; "
-    "then\n"
-    "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
-    "        exit 0\n"
-    "    fi\n"
-    "    touch \"$3.new\"\n"
-    "    echo '" COVERAGE_HEAD_LCOV "'\n"
-    "    cat \"$f\"\n"
-    "    exit 0\n"
-    "done\n"
-    "echo '" COVERAGE_HEAD_NONE "'\n";
-
 /* --------------------------------------------------------------------------------------------- */
 /*** file scope functions ************************************************************************/
 /* --------------------------------------------------------------------------------------------- */
@@ -660,6 +627,8 @@ coverage_read_done (coverage_t *coverage)
     }
     else if (data == COVERAGE_DATA_NONE)
     {
+        // no data read: the stamp of a reading of before is none, the next one reads it all
+        (void) unlink (coverage->stamp);
         // the data is gone, or the project in front has none: no marks of the one before
         if (coverage->files != NULL)
         {
@@ -766,7 +735,7 @@ coverage_read (coverage_t *coverage, gboolean forced)
     // $0 is the name of the script, $1 to $4 its arguments
     argv[0] = "/bin/sh";
     argv[1] = "-c";
-    argv[2] = coverage_script;
+    argv[2] = coverage_reading_script ();
     argv[3] = "coverage";
     argv[4] = dir;
     argv[5] = root;
@@ -809,36 +778,28 @@ coverage_signal (const char *name, const char *signal, GVariant *args, void *use
     if (strcmp (name, "build") == 0 && args != NULL)
     {
         const char *step = NULL, *profile = NULL, *root = NULL;
+        // the project read again is that of the window in front
+        char *front = coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
+        char *now = NULL;
+        gboolean asked = FALSE, concerns;
 
-        if (g_variant_lookup (args, "step", "&s", &step) && strcmp (step, "build") != 0)
-            return;
-        // the project read again is that of the window in front: the build is of it, or not
-        if (g_variant_lookup (args, "root", "&s", &root))
-        {
-            char *front =
-                coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
-            const gboolean other = g_strcmp0 (root, front) != 0;
-
-            g_free (front);
-            if (other)
-                return;
-        }
-        // the profile of coverage by its name now: it may have been renamed since the reading
-        if (coverage->profile != NULL && g_variant_lookup (args, "profile", "&s", &profile)
+        (void) g_variant_lookup (args, "step", "&s", &step);
+        (void) g_variant_lookup (args, "root", "&s", &root);
+        (void) g_variant_lookup (args, "profile", "&s", &profile);
+        // the profile of coverage by its name now when it is another: it may have been renamed
+        if (profile != NULL && coverage->profile != NULL
             && strcmp (profile, coverage->profile) != 0)
         {
-            char *front =
-                coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
-            char *now = NULL;
-            char *dir = coverage_data_dir (coverage, front, &now);
-            const gboolean other = g_strcmp0 (profile, now) != 0;
-
-            g_free (dir);
-            g_free (now);
-            g_free (front);
-            if (other)
-                return;
+            g_free (coverage_data_dir (coverage, front, &now));
+            asked = TRUE;
         }
+        // asked: none now is none, the data read from the build found, of whatever profile
+        concerns =
+            coverage_build_concerns (step, root, front, profile, asked ? now : coverage->profile);
+        g_free (now);
+        g_free (front);
+        if (!concerns)
+            return;
     }
     // a build makes the lines of the data others: read it whatever the stamp says
     coverage_read (coverage, strcmp (name, "build") == 0);
@@ -1001,9 +962,12 @@ coverage_close (void *data)
     g_string_free (coverage->pending, TRUE);
     {
         char *read_one = g_strconcat (coverage->stamp, ".new", (char *) NULL);
+        char *output = g_strconcat (coverage->stamp, ".out", (char *) NULL);
 
         (void) unlink (read_one);
+        (void) unlink (output);
         (void) unlink (coverage->stamp);
+        g_free (output);
         g_free (read_one);
     }
     g_free (coverage->stamp);

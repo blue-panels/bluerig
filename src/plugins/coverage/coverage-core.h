@@ -55,6 +55,16 @@ coverage_data_t coverage_reader_finish (coverage_reader_t *reader, GHashTable **
 
 /* The lines of a file of @files, NULL when it is not there */
 GHashTable *coverage_file_lines (GHashTable *files, const char *path);
+/* The shell script that finds the data and prints it, the head first: $1 the build directory,
+   $2 the root, $3 the stamp of the last reading, $4 1 to read it whatever the stamp says; $3.new
+   stamps this reading, made before it reads, to be the stamp once its output is all read; $3.out
+   holds the output while it is made */
+const char *coverage_reading_script (void);
+/* Whether a build that ended, of the step @step ("build", "configure"), the project @root and the
+   profile @profile, makes the data of the project @front, that of the profile @coverage_profile,
+   other: a build of it, not a setup; NULL for what is not known, which does not say no */
+gboolean coverage_build_concerns (const char *step, const char *root, const char *front,
+                                  const char *profile, const char *coverage_profile);
 /* Of the lines of a file, @lines of coverage_file_lines(): those that ran, and those of code */
 void coverage_lines_count (GHashTable *lines, guint *covered, guint *code);
 

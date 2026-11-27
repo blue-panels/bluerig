@@ -249,6 +249,134 @@ remove_tree (const char *dir)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The build that ended: of the project in front and of the profile of its data, not a setup */
+static void
+test_build_concerns (void)
+{
+    g_assert_true (coverage_build_concerns ("build", "/p", "/p", "Coverage", "Coverage"));
+    // what is not told does not say no
+    g_assert_true (coverage_build_concerns (NULL, NULL, "/p", NULL, NULL));
+    g_assert_true (coverage_build_concerns ("build", "/p", "/p", "Coverage", NULL));
+    // a setup, another project, another profile
+    g_assert_false (coverage_build_concerns ("configure", "/p", "/p", "Coverage", "Coverage"));
+    g_assert_false (coverage_build_concerns ("build", "/q", "/p", "Coverage", "Coverage"));
+    g_assert_false (coverage_build_concerns ("build", "/p", NULL, "Coverage", "Coverage"));
+    g_assert_false (coverage_build_concerns ("build", "/p", "/p", "Default", "Coverage"));
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* A gcov of the test in @bin that runs @body: prints a line of a source, fails, or does both */
+static void
+fake_gcov (const char *bin, const char *body)
+{
+    char *path = g_build_filename (bin, "gcov", (char *) NULL);
+    char *text = g_strconcat ("#!/bin/sh\n", body, "\n", (char *) NULL);
+
+    g_assert_cmpint (g_mkdir_with_parents (bin, 0700), ==, 0);
+    g_assert_true (g_file_set_contents (path, text, -1, NULL));
+    g_assert_cmpint (g_chmod (path, 0700), ==, 0);
+    g_free (text);
+    g_free (path);
+}
+
+/* The first line the reading script prints for the build directory @dir and the root @root, the
+   stamp @stamp, read whatever it says when @forced; its gcov that of @bin */
+static char *
+script_head (const char *dir, const char *root, const char *stamp, gboolean forced, const char *bin)
+{
+    const char *argv[] = { "/bin/sh", "-c",  coverage_reading_script (), "coverage", dir,
+                           root,      stamp, forced ? "1" : "0",         NULL };
+    char *path = g_strconcat (bin, ":", g_getenv ("PATH"), (char *) NULL);
+    char **env = g_environ_setenv (g_get_environ (), "PATH", path, TRUE);
+    char *out = NULL, *eol;
+
+    g_assert_true (g_spawn_sync (root, (char **) argv, env, G_SPAWN_STDERR_TO_DEV_NULL, NULL, NULL,
+                                 &out, NULL, NULL, NULL));
+    eol = strchr (out, '\n');
+    if (eol != NULL)
+        *eol = '\0';
+    g_strfreev (env);
+    g_free (path);
+    return out;
+}
+
+/* The head of the script is @head; the stamp of the reading made the stamp, as when it is read */
+static void
+script_is (const char *dir, const char *root, const char *stamp, gboolean forced, const char *bin,
+           const char *head)
+{
+    char *got = script_head (dir, root, stamp, forced, bin);
+    char *fresh = g_strconcat (stamp, ".new", (char *) NULL);
+
+    g_assert_cmpstr (got, ==, head);
+    if (g_file_test (fresh, G_FILE_TEST_EXISTS))
+        g_assert_cmpint (rename (fresh, stamp), ==, 0);
+    g_free (fresh);
+    g_free (got);
+}
+
+/* The script: gcov data in the build directory, else an lcov tracefile in the root, the build
+   directory there or not; nothing new since the stamp; a set of data files other than the one
+   read; a gcov that prints nothing; nothing at all */
+static void
+test_script (void)
+{
+    char *root = g_build_filename (top, "s", (char *) NULL);
+    char *build = g_build_filename (root, "build", (char *) NULL);
+    char *stamp = g_build_filename (top, "stamp", (char *) NULL);
+    char *gcov = g_build_filename (top, "bin", (char *) NULL);
+    char *silent = g_build_filename (top, "bin-silent", (char *) NULL);
+    char *partial = g_build_filename (top, "bin-partial", (char *) NULL);
+    char *gone = g_build_filename (build, "b.p", "b.c.gcda", (char *) NULL);
+    char *info = g_build_filename (top, "real.info", (char *) NULL);
+    char *link = g_build_filename (root, "lcov.info", (char *) NULL);
+
+    fake_gcov (gcov, "echo '        -:    0:Source:a.c'");
+    fake_gcov (silent, "exit 1");
+    fake_gcov (partial, "echo '        -:    0:Source:a.c'; exit 1");
+    put ("s/coverage.info");
+    // the build directory not there yet: the tracefile of the root
+    script_is (build, root, stamp, TRUE, gcov, COVERAGE_HEAD_LCOV);
+    put ("s/build/a.p/a.c.gcda");
+    put ("s/build/b.p/b.c.gcda");
+    script_is (build, root, stamp, TRUE, gcov, COVERAGE_HEAD_GCOV);
+    // read, nothing new since
+    script_is (build, root, stamp, FALSE, gcov, COVERAGE_HEAD_UNCHANGED);
+    // a data file gone: the set is another, read again
+    g_assert_cmpint (g_remove (gone), ==, 0);
+    script_is (build, root, stamp, FALSE, gcov, COVERAGE_HEAD_GCOV);
+    script_is (build, root, stamp, FALSE, gcov, COVERAGE_HEAD_UNCHANGED);
+    // gcov prints nothing, or a part and fails: no data of it, the tracefile of the root
+    script_is (build, root, stamp, TRUE, silent, COVERAGE_HEAD_LCOV);
+    script_is (build, root, stamp, TRUE, partial, COVERAGE_HEAD_LCOV);
+    remove_tree (root);
+    /* a tracefile through a link, the link older than the stamp: the time of what it leads to,
+       written again after the reading */
+    g_assert_cmpint (g_mkdir_with_parents (root, 0700), ==, 0);
+    g_assert_true (g_file_set_contents (info, "SF:a.c\n", -1, NULL));
+    g_assert_cmpint (symlink (info, link), ==, 0);
+    script_is (build, root, stamp, TRUE, gcov, COVERAGE_HEAD_LCOV);
+    script_is (build, root, stamp, FALSE, gcov, COVERAGE_HEAD_UNCHANGED);
+    g_usleep (1100 * 1000);
+    g_assert_true (g_file_set_contents (info, "SF:b.c\n", -1, NULL));
+    script_is (build, root, stamp, FALSE, gcov, COVERAGE_HEAD_LCOV);
+    remove_tree (root);
+    g_assert_cmpint (g_mkdir_with_parents (root, 0700), ==, 0);
+    script_is (build, root, stamp, TRUE, gcov, COVERAGE_HEAD_NONE);
+    g_free (link);
+    g_free (info);
+    g_free (gone);
+    g_free (partial);
+    g_free (silent);
+    g_free (gcov);
+    g_free (stamp);
+    g_free (build);
+    g_free (root);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 int
 main (int argc, char **argv)
 {
@@ -266,6 +394,8 @@ main (int argc, char **argv)
     g_test_add_func ("/coverage/lcov", test_lcov);
     g_test_add_func ("/coverage/heads", test_heads);
     g_test_add_func ("/coverage/link-root", test_link_root);
+    g_test_add_func ("/coverage/build-concerns", test_build_concerns);
+    g_test_add_func ("/coverage/script", test_script);
     ret = g_test_run ();
 
     remove_tree (top);
