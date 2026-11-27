@@ -144,6 +144,10 @@ typedef struct
     mctree_model_t *model;  // and what it shows
     GHashTable *paths;      // the paths of the directories open, NULL for none
     gboolean service;
+    // the share of the lines that ran, "87%", by the absolute name of a file or of a directory, the
+    // files in it all together, from the plugin coverage while it shows the coverage; NULL for none
+    GHashTable *coverage;
+    guint coverage_signal;
     // what the list chose, opened once its dialog is gone
     char *open_file;
     long open_line;
@@ -206,6 +210,7 @@ typedef struct
 
 /*** forward declarations (file scope functions) *************************************************/
 
+static void project_coverage_read (project_t *project);
 static void project_tree_close (project_t *project);
 
 static void project_tree_rebuild (project_t *project, gboolean keep);
@@ -406,6 +411,8 @@ project_set_root (project_t *project, const char *root, gboolean chosen)
     project->closed = FALSE;
     project_files_drop (project);
     project_recent_load (project);
+    // the shares by the names from the new root
+    project_coverage_read (project);
     if (project->tree != NULL)
     {
         (void) project_files (project);
@@ -1402,7 +1409,20 @@ project_tree_row (edit_tree_t *tree, const mctree_node_t *node, GString *name, G
 
     g_string_append (name, node->key);
     if (data != NULL && data->dir)
+    {
         g_string_append_c (name, '/');
+        // the share of the files in it all together, in the field of those of the files
+        if (project != NULL && project->root != NULL && project->coverage != NULL
+            && data->rel != NULL)
+        {
+            char *path = g_build_filename (project->root, data->rel, (char *) NULL);
+            const char *share = (const char *) g_hash_table_lookup (project->coverage, path);
+
+            if (share != NULL)
+                g_string_append_printf (info, "%4s", share);
+            g_free (path);
+        }
+    }
     else if (project != NULL && project->root != NULL && data != NULL && data->symbol < 0
              && data->rel != NULL)
     {
@@ -1410,6 +1430,26 @@ project_tree_row (edit_tree_t *tree, const mctree_node_t *node, GString *name, G
 
         if (size != NULL)
             g_string_append (info, size->text);
+        /* the share of its lines the tests ran, while the coverage is shown: a field of its own
+           width for each file, blank for one without data, so that the lines stay in a column */
+        if (project->coverage != NULL)
+        {
+            char *path = g_build_filename (project->root, data->rel, (char *) NULL);
+            const char *share = (const char *) g_hash_table_lookup (project->coverage, path);
+
+            // a file that is a link: the data has it by the name it leads to
+            if (share == NULL && g_file_test (path, G_FILE_TEST_IS_SYMLINK))
+            {
+                char *real = realpath (path, NULL);
+
+                if (real != NULL)
+                    share = (const char *) g_hash_table_lookup (project->coverage, real);
+                free (real);
+            }
+            g_string_append_printf (info, "%s%4s", info->len > 0 ? "  " : "",
+                                    share != NULL ? share : "");
+            g_free (path);
+        }
     }
 }
 
@@ -2773,6 +2813,100 @@ static const mc_ep_window_kind_t project_tree_kind = {
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The shares of the files the plugin coverage tells, none when it shows no coverage */
+static void
+project_coverage_read (project_t *project)
+{
+    GVariant *reply, *files;
+
+    g_clear_pointer (&project->coverage, g_hash_table_destroy);
+    if (project->host->service_call == NULL)
+        return;
+    reply = project->host->service_call (project->host, "coverage", "files", NULL, NULL);
+    if (reply == NULL)
+        return;
+    files = g_variant_lookup_value (reply, "files", G_VARIANT_TYPE ("a(ayuu)"));
+    if (files != NULL)
+    {
+        // the lines of the directories: what ran and what is code, of all the files in each
+        GHashTable *dirs = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+        GHashTableIter dir_iter;
+        gpointer dir, sums;
+        GVariantIter iter;
+        const char *path;
+        guint covered, code;
+        /* the data names the files by their real names, the links resolved; the tree by the root
+           as the project was opened: a root through a link is made that root again */
+        char *real = project->root != NULL ? realpath (project->root, NULL) : NULL;
+        const gsize real_len = real != NULL ? strlen (real) : 0;
+        const gboolean other = real != NULL && strcmp (real, project->root) != 0;
+
+        project->coverage = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+        g_variant_iter_init (&iter, files);
+        while (g_variant_iter_next (&iter, "(^&ayuu)", &path, &covered, &code))
+        {
+            char *key, *up;
+
+            // a file gone since the data was made counts in no directory
+            if (code == 0 || !g_file_test (path, G_FILE_TEST_EXISTS))
+                continue;
+            key = other && strncmp (path, real, real_len) == 0
+                    && (path[real_len] == '/' || path[real_len] == '\0')
+                ? g_strconcat (project->root, path + real_len, (char *) NULL)
+                : g_strdup (path);
+            g_hash_table_insert (
+                project->coverage, g_strdup (key),
+                g_strdup_printf ("%u%%", (guint) ((guint64) covered * 100 / code)));
+            for (up = g_path_get_dirname (key); strcmp (up, "/") != 0 && strcmp (up, ".") != 0;)
+            {
+                guint64 *sum = (guint64 *) g_hash_table_lookup (dirs, up);
+                char *next = g_path_get_dirname (up);
+
+                if (sum == NULL)
+                {
+                    sum = g_new0 (guint64, 2);
+                    g_hash_table_insert (dirs, g_strdup (up), sum);
+                }
+                sum[0] += covered;
+                sum[1] += code;
+                g_free (up);
+                up = next;
+            }
+            g_free (up);
+            g_free (key);
+        }
+        free (real);
+        g_hash_table_iter_init (&dir_iter, dirs);
+        while (g_hash_table_iter_next (&dir_iter, &dir, &sums))
+            g_hash_table_insert (
+                project->coverage, g_strdup ((const char *) dir),
+                g_strdup_printf ("%u%%",
+                                 (guint) (((guint64 *) sums)[0] * 100 / ((guint64 *) sums)[1])));
+        g_hash_table_destroy (dirs);
+        g_variant_unref (files);
+    }
+    g_variant_unref (reply);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* The coverage shown, hidden or read again: the shares of the tree with it */
+static void
+project_coverage_changed (const char *name, const char *signal, GVariant *args, void *user_data)
+{
+    project_t *project = (project_t *) user_data;
+
+    (void) name;
+    (void) args;
+    if (strcmp (signal, "changed") != 0)
+        return;
+    project_coverage_read (project);
+    if (project->tree != NULL)
+        widget_draw (WIDGET (project->tree));
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static void *
 project_open (mc_editor_host_t *host, void *editor_dialog)
 {
@@ -2791,6 +2925,11 @@ project_open (mc_editor_host_t *host, void *editor_dialog)
     for (i = 0; i < PROJECT_CMD_COUNT; i++)
         project->commands[i] = host->command_id (host, project_commands[i].name);
     project->service = host->service_register (host, PROJECT_SERVICE, project_call, project, NULL);
+    // the plugin coverage may come after: listened to whether it is there yet or not
+    if (host->service_connect != NULL)
+        project->coverage_signal =
+            host->service_connect (host, "coverage", project_coverage_changed, project);
+    project_coverage_read (project);
     if (host->startup_option (host, "debug") != NULL)
     {
         project_set_root (project, host->startup_option (host, "debug"), TRUE);
@@ -2813,6 +2952,9 @@ project_close (void *data)
     g_clear_pointer (&project->model, mctree_model_free);
     g_clear_pointer (&project->paths, g_hash_table_destroy);
     g_clear_pointer (&project->sizes, g_hash_table_destroy);
+    if (project->coverage_signal != 0)
+        project->host->service_disconnect (project->host, project->coverage_signal);
+    g_clear_pointer (&project->coverage, g_hash_table_destroy);
     project_icons_free (project);
     if (project->service)
         project->host->service_unregister (project->host, PROJECT_SERVICE);
