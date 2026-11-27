@@ -95,6 +95,18 @@ test_gcov (void)
     g_assert_cmpint (state_of (files, "src/a.c", 7), ==, COVERAGE_LINE_COVERED);
     g_assert_cmpint (state_of (files, "src/a.c", 8), ==, COVERAGE_LINE_MISSED);
     g_assert_cmpint (state_of (files, "src/a.h", 3), ==, COVERAGE_LINE_COVERED);
+    {
+        // of the four lines of code of a.c two ran; a file not there has none
+        char *path = g_build_filename (top, "src", "a.c", (char *) NULL);
+        guint covered, code;
+
+        coverage_lines_count (coverage_file_lines (files, path), &covered, &code);
+        g_assert_cmpuint (covered, ==, 2);
+        g_assert_cmpuint (code, ==, 4);
+        coverage_lines_count (NULL, &covered, &code);
+        g_assert_cmpuint (code, ==, 0);
+        g_free (path);
+    }
     g_hash_table_unref (files);
     g_free (build);
 }

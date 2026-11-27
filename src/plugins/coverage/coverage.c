@@ -60,6 +60,9 @@
 /* a look at the data when a file window comes to the front: not more often, in microseconds */
 #define COVERAGE_LOOK_EVERY (2 * G_USEC_PER_SEC)
 
+/* what the plugin offers the others: the share of the lines that ran, by file */
+#define COVERAGE_SERVICE "coverage"
+
 /*** file scope type declarations ****************************************************************/
 
 enum
@@ -96,6 +99,7 @@ typedef struct coverage_t
     gboolean shown;
     guint build_signal;
     guint terminal_signal;
+    gboolean service; /* the service is offered */
 
     // the reading of the data
     GPid pid;
@@ -613,6 +617,16 @@ coverage_read_stop (coverage_t *coverage)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* Tell those who listen that the shares of the files may be other now */
+static void
+coverage_changed (coverage_t *coverage)
+{
+    if (coverage->service)
+        coverage->host->service_emit (coverage->host, COVERAGE_SERVICE, "changed", NULL);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 /* The output is over: the data replaces the one there was */
 static void
 coverage_read_done (coverage_t *coverage)
@@ -642,6 +656,7 @@ coverage_read_done (coverage_t *coverage)
         coverage->files = files;
         if (coverage->shown)
             coverage_mark_all (coverage);
+        coverage_changed (coverage);
     }
     else if (data == COVERAGE_DATA_NONE)
     {
@@ -651,6 +666,7 @@ coverage_read_done (coverage_t *coverage)
             g_hash_table_unref (coverage->files);
             coverage->files = NULL;
             coverage_clear (coverage);
+            coverage_changed (coverage);
         }
         if (forced && coverage->shown && coverage->root != NULL)
         {
@@ -837,6 +853,8 @@ coverage_act_toggle (void *data, void *edit)
 
     (void) edit;
     coverage->shown = !coverage->shown;
+    // the shares of the files go and come with the marks
+    coverage_changed (coverage);
     if (!coverage->shown)
     {
         coverage_clear (coverage);
@@ -892,6 +910,47 @@ coverage_file_open (void *data, void *edit)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The service coverage.  "files": "files", a(ayuu), for each file of the data while the
+   coverage is shown, by its absolute name: the lines that ran and the lines of code; none when
+   it is hidden or there is no data.  The signal "changed" says they may be other now. */
+static GVariant *
+coverage_call (void *data, const char *method, GVariant *args, GError **error)
+{
+    coverage_t *coverage = (coverage_t *) data;
+    GVariantDict reply;
+
+    (void) args;
+    if (strcmp (method, "files") != 0)
+    {
+        g_set_error (error, MC_SERVICE_ERROR, MC_SERVICE_ERROR_METHOD, "coverage: no method %s",
+                     method);
+        return NULL;
+    }
+    g_variant_dict_init (&reply, NULL);
+    if (coverage->shown && coverage->files != NULL)
+    {
+        GVariantBuilder files;
+        GHashTableIter iter;
+        gpointer path, lines;
+
+        // the names as bytes, one of a file may be no UTF-8: a list, a key of a dictionary is text
+        g_variant_builder_init (&files, G_VARIANT_TYPE ("a(ayuu)"));
+        g_hash_table_iter_init (&iter, coverage->files);
+        while (g_hash_table_iter_next (&iter, &path, &lines))
+        {
+            guint covered, code;
+
+            coverage_lines_count ((GHashTable *) lines, &covered, &code);
+            if (code > 0)
+                g_variant_builder_add (&files, "(^ayuu)", (const char *) path, covered, code);
+        }
+        g_variant_dict_insert_value (&reply, "files", g_variant_builder_end (&files));
+    }
+    return g_variant_dict_end (&reply);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static void *
 coverage_open (mc_editor_host_t *host, void *editor_dialog)
 {
@@ -907,6 +966,9 @@ coverage_open (mc_editor_host_t *host, void *editor_dialog)
     for (i = 0; i < COVERAGE_MARK_COUNT; i++)
         coverage->marks[i] =
             host->marker_kind != NULL ? host->marker_kind (host, &coverage_mark_kinds[i]) : -1;
+    if (host->service_register != NULL)
+        coverage->service =
+            host->service_register (host, COVERAGE_SERVICE, coverage_call, coverage, NULL);
     if (host->service_connect != NULL)
     {
         coverage->build_signal = host->service_connect (host, "build", coverage_signal, coverage);
@@ -923,6 +985,8 @@ coverage_close (void *data)
 {
     coverage_t *coverage = (coverage_t *) data;
 
+    if (coverage->service)
+        coverage->host->service_unregister (coverage->host, COVERAGE_SERVICE);
     if (coverage->build_signal != 0)
         coverage->host->service_disconnect (coverage->host, coverage->build_signal);
     if (coverage->terminal_signal != 0)

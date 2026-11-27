@@ -272,3 +272,29 @@ coverage_file_lines (GHashTable *files, const char *path)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+coverage_lines_count (GHashTable *lines, guint *covered, guint *code)
+{
+    GHashTableIter iter;
+    gpointer value;
+
+    *covered = 0;
+    *code = 0;
+    if (lines == NULL)
+        return;
+    g_hash_table_iter_init (&iter, lines);
+    while (g_hash_table_iter_next (&iter, NULL, &value))
+    {
+        const coverage_line_t line = (coverage_line_t) GPOINTER_TO_INT (value);
+
+        if (line == COVERAGE_LINE_COVERED)
+            (*covered)++;
+        if (line != COVERAGE_LINE_NONE)
+            (*code)++;
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */

@@ -13,6 +13,8 @@ and the lines of code that did not run. Works in *bluerig -D*.
 A line that ran gets a green bar, a line that did not run a yellow one.
 Lines without code, comments and empty lines get no mark. The marks move
 with their lines while the file is edited, until the data is read again.
+The project tree shows after each file the share of its lines of code that
+ran, *83%*, and after a directory that of all its files together.
 
 **Where the data comes from**
 

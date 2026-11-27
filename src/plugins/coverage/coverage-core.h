@@ -55,5 +55,7 @@ coverage_data_t coverage_reader_finish (coverage_reader_t *reader, GHashTable **
 
 /* The lines of a file of @files, NULL when it is not there */
 GHashTable *coverage_file_lines (GHashTable *files, const char *path);
+/* Of the lines of a file, @lines of coverage_file_lines(): those that ran, and those of code */
+void coverage_lines_count (GHashTable *lines, guint *covered, guint *code);
 
 #endif /* MC__COVERAGE_CORE_H */
