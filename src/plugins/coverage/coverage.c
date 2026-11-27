@@ -60,6 +60,9 @@
 /* a look at the data when a file window comes to the front: not more often, in microseconds */
 #define COVERAGE_LOOK_EVERY (2 * G_USEC_PER_SEC)
 
+/* what the plugin offers the others: the share of the lines that ran, by file */
+#define COVERAGE_SERVICE "coverage"
+
 /*** file scope type declarations ****************************************************************/
 
 enum
@@ -96,6 +99,7 @@ typedef struct coverage_t
     gboolean shown;
     guint build_signal;
     guint terminal_signal;
+    gboolean service; /* the service is offered */
 
     // the reading of the data
     GPid pid;
@@ -129,39 +133,6 @@ static const mc_ep_marker_kind_t coverage_mark_kinds[COVERAGE_MARK_COUNT] = {
     { "coverage.missed", "coverage-missed-char", "\xe2\x96\x8c", "|", "coveragemissed", NULL, NULL,
       2, "yellow" },
 };
-
-/* What finds the data and prints it, the head first: $1 the build directory, $2 the root, $3 the
-   stamp of the last reading, $4 1 to read it whatever the stamp says; $3.new stamps this reading,
-   to be the stamp once its output is all read.  gcov of the .gcda files of
-   the build, else the first lcov tracefile there is, the build directory there or not */
-static const char coverage_script[] =
-    "if cd \"$1\" 2>/dev/null && [ -n \"$(find . -name '*.gcda' -print 2>/dev/null | head -n 1)\" "
-    "]; "
-    "then\n"
-    "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ -z \"$(find . -name '*.gcda' -newer \"$3\" "
-    "-print 2>/dev/null | head -n 1)\" ]; then\n"
-    "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
-    "        exit 0\n"
-    "    fi\n"
-    "    touch \"$3.new\"\n"
-    "    echo '" COVERAGE_HEAD_GCOV "'\n"
-    "    find . -name '*.gcda' -exec gcov -t {} + 2>/dev/null\n"
-    "    exit 0\n"
-    "fi\n"
-    "for f in \"$2/coverage.info\" \"$2/lcov.info\" \"$2/coverage/lcov.info\" "
-    "\"$1/meson-logs/coverage.info\"; do\n"
-    "    [ -f \"$f\" ] || continue\n"
-    "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ -z \"$(find \"$f\" -newer \"$3\" -print)\" ]; "
-    "then\n"
-    "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
-    "        exit 0\n"
-    "    fi\n"
-    "    touch \"$3.new\"\n"
-    "    echo '" COVERAGE_HEAD_LCOV "'\n"
-    "    cat \"$f\"\n"
-    "    exit 0\n"
-    "done\n"
-    "echo '" COVERAGE_HEAD_NONE "'\n";
 
 /* --------------------------------------------------------------------------------------------- */
 /*** file scope functions ************************************************************************/
@@ -613,6 +584,16 @@ coverage_read_stop (coverage_t *coverage)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* Tell those who listen that the shares of the files may be other now */
+static void
+coverage_changed (coverage_t *coverage)
+{
+    if (coverage->service)
+        coverage->host->service_emit (coverage->host, COVERAGE_SERVICE, "changed", NULL);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 /* The output is over: the data replaces the one there was */
 static void
 coverage_read_done (coverage_t *coverage)
@@ -642,15 +623,19 @@ coverage_read_done (coverage_t *coverage)
         coverage->files = files;
         if (coverage->shown)
             coverage_mark_all (coverage);
+        coverage_changed (coverage);
     }
     else if (data == COVERAGE_DATA_NONE)
     {
+        // no data read: the stamp of a reading of before is none, the next one reads it all
+        (void) unlink (coverage->stamp);
         // the data is gone, or the project in front has none: no marks of the one before
         if (coverage->files != NULL)
         {
             g_hash_table_unref (coverage->files);
             coverage->files = NULL;
             coverage_clear (coverage);
+            coverage_changed (coverage);
         }
         if (forced && coverage->shown && coverage->root != NULL)
         {
@@ -750,7 +735,7 @@ coverage_read (coverage_t *coverage, gboolean forced)
     // $0 is the name of the script, $1 to $4 its arguments
     argv[0] = "/bin/sh";
     argv[1] = "-c";
-    argv[2] = coverage_script;
+    argv[2] = coverage_reading_script ();
     argv[3] = "coverage";
     argv[4] = dir;
     argv[5] = root;
@@ -793,36 +778,28 @@ coverage_signal (const char *name, const char *signal, GVariant *args, void *use
     if (strcmp (name, "build") == 0 && args != NULL)
     {
         const char *step = NULL, *profile = NULL, *root = NULL;
+        // the project read again is that of the window in front
+        char *front = coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
+        char *now = NULL;
+        gboolean asked = FALSE, concerns;
 
-        if (g_variant_lookup (args, "step", "&s", &step) && strcmp (step, "build") != 0)
-            return;
-        // the project read again is that of the window in front: the build is of it, or not
-        if (g_variant_lookup (args, "root", "&s", &root))
-        {
-            char *front =
-                coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
-            const gboolean other = g_strcmp0 (root, front) != 0;
-
-            g_free (front);
-            if (other)
-                return;
-        }
-        // the profile of coverage by its name now: it may have been renamed since the reading
-        if (coverage->profile != NULL && g_variant_lookup (args, "profile", "&s", &profile)
+        (void) g_variant_lookup (args, "step", "&s", &step);
+        (void) g_variant_lookup (args, "root", "&s", &root);
+        (void) g_variant_lookup (args, "profile", "&s", &profile);
+        // the profile of coverage by its name now when it is another: it may have been renamed
+        if (profile != NULL && coverage->profile != NULL
             && strcmp (profile, coverage->profile) != 0)
         {
-            char *front =
-                coverage_root_of (coverage, coverage->host->window_top_file (coverage->host));
-            char *now = NULL;
-            char *dir = coverage_data_dir (coverage, front, &now);
-            const gboolean other = g_strcmp0 (profile, now) != 0;
-
-            g_free (dir);
-            g_free (now);
-            g_free (front);
-            if (other)
-                return;
+            g_free (coverage_data_dir (coverage, front, &now));
+            asked = TRUE;
         }
+        // asked: none now is none, the data read from the build found, of whatever profile
+        concerns =
+            coverage_build_concerns (step, root, front, profile, asked ? now : coverage->profile);
+        g_free (now);
+        g_free (front);
+        if (!concerns)
+            return;
     }
     // a build makes the lines of the data others: read it whatever the stamp says
     coverage_read (coverage, strcmp (name, "build") == 0);
@@ -837,6 +814,8 @@ coverage_act_toggle (void *data, void *edit)
 
     (void) edit;
     coverage->shown = !coverage->shown;
+    // the shares of the files go and come with the marks
+    coverage_changed (coverage);
     if (!coverage->shown)
     {
         coverage_clear (coverage);
@@ -892,6 +871,47 @@ coverage_file_open (void *data, void *edit)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The service coverage.  "files": "files", a(ayuu), for each file of the data while the
+   coverage is shown, by its absolute name: the lines that ran and the lines of code; none when
+   it is hidden or there is no data.  The signal "changed" says they may be other now. */
+static GVariant *
+coverage_call (void *data, const char *method, GVariant *args, GError **error)
+{
+    coverage_t *coverage = (coverage_t *) data;
+    GVariantDict reply;
+
+    (void) args;
+    if (strcmp (method, "files") != 0)
+    {
+        g_set_error (error, MC_SERVICE_ERROR, MC_SERVICE_ERROR_METHOD, "coverage: no method %s",
+                     method);
+        return NULL;
+    }
+    g_variant_dict_init (&reply, NULL);
+    if (coverage->shown && coverage->files != NULL)
+    {
+        GVariantBuilder files;
+        GHashTableIter iter;
+        gpointer path, lines;
+
+        // the names as bytes, one of a file may be no UTF-8: a list, a key of a dictionary is text
+        g_variant_builder_init (&files, G_VARIANT_TYPE ("a(ayuu)"));
+        g_hash_table_iter_init (&iter, coverage->files);
+        while (g_hash_table_iter_next (&iter, &path, &lines))
+        {
+            guint covered, code;
+
+            coverage_lines_count ((GHashTable *) lines, &covered, &code);
+            if (code > 0)
+                g_variant_builder_add (&files, "(^ayuu)", (const char *) path, covered, code);
+        }
+        g_variant_dict_insert_value (&reply, "files", g_variant_builder_end (&files));
+    }
+    return g_variant_dict_end (&reply);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 static void *
 coverage_open (mc_editor_host_t *host, void *editor_dialog)
 {
@@ -907,6 +927,9 @@ coverage_open (mc_editor_host_t *host, void *editor_dialog)
     for (i = 0; i < COVERAGE_MARK_COUNT; i++)
         coverage->marks[i] =
             host->marker_kind != NULL ? host->marker_kind (host, &coverage_mark_kinds[i]) : -1;
+    if (host->service_register != NULL)
+        coverage->service =
+            host->service_register (host, COVERAGE_SERVICE, coverage_call, coverage, NULL);
     if (host->service_connect != NULL)
     {
         coverage->build_signal = host->service_connect (host, "build", coverage_signal, coverage);
@@ -923,6 +946,8 @@ coverage_close (void *data)
 {
     coverage_t *coverage = (coverage_t *) data;
 
+    if (coverage->service)
+        coverage->host->service_unregister (coverage->host, COVERAGE_SERVICE);
     if (coverage->build_signal != 0)
         coverage->host->service_disconnect (coverage->host, coverage->build_signal);
     if (coverage->terminal_signal != 0)
@@ -937,9 +962,12 @@ coverage_close (void *data)
     g_string_free (coverage->pending, TRUE);
     {
         char *read_one = g_strconcat (coverage->stamp, ".new", (char *) NULL);
+        char *output = g_strconcat (coverage->stamp, ".out", (char *) NULL);
 
         (void) unlink (read_one);
+        (void) unlink (output);
         (void) unlink (coverage->stamp);
+        g_free (output);
         g_free (read_one);
     }
     g_free (coverage->stamp);

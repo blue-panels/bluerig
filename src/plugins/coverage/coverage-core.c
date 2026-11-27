@@ -272,3 +272,97 @@ coverage_file_lines (GHashTable *files, const char *path)
 }
 
 /* --------------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+coverage_lines_count (GHashTable *lines, guint *covered, guint *code)
+{
+    GHashTableIter iter;
+    gpointer value;
+
+    *covered = 0;
+    *code = 0;
+    if (lines == NULL)
+        return;
+    g_hash_table_iter_init (&iter, lines);
+    while (g_hash_table_iter_next (&iter, NULL, &value))
+    {
+        const coverage_line_t line = (coverage_line_t) GPOINTER_TO_INT (value);
+
+        if (line == COVERAGE_LINE_COVERED)
+            (*covered)++;
+        if (line != COVERAGE_LINE_NONE)
+            (*code)++;
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+gboolean
+coverage_build_concerns (const char *step, const char *root, const char *front, const char *profile,
+                         const char *coverage_profile)
+{
+    // a setup changes no line of the data
+    if (step != NULL && strcmp (step, "build") != 0)
+        return FALSE;
+    // the build of another project
+    if (root != NULL && g_strcmp0 (root, front) != 0)
+        return FALSE;
+    // the build of another profile than that of the data
+    if (profile != NULL && coverage_profile != NULL && strcmp (profile, coverage_profile) != 0)
+        return FALSE;
+    return TRUE;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+const char *
+coverage_reading_script (void)
+{
+    // gcov of the .gcda files of the build, else the first lcov tracefile, the build there or not
+    static const char script[] =
+        "# the stamp of this reading first, what it reads in it: data newer than it is read next "
+        "time\n"
+        "if cd \"$1\" 2>/dev/null && list=$(find . -name '*.gcda' -print 2>/dev/null | LC_ALL=C "
+        "sort) && [ -n \"$list\" ]; then\n"
+        "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ \"$(cat \"$3\")\" = \"gcov $list\" ] && [ -z "
+        "\"$(find . -name '*.gcda' -newer \"$3\" -print 2>/dev/null | head -n 1)\" ]; then\n"
+        "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
+        "        exit 0\n"
+        "    fi\n"
+        "    printf '%s' \"gcov $list\" > \"$3.new\"\n"
+        "    # all of gcov, or none of it: a gcov that fails is no data\n"
+        "    if find . -name '*.gcda' -exec gcov -t {} + > \"$3.out\" 2>/dev/null && [ -s "
+        "\"$3.out\" ]; then\n"
+        "        echo '" COVERAGE_HEAD_GCOV "'\n"
+        "        cat \"$3.out\"\n"
+        "        rm -f \"$3.out\"\n"
+        "        exit 0\n"
+        "    fi\n"
+        "    rm -f \"$3.new\" \"$3.out\"\n"
+        "fi\n"
+        "for f in \"$2/coverage.info\" \"$2/lcov.info\" \"$2/coverage/lcov.info\" "
+        "\"$1/meson-logs/coverage.info\"; do\n"
+        "    [ -f \"$f\" ] || continue\n"
+        "    # the time of what a link leads to\n"
+        "    if [ \"$4\" != 1 ] && [ -f \"$3\" ] && [ \"$(cat \"$3\")\" = \"lcov $f\" ] && [ -z "
+        "\"$(find -L \"$f\" -newer \"$3\" -print)\" ]; then\n"
+        "        echo '" COVERAGE_HEAD_UNCHANGED "'\n"
+        "        exit 0\n"
+        "    fi\n"
+        "    printf '%s' \"lcov $f\" > \"$3.new\"\n"
+        "    if cat \"$f\" > \"$3.out\" 2>/dev/null; then\n"
+        "        echo '" COVERAGE_HEAD_LCOV "'\n"
+        "        cat \"$3.out\"\n"
+        "        rm -f \"$3.out\"\n"
+        "        exit 0\n"
+        "    fi\n"
+        "    rm -f \"$3.new\" \"$3.out\"\n"
+        "done\n"
+        "echo '" COVERAGE_HEAD_NONE "'\n";
+
+    return script;
+}
+
+/* --------------------------------------------------------------------------------------------- */

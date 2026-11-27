@@ -51,6 +51,9 @@ Shows the directories and files of the project, and under the file of the
 front window its functions, types and variables. The file of the front
 window and the symbol under the cursor are in bold. At the right of a file
 stands the number of its lines; large and binary files show their size.
+While the plugin Coverage shows the coverage, the share of the lines of
+code of the file the tests ran follows it, *83%*; a directory shows that of
+all the files in it together.
 
 |  |  |
 |--|--|
