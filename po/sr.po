@@ -500,7 +500,7 @@ msgstr "Смени замотавање кода"
 
 #: lib/keybind.c:205
 msgid "Unfold all"
-msgstr "Одмотај све"
+msgstr "Отвори сва сажимања"
 
 #: lib/keybind.c:206
 msgid "Toggle line filter"
@@ -2438,21 +2438,19 @@ msgstr "Обриши макро"
 
 #: src/editor/editmacros.c:840 src/editor/editmacros.c:845
 msgid "Macro Explorer"
-msgstr ""
+msgstr "Преглед макроа"
 
 #: src/editor/editmacros.c:840
 msgid "No macros recorded"
 msgstr ""
 
 #: src/editor/editmacros.c:865
-#, fuzzy
 msgid "Run"
-msgstr "Руски"
+msgstr "Покрени"
 
 #: src/editor/editmacros.c:868
-#, fuzzy
 msgid "Close"
-msgstr "&Затвори"
+msgstr "Затвори"
 
 #: src/editor/editmenu.c:230
 msgid "&Open file..."
@@ -2615,7 +2613,7 @@ msgstr "Смени &десну маргину"
 
 #: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
-msgstr ""
+msgstr "Смени контролне з&наке"
 
 #: src/editor/editmenu.c:321
 msgid "Encod&ing..."
@@ -2623,12 +2621,11 @@ msgstr "&Кодирање..."
 
 #: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
-msgstr ""
+msgstr "&Сажми / отвори блок"
 
 #: src/editor/editmenu.c:324
-#, fuzzy
 msgid "&Unfold all"
-msgstr "&Тражи све"
+msgstr "Отвори сва са&жимања"
 
 #: src/editor/editmenu.c:326
 msgid "&Refresh screen"
@@ -2640,7 +2637,7 @@ msgstr "&Покрени/заустави снимање макроа"
 
 #: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
-msgstr ""
+msgstr "Пр&еглед макроа..."
 
 #: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
@@ -2691,34 +2688,30 @@ msgid "Learn &keys..."
 msgstr "Научи &тастере..."
 
 #: src/editor/editmenu.c:374
-#, fuzzy
 msgid "Key &bindings..."
-msgstr "&Кодирање..."
+msgstr "Тастерске пр&ечице..."
 
 #: src/editor/editmenu.c:375
-#, fuzzy
 msgid "Key s&niffer..."
-msgstr "&Кодирање..."
+msgstr "Детектор т&астера..."
 
 #: src/editor/editmenu.c:377
-#, fuzzy
 msgid "Manage &plugins..."
-msgstr "Опције &панела..."
+msgstr "&Управљање прикључцима..."
 
 #: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
-msgstr ""
+msgstr "&Подаци о прикључцима..."
 
 #: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
-msgstr ""
+msgstr "&Lua скриптови..."
 
 #: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "&Датотека синтаксе"
 
 #: src/editor/editmenu.c:384
-#, fuzzy
 msgid "M&enu file"
 msgstr "Датотека &менија"
 
@@ -2747,9 +2740,8 @@ msgid "&Command"
 msgstr "&Наредба"
 
 #: src/editor/editmenu.c:553
-#, fuzzy
 msgid "&Navigate"
-msgstr "Навигација"
+msgstr "Н&авигација"
 
 #: src/editor/editmenu.c:580
 msgid "&Window"
@@ -2757,7 +2749,7 @@ msgstr "&Прозор"
 
 #: src/editor/editmenu.c:586
 msgid "Pl&ugins"
-msgstr ""
+msgstr "При&кључци"
 
 #: src/editor/editmenu.c:592
 msgid "&Options"
