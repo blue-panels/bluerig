@@ -9,44 +9,43 @@
                                   |___/
   {{MC_VERSION:32}}
 ```
- a terminal IDE, a continuation of cooledit
+ bluerig - un IDE per la console
 
-Questa è la principale schermata della guida interattiva del **bluerig**.
+Per imparare a usare la guida interattiva, premere [Invio](#how-to-use-help). Si può anche andare subito al [sommario](#contents) della guida o al capitolo sull'[editor](#internal-file-editor).
 
-Per saperne di più su come usare la guida interattiva, premere semplicemente [invio](#how-to-use-help). Se lo si desidera, è possibile  consultare direttamente il [sommario](#contents) della guida.
+bluerig si basa sugli editor cooledit e mcedit. Vedere [Autori](#authors).
 
-Il Midnight Commander è stato scritto dai suoi [autori](#authors).
-
-Il bluerig NON E' COPERTO DA ALCUNA [GARANZIA](gnu-gpl-v3.0.md#warranty). Questo è software libero, lo si può ridistribuire sotto  certe [condizioni](gnu-gpl-v3.0.md#license).
+bluerig NON HA ALCUNA [GARANZIA](gnu-gpl-v3.0.md#warranty). È software libero: lo si può ridistribuire secondo i termini della [GNU General Public License](gnu-gpl-v3.0.md#license).
 
 # Finestre di dialogo di richiesta dati <a id="querybox"></a>
 
-Nelle finestre di dialogo di richiesta dati è possibile usare i tasti freccia o la prima lettera per selezionare una voce o cliccare con il mouse sul bottone.
+In una finestra di richiesta si sceglie un pulsante con i tasti freccia o con la sua lettera evidenziata, e lo si preme con Invio. Si può anche fare clic sul pulsante. Esc chiude la finestra senza risposta.
 
 # Come usare la guida interattiva <a id="how-to-use-help"></a>
 <a id="help"></a>
 
-Usare i tasti del cursore o il mouse per navigare nel visualizzatore della guida.
+La guida si apre con F1 quasi ovunque. Nella finestra della guida ci si muove con i tasti del cursore o con il mouse. Premere **freccia in giù** per andare al collegamento successivo o scorrere in basso. Premere **freccia in su** per andare al collegamento precedente o scorrere in alto. Premere **freccia a destra** o **Invio** per seguire il collegamento corrente. Premere **freccia a sinistra** per tornare indietro nella cronologia dei nodi visitati.
 
-Premere freccia in giù per spostarsi alla voce successiva o per spostarsi in basso. Premere freccia in su per spostarsi alla voce precedente o per spostarsi in alto. Premere freccia a destra per seguire il collegamento corrente. Premere freccia a sinistra per tornare indietro nello storico dei nodi visitati.
+Se il terminale non supporta i tasti del cursore, usare la **barra spaziatrice** per scorrere in avanti e il tasto **b** per scorrere indietro. Il tasto **Tab** va al collegamento successivo e **Invio** lo segue. Il tasto **l** torna indietro nella cronologia dei nodi visitati. Premere **Esc** per uscire dalla guida.
 
-Se il terminale non supporta i tasti del cursore si può usare la barra spaziatrice per spostarsi in avanti ed il tasto 'b' per tornare indietro. Usare il tasto TAB per spostarsi sulla prossima voce e premere INVIO per seguire il collegamento corrente. Usare il tasto 'l' per tornare indietro nello storico dei nodi visitati. Premere ESC per uscire dal visualizzatore della guida.
+Il tasto sinistro del mouse segue un collegamento o scorre. Il tasto destro torna indietro nella cronologia dei nodi.
 
-Il tasto sinistro del mouse segue il collegamento  o sfoglia le pagine. Il tasto destro del mouse torna indietro nello storico  dei nodi visitati.
+La barra sul lato destro della cornice mostra quale parte della pagina è visibile: una freccia scorre di una riga, un clic accanto al cursore della barra scorre di una pagina, e il cursore si trascina.
 
-Elenco completo dei tasti del visualizzatore della guida:
+Elenco completo dei tasti della finestra della guida:
 
 Sono accettati i [tasti generali di movimento](#general-movement-keys).
 
 ```
-tab           Va alla voce successiva.
-M-tab         Va alla voce precedente.
-giù           Va alla voce successiva o una riga in basso.
-su            Va alla voce precedente o una riga in alto. destra, invio Segue il collegamento corrente.
-sinistra, l   Torna indietro nello storico dei nodi visitati.
-F1            Mostra la guida per il visualizzatore della guida stessa.
-n             Va al nodo successivo.
-p             Va al nodo precedente.
-c             Va al nodo del sommario.
-F10, esc      Esce dal visualizzatore della guida. 
+Tab             va al collegamento successivo
+Alt-Tab         va al collegamento precedente
+Giù             collegamento successivo, o una riga in basso
+Su              collegamento precedente, o una riga in alto
+Destra, Invio   segue il collegamento corrente
+Sinistra, l, F3 indietro nella cronologia dei nodi visitati
+F1              mostra questa guida sulla guida
+n               va al nodo successivo
+p               va al nodo precedente
+c, F2           va al sommario
+F10, Esc        esce dalla guida
 ```

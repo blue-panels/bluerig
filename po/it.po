@@ -568,14 +568,12 @@ msgid "Toggle code fold"
 msgstr ""
 
 #: lib/keybind.c:205
-#, fuzzy
 msgid "Unfold all"
-msgstr "Tro&va tutti"
+msgstr "Espandi tutto"
 
 #: lib/keybind.c:206
-#, fuzzy
 msgid "Toggle line filter"
-msgstr "Commuta la riga di s&tato"
+msgstr "Attiva/disattiva il filtro &righe"
 
 #: lib/keybind.c:207
 msgid "Filter by selection or word"
@@ -683,7 +681,7 @@ msgstr "Spazi finali &visibili"
 
 #: lib/keybind.c:230
 msgid "Toggle control characters"
-msgstr ""
+msgstr "Mostra/nascondi caratteri di controllo"
 
 #: lib/keybind.c:231
 #, fuzzy
@@ -695,9 +693,8 @@ msgid "Choose syntax highlighting"
 msgstr "Scegli la sintassi evidenziata"
 
 #: lib/keybind.c:233
-#, fuzzy
 msgid "Toggle right margin"
-msgstr "Commuta margine des&tro"
+msgstr "Commuta margine destro"
 
 #: lib/keybind.c:234
 #, fuzzy
@@ -2683,7 +2680,7 @@ msgstr "Vai alla ri&ga..."
 
 #: src/editor/editmenu.c:312
 msgid "&Toggle line state"
-msgstr "Commuta la riga di s&tato"
+msgstr "M&ostra/nascondi lo stato delle righe"
 
 #: src/editor/editmenu.c:314
 msgid "Go to matching &bracket"
@@ -2699,7 +2696,7 @@ msgstr "Commuta margine des&tro"
 
 #: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
-msgstr ""
+msgstr "Mostra/nascondi &caratteri di controllo"
 
 #: src/editor/editmenu.c:321
 msgid "Encod&ing..."
@@ -2710,9 +2707,8 @@ msgid "&Fold / Unfold block"
 msgstr ""
 
 #: src/editor/editmenu.c:324
-#, fuzzy
 msgid "&Unfold all"
-msgstr "Tro&va tutti"
+msgstr "&Espandi tutto"
 
 #: src/editor/editmenu.c:326
 msgid "&Refresh screen"
@@ -2775,19 +2771,16 @@ msgid "Learn &keys..."
 msgstr "&Impara tasti..."
 
 #: src/editor/editmenu.c:374
-#, fuzzy
 msgid "Key &bindings..."
-msgstr "&Codifica..."
+msgstr "Associazioni dei &tasti..."
 
 #: src/editor/editmenu.c:375
-#, fuzzy
 msgid "Key s&niffer..."
-msgstr "&Codifica..."
+msgstr "Rile&vatore di tasti..."
 
 #: src/editor/editmenu.c:377
-#, fuzzy
 msgid "Manage &plugins..."
-msgstr "Opzioni &pannello..."
+msgstr "Gestisci &plugin..."
 
 #: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
