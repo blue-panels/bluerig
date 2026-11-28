@@ -221,9 +221,14 @@ spell_keymap_load (void)
     else
         spell_debug_log ("spell: sysconfig_dir is NULL, skip sysconfig keymap");
 
-    fname = mc_config_get_full_path (SPELL_KEYMAP_FILE);
-    spell_keymap_load_file (keymap, fname);
-    g_free (fname);
+    /* the user's own: mc_config_get_full_path () knows only the files of its table, and gives
+       NULL for this one, so the path is built from the config dir as ctags does */
+    if (mc_config_get_path () != NULL)
+    {
+        fname = g_build_filename (mc_config_get_path (), SPELL_KEYMAP_FILE, (char *) NULL);
+        spell_keymap_load_file (keymap, fname);
+        g_free (fname);
+    }
 
     spell_debug_log ("spell: keymap loaded total binds=%u", keymap->len);
     return keymap;
