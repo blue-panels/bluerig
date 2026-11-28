@@ -2,8 +2,8 @@
 
 **Build**
 
-Builds the project, shows the output of the compiler as a list of errors
-and goes to the lines with errors and warnings.
+Builds the project and shows the errors and warnings of the compiler as a
+list. From the list you can go to the line of an error.
 
 |  |  |
 |--|--|
@@ -12,13 +12,13 @@ and goes to the lines with errors and warnings.
 | Alt-K | Previous error |
 | Enter | In the list of errors: go to the error |
 
-The keys are changed in the *[build]* section of the keymap file. The same
+Keys can be reassigned in the *[build]* section of *~/.config/bluerig/keymap.ini*. The same
 commands are in the Project menu.
 
 Saves the modified files of the project before the build. The output of the
 compiler comes in the **Build** window at the bottom of the screen; Project >
-Build output shows this window again. Alt-J goes to the warnings when there
-are no errors.
+Build output shows this window again. Alt-J and Alt-K go to the warnings
+when there are no errors.
 
 **The list of errors**
 
@@ -46,8 +46,9 @@ The plugin finds by itself how to build the project:
 | make | make, if the project has a Makefile |
 | language | the command of the language from presets.ini, e.g. cargo build or go build ./... |
 
-A build directory and the way it is built make a build profile, see
-[Build profiles](#build-profiles). Ctrl-F9 builds the active one. The profile
+A profile sets the build directory, the build and test commands and the
+options of the build system. Ctrl-F9 builds the active
+[profile](#build-profiles). The profile
 found first is *Default*; a command of its own set in it takes precedence over
 the one found. If nothing is found, the plugin asks for a command at the first
 build.
@@ -71,36 +72,30 @@ language settings again.
 Project > Build profiles... lists the profiles of the project: a name, a
 build directory, the build system and what the directory is built for
 (debug, coverage, address,undefined). The active profile is marked with *\**:
-Ctrl-F9 builds it and the debugger runs the programs it builds. A profile
-of make builds in the tree of the sources: one made from it builds there
-too, and the list says it shares the tree with the other.
+Ctrl-F9 builds it and the debugger runs the programs it builds. Make profiles made from one
+profile build in the same source tree. The list marks such profiles as
+sharing a directory.
 
-**Space**
-: Make the profile of the cursor the active one. Enter does the same and
-closes the window.
+|  |  |
+|--|--|
+| Space | Make the selected profile active |
+| Enter | Make the selected profile active and close the list |
+| Ins | Create a profile with the options and commands of the selected one and open it for editing |
+| F4 | Open the [profile for editing](#build-profile) |
+| F5 | Build the selected profile; the active one stays |
+| Del, F8 | Delete the profile. The build directory stays |
 
-**Ins**
-: A new profile made from the one of the cursor: its options and commands,
-in a directory of its own next to its directory, opened in its window. The
-first build sets the new directory up.
-
-**F4**
-: The window of the profile, see [Build profile](#build-profile).
-
-**F5**
-: Build the profile, the active one stays.
-
-**Del**
-: Delete the profile. Its build directory stays.
+A new profile gets a directory next to the old one, if the build system
+supports separate directories. The first build sets it up.
 
 The profiles are kept in the configuration of the user, not in the project:
 *~/.config/bluerig/build/*, one file for each project.
 
 # Build profile
 
-The window of a profile: its fields on top, the options of its build
-directory under them. Tab goes between the fields and the options; the line
-under the options says what the field or the option of the cursor is.
+The fields of the profile are at the top of the window, the options of the
+build directory under them. Tab moves the focus between the fields and the
+options. The line under the list describes the selected field or option.
 
 **Name**
 : The name of the profile, without *[* and *]*.
@@ -111,49 +106,45 @@ under the options says what the field or the option of the cursor is.
 the first build, with the options of the profile.
 
 **Build command**
-: The command that builds the profile, run in the root of the project.
-Empty is the command of the build system: *meson compile -C* or *cmake
---build* with the directory, set up first when it is not yet. Leave it empty
-unless the profile is built another way.
+: The command that builds the profile, run in the root of the project. Empty
+means the command of the build system: *meson compile -C* or *cmake --build*
+with the build directory, or *make*. For Meson and CMake the plugin first sets
+up a new directory. It also does this before your own command, if the command
+names the build directory and does not run the setup itself.
 
 **Test command**
 : The command that runs the tests, run in the root of the project: *meson
-test -C* or *ctest --test-dir* with the directory. Empty: no tests.
+test -C* or *ctest --test-dir* with the directory. Empty means no tests.
 
 **Run the tests after the build**
-: Ctrl-F9 runs the test command after the build. The coverage of the tests
-comes from a build with *b_coverage* and its tests run: *b_coverage* made
-*true* checks the box, and fills an empty test command.
+: Runs the test command after a successful build, also for a build by F5
+from the list of profiles. Test coverage comes from a build with
+*b_coverage* and the tests run: when *b_coverage* becomes *true*, the box is
+checked and an empty test command is filled in.
 
 The options of the directory, meson or cmake, show a value and a default; a
-value that is not its default has another color. The frame says what the
-directory is: not set up yet, changed, applied.
+value that differs from its default has another color. The frame shows the
+state of the directory: not set up yet, changed, applied.
 
-**Del**
-: Undo the change of the option of the cursor.
+|  |  |
+|--|--|
+| Del | Undo the change of the selected option |
+| F2 | Save the profile and apply the options; the window stays open |
+| F3 | Switch the list of options: main, different from the default, all |
+| F4 | Change the selected option |
+| Enter | Save the profile. If options changed, apply them and close the window after a successful setup. If only the fields of the profile changed, close the window without setting up the directory |
+| Esc | Close the window. If there are unsaved changes, it asks first |
 
-**F2**
-: Save the profile and apply the changes: *meson configure* with them, or
-*meson setup* with all the options of the profile when the directory is
-not set up yet; cmake likewise. The output comes in the Build window, the
-window of the profile stays. The options are then read again from the
-directory.
+F2 applies the options with *meson configure* or sets up a new directory
+with *meson setup*. For CMake it runs the matching setup command. The output
+comes in the Build window. After a successful setup the options are read
+again from the directory.
 
-**F3**
-: Show the main options, those off their default, or all of them, in turn.
-The main ones are those set by the user, the options of the project and
-those that say what the build is for.
+The main options are those set by the user, the options of the project and
+the options that say what the build is for.
 
-**F4**
-: Change the option of the cursor: a boolean takes its other value, an
-option with choices takes one from a list, another one is typed. A change
-not applied is marked with *\** before the name.
-
-**Enter**
-: Save the profile and apply the changes of the options, then close the
-window, in the fields and in the options alike.
-
-**Esc**
-: Close the window; what is not saved is asked about.
+F4 toggles a boolean option. If an option has a list of allowed values,
+pick one of them. For other options, type the value. A change not applied
+yet is marked with *\** before the name.
 
 Letters typed in the options filter their names.

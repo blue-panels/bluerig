@@ -2,42 +2,47 @@
 
 **Project**
 
-Opens the files of the project by a few letters of the name, finds a text in
-all its files and shows the tree of the project at the left of the screen.
+The plugin works with the files of the project: navigation and search.
 
 |  |  |
 |--|--|
 | Alt-P | Open a file of the project |
-| Ctrl-e | Recent files of the project |
-| Alt-T | Show or hide the project tree |
-| Alt-A | Switch between source and header |
+| Ctrl-E | Recent files of the project |
+| Alt-T | Open the project tree or go to it; in the tree - close it |
+| Alt-A | Go from a source file to its header and back |
 | Alt-F7 | Find a text in the files of the project |
 
-The keys are changed in the *[project]* section of the keymap file. The same
-commands are in the Project menu, and Alt-A in the Navigate menu.
+Keys can be reassigned in the *[project]* section of *~/.config/bluerig/keymap.ini*.
+The same commands are in the Project menu, and Alt-A is in the Navigate menu.
 
 **Open a file of the project**
 
-Shows the recent files of the project, and as you type, the files whose
-names have the typed letters in order. The line takes other queries too:
+The dialog first shows the list of recent files of the project. If there are
+none, it shows the files of the project, at most 500. Typing filters the list
+by fuzzy search over all files: the paths that stay have the typed letters in
+order. Enter opens the chosen file. The line also takes these queries:
 
 |  |  |
 |--|--|
-| edwi | Files with these letters in the name: *src/editor/editwidget.c* |
+| edwi | Files with these letters in order in the path: *src/editor/editwidget.c* |
 | main:42 | The file *main* at line 42 |
-| :42 | Line 42 of the current file |
+| :42 | Line 42 of the last opened file |
 | @divi | Functions, types and variables of the project with these letters in the name |
-| calc@ | Symbols of the file *calc*; *calc@tw* only those with *tw* |
+| calc@ | Symbols of the file *calc*; *calc@tw* - only those with *tw* |
 
 The symbols come from the Ctags plugin; without it the queries with @ do not
 work.
 
 **Find in project**
 
-Finds the text as you type, from the second letter, and shows the lines
-found, and under them the file around the chosen line. A search without
-capital letters ignores case. Shows at most 5000 lines and skips
-binary files.
+The search runs as you type, from the second letter, without regular
+expressions: it finds the lines that contain the typed text. If the query has
+no capital letters, case is ignored. Under the list you see the part of the
+file around the chosen line. The list has at most 5000 lines. The search reads
+the files of the project: in a git repository - the tracked files and the
+files not ignored by *.gitignore*; without git - all files except hidden ones,
+build directories and *node_modules*. Binary files and the *.bluerig*
+directory are always skipped.
 
 |  |  |
 |--|--|
@@ -47,30 +52,38 @@ binary files.
 
 **The project tree**
 
-Shows the directories and files of the project, and under the file of the
-front window its functions, types and variables. The file of the front
-window and the symbol under the cursor are in bold. At the right of a file
-stands the number of its lines; large and binary files show their size.
-While the plugin Coverage shows the coverage, the share of the lines of
-code of the file the tests ran follows it, *83%*; a directory shows that of
-all the files in it together.
+Shows the directories and files of the project. The active file can show its
+functions, types and variables; the Ctags plugin finds them. For files over
+1 MiB the list of symbols is not built. The file of the active window and the
+symbol under the cursor are in bold. At the right of a file name stands the
+number of its lines; large and binary files show their size. When coverage is
+on, the coverage percent follows the number of lines or the size, for
+example *83%*. A directory shows the total percent of its files.
 
 |  |  |
 |--|--|
-| Enter | Open the file, open or close the directory |
+| Enter | Open the file, go to the line of the symbol, open or close the directory |
 | Right, Left | Open or close a directory or the symbols of a file |
-| A letter | Next name that starts with this letter |
+| A letter | Go to the next name that starts with this letter |
 | Esc, F10 | Close the tree |
 
 The *[project]* section of the skin sets the marks before the names, and the
-file *project-marks.ini* says what each name is. The file
+file *project-marks.ini* maps names to marks; the file
 *~/.config/bluerig/project-marks.ini* adds to it.
 
 **Which directory is the project**
 
-The first file opened gives the project: the nearest directory above it with
-*.bluerig* or *.git* in it, else the outermost directory with a build file
-(*meson.build*, *CMakeLists.txt*, *Makefile*), but not above the home
-directory. Project > Open project... chooses another project, Project > Close
-project closes it. The files of the project are what git knows, else
-everything but hidden directories and build directories.
+To find the root, the plugin goes up from the directory of the opened file.
+It goes up to the home directory if it is on the path, else to the root of
+the file system. The plugin takes the nearest directory with *.bluerig* or
+*.git*. If there is none, it takes the outermost directory with a project
+marker, for example *meson.build*, *CMakeLists.txt*, *Makefile*,
+*Cargo.toml*, *go.mod* or *package.json*. If there are no markers, it uses
+the directory of the file and shows only the files in it.
+
+Project > Open project... chooses another project, Project > Close project
+closes it.
+
+In a Git project the list has the tracked files and the untracked files that
+Git does not ignore. When it walks directories, the plugin skips hidden files
+and directories, build directories and links to directories.

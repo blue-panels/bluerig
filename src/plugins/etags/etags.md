@@ -2,16 +2,16 @@
 
 **The list of definitions**
 
-Shows the definitions of the name under the cursor found in the tags file:
-the file, the line number and the text of the line of each.
+Shows the definitions of a name found in the tags file. Each one shows the
+tag name or a part of the *TAGS* entry, the file name and the line number.
 
 |  |  |
 |--|--|
 | Enter | Go to the definition |
 | Esc | Close the list |
 
-The list appears only when there are several definitions; the editor goes to
-a single one at once.
+The list opens even when only one definition is found. Press Enter to go
+to it.
 
 |  |  |
 |--|--|
@@ -19,8 +19,9 @@ a single one at once.
 | Alt-Minus | Back through the places of the jumps |
 | Alt-Plus | Forward |
 
-The definitions come from the *TAGS* file in Emacs format, which is
-looked for in the current directory and above. etags or ctags builds it:
+The plugin looks for a *TAGS* file in Emacs format, starting in the current
+working directory and going up through the parent directories. It uses the
+first file found, even if it has no matches. etags or ctags builds the file:
 
 ```
 etags -R .

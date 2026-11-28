@@ -12,10 +12,11 @@ shows the call stack, the variables and the watches beside it.
 | Ctrl-F8, Ctrl-B | Toggle breakpoint |
 | Alt-F6 | Breakpoint condition |
 | Alt-F5 | To the debugger panel and back |
-| Ctrl-F2 | While debugging: stop the program |
+| Ctrl-F2 | During a session: stop the program. Outside a session: save the file under another name |
 
-These keys work in any file window. Change them in the *[debugger]*
-section of the keymap, for example *DebugStepOver = alt-o*; there *f15* is
+These keys work in any file window. Keys can be reassigned in the
+*[debugger]* section of *~/.config/bluerig/keymap.ini*, for example
+*DebugStepOver = alt-o*; there *f15* is
 Shift-F5, *f17* is Shift-F7, *f18* is Shift-F8. The Debug menu has the
 commands too.
 
@@ -35,7 +36,8 @@ Enter accepts the form.
 For a program without debug information or built with optimization, the
 debugger says so and names the command that builds it for debugging.
 
-The project is built before the start. When the build fails, Alt-J goes to
+If the configuration has the build before the start turned on, the
+debugger builds the project first. When the build fails, Alt-J goes to
 the errors.
 
 The arguments and the environment are split as a shell splits them, but no
@@ -43,9 +45,10 @@ shell runs them: *GREETING="hello world"*.
 
 **Step mode**
 
-While the program is stopped, the source windows take the debugger keys.
-The keys that move, search and select stay the editor's, and a key that
-changes the text beeps.
+In step mode the source windows take the debugger keys, both at a stop and
+while the program runs between stops. The keys that move, search and select
+stay the editor's, and a key that changes the text beeps. Esc goes back to
+editing until the next stop.
 
 |  |  |
 |--|--|
@@ -64,9 +67,9 @@ changes the text beeps.
 | Shift-F5, Ctrl-F2 | Stop the program |
 | Esc | Back to editing until the next stop |
 
-F2, F9 and F10 stay Save, the menu and Quit. Shift-F7 and Shift-F4 belong
-to the debugger only while the program is stopped; the rest of the time
-they are Search again and Replace again.
+F2, F9 and F10 stay Save, the menu and Quit. In step mode Shift-F7 and
+Shift-F4 step by one instruction when the program is stopped. Outside step
+mode they are Search again and Replace again.
 
 The keys come from IntelliJ IDEA where the editor leaves them free; F5 and
 F4 are added because F9 and F10 are the menu and Quit.
@@ -106,7 +109,7 @@ Debugger panel and Window > Debug console reopen the panel and the console.
 | Right, Left | Open or close |
 | Enter | Open, show the value, go to the frame or breakpoint |
 | Space | Disable or enable the breakpoint |
-| Ins | Add a watch |
+| Ins | Add the selected variable or its field to the watches. On other rows, ask for an expression |
 | Del | Remove the watch or breakpoint |
 | Alt-F6 | Breakpoint condition |
 | : | Command of GDB or of the adapter console |
@@ -185,8 +188,9 @@ opens by itself on a stop in code without source.
 | F6 | Breakpoint on the instruction |
 | Enter | To the source line |
 
-A step into code without source (*printf*, for example) goes on until it
-leaves it; a step by one instruction stays there.
+If a normal step goes into code without source (*printf*, for example),
+the debugger tries to step out of that code. A step by one instruction does
+not step out by itself.
 
 **Configurations**
 
@@ -214,7 +218,7 @@ The adapter comes from *presets.ini* by the file type:
 | .py | python3 -m debugpy.adapter |
 | .sh, .bash | bash-dap |
 | .go | dlv dap --listen=127.0.0.1:0 |
-| .js, .mjs, .ts | js-debug-adapter |
+| .js, .mjs, .ts | js-debug-adapter 0, address 127.0.0.1:0 |
 | a program | gdb -i dap |
 
 When the adapter is missing, the debugger says how to install it. A Go

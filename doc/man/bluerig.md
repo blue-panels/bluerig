@@ -1,5 +1,5 @@
 ---
-date: September 2026
+date: November 2026
 ---
 
 <!-- help:topics "Topics:" -->
@@ -12,33 +12,15 @@ bluerig - a terminal IDE.
 **bluerig**
 [options] [+lineno] [file1[:lineno]] [file2[:lineno]] ...
 
-# DESCRIPTION
+# DESCRIPTION <a id="description"></a>
 
-**bluerig**
-is a terminal IDE. It continues
-**cooledit**,
-the editor by Paul Sheer, whose terminal version was developed for many years
-as the internal editor of GNU Midnight Commander; bluerig carries that editor on
-as a program of its own.
-**brg**
-is a shorter name of the same program.
+**bluerig** is a terminal IDE that grew out of mcedit (GNU Midnight Commander) and cooledit by Paul Sheer. **brg** is a shorter name of the same program.
 
-It edits several files at once, each in a window of its own, and it can edit
-binary files. It has block copy, move, delete, cut and paste; key for key
-undo and redo; pull-down menus; file insertion; macros; regular expression
-search and replace; a line filter; folding; bookmarks; shift-arrow text
-highlighting (where the terminal supports it); column blocks; insert and
-overwrite modes; autoindent; word wrap and paragraph formatting; a tunable
-tab size; syntax highlighting for many file types; a user menu that pipes the
-text through shell commands; editor plugins (tags navigation, spell
-checking) and Lua scripts.
+The editor works with several files at once, each in its own window, binary files too. It marks column blocks, filters lines, folds text, records macros, passes text through shell commands from the user menu and runs Lua scripts. Plugins add projects, build and debugging, code coverage, language servers (LSP), git and code navigation, and spell checking.
 
-Every file named on the command line is opened in a window of its own. With
-no file, the editor opens an empty window. A file larger than
-*editor_filesize_threshold*
-(64 MB by default) is opened after a question, not refused.
+Language support can be extended: syntax highlighting, build, debugging through DAP adapters and language servers are set up for each language. The default configuration includes syntax highlighting for more than 100 file types, build support for C (Meson, CMake and Make), Rust and Go, and debugging support for C, Rust, Python, Bash, Go and JavaScript.
 
-# OPTIONS
+# OPTIONS <a id="options"></a>
 
 *+lineno*
 : Go to the line specified by number (do not put a space between the
@@ -50,6 +32,45 @@ is used, and it is applied to the first file only.
 : Open the file at that line, the way compilers and grep print a place in a
 file. When a file of the whole name, colon and number included, exists, that
 file is opened instead.
+
+**Application modes**
+
+*-Q, --query*
+: Open the file in the mode of queries to MongoDB or PostgreSQL. Set
+*MC_QUERY_KIND=mongo* or *MC_QUERY_KIND=postgres*. If this variable is
+not set, *MC_MONGO_URI* selects MongoDB, and a file with the extension
+*.sql* selects PostgreSQL when *MC_MONGO_URI* is not set.
+It needs the Query plugin.
+
+*-D directory, --debug=directory*
+: Open the project in debug mode. It shows the project tree and the
+debugger panel. It needs the Project, Build and Debugger plugins.
+
+*-G directory, --git=directory*
+: Open the Git window for that directory. Closing the window ends
+bluerig. One of the options below can follow it. Without *--git* the
+option applies to the current directory.
+
+**Git options**
+
+*--git-log*
+: Open the commit log.
+
+*--git-show=commit*
+: Show the files and the changes of that commit.
+
+*--git-commit*
+: Open the message editor to commit the staged changes.
+
+*--git-amend*
+: Change the last commit, adding the staged changes to it.
+It opens the editor of the commit message.
+
+*--git-reword=commit*
+: Open the message editor of that commit. Saving the message
+rewrites the Git history.
+
+**General options**
 
 *-V, --version*
 : Display the version of the program.
@@ -67,76 +88,26 @@ files, the user files and the plugins.
 *--no-lua*
 : Start without the Lua runtime: no Lua script is loaded.
 
-*-D, --debug=directory*
-: Open the project of that directory to debug it: the latest file of the
-project, the tree of the project and the panel of the debugger at
-the right. The file windows take the keys of the debugger: F6 puts a
-breakpoint, F5 builds the program and runs it, making its debug
-configuration the first time, F7 and F8 step, F3 indexes the symbols of the
-project; F2, F9 and F10 stay Save, the menu and Quit, and Alt-F5 goes
-to the panel and back. It needs the project, build and debugger plugins,
-and ctags for F3. The menus Drawing, Format and Plugins are not in the
-menubar; their keys stay, and Options keeps Manage plugins.
-
-*-Q, --query*
-: Run the queries of the file in a database, MongoDB by mongosh or
-PostgreSQL by libpq; the answer comes in the tabs Output, Table and History
-at the bottom. *MC_QUERY_KIND* is *mongo* or *postgres*; without it,
-*MC_MONGO_URI* means MongoDB and a file *.sql* PostgreSQL. For MongoDB
-*MC_MONGO_URI* and *MC_MONGO_DB* tell what to connect to, *MC_MONGOSH* the
-program; F5 runs the selection, else the part between lines *// ---*
-around the cursor, else the whole file. For PostgreSQL libpq takes the
-connection from *PGHOST*, *PGDATABASE*, *PGSERVICE* and the like, the
-password from *~/.pgpass*; F5 runs the selection, else the whole file.
-Ctrl-F5 runs the whole file. Without a file named, the file is
-*~/.local/share/bluerig/queries/*, with the name of the database and *.js*,
-or *postgres/*, the name of the connection, and that of the database and
-*.sql*. The windows the project had last time are
-not shown, and the plugins of a project and of code (project, build,
-debugger, ctags, etags, git, terminal, spell) are not started; the
-scripts stay, and the language server of the queries when lsp.json has one.
-The menus Drawing, Format and Plugins are not in the menubar, as with -D.
-It needs the query plugin.
-
-*-G, --git=directory*
-: Open the window Git of the git plugin on the work tree of that
-directory; closing it ends the editor. The windows the project had last
-time are not shown, and the plugins of a project (project, build, debugger,
-ctags, etags) are not started. For a panel of git in a file
-manager, with one of these after it, or alone for the current directory:
-
-*--git-log*
-: The window Git on the log.
-
-*--git-show=commit*
-: The window Git on that commit: its files and their diffs.
-
-*--git-commit*, *--git-amend*
-: The window Git with the message of a commit of what is staged, or of the
-last commit amended with it; the editor ends once it is saved and
-committed, or its window closed.
-
-*--git-reword=commit*
-: Another message for that commit, the same way, the files of the commit
-under it.
-
 *-h, -?, --help*
-: Show the options and what they do.
+: Show the command line options and what they do.
+
+*--help-all*
+: Show the command line options of all the groups.
 
 *--help-terminal, --help-color*
-: Show the terminal options or the color options below.
+: Show the terminal options or the color options.
 
-The terminal options:
+**Terminal options**
 
 *-x, --xterm*
-: Force xterm mode. Used when running on xterm-capable terminals (two
-screen modes, and able to send mouse escape sequences).
+: Turn on xterm mode. Use it on terminals that can do what xterm does:
+two screen modes and mouse sequences.
 
 *-X, --no-x11*
 : Do not use the X Window System to get the state of the modifier keys.
 
 *-g, --oldmouse*
-: Use the old highlight mouse tracking of the terminal.
+: Use the old mouse tracking of the terminal.
 
 *-d, --nomouse*
 : Disable mouse support.
@@ -146,7 +117,7 @@ screen modes, and able to send mouse escape sequences).
 bluerig was built with the S-Lang library.
 
 *-s, --slow*
-: Run on a slow terminal: the screen is drawn with fewer updates.
+: Run on a slow terminal: the screen is redrawn less often.
 
 *-a, --stickchars*
 : Draw the frames with plain characters instead of the line drawing
@@ -159,19 +130,19 @@ characters of the terminal.
 *--nokeymap*
 : Do not load any keymap file: use the key bindings built into the program.
 
-The color options:
+**Color options**
 
 *-b, --nocolor*
-: Force black and white display.
+: Black and white display.
 
 *-c, --color*
-: Force color mode on terminals that don't seem to have color support.
+: Color mode on terminals that do not report color support.
 
 *-S skin, --skin=skin*
-: Use the named skin. See
+: Use the skin of that name. See
 [Skins](#skins).
 
-# Overview
+# Overview <a id="overview"></a>
 
 The screen of bluerig has the
 [menu bar](#menu-bar)
@@ -179,11 +150,9 @@ at the top, the editor windows under it and the labels of the function keys at
 the bottom. The menu bar may be hidden: F9 or a click on the top line of the
 screen brings it up.
 
-Every window shows one file: its name, the state of the file and the place of
-the cursor stand in the status line at its top. Several windows may be open
-at a time; the
-[Window menu](#window-menu)
-moves between them, and each of them can be moved and resized.
+The status line at the top of a window shows the file name, the state of the
+file and the place of the cursor. The [Window menu](#window-menu) switches
+between the open windows. Windows can be moved and resized.
 
 # The bluerig editor <a id="internal-file-editor"></a>
 
@@ -191,8 +160,7 @@ moves between them, and each of them can be moved and resized.
 **Keys**
 
 <!-- {{key:Action|F8}}: Action is the action name of misc/keymap.default.ini and src/keymap.c (Remove = f8); the help shows the keys bound to it now, the man page the default keys after the bar -->
-These are the default keys. Any of them can be changed, see
-[Redefine key bindings](#keys_redefine).
+[How to change the bindings](#keys_redefine)
 
 <a id="moving-around"></a>
 **Cursor movement**
@@ -472,9 +440,9 @@ Linux console with the
 **gpm**
 mouse server running.
 
-A click puts the cursor where you click, a drag highlights text, and a click on a
-menu, a button or a function key label chooses it. The wheel scrolls the
-text.
+A click on the text moves the cursor, and a drag marks text. The mouse opens
+menus, presses buttons and runs the commands shown in the bottom line of the
+screen. The mouse wheel scrolls the text.
 
 The default auto repeat rate for the mouse buttons is 400 milliseconds. This
 may be changed with the
@@ -489,82 +457,58 @@ key.
 
 # Menu bar <a id="menu-bar"></a>
 
-The menu bar pops up when you press F9 or click the mouse on the top row of
-the screen. Its menus are File, Edit, Search, Command, Navigate (only when a
-plugin or a script adds something to it), Window, Plugins and Options. A Lua
-script may add entries to any of them, or menus of its own.
+The menu bar pops up when you press {{key:Menu|F9}} or click the top line of
+the screen. Its menus are File, Edit, Search, Command, Navigate (when a plugin
+or a script added something to it), Window, Plugins and Options. A Lua script
+may add entries to any of them, or menus of its own.
 
 ## File menu <a id="file-menu"></a>
 
-**Open file...**
-: Open a file in a new window.
-
-**New**
-: Open an empty window.
-
-**Close**
-: Close the window.
-
-**History...**
-: The files that were edited before, to open one of them again.
-
-**Save, Save as...**
-: Write the file, under its name or another one. See
-[Save As](#save-file-as).
-
-**Insert file..., Copy to file...**
-: Insert a file at the cursor, or write the highlighted block to a file.
-
-**User menu...**
-: The [user menu](#edit-menu-file).
-
-**About...**
-: The version of the program.
-
-**Quit**
-: Leave the editor, asking about the files that are not saved.
+|  |  |
+|--|--|
+| Open file... | Opens a file in a new window |
+| New | Opens an empty window |
+| Close | Closes the current window |
+| History... | Opens the list of the recently edited files |
+| Save | Writes the current file |
+| Save as... | [Writes the file under a new name](#save-file-as) |
+| Insert file... | Inserts the contents of a file at the cursor |
+| Copy to file... | Writes the marked block to a file |
+| User menu... | [Opens the list of commands that process the text](#edit-menu-file) |
+| About... | Shows the version of the program |
+| Quit | Closes the editor. Offers to save unsaved changes |
 
 ## Edit menu <a id="edit-menu"></a>
 
 Undo, Redo and the Undo history; the switch between insert and overwrite
-mode; the commands that highlight a block, a column block or the whole file,
-and remove the highlighting; copying, moving and deleting the block; copy to, cut
-to and paste from the clipboard file; and going to the start and the end of
-the file.
+mode; the commands that mark a block, a column block or the whole file, and
+unmark it; copying, moving and deleting the block; copy to, cut to and paste
+from the clipboard file; going to the start and to the end of the file.
 
 ## Search menu <a id="search-menu"></a>
 
-Search, Search again and Replace; the line filter (Toggle line filter, Filter
-by word; see [Search, replace and the line filter](#search-and-replace)); and
-the bookmarks: toggle a bookmark on the current line, go to the next or to
-the previous one, and clear them all.
+The search, replace and filter commands are described in
+[Search, replace and the line filter](#search-and-replace).
+The same menu sets or clears a bookmark on the current line, goes to the next
+or the previous bookmark, and clears all the bookmarks.
 
 ## Command menu <a id="command-menu"></a>
 
-**Go to line...**
-: Go to a line, given by its number.
-
-**Toggle line state**
-: Show or hide the column of line numbers.
-
-**Go to matching bracket**
-: Go to the bracket that matches the one under the cursor.
-
-**Toggle syntax highlighting, Toggle right margin, Toggle control characters**
-: Switch these on and off.
-
-**Encoding...**
-: The codepage the text is written in. See
-[Choose codepage](#codepages-translation).
-
-**Fold / Unfold block, Unfold all**
-: See [Folding](#folding).
-
-**Refresh screen**
-: Redraw the screen.
-
-**Start/Stop record macro, Macro explorer..., Record/Repeat actions**
-: See [Macros](#macros).
+|  |  |
+|--|--|
+| Go to line... | Moves the cursor to the line with the given number |
+| Toggle line state | Switches the line state column |
+| Go to matching bracket | Moves the cursor to the matching bracket |
+| Toggle syntax highlighting | Switches the highlighting in the editor |
+| Toggle right margin | Marks the column where lines wrap |
+| Toggle control characters | Shows control characters as ^M, ^L and so on |
+| Encoding... | [Chooses the encoding of the file](#codepages-translation) |
+| Fold / Unfold block | [Folds or unfolds a block](#folding) |
+| Unfold all | Opens all the folds and removes the line filter |
+| Refresh screen | Redraws the screen |
+| Start/Stop record macro | [Records a macro and binds it to a key](#macros) |
+| Macro explorer... | [Opens the list of the recorded macros](#macro-explorer) |
+| Record/Repeat actions | Records actions and repeats them a given number of times |
 
 ## Navigate menu <a id="navigate-menu"></a>
 
@@ -581,13 +525,14 @@ symbols of the file and others. See
 : Switch the window between full screen and its own size.
 
 **Toggle sticky windows**
-: With sticky windows, windows whose frames stand next to each other resize
-together: the corner of a window moves the edge it is on with all the windows
-along it, on both sides, and no gap opens between them. Where four windows
-meet, the corner moves both edges. A side that is on the edge of the screen
-when the resize begins stays there, a window keeps its smallest size, and an
-edge stops at a window in its way, and that window then resizes with the others. Esc puts
-every window back. A window dragged by its title moves alone. The setting is kept as
+: When you drag the corner of a window, the frames of the next windows move
+with it, so the windows keep a common border. Where four windows meet in a
+corner, you can move the horizontal and the vertical border at once. A border
+that was on the edge of the screen at the start stays there. When the border
+you move reaches another window, that window starts to resize too. Every
+window has a minimum size. Esc cancels the change. A window dragged by its
+title moves alone.
+The setting is kept as
 **editor_sticky_windows**
 in the ini file.
 
@@ -595,98 +540,39 @@ in the ini file.
 : Go to the next or to the previous window.
 
 **List...**
-: The windows that are open, to go to one of them. See
+: The open windows, to go to one of them. See
 [Open files](#open-files).
-
-Under them come the windows of the plugins: the tree of the project, the
-output of the build, the panel and the console of the debugger, the
-terminal, the terminal of the program the debugger runs, the Preview. An entry opens its window, brings it to the front
-when it is behind another, and closes it when it is in front already; an
-open one is marked with *\**. A plugin that is switched off has no entry.
-
-The windows of the plugins stand in docks. The tree, the panel of the
-debugger and the Preview go in the column at the right, one above the other,
-all the height of the screen. The console, the output of the build and the
-terminal go in the row at the bottom, under the windows of the files: they
-share the row as tabs: one is shown, and its title lists their names. A click on a name, or
-**Ctrl-Alt-PgDn** and **Ctrl-Alt-PgUp** (*WindowTabNext* and *WindowTabPrev*
-in the keymap), shows another. A fullscreen file window fills the rest of
-the screen, and the whole screen again when the docks are empty. Resizing a
-docked window resizes the dock; moving it takes it out of the dock.
-
-**Layout...**
-: The layouts of the windows: which windows of the plugins are open, in
-which dock, and how big the docks are. *Edit* has the files alone,
-*Project* the tree of the project, *Debug* the tree and the panel of the
-debugger. **Use** puts the windows so; **Save as...** keeps them as they are
-under a name, the name of one of these too; **Delete** forgets a layout
-kept, the one of the editor of that name coming back. With **Debug layout
-while debugging** the start of the debugger puts the windows as *Debug* has
-them, and its stop puts them back, the tabs of the bottom staying to be
-read.
-
-The windows of a project are kept when the editor ends, and come back when
-it starts with a file of the project.
-*bluerig --debug* starts with the layout *Debug*. The layouts are kept in
-*layouts.ini* in the settings directory.
 
 ## Plugins menu <a id="plugins-menu"></a>
 
-The editor plugins that carry an entry of their own, the spell checker for
-one; their windows are in the [Window menu](#window-menu). A plugin that is switched off in
+The editor plugins that have a menu entry of their own, for example the spell
+checker. A plugin that is switched off in
 [Manage plugins](#manage-plugins)
 is not in the menu.
 
 ## Options menu <a id="options-menu"></a>
 
-**General...**
-: The [editor options](#editor-options).
+|  |  |
+|--|--|
+| General... | [Sets the indents, line wrap and other editor options](#editor-options) |
+| Save mode... | [Chooses how files are written](#edit-save-mode) |
+| Syntax highlighting... | Chooses the highlighting rules by hand, or by the file name and the first line |
+| Appearance... | [Sets the skin and the shadows](#appearance) |
+| Learn keys... | [Maps keys to terminal sequences](#learn-keys) |
+| Key bindings... | [Binds keys to actions](#key-bindings) |
+| Key sniffer... | [Shows the terminal sequence and the bound action](#key-sniffer) |
+| Manage plugins... | [Switches plugins on and off and sets them up](#manage-plugins) |
+| Plugin info... | [Shows the state and the features of the plugins](#plugin-info) |
+| Lua scripts... | [Manages the Lua scripts](#lua-scripts). There when built with Lua |
+| Syntax file | Opens the [user syntax file](#syntax-highlighting) in the editor |
+| Menu file | Opens the [user menu file](#edit-menu-file) in the editor |
+| Save setup | Writes the settings to *~/.config/bluerig/ini* |
 
-**Save mode...**
-: How a file is written. See [Edit Save Mode](#edit-save-mode).
+"Syntax file" opens *~/.local/share/bluerig/syntax/Syntax*. If the file does
+not exist yet, the editor makes it with a short comment. The system file is
+read after the user file.
 
-**Syntax highlighting...**
-: Choose the syntax rules for the file by hand, or leave them to the name and
-the first line of the file.
-
-**Appearance...**
-: The skin and the shadows. See [Appearance](#appearance).
-
-**Learn keys...**
-: See [Learn keys](#learn-keys).
-
-**Key bindings...**
-: See [Key bindings](#key-bindings).
-
-**Key sniffer...**
-: See [Key sniffer](#key-sniffer).
-
-**Manage plugins...**
-: See [Manage plugins](#manage-plugins).
-
-**Plugin info...**
-: See [Plugin info](#plugin-info).
-
-**Lua scripts...**
-: See [Lua scripts](#lua-scripts). The entry is there only where bluerig was
-built with Lua.
-
-**Syntax file**
-: Open the syntax file of the user,
-*~/.local/share/bluerig/syntax/Syntax*,
-in the editor. Where it does not exist, it is made with a short comment on what
-it holds, not as a copy of the system file, which is still read after it. See
-[Syntax Highlighting](#syntax-highlighting).
-
-**Menu file**
-: Open the [user menu](#edit-menu-file) file in the editor.
-
-**Save setup**
-: Write the settings to
-*~/.config/bluerig/ini*.
-With the
-*auto_save_setup*
-setting on, they are written whenever the editor ends.
+With *auto_save_setup* on, the editor saves the settings on exit.
 
 ### Editor options <a id="editor-options"></a>
 
@@ -708,7 +594,7 @@ written to the ini file, see
 
 |  |  |
 |--|--|
-| Fake half tabs | Between the left margin and the text a tab steps half its width, and the file gets spaces and tabs |
+| Fake half tabs | In the indent the cursor moves by half a tab stop. The file gets spaces and tab characters |
 | Backspace through tabs | Backspace deletes the whole indent to the left margin when no text stands between the cursor and the margin |
 | Fill tabs with spaces | Inserts spaces to the next tab stop instead of a tab character |
 | Tab spacing | The width of a tab character; 8 by default |
@@ -717,7 +603,7 @@ written to the ini file, see
 
 |  |  |
 |--|--|
-| Esc timeout, ms | How many milliseconds Esc waits for the rest of a key before it counts as Esc; 1000 by default. In the ini file it is *old_esc_mode_timeout* in microseconds, and the variable **KEYBOARD_KEY_TIMEOUT_US** overrides it at startup |
+| Esc timeout, ms | How many milliseconds the editor waits for the rest of an escape sequence after Esc. 1000 by default. The setting *old_esc_mode_timeout* is in microseconds. At startup the variable **KEYBOARD_KEY_TIMEOUT_US** takes priority |
 
 **Other options**
 
@@ -725,14 +611,14 @@ written to the ini file, see
 |--|--|
 | Return does autoindent | Enter starts the line with the indent of the line above |
 | Confirm before saving | Asks before writing the file |
-| Save file position | Opens the file where it was left |
+| Save file position | Restores the cursor position when the file is opened |
 | Visible trailing spaces | Marks the spaces at the end of lines |
 | Visible tabs | Marks the tab characters |
 | Show control characters | Shows control characters as ^M instead of hiding them |
 | Syntax highlighting | Colors the text by the syntax rules of its type |
 | Cursor after inserted block | Leaves the cursor at the end of an inserted block, not at its start |
 | Persistent selection | Keeps the selection when the cursor moves |
-| Cursor beyond end of line | Lets the cursor go past the last character of the line |
+| Cursor beyond end of line | Lets the cursor go past the end of the line |
 | Group undo | Undoes a series of changes of one kind at once |
 | Word wrap line length | The column where the wrap modes break the line; 72 by default |
 
@@ -743,28 +629,28 @@ How a file is written, the same three modes the
 setting takes:
 
 **Quick save**
-: Write over the file at once. Fast, and a failure in the middle leaves the
-file half written.
+: Write the data straight into the original file. If writing fails, the file
+may be left incomplete.
 
 **Safe save**
-: Write a temporary file first and rename it over the original when it is
-whole, so a failure leaves the original untouched.
+: Write the data to a temporary file, and replace the original with it only
+when writing is complete.
 
 **Do backups with following extension**
 : Safe save, and the original is kept under its name with the extension of the
-input line added, "~" by default. Saving twice replaces the backup as well.
+input line added, "~" by default. A second save replaces the backup as well.
 
 **Check POSIX new line**
 : Ask about the missing newline at the end of the file before it is written.
 
-### Appearance
+### Appearance <a id="appearance"></a>
 
-The skin the program is drawn with, and whether the dialogs and the drop-down
-menus have a shadow.
+Here you choose the skin and set the shadows of the dialogs and the drop-down
+menus.
 
 **Skin**
-: The button opens the list of the skins that are installed and those of the
-user; the one chosen is applied at once.
+: The button opens the list of the installed skins and the skins of the user;
+the one chosen is applied at once.
 
 **Shadows**
 : Draw a shadow under every dialog and drop-down menu. Without colors there
@@ -774,28 +660,25 @@ The choice is written to the
 *skin*
 and
 *shadows*
-settings of the ini file. See the
-[Skins](#skins)
-section for the skin files themselves.
+settings of the ini file. The order in which skin files are looked for is
+described in [Skins](#skins).
 
-### Learn keys
+### Learn keys <a id="learn-keys"></a>
 
-This dialog teaches bluerig the escape sequences your terminal sends for the
-function keys, the arrows and the navigation keys. Its title names the
-terminal, from the
-**TERM**
-variable.
+This dialog maps the escape sequences of the terminal to the function keys,
+the arrows and the navigation keys. The title shows the terminal name from the
+**TERM** variable.
 
-Select a modifier combination (Ctrl, Alt, Shift) using the checkboxes, then
-press the button of a key. Press the key on the keyboard and wait for the
+Select a modifier combination (Ctrl, Alt, Shift) with the checkboxes, then
+press the button of a key. Press that key on the keyboard and wait for the
 capture message to disappear. The learned sequence appears next to the button.
-A sequence that another key has already is reported as a conflict.
+If another key has it already, the editor reports a conflict.
 
 **Del**
-: Clear the learned key the cursor is on.
+: Delete the saved sequence of the selected key.
 
 **Save**
-: Write the learned keys to
+: Write the mappings of keys to sequences to
 *~/.config/bluerig/term/\<TERM>*.
 
 **Edit term file**
@@ -803,11 +686,11 @@ A sequence that another key has already is reported as a conflict.
 
 ### Key bindings <a id="key-bindings"></a>
 
-The actions of the program with the keys they answer to, in a table. The
-buttons at the top choose the group, Editor or Widgets, and then the part of
-it: Main and Ctrl-X for the editor; Dialog, Menu, Input, Listbox, Radio and
-Help for the widgets. Back returns to the groups. Actions marked with \* have
-keys that differ from the defaults.
+The table shows the actions and the keys bound to them. The buttons at the
+top choose the group, Editor or Widgets. The Editor group has the parts Main
+and Ctrl-X, the Widgets group has Dialog, Menu, Input, Listbox, Radio and
+Help. Back returns to the list of groups. Actions with changed bindings are
+marked with \*.
 
 **Enter**
 : Replace the key of the action: press the key to assign.
@@ -828,74 +711,62 @@ keys that differ from the defaults.
 in the editor.
 
 **Edit term file**
-: Open the key sequences of the terminal, the file
+: Open the file of the escape sequences saved in the
 [Learn keys](#learn-keys)
-writes.
+dialog.
 
-A key that is taken by another action is reported, and the question is
-whether to take it from there.
+If the key is bound to another action already, the editor asks you to
+confirm the new binding.
 
 ### Key sniffer <a id="key-sniffer"></a>
 
 Press
 **Capture key**,
-then any key. The dialog shows what arrived:
+then press the key you want to check. The dialog shows its data:
 
 ```
 Shortcut   the symbolic name, e.g. Ctrl-F5
 Action     the action of the key in the editor keymap
-Raw        the escape sequence and its bytes in hex
+Raw        the escape sequence and its bytes
 Keycode    the internal numeric code
 ```
 
-It is the place to look when a key does nothing or the wrong thing: a key
-that arrives as a sequence the program does not recognize is to be taught in
-[Learn keys](#learn-keys),
-and one that arrives but has no action is to be bound in
-[Key bindings](#key-bindings).
+If the editor does not recognize the sequence, set it up in the
+[Learn keys](#learn-keys) dialog. If the key is recognized, check the action
+bound to it in the [Key bindings](#key-bindings) dialog.
 
 ### Manage plugins <a id="manage-plugins"></a>
 
-The plugins the program has loaded, in a table: the kind, the name and what the
-plugin says about itself. The editor plugins are listed here, and, where bluerig
-was built with Lua, the Lua engine as a plugin of the kind
+The table shows the kind, the name and the description of every editor plugin.
+If bluerig was built with Lua, the table also has the Lua runtime, of the kind
 *runtime*.
-A plugin is switched off and on with the checkbox of its row, and what is
-switched off is not loaded the next time either; the choice is kept in
-*~/.config/bluerig/plugins.ini*.
-A plugin that is switched off stays in the list, so that it can be switched
-on again.
+The checkbox in the row of a plugin decides whether it is loaded at the next
+start. The choice is kept in *~/.config/bluerig/plugins.ini*.
+Plugins that are switched off stay in the list.
 
 **Enter, F4**
-: Open the settings of the plugin the cursor is on. A plugin that has none says
-so. On the row of the Lua engine it opens the
-[Lua scripts](#lua-scripts).
-
-**IDE: project, build, debugger**
-: Switch the three plugins that make an IDE of the editor on together, or off
-together when all of them are on: the project and its files, the build, and
-the debugger. Each of them works without the others too.
+: Open the settings of the selected plugin. If the plugin has no settings, the
+editor says so. For the Lua runtime it opens the
+[Lua scripts](#lua-scripts) dialog.
 
 ### Plugin info <a id="plugin-info"></a>
 
-The plugins the editor has loaded: the name, whether it is on, what it
-provides and what it does. It is a list to look at; a plugin is switched off
-and its settings are opened in the
-[Manage plugins](#manage-plugins)
-dialog.
+The list of the loaded plugins shows their names, state, features and
+description. The settings and the switches of the plugins are in the
+[Manage plugins](#manage-plugins) dialog.
 
 ### Lua scripts <a id="lua-scripts"></a>
 
-The Lua scripts that were found, the system ones and those of the user, in a
-table: whether it is on, where the script lives (global or user), its
-identifier, its workspace, what it provides and what it does. A script is
-switched off and on with the checkbox of its row; the change takes effect the
-next time bluerig starts.
+The table shows the state, the location (global or user), the identifier, the
+workspace, the features and the description of every Lua script found.
+The checkbox in the row of a script decides whether it is loaded at the next
+start of bluerig.
 
 **Settings**
-: Run the script that carries the settings of the package, where it has one.
+: Run the script that holds the settings of the package, if there is one.
 
-See [Lua scripting](#lua-scripting) for the scripts themselves.
+Where the packages live and how they are built is described in
+[Lua scripting](#lua-scripting).
 
 # Search, replace and the line filter <a id="search-and-replace"></a>
 
@@ -927,45 +798,45 @@ See [Lua scripting](#lua-scripting) for the scripts themselves.
 
 **Filter**
 
-Hides the lines without a match; the line numbers do not change, and the
-line state column marks every hidden run. The lines are hidden once, when the
-button is pressed: a line changed or typed afterwards stays shown even if it
-does not match.
+The filter hides the lines without a match and keeps the line numbers. The
+line state column marks the hidden runs. The filter is applied when it is
+switched on. New and changed lines stay shown until the filter is applied
+again.
 
 |  |  |
 |--|--|
-| {{key:FilterToggle|Alt-s}} | Removes the filter, or applies the last search as a filter; with no search, opens the search dialog |
+| {{key:FilterToggle|Alt-s}} | Removes the filter, or applies the last search as a filter. If there was no search yet, opens the search dialog |
 | {{key:FilterWord|Alt-S}} | Filters by the marked text or by the word under the cursor |
 | Command \> Unfold all | Lifts the filter and every fold |
 
 # Folding <a id="folding"></a>
 
-A fold hides a run of lines behind its first line, which stays on the screen
-with a mark in the line state gutter.
-**Alt-F**
-(Fold / Unfold block in the Command menu) folds the highlighted lines, or,
-with nothing highlighted, the lines from a bracket on the current line to the
-bracket that matches it. On the first line of a fold it unfolds it.
+A fold shows only the first line of a block. The line state column marks
+that line.
+{{key:FoldToggle|Alt-F}}
+(the entry Fold / Unfold block of the Command menu) folds the marked lines,
+or, with nothing marked, the lines from a bracket on the current line to the
+bracket that matches it. On the first line of a fold this key unfolds it.
 **Unfold all**
-opens every fold of the file, and lifts the line filter.
+opens all the folds of the file and removes the line filter.
 
 # Macros <a id="macros"></a>
 
 {{key:MacroStartStopRecord|Ctrl-r}}
-starts recording a macro: the keys pressed after it are recorded. Pressing
-**Ctrl-r**
-again ends the recording and waits for the key the macro is bound to; that
-key then runs it.
+starts recording a macro. To end the recording, press
+{{key:MacroStartStopRecord|Ctrl-r}}
+again, then press the key that will run the macro.
 
 The macros are kept in the section
 **[editor]**
 of the file
-**~/.local/share/bluerig/macros**,
-and a macro is deleted by deleting its line there, or in the
+**~/.local/share/bluerig/macros**.
+To delete a macro, delete its line from the file or use the
 [Macro Explorer](#macro-explorer).
 
+The entry
 **Record/Repeat actions**
-in the Command menu records the actions that follow until it is chosen again,
+of the Command menu records the actions that follow until it is chosen again,
 and then asks how many times to repeat them.
 
 A shell script can be assigned to a key as well, by a line of the
@@ -1010,19 +881,16 @@ l       comment selection
 
 ## Macro Explorer <a id="macro-explorer"></a>
 
-The macros that are recorded, with the key each one answers to and what it
-does. The buttons are
+The list of the recorded macros shows their keys and actions.
 
 **Run**
-: Play the macro the cursor is on.
+: Run the selected macro.
 
 **Delete**
-: Remove it, after a question.
+: Delete the selected macro after a question.
 
 **Edit file**
-: Open the file the macros live in, which the
-[Macros](#macros)
-section describes.
+: Open the macro file. Its format is described in [Macros](#macros).
 
 # User menu <a id="edit-menu-file"></a>
 
@@ -1150,6 +1018,7 @@ before an entry, one with '+' and one with '=', set them apart.
 # Plugins <a id="plugins"></a>
 
 {{plugins}}
+
 A plugin is switched on and off in the Options menu, entry
 [Manage plugins](#manage-plugins).
 
@@ -1157,33 +1026,28 @@ A plugin is switched on and off in the Options menu, entry
 
 ## Save As <a id="save-file-as"></a>
 
-The name to write the file under, and the line breaks to write it with: as the
-file has them, Unix (LF), Windows and DOS (CR LF), or Macintosh (CR). The
-choice holds for that save; the file keeps what it is given.
+Give the file name and the line break format. You can keep the format of the
+file, or choose Unix (LF), Windows and DOS (CR LF), or Macintosh (CR).
+The chosen format applies to this save.
 
 ## Open files <a id="open-files"></a>
 
-The files the editor has open, one to a line. Enter goes to the file the
-cursor is on, Esc leaves the file that is shown where it is. The same list is
-the
+The list has one line for every open file. Enter switches the editor to the
+selected file, Esc closes the list. The entry
 **List...**
-item of the Window menu.
+of the Window menu opens the same list.
 
-## Screen selector
+## Screen selector <a id="screen-selector"></a>
 
 Besides the editor, a Lua script may open screens of its own, full-screen
-views that stay open while you go back to the editor. There are three ways to
-switch between the screens:
+windows that stay open while you go back to the editor. There are three ways
+to switch between the screens:
 
-**Alt-}**
-: switch to the next screen;
-
-**Alt-{**
-: switch to the previous screen;
-
-**Alt-\`**
-: open a dialog window with the list of the screens that are open, to choose
-one.
+|  |  |
+|--|--|
+| Alt-} | Next screen |
+| Alt-{ | Previous screen |
+| Alt-\` | List of the open screens |
 
 ## Completion <a id="completion"></a>
 
@@ -1203,7 +1067,7 @@ in an input line of a dialog completes the text:
 | ~name | A user name |
 | Else | A file name |
 
-Where several fit, the program beeps. The setting
+If several fit, the editor beeps. The setting
 *show_all_if_ambiguous*
 of the ini file, off by default, shows their list next to the cursor:
 **Enter**
@@ -1211,27 +1075,22 @@ chooses one, typed letters narrow the list, Esc, F10, Left and Right hide it.
 
 ## Choose codepage <a id="codepages-translation"></a>
 
-The list of the codepages the program knows, from
-**{{pkgdatadir}}/charsets**.
-Choosing one tells the editor in which codepage the text of the file is
-written, and the text is recoded from it into the codepage of the terminal
-for the screen;
-**\<No translation>**
-leaves it as bytes. The list is opened by
-**Alt-e**
-and by the Encoding item of the Command menu.
+The editor loads the list of encodings from **{{pkgdatadir}}/charsets**.
+Choose the encoding of the file; the editor converts the text from it for
+the terminal. The entry **\<No translation>** turns the conversion off.
+The list opens with {{key:SelectCodepage|Alt-e}} or with the entry Encoding...
+of the Command menu.
 
 ## History <a id="history-query"></a>
 
-The list of what was typed into an input line before, newest first, which
-**Alt-h**
-opens for the line the cursor is in. Enter takes the entry the cursor is on
-into the line, Esc leaves the line as it was, and
-**F8, Del**
-removes the entry the cursor is on from the history. The histories are kept in
+**Alt-h** opens the history of the current input line. Recent entries come
+first. Enter puts the selected entry into the line, Esc closes the history
+without changing the line, and **F8, Del** delete the selected entry. The
+history is kept in
 *~/.local/share/bluerig/history*;
+the setting
 *num_history_items_recorded*
-says how many entries each of them keeps.
+says how many entries each history keeps.
 
 # Syntax highlighting <a id="syntax-highlighting"></a>
 
@@ -1257,17 +1116,16 @@ get their colors there.
 | **~/.local/share/bluerig/syntax/Syntax** | The rules of the user: what the user added or wants otherwise |
 | **{{pkgdatadir}}/syntax/Syntax** | The installed rules, for the file types the user file does not name |
 
-A user entry overrides an installed one for the files it
-matches. The files named by
+When both the user rules and the installed rules match a file, the user
+rules apply. The files named by
 **include**
 lines are looked for in
 *~/.local/share/bluerig/syntax/*
 first, then among the installed ones. The user file is read again each time
 a new file is opened in the editor.
 
-A full copy of the installed file, as older versions made, hides every file
-type installed after it, and their highlighting stops working: keep only the
-changed entries in the copy.
+A full copy of the installed file can hide the rules for file types added in
+a new version. Keep only the changed entries in the user file.
 
 ## The file section <a id="syntax-file"></a>
 
@@ -1365,7 +1223,7 @@ set the two sides separately. A line
 **spellcheck**
 after
 **context**
-gives the words of the context to the spell check.
+turns on the spell check inside the context.
 
 ## Embedding and layers <a id="syntax-embed"></a>
 
@@ -1384,8 +1242,9 @@ up in the Syntax file the rules are read from, then in the one installed with
 bluerig. A type found in neither leaves the context in its own colors. The
 delimiters keep the colors of the context. The right delimiter ends the
 embedded text wherever it stands, inside a string or a comment of the
-embedded rules too. An embedded syntax can embed another one, a few levels
-deep. For example, HTML gives scripts to the rules of JavaScript:
+embedded rules too. Syntaxes can be nested several levels
+deep. For example, the HTML rules can use the JavaScript syntax for the
+contents of the SCRIPT tag:
 
 ```
   context <SCRIPT*> </SCRIPT> brightcyan
@@ -1437,7 +1296,7 @@ The strings of keywords and of context delimiters are read so:
 
 |  |  |
 |--|--|
-| \\t, \\s | Tab and space: blanks separate the words of the line and cannot be used as they are |
+| \\t, \\s | Tab and space. As they are, they separate the words of the line, so a pattern uses these forms |
 | \\n, \\r | Newline and carriage return |
 | `\\` | Backslash |
 | \\\* | Asterisk |
@@ -1487,8 +1346,8 @@ colors of the editor; it sets attributes without changing the background
 color. With 256 colors there are also color16 to color255, rgb000 to rgb555
 and gray0 to gray23.
 
-The foreground may be a scope token instead of a color: a word in capitals
-that says what the text is rather than how it looks:
+Instead of a foreground color you can give a scope token: a word in capitals
+that names the kind of text. The skin sets its color:
 
 ```
 keyword  whole  if   KEYWORD_CONTROL
@@ -1497,18 +1356,19 @@ context  " " STRING_QUOTED_DOUBLE
 keyword  linestart TODO  KEYWORD_OTHER_TODO black
 ```
 
-The color of a token comes from the skin, so one skin colors the program and
-the text, and every language in the same way; see
+The skin sets the colors of the interface and of the highlighting tokens for
+all languages. See
 [Skins](#skins).
-A token is read as a scope: in lower case, with dots for the underscores.
-KEYWORD_CONTROL_IMPORT is keyword.control.import, a kind of keyword.control,
-which is a kind of keyword. These are the scope names of Sublime Text and
-TextMate. What the skin does not color keeps the colors mcedit gave that
-text. A background or attributes after a token stand over the colors of
-mcedit, as black does above, but not over a background or attributes the
-skin gives the token itself. A token works in a define too, and on the
-number, string and symbols lines of line-local rules. The installed syntax
-files use tokens only; the list of them with the colors of mcedit is in
+The scope name is written in lower case, with dots for the underscores. For
+example, KEYWORD_CONTROL_IMPORT is keyword.control.import, a kind of
+keyword.control, which is a kind of keyword. These are the scope names of
+Sublime Text and TextMate. A background and attributes in the skin take
+priority over the values given after the token in the rule. If the skin does
+not set them, the values of the rule are used, for example black above. The
+other values come from the standard mcedit scheme. A token works in a define
+too, and on the number, string and symbols lines of line-local rules. The
+installed syntax files use tokens. The list of the tokens and their mcedit
+colors is in
 **{{pkgdatadir}}/syntax/README.txt**.
 
 A syntax file shared with
@@ -1534,7 +1394,7 @@ joined with a plus sign.
 | string *quote* *color* | In line-local: strings in single or double quotes |
 | symbols *characters* *color* | In line-local: punctuation characters colored one by one |
 
-# Colors
+# Colors <a id="colors"></a>
 
 bluerig will try to detect if your terminal supports color using the terminal
 database and your terminal name. Sometimes it gets confused, so you may force
@@ -1542,7 +1402,7 @@ color mode or disable color mode using the -c and -b flag respectively.
 
 If the program is compiled with the S-Lang screen manager instead of ncurses,
 it will also check the variable
-**COLORTERM,**
+**COLORTERM**:
 if it is set, it has the same effect as the -c flag.
 
 You may specify terminals that always force color mode by adding the
@@ -1560,7 +1420,7 @@ The program can be compiled with both ncurses and S-Lang, ncurses does not
 provide a way to force color mode: ncurses uses just the information in the
 terminal database.
 
-# Skins
+# Skins <a id="skins"></a>
 
 The colors of the program and the lines of its frames are taken from a skin
 file. The
@@ -1594,10 +1454,10 @@ The format of skin files is described in
 **{{pkgdatadir}}/skins/README.txt**.
 The colors of the syntax highlighting come from the section
 **[syntax]**
-of the skin: there a scope names the colors of a kind of text, and a scope
-and the scope of the context it stands in, the two with a blank between
-them, name the colors of that kind of text in that context. The longest
-scope the skin names wins:
+of the skin. A key sets the color of a scope. To set the color of a scope
+inside a context, give the scope of the context first, then the scope of the
+text, with a space between them. In each case the longest matching scope
+name is chosen. The pair with the context is checked first.
 
 ```
 [syntax]
@@ -1609,12 +1469,11 @@ scope the skin names wins:
     invalid = white;red;bold
 ```
 
-A kind of text the skin does not name keeps the colors mcedit gave it, so a
-skin may name a few kinds and leave the rest. The rules that name colors
-instead of scope tokens keep their colors whatever the skin; see
+Scopes without a color in the skin use the standard mcedit colors. Colors
+given explicitly in the highlighting rules stay the same with any skin. See
 [Syntax Highlighting](#syntax-highlighting).
 
-# Terminal databases
+# Terminal databases <a id="terminal-databases"></a>
 
 bluerig provides a way to fix your system terminal database without requiring
 root privileges. The
@@ -1676,16 +1535,14 @@ bluerig interprets "\\e[[1;6D" as Ctrl-Alt-Left.
 
 The
 *complete*
-key symbol represents the escape sequences used to invoke the completion
-process, this is invoked with Alt-tab, but you can define other keys to do the
-same work (on those keyboard with tons of nice and unused keys everywhere).
+key symbol sets the escape sequences for completion. Usually Alt-Tab does
+it. You can give the sequence of another key.
 
-# Lua scripting
+# Lua scripting <a id="lua-scripting"></a>
 
-Where bluerig was built with Lua, it runs Lua scripts that extend the editor:
-actions bound to keys and to menus, reactions to the events of the editor
-(a file is opened, saved, a key is pressed), dialogs and full-screen views.
-Several commands of the editor are such scripts: sorting the lines, formatting
+When bluerig is built with Lua, scripts can add commands to the menus, bind
+them to keys, handle the events of the editor, and open dialogs and
+full-screen windows. Lua implements, for example, sorting the lines, formatting
 the paragraph, inserting the output of a command, inserting a character by its
 code point, inserting the date, decoding base64 and drawing tables.
 
@@ -1709,7 +1566,7 @@ set to 1, starts the editor without any Lua script, and
 *enabled=false*
 in the
 **[Lua]**
-section of the ini file does so for good.
+section of the ini file turns Lua off for later starts too.
 
 How to write a script, and the functions a script can call, is described in
 **LUA_PLUGINS.md**
@@ -1717,7 +1574,7 @@ and
 **LUA_API_REFERENCE.md**,
 which are installed with the documentation of bluerig.
 
-# General settings
+# General settings <a id="general-settings"></a>
 
 These settings of the
 **[bluerig]**
@@ -1778,8 +1635,8 @@ terminals only (1, the default) or always (2).
 *keybar_modifiers*
 : If true, the key bar shows the commands of Shift, Ctrl or Alt with the F keys
 while that modifier is held. This needs a terminal with the kitty keyboard
-protocol: bluerig then asks it for every key with its release, and for focus
-events. Other terminals are not affected. False by default.
+protocol. bluerig asks the terminal for key press and release events and for
+focus events. Off by default.
 
 *verbose*
 : Show the progress of long operations.
@@ -1836,7 +1693,7 @@ the default comes last.
 | editor_check_new_line | Asks about a missing newline at the end of the file when saving; 0. A check box of the save mode dialog switches it |
 | editor_sticky_windows | Resizes windows whose frames touch as one, see [Window menu](#window-menu); 0 |
 
-# ENVIRONMENT
+# ENVIRONMENT <a id="environment"></a>
 
 The variables below are the ones bluerig reads. Variables such as **TERM**,
 **SHELL**, **HOME** or **PATH** are not listed here: the program reads them
@@ -1875,10 +1732,10 @@ file named by *logfile* in the *[Logging]* section of the *ini* file is used,
 and without that entry *~/.cache/bluerig/bluerig.log*.
 
 **BLUERIG_SPELL_LOG**
-: The file the spell checker writes its debug log to. It has no switch of its
-own: the log is written when the variable names a file.
+: The path of the debug log of the spell check. If the variable is set, the
+spell check writes its log to that file.
 
-# FILES
+# FILES <a id="files"></a>
 
 Full paths below may vary between installations. The data files are also
 affected by the
@@ -1898,8 +1755,8 @@ and
 where these are set.
 
 *{{pkgdatadir}}/help/bluerig.md*
-: The help file of the program, and the help files of the editor plugins
-beside it.
+: The help file of the program (translations are bluerig.ru.md and so on);
+the help files of the editor plugins are beside it.
 
 *{{sysconfdir}}/bluerig/bluerig.ini*, *{{pkgdatadir}}/bluerig.ini*
 : System-wide setup files, used only if the user doesn't have his own
@@ -2008,23 +1865,23 @@ This program is distributed under the terms of the GNU General Public
 License as published by the Free Software Foundation. See the built-in
 help for details on the License and the lack of warranty.
 
-# AVAILABILITY
+# AVAILABILITY <a id="availability"></a>
 
 The latest version of this program can be found at
 <https://github.com/blue-panels/bluerig/releases> .
 
-# SEE ALSO
+# SEE ALSO <a id="see-also"></a>
 
 cooledit(1), aspell(1), hunspell(1), ctags(1), etags(1), gpm(1),
 terminfo(5), sh(1).
 
-# AUTHORS
+# AUTHORS <a id="authors"></a>
 
 Paul Sheer (psheer@obsidian.co.za) is the original author of cooledit, which
 bluerig continues. The authors and
 contributors are listed in the AUTHORS file in the source distribution.
 
-# BUGS
+# BUGS <a id="bugs"></a>
 
 Bugs should be reported at
 <https://github.com/blue-panels/bluerig/issues> .

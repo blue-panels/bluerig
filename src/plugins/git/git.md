@@ -11,9 +11,9 @@ message is written in an editor window.
 | Alt-C | Git window on the Status tab |
 | Alt-L | Git window on the Log tab |
 
-The keys are changed in the *[git]* section of the key bindings file. The
-GitCommit command, which commits what is staged from any window, has no
-default key; it is in the Command menu.
+Keys can be reassigned in the *[git]* section of *~/.config/bluerig/keymap.ini*.
+The **Git commit...** item of the Command menu commits the staged changes.
+A key for this action can be set there too.
 
 The work tree is that of the file in front, else that of the project, else
 that of the current directory. The plugin runs the system *git*, so hooks,
@@ -34,16 +34,27 @@ configuration and user identity apply.
  └────────────────────────────────────┘└───────────────────────┘
 ```
 
-The windows stand frame to frame in place of the file windows. The list
-title shows the branch and how far it is ahead of and behind its upstream. A
-closed window has its item in the Window menu to bring it back; Esc or F10
-closes the whole Git window, and the commit message stays for the next time.
+In the Git application mode there are four windows:
+
+1. The commit message.
+2. The list of changes with the Status, Log and Graph tabs.
+3. The index (Staged changes).
+4. The diff of the selected file or commit.
+
+The list title shows the branch and how it differs from its upstream. For
+example, *master +2 -1* means that two commits are not pushed yet and one is
+not pulled yet. The *+* and *-* characters before the numbers are set by the
+*ahead* and *behind* keys of the *[git-graph]* section of the skin.
+
+A closed window gets its item back in the Window menu; Esc or F10 closes the
+whole Git window, and the commit message stays for the next time.
 
 |  |  |
 |--|--|
 | 1, 2, 3 | Status, Log and Graph tabs |
 | Tab | Next window: changes, staged, diff |
-| Right, Left | To the diff and back |
+| Right | From the list to the diff |
+| Enter, Left at the left edge | Leave the diff |
 | F5, Ctrl-R | Read everything again |
 | F6 | git push |
 | F7 | git pull |
@@ -53,13 +64,11 @@ closes the whole Git window, and the commit message stays for the next time.
 | Esc | Leave the diff or the commit files, else close the Git window |
 | F10 | Close the Git window |
 
-The status is read again when the window comes to the front. In the diff Up,
-Down, PgUp, PgDn, Home, End and Space scroll it, Right and Left scroll it
-sideways.
+In the diff window Up, Down, PgUp, PgDn, Home, End and Space scroll the text,
+Right and Left scroll it sideways.
 
-Push, pull and fetch run in the terminal window, so that git can ask for a
-password there; after them everything is read again. Without the Terminal
-plugin git runs on the terminal of the editor.
+Push, pull and fetch run interactively in the built-in terminal: git can ask
+for a password or an SSH key passphrase.
 
 **Status tab**
 
@@ -75,8 +84,10 @@ changes. A file with a merge conflict is marked *U*.
 | F4, e, r | Open the file in an editor window |
 | F8, d, Delete | Discard the changes of the file |
 
-F8 asks first: a tracked file goes back to the state of the index, an
-untracked one is deleted.
+Changes are discarded only in the list of unstaged changes. After you
+confirm, a tracked file is restored from the index. An untracked file or a
+file added with *git add -N* is deleted. The command is not available for a
+file with a merge conflict.
 
 **Log tab**
 
@@ -86,17 +97,19 @@ right the author, dates, message and files of the commit. Commits are read
 
 |  |  |
 |--|--|
-| Enter | Commit files; Enter on a file shows its diff |
-| e | Open the work tree file |
+| Enter, Space | Open the list of the commit files |
+| Enter on a file | Go to the diff of the file |
+| e on a file | Open the work tree file |
 | F4, r | Change the commit message (reword) |
-| Left, Esc | Back to the commits |
+| Left, Backspace, Esc | From the file list back to the commits |
 
 **Graph tab**
 
-Shows the commits of the branches as a graph: each branch in its own column,
-at the left *main* or *master*, *develop*, *release*, *hotfix*, then the
-others. A merge is a hollow node. Enter, e, F4 and r work as on Log; reword
-works only for commits of the current branch.
+The commits of the branches as a graph: each branch in its own column, at
+the left *main* or *master*, *develop*, *release*, *hotfix*, then the
+others. A merge is a hollow node. The keys work as on the Log tab. The
+message can be changed only for a commit in the history of the current
+branch.
 
 |  |  |
 |--|--|
@@ -120,14 +133,15 @@ colors *main*, *develop*, *release*, *hotfix* and *others* (separated by
     others = magenta;cyan;brightmagenta;brightcyan
 ```
 
-*rail* puts a commit beside the line of its branch, after this character.
+When *rail* is set, this character is drawn in place of the branch line in
+the row of an ordinary commit. The commit marker is drawn right after it.
 
 **Branches**
 
 Local and remote branches and, when checked, tags; the current one first,
-then by the date of the last commit, newest first. Typed words filter the list by name,
-author and subject of the last commit. *Extended* also searches the messages
-of the commits unique to that branch.
+then by the date of the last commit, newest first. Typed words filter the
+list by name, author and subject of the last commit. *Extended* also
+searches the messages of the commits unique to that branch.
 
 |  |  |
 |--|--|
@@ -148,7 +162,7 @@ options:
 
 |  |  |
 |--|--|
-| Force with lease | --force-with-lease; checked after an amend or reword of a pushed branch |
+| Force with lease | --force-with-lease. Checked when the branch has diverged from its upstream and the plugin did an amend or reword on it |
 | Set upstream | -u; checked for a branch with no upstream |
 | Include tags | --follow-tags |
 
@@ -160,19 +174,22 @@ first line of the dialog says so.
 
 It is written in an editor window, in the file *BLUERIG_EDITMSG* in the git
 directory (*BLUERIG_AMEND_EDITMSG* for an amend, *BLUERIG_REWORD_EDITMSG*
-for a reword). Saving (F2) commits. When nothing is staged, the plugin first
-offers to stage everything. Lines starting with *#* are left out; below them
-is what is being committed.
+for a reword). Saving (F2) runs the chosen operation. For an ordinary commit
+with an empty index the plugin offers to stage all changes, if there are any
+and they have no conflicts. An amend can save only a new message, and a
+reword does not need the index. Lines starting with *#* are left out; below
+them is what is being committed.
 
 The message of the next commit is kept when the Git window is closed and
-when the editor ends. An amend or a reword takes its place temporarily.
-When git refuses (a *commit-msg* hook, for example), the window stays, to be
-saved again.
+when the editor ends. When you go to an amend or a reword from the Git
+window, the draft of the ordinary commit is kept, and the editor opens the
+message of the chosen commit. When git refuses the commit (a *commit-msg*
+hook, for example), the window stays open to be saved again.
 
 Reword re-creates the commit and the commits after it, as *git rebase*
 does, without touching the index and the work tree and without running
-hooks; the re-created commits lose their signatures. A commit with a merge
-after it cannot be reworded.
+hooks; the re-created commits lose their signatures. The message of a commit
+with a merge after it is not changed.
 
 **Message menu**
 
@@ -194,8 +211,10 @@ undoes what an item did.
 
 **git-menu.ini**
 
-The menu is read from *~/.config/bluerig/git-menu.ini*, else from
-*git-menu.ini* in */etc/bluerig*. An item is a group named by its key:
+The plugin loads the menu from *~/.config/bluerig/git-menu.ini*. When the
+menu cannot be loaded, it looks for *git-menu.ini* first in the system
+configuration directory (usually */etc/bluerig*), then in the bluerig data
+directory. An item is a group named by its key:
 
 ```
 [x]
@@ -217,8 +236,11 @@ repository's author wrote.
 
 **ai.ini**
 
-The command that writes messages is set in the *[commit-message]* group of
-*~/.config/bluerig/ai.ini*:
+The **g** item of the commit message menu runs a command that writes the
+text with AI. bluerig gives it the prompt and, unless *input = none* is set,
+the diff. The output of the command replaces the message text and keeps
+lines such as Signed-off-by. The command is set by the *command* key of the
+*[commit-message]* group of *~/.config/bluerig/ai.ini*:
 
 ```
 [commit-message]
@@ -230,7 +252,7 @@ input = diff
 |--|--|
 | command | sh command: reads the prompt and diff on standard input, prints the message |
 | prompt | The prompt; by default the bluerig prompt |
-| `prompt-<kind>` | The prompt for commit, amend or reword |
+| prompt-<kind> | The prompt for commit, amend or reword |
 | input | diff (the default) or none |
 
 The command gets *BLUERIG_GIT_MODE* (commit, amend, reword) and
@@ -254,5 +276,5 @@ the command calls.
 | bluerig -G dir --git-amend | The same for an amend |
 | bluerig -G dir --git-reword commit | The same for a reword |
 
-With *-G* the editor does not open the project windows and does not start
-the Project, Build, Debugger, Ctags and Etags plugins.
+In Git mode (*bluerig -G*) the Project, Build, Debugger, Ctags, Etags and
+Coverage plugins do not start.
