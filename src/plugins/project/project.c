@@ -1919,7 +1919,7 @@ project_find_files (void)
         const char *rel = (const char *) g_ptr_array_index (files, i);
 
         // what bluerig keeps of the project, its tags among them, is no text of it
-        if (strncmp (rel, ".bluerig/", 7) == 0)
+        if (g_str_has_prefix (rel, ".bluerig/"))
             continue;
         fputs (rel, list);
         fputc ('\0', list);
