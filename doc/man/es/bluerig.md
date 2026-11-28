@@ -5,7 +5,7 @@ date: noviembre de 2026
 <!-- help:topics "Índice de Contenidos:" -->
 # NOMBRE <!-- help:skip -->
 
-bluerig - un IDE para el terminal.
+bluerig - un IDE de consola.
 
 # SINOPSIS <!-- help:skip -->
 
@@ -14,31 +14,11 @@ bluerig - un IDE para el terminal.
 
 # DESCRIPCIÓN <a id="description"></a>
 
-**bluerig**
-es un IDE para el terminal. Continúa
-**cooledit**,
-el editor de Paul Sheer, cuya versión para terminal se desarrolló durante
-muchos años como el editor interno de GNU Midnight Commander; bluerig lo
-continúa como programa independiente.
-**brg**
-es un nombre más corto del mismo programa.
+**bluerig** es un IDE de consola que nació de mcedit (GNU Midnight Commander) y de cooledit de Paul Sheer. **brg** es el nombre corto del mismo programa.
 
-Edita varios archivos a la vez, cada uno en su propia ventana, y puede editar
-archivos binarios. Tiene copia, movimiento, borrado, corte y pegado de
-bloques; deshacer y rehacer tecla a tecla; menús desplegables; inserción de
-archivos; macros; búsqueda y reemplazo con expresiones regulares; un filtro de
-líneas; plegado; marcas; selección de texto con Shift y las flechas (si el
-terminal lo permite); bloques de columnas; modos de inserción y
-sobrescritura; sangría automática; ajuste de líneas y formato de párrafos; un
-tamaño de tabulación ajustable; resaltado de sintaxis para muchos tipos de
-archivo; un menú de usuario que pasa el texto por órdenes del shell;
-complementos del editor (navegación por etiquetas, revisión ortográfica) y
-guiones Lua.
+El editor abre varios archivos a la vez, incluidos los binarios, cada uno en su propia ventana. Marca bloques de columnas, filtra líneas, pliega texto, graba macros, procesa texto con órdenes del shell desde el menú de usuario y ejecuta guiones Lua. Los complementos añaden gestión de proyectos, compilación, depuración, consulta de la cobertura de código, navegación por el código y corrección ortográfica. También ofrecen integración con Git y con servidores de lenguaje (LSP).
 
-Cada archivo indicado en la línea de órdenes se abre en su propia ventana.
-Sin archivos, el editor abre una ventana vacía. Un archivo mayor que
-*editor_filesize_threshold*
-(64 MB por omisión) se abre tras una pregunta, no se rechaza.
+El soporte de lenguajes se puede ampliar: el resaltado de sintaxis, la compilación, la depuración con adaptadores DAP y los servidores de lenguaje se configuran para cada lenguaje. La configuración de serie incluye resaltado para más de 100 tipos de archivo, compilación para C (Meson, CMake y Make), Rust y Go, y depuración para C, Rust, Python, Bash, Go y JavaScript.
 
 # OPCIONES <a id="options"></a>
 
@@ -52,6 +32,47 @@ para el primer archivo.
 : Abrir el archivo en esa línea, en la forma en que los compiladores y grep
 indican un lugar de un archivo. Si existe un archivo con el nombre completo,
 dos puntos y número incluidos, se abre ese archivo.
+
+**Modos de la aplicación**
+
+*-Q, --query*
+: Abrir el archivo en el modo de consultas a MongoDB o PostgreSQL. Para elegir MongoDB, defina
+*MC_QUERY_KIND=mongo* y configure *MC_MONGO_URI* con la URI de conexión.
+Para elegir PostgreSQL, defina *MC_QUERY_KIND=postgres*. Si *MC_QUERY_KIND*
+no está definida o está vacía, bluerig elige MongoDB si *MC_MONGO_URI* está
+definida. En caso contrario, elige PostgreSQL si el primer archivo indicado
+tiene la extensión *.sql*.
+Necesita el complemento Query.
+
+*-D directorio, --debug=directorio*
+: Abrir el proyecto en modo de depuración. Muestra el árbol del proyecto y el
+panel del depurador. Necesita los complementos Project, Build y Debugger.
+
+*-G directorio, --git=directorio*
+: Abrir la ventana Git de ese directorio. Al cerrar la ventana termina
+bluerig. Puede combinar esta opción con una de las siguientes. Si omite
+*--git*, la opción se aplica al directorio actual.
+
+**Opciones de Git**
+
+*--git-log*
+: Abrir el registro de commits.
+
+*--git-show=commit*
+: Mostrar los archivos y los cambios de ese commit.
+
+*--git-commit*
+: Abrir el editor del mensaje para hacer commit de los cambios preparados.
+
+*--git-amend*
+: Abrir el editor del mensaje del último commit para modificarlo. Si hay
+cambios preparados, también se incorporan al commit.
+
+*--git-reword=commit*
+: Abrir el editor del mensaje de ese commit. Guardar el mensaje
+reescribe el historial de Git.
+
+**Opciones generales**
 
 *-V, --version*
 : Mostrar la versión del programa.
@@ -69,77 +90,27 @@ archivos de datos, los archivos del usuario y los complementos.
 *--no-lua*
 : Arrancar sin el entorno Lua: no se carga ningún guion Lua.
 
-*-D, --debug=directorio*
-: Abrir el proyecto de ese directorio para depurarlo: el último archivo del
-proyecto, el árbol del proyecto y el panel del depurador a la derecha. Las
-ventanas de archivos toman las teclas del depurador: F6 pone un punto de
-parada, F5 compila el programa y lo ejecuta, y crea su configuración de
-depuración la primera vez, F7 y F8 avanzan paso a paso, F3 indexa los
-símbolos del proyecto; F2, F9 y F10 siguen siendo Guardar, el menú y Salir, y
-Alt-F5 va al panel y vuelve. Necesita los complementos project, build y
-debugger, y ctags para F3. Los menús Drawing, Format y Plugins no están en la
-barra de menús; sus teclas siguen, y Opciones conserva Manage plugins.
-
-*-Q, --query*
-: Ejecutar las consultas del archivo en una base de datos, MongoDB con
-mongosh o PostgreSQL con libpq; la respuesta llega en las pestañas Output,
-Table e Historia de abajo. *MC_QUERY_KIND* es *mongo* o *postgres*; sin ella,
-*MC_MONGO_URI* indica MongoDB y un archivo *.sql* PostgreSQL. Para MongoDB
-*MC_MONGO_URI* y *MC_MONGO_DB* dicen a qué conectarse, *MC_MONGOSH* el
-programa; F5 ejecuta la selección, si no, la parte entre las líneas *// ---*
-que rodean el cursor, si no, el archivo entero. Para PostgreSQL libpq toma la
-conexión de *PGHOST*, *PGDATABASE*, *PGSERVICE* y similares, la contraseña de
-*~/.pgpass*; F5 ejecuta la selección, si no, el archivo entero. Ctrl-F5
-ejecuta el archivo entero. Sin un archivo indicado, el archivo es
-*~/.local/share/bluerig/queries/*, con el nombre de la base de datos y *.js*,
-o *postgres/*, el nombre de la conexión, y el de la base de datos y *.sql*.
-Las ventanas que tenía el proyecto la última vez no se muestran, y los
-complementos de proyecto y de código (project, build, debugger, ctags, etags,
-git, terminal, spell) no se inician; los guiones siguen, y el servidor de
-lenguaje de las consultas cuando lsp.json tiene uno. Los menús Drawing,
-Format y Plugins no están en la barra de menús, como con -D. Necesita el
-complemento query.
-
-*-G, --git=directorio*
-: Abrir la ventana Git del complemento git sobre el árbol de trabajo de ese
-directorio; al cerrarla termina el editor. Las ventanas que tenía el proyecto
-la última vez no se muestran, y los complementos de proyecto (project, build,
-debugger, ctags, etags) no se inician. Para un panel de git en un gestor de
-archivos, con una de estas detrás, o sola para el directorio actual:
-
-*--git-log*
-: La ventana Git sobre el registro.
-
-*--git-show=commit*
-: La ventana Git sobre ese commit: sus archivos y sus diferencias.
-
-*--git-commit*, *--git-amend*
-: La ventana Git con el mensaje de un commit de lo preparado, o del último
-commit corregido con ello; el editor termina cuando el mensaje se guarda y se
-hace el commit, o cuando se cierra su ventana.
-
-*--git-reword=commit*
-: Otro mensaje para ese commit, de la misma forma, con los archivos del
-commit debajo.
-
 *-h, -?, --help*
-: Mostrar las opciones y lo que hacen.
+: Mostrar las opciones de la línea de órdenes y lo que hacen.
+
+*--help-all*
+: Mostrar las opciones de la línea de órdenes de todos los grupos.
 
 *--help-terminal, --help-color*
-: Mostrar las opciones del terminal o las opciones de color de abajo.
+: Mostrar las opciones del terminal o las opciones de color.
 
-Las opciones del terminal:
+**Opciones del terminal**
 
 *-x, --xterm*
-: Forzar el modo xterm. Se usa en terminales compatibles con xterm (dos modos
-de pantalla, y capaces de enviar secuencias de escape del ratón).
+: Activar el modo xterm. Úselo en terminales que hacen lo mismo que xterm:
+dos modos de pantalla y secuencias del ratón.
 
 *-X, --no-x11*
 : No usar el sistema X Window para conocer el estado de las teclas
 modificadoras.
 
 *-g, --oldmouse*
-: Usar el antiguo seguimiento del ratón con resaltado del terminal.
+: Usar el antiguo seguimiento del ratón del terminal.
 
 *-d, --nomouse*
 : Desactivar el ratón.
@@ -149,8 +120,8 @@ modificadoras.
 cuando bluerig se compiló con la biblioteca S-Lang.
 
 *-s, --slow*
-: Trabajar en un terminal lento: la pantalla se dibuja con menos
-actualizaciones.
+: Trabajar en un terminal lento: la pantalla se redibuja con menos
+frecuencia.
 
 *-a, --stickchars*
 : Dibujar los marcos con caracteres simples en lugar de los caracteres de
@@ -164,16 +135,16 @@ líneas del terminal.
 : No cargar ningún archivo de teclas: usar las asociaciones internas del
 programa.
 
-Las opciones de color:
+**Opciones de color**
 
 *-b, --nocolor*
-: Forzar la pantalla en blanco y negro.
+: Pantalla en blanco y negro.
 
 *-c, --color*
-: Forzar el modo de color en terminales que no parecen admitir colores.
+: Modo de color en terminales que no indican que admiten colores.
 
 *-S skin, --skin=skin*
-: Usar la skin con ese nombre. Véase
+: Usar la skin de ese nombre. Véase
 [Skins](#skins).
 
 # Vista general <a id="overview"></a>
@@ -184,11 +155,9 @@ arriba, las ventanas del editor debajo y las etiquetas de las teclas de
 función abajo. La barra de menús puede estar oculta: F9 o un clic en la línea
 superior de la pantalla la muestra.
 
-Cada ventana muestra un archivo: su nombre, el estado del archivo y la
-posición del cursor están en la línea de estado de su parte superior. Puede
-haber varias ventanas abiertas a la vez; el
-[menú Ventana](#window-menu)
-pasa de una a otra, y cada una se puede mover y cambiar de tamaño.
+La línea de estado de la parte superior de una ventana muestra el nombre del
+archivo, el estado del archivo y la posición del cursor. El [menú Ventana](#window-menu)
+pasa de una ventana abierta a otra. Las ventanas se pueden mover y cambiar de tamaño.
 
 # El editor bluerig <a id="internal-file-editor"></a>
 
@@ -196,8 +165,7 @@ pasa de una a otra, y cada una se puede mover y cambiar de tamaño.
 **Teclas**
 
 <!-- {{key:Action|F8}}: Action is the action name of misc/keymap.default.ini and src/keymap.c (Remove = f8); the help shows the keys bound to it now, the man page the default keys after the bar -->
-Estas son las teclas por omisión. Cualquiera de ellas se puede cambiar, véase
-[Redefinir las teclas](#keys_redefine).
+[Cómo cambiar las asociaciones](#keys_redefine)
 
 <a id="moving-around"></a>
 **Movimiento del cursor**
@@ -479,9 +447,9 @@ Linux con el servidor de ratón
 **gpm**
 en marcha.
 
-Un clic pone el cursor donde se pulsa, arrastrar resalta texto, y un clic en
-un menú, un botón o una etiqueta de tecla de función lo elige. La rueda
-desplaza el texto.
+Un clic en el texto mueve el cursor, y arrastrar marca texto. El ratón abre
+los menús, pulsa los botones y ejecuta las órdenes que muestra la línea
+inferior de la pantalla. La rueda del ratón desplaza el texto.
 
 La repetición automática por omisión de los botones del ratón es de 400
 milisegundos. Se puede cambiar con el ajuste
@@ -495,85 +463,60 @@ Shift.
 
 # Barra de menús <a id="menu-bar"></a>
 
-La barra de menús aparece al pulsar F9 o al hacer clic en la fila superior
-de la pantalla. Sus menús son Archivo, Edición, Buscar, Utilidades, Navigate
-(solo cuando un complemento o un guion le añade algo), Ventana, Plugins y
-Opciones. Un guion Lua puede añadir entradas a cualquiera de ellos, o menús
-propios.
+La barra de menús aparece al pulsar {{key:Menu|F9}} o al hacer clic en la
+línea superior de la pantalla. Sus menús son Archivo, Edición, Buscar,
+Utilidades, Navigate (cuando un complemento o un guion le ha añadido algo),
+Ventana, Plugins y Opciones. Un guion Lua puede añadir entradas a cualquiera
+de ellos, o menús propios.
 
 ## Menú Archivo <a id="file-menu"></a>
 
-**Abrir archivo...**
-: Abrir un archivo en una ventana nueva.
-
-**Nuevo**
-: Abrir una ventana vacía.
-
-**Cerrar**
-: Cerrar la ventana.
-
-**Historia...**
-: Los archivos editados antes, para abrir de nuevo uno de ellos.
-
-**Guardar, Guardar como...**
-: Escribir el archivo, con su nombre o con otro. Véase
-[Guardar como](#save-file-as).
-
-**Insertar archivo..., Copiar a un archivo...**
-: Insertar un archivo en el cursor, o escribir el bloque resaltado en un
-archivo.
-
-**Menú de usuario**
-: El [menú de usuario](#edit-menu-file).
-
-**Acerca de...**
-: La versión del programa.
-
-**Salir**
-: Salir del editor, con una pregunta por los archivos sin guardar.
+|  |  |
+|--|--|
+| Abrir archivo... | Abre un archivo en una ventana nueva |
+| Nuevo | Abre una ventana vacía |
+| Cerrar | Cierra la ventana actual |
+| Historia... | Abre la lista de los archivos editados hace poco |
+| Guardar | Escribe el archivo actual |
+| Guardar como... | [Escribe el archivo con un nombre nuevo](#save-file-as) |
+| Insertar archivo... | Inserta el contenido de un archivo en el cursor |
+| Copiar a un archivo... | Escribe el bloque marcado en un archivo |
+| Menú de usuario | [Abre la lista de órdenes que procesan el texto](#edit-menu-file) |
+| Acerca de... | Muestra la versión del programa |
+| Salir | Cierra el editor. Si hay cambios pendientes, pregunta si desea guardarlos |
 
 ## Menú Edición <a id="edit-menu"></a>
 
 Deshacer, Rehacer y Undo History...; el cambio entre los modos de inserción
-y sobrescritura; las órdenes que resaltan un bloque, un bloque de columnas o
-el archivo entero, y quitan el resaltado; copiar, mover y borrar el bloque;
-copiar y cortar al archivo del portapapeles y pegar desde él; e ir al
+y sobrescritura; las órdenes que marcan un bloque, un bloque de columnas o
+el archivo entero, y quitan la marca; copiar, mover y borrar el bloque;
+copiar y cortar al archivo del portapapeles y pegar desde él; ir al
 principio y al fin del archivo.
 
 ## Menú Buscar <a id="search-menu"></a>
 
-Buscar..., Buscar siguiente y Reemplazar...; el filtro de líneas (Toggle line
-filter, Filter by word; véase
-[Búsqueda, reemplazo y filtro de líneas](#search-and-replace)); y las marcas:
-poner o quitar una marca en la línea actual, ir a la siguiente o a la
-anterior, y quitarlas todas.
+Las órdenes de búsqueda, reemplazo y filtro se describen en
+[Búsqueda, reemplazo y filtro de líneas](#search-and-replace).
+El mismo menú pone o quita una marca en la línea actual, va a la marca
+siguiente o a la anterior, y quita todas las marcas.
 
 ## Menú Utilidades <a id="command-menu"></a>
 
-**Ir a la línea...**
-: Ir a una línea, dada por su número.
-
-**Numeración de líneas**
-: Mostrar u ocultar la columna de números de línea.
-
-**Buscar pareja del operador**
-: Ir al paréntesis correspondiente al que está bajo el cursor.
-
-**Poner/quitar sintaxis, Margen derecho, Toggle control characters**
-: Activar y desactivar estas opciones.
-
-**Código carácter...**
-: La página de códigos en la que está escrito el texto. Véase
-[Codificación de caracteres](#codepages-translation).
-
-**Fold / Unfold block, Unfold all**
-: Véase [Plegado](#folding).
-
-**Refrescar la pantalla**
-: Redibujar la pantalla.
-
-**Iniciar/parar grabación macro, Macro explorer..., Grabar/repetir acciones**
-: Véase [Macros](#macros).
+|  |  |
+|--|--|
+| Ir a la línea... | Lleva el cursor a la línea con el número dado |
+| Numeración de líneas | Muestra u oculta la columna del estado de las líneas |
+| Buscar pareja del operador | Lleva el cursor al paréntesis correspondiente |
+| Poner/quitar sintaxis | Activa o desactiva el resaltado en el editor |
+| Margen derecho | Marca la columna en la que se ajustan las líneas |
+| Toggle control characters | Muestra los caracteres de control como ^M, ^L, etc. |
+| Código carácter... | [Elige la codificación del archivo](#codepages-translation) |
+| Fold / Unfold block | [Pliega o despliega un bloque](#folding) |
+| Desplegar todo | Despliega todo el texto y quita el filtro de líneas |
+| Refrescar la pantalla | Redibuja la pantalla |
+| Iniciar/parar grabación macro | [Graba una macro y la asocia a una tecla](#macros) |
+| Macro explorer... | [Abre la lista de las macros grabadas](#macro-explorer) |
+| Grabar/repetir acciones | Graba acciones y las repite el número de veces indicado |
 
 ## Menú Navigate <a id="navigate-menu"></a>
 
@@ -590,15 +533,14 @@ referencias, los símbolos del archivo y otras. Véase
 : Alternar la ventana entre pantalla completa y su propio tamaño.
 
 **Toggle sticky windows**
-: Con las ventanas pegadas, las ventanas cuyos marcos están uno junto a otro
-cambian de tamaño juntas: la esquina de una ventana mueve el borde en el que
-está con todas las ventanas a lo largo de él, a ambos lados, y no se abre
-hueco entre ellas. Donde se juntan cuatro ventanas, la esquina mueve los dos
-bordes. Un lado que está en el borde de la pantalla cuando empieza el cambio
-de tamaño se queda allí, una ventana conserva su tamaño mínimo, y un borde se
-para en una ventana que encuentra en su camino, y esa ventana cambia entonces
-de tamaño con las demás. Esc devuelve cada ventana a su sitio. Una ventana
-arrastrada por su título se mueve sola. El ajuste se guarda como
+: Al arrastrar la esquina de una ventana, los marcos de las ventanas vecinas
+se mueven con ella, y las ventanas conservan un borde común. Donde cuatro
+ventanas se juntan en una esquina, se mueven a la vez el borde horizontal y
+el vertical. Un borde que estaba en el borde de la pantalla al empezar se
+queda allí. Cuando el borde que se mueve llega a otra ventana, esa ventana
+también empieza a cambiar de tamaño. Cada ventana tiene un tamaño mínimo.
+Esc cancela el cambio. Una ventana arrastrada por su título se mueve sola.
+El ajuste se guarda como
 **editor_sticky_windows**
 en el archivo ini.
 
@@ -609,99 +551,36 @@ en el archivo ini.
 : Las ventanas abiertas, para ir a una de ellas. Véase
 [Archivos abiertos](#open-files).
 
-Debajo vienen las ventanas de los complementos: el árbol del proyecto, la
-salida de la compilación, el panel y la consola del depurador, el terminal,
-el terminal del programa que ejecuta el depurador, Preview. Una entrada abre
-su ventana, la trae al frente cuando está detrás de otra, y la cierra cuando
-ya está al frente; las abiertas llevan la marca *\**. Un complemento
-desactivado no tiene entrada.
-
-Las ventanas de los complementos están en zonas fijas. El árbol, el panel del
-depurador y Preview van en la columna de la derecha, uno sobre otro, a toda
-la altura de la pantalla. La consola, la salida de la compilación y el
-terminal van en la fila de abajo, bajo las ventanas de los archivos: comparten
-la fila como pestañas: se muestra una, y su título lista los nombres de
-todas. Un clic en un nombre, o
-**Ctrl-Alt-PgDn** y **Ctrl-Alt-PgUp** (*WindowTabNext* y *WindowTabPrev*
-en el mapa de teclas), muestra otra. Una ventana de archivo a pantalla
-completa llena el resto de la pantalla, y de nuevo la pantalla entera cuando
-las zonas están vacías. Cambiar el tamaño de una ventana en una zona cambia
-el tamaño de la zona; moverla la saca de la zona.
-
-**Layout...**
-: Las disposiciones de las ventanas: qué ventanas de los complementos están
-abiertas, en qué zona, y qué tamaño tienen las zonas. *Edit* tiene solo los
-archivos, *Project* el árbol del proyecto, *Debug* el árbol y el panel del
-depurador. **Use** coloca las ventanas así; **Save as...** las guarda tal
-como están con un nombre, que puede ser el de una de estas; **Delete** olvida
-una disposición guardada, y vuelve la del editor de ese nombre. Con **Debug
-layout while debugging**, al iniciar el depurador las ventanas se colocan como
-en *Debug*, y al pararlo vuelven a su sitio, pero las pestañas de abajo siguen
-abiertas para leerlas.
-
-Las ventanas de un proyecto se guardan cuando termina el editor, y vuelven
-cuando arranca con un archivo del proyecto.
-*bluerig --debug* arranca con la disposición *Debug*. Las disposiciones se
-guardan en *layouts.ini* en el directorio de configuración.
-
 ## Menú Plugins <a id="plugins-menu"></a>
 
-Los complementos del editor que tienen una entrada propia, por ejemplo el
-corrector ortográfico; sus ventanas están en el
-[menú Ventana](#window-menu). Un complemento desactivado en
+Los complementos del editor que tienen una entrada propia en el menú, por
+ejemplo el corrector ortográfico. Un complemento desactivado en
 [Manage plugins](#manage-plugins)
 no está en el menú.
 
 ## Menú Opciones <a id="options-menu"></a>
 
-**General...**
-: Las [opciones del editor](#editor-options).
+|  |  |
+|--|--|
+| General... | [Ajusta la sangría, el ajuste de líneas y otras opciones del editor](#editor-options) |
+| Modo de guardar... | [Elige cómo se escriben los archivos](#edit-save-mode) |
+| Sintaxis coloreada... | Elige las reglas de resaltado a mano, o por el nombre del archivo y la primera línea |
+| Aspecto... | [Ajusta la skin y las sombras](#appearance) |
+| Redefinir teclas... | [Asocia las teclas a las secuencias del terminal](#learn-keys) |
+| Key bindings... | [Asocia las teclas a las acciones](#key-bindings) |
+| Key sniffer... | [Muestra la secuencia del terminal y la acción asociada](#key-sniffer) |
+| Manage plugins... | [Activa, desactiva y configura los complementos](#manage-plugins) |
+| Plugin info... | [Muestra el estado y las funciones de los complementos](#plugin-info) |
+| Lua scripts... | [Gestiona los guiones Lua](#lua-scripts). Existe si se compiló con Lua |
+| Editar archivo de sintaxis | Abre en el editor el [archivo de sintaxis del usuario](#syntax-highlighting) |
+| Menu file | Abre en el editor el [archivo del menú de usuario](#edit-menu-file) |
+| Guardar configuración | Escribe los ajustes en *~/.config/bluerig/ini* |
 
-**Modo de guardar...**
-: Cómo se escribe un archivo. Véase [Modo de guardar](#edit-save-mode).
+"Editar archivo de sintaxis" abre *~/.local/share/bluerig/syntax/Syntax*. Si
+el archivo aún no existe, el editor lo crea con un breve comentario. El
+archivo del sistema se lee después del archivo del usuario.
 
-**Sintaxis coloreada...**
-: Elegir a mano las reglas de sintaxis del archivo, o dejar que las decidan
-el nombre y la primera línea del archivo.
-
-**Aspecto...**
-: La skin y las sombras. Véase [Aspecto](#appearance).
-
-**Redefinir teclas...**
-: Véase [Redefinir teclas](#learn-keys).
-
-**Key bindings...**
-: Véase [Key bindings](#key-bindings).
-
-**Key sniffer...**
-: Véase [Key sniffer](#key-sniffer).
-
-**Manage plugins...**
-: Véase [Manage plugins](#manage-plugins).
-
-**Plugin info...**
-: Véase [Plugin info](#plugin-info).
-
-**Lua scripts...**
-: Véase [Lua scripts](#lua-scripts). La entrada solo existe si bluerig se
-compiló con Lua.
-
-**Editar archivo de sintaxis**
-: Abrir en el editor el archivo de sintaxis del usuario,
-*~/.local/share/bluerig/syntax/Syntax*.
-Si no existe, se crea con un breve comentario sobre lo que contiene, no como
-copia del archivo del sistema, que se sigue leyendo después de él. Véase
-[Resaltado de sintaxis](#syntax-highlighting).
-
-**Menu file**
-: Abrir en el editor el archivo del [menú de usuario](#edit-menu-file).
-
-**Guardar configuración**
-: Escribir los ajustes en
-*~/.config/bluerig/ini*.
-Con el ajuste
-*auto_save_setup*
-activado, se escriben siempre que termina el editor.
+Con *auto_save_setup* activado, el editor guarda los ajustes al salir.
 
 ### Opciones del editor <a id="editor-options"></a>
 
@@ -723,7 +602,7 @@ escribe en el archivo ini, véase
 
 |  |  |
 |--|--|
-| Fingir medias tabulaciones | Entre el margen izquierdo y el texto una tabulación avanza la mitad de su ancho, y el archivo recibe espacios y tabulaciones |
+| Fingir medias tabulaciones | En la sangría el cursor avanza media tabulación. El archivo recibe espacios y caracteres de tabulación |
 | Borrar en tabulaciones | Backspace borra toda la sangría hasta el margen izquierdo cuando no hay texto entre el cursor y el margen |
 | Tabulaciones x espacios | Inserta espacios hasta la siguiente posición de tabulación en lugar de un carácter de tabulación |
 | Tamaño de tabulaciones | El ancho de un carácter de tabulación; 8 por omisión |
@@ -732,7 +611,7 @@ escribe en el archivo ini, véase
 
 |  |  |
 |--|--|
-| Esc timeout, ms | Cuántos milisegundos se espera, tras Esc, al resto de una tecla antes de tomarlo como Esc; 1000 por omisión. En el archivo ini es *old_esc_mode_timeout* en microsegundos, y la variable **KEYBOARD_KEY_TIMEOUT_US** lo sustituye al arrancar |
+| Esc timeout, ms | Cuántos milisegundos espera el editor, tras Esc, al resto de una secuencia de escape. 1000 por omisión. El ajuste *old_esc_mode_timeout* está en microsegundos. Al arrancar tiene prioridad la variable **KEYBOARD_KEY_TIMEOUT_US** |
 
 **Otras opciones**
 
@@ -740,14 +619,14 @@ escribe en el archivo ini, véase
 |--|--|
 | Autoindentar | Enter empieza la línea con la sangría de la línea de arriba |
 | Confirmar al guardar | Pregunta antes de escribir el archivo |
-| Recordar posiciones | Abre el archivo donde se dejó |
+| Recordar posiciones | Restaura la posición del cursor al abrir el archivo |
 | Espacios finales visibles | Marca los espacios al final de las líneas |
 | Tabulaciones visibles | Marca los caracteres de tabulación |
 | Show control characters | Muestra los caracteres de control como ^M en lugar de ocultarlos |
 | Sintaxis coloreada | Colorea el texto según las reglas de sintaxis de su tipo |
 | Cursor tras inserción | Deja el cursor al final de un bloque insertado, no al principio |
 | Selección persistente | Conserva la selección cuando se mueve el cursor |
-| Cursor pasa fin de línea | Deja que el cursor pase del último carácter de la línea |
+| Cursor pasa fin de línea | Deja que el cursor pase del fin de la línea |
 | Deshacer en grupo | Deshace de una vez una serie de cambios del mismo tipo |
 | Ancho del párrafo auto | La columna en la que los modos de ajuste cortan la línea; 72 por omisión |
 
@@ -757,17 +636,17 @@ Cómo se escribe un archivo, los mismos tres modos que admite el ajuste
 *editor_option_save_mode*:
 
 **Guardar rápido**
-: Escribir sobre el archivo en el acto. Es rápido, pero un fallo a mitad deja el
-archivo escrito a medias.
+: Escribir los datos directamente en el archivo original. Si la escritura
+falla, el archivo puede quedar incompleto.
 
 **Guardar seguro**
-: Escribir primero un archivo temporal y renombrarlo sobre el original cuando
-está entero, de modo que un fallo deja intacto el original.
+: Escribir los datos en un archivo temporal, y sustituir el original por él
+solo cuando la escritura ha terminado.
 
 **Conservar copias con extensión**
 : Guardado seguro, y el original se conserva con su nombre más la extensión
-de la línea de entrada, "~" por omisión. Guardar dos veces también sustituye
-la copia.
+de la línea de entrada, "~" por omisión. Un segundo guardado también
+sustituye la copia.
 
 **Verificar salto de línea POSIX**
 : Preguntar por el salto de línea que falta al final del archivo antes de
@@ -775,8 +654,8 @@ escribirlo.
 
 ### Aspecto <a id="appearance"></a>
 
-La skin con la que se dibuja el programa, y si los diálogos y los menús
-desplegables tienen sombra.
+Aquí se elige la skin y se ajustan las sombras de los diálogos y los menús
+desplegables.
 
 **Skin**
 : El botón abre la lista de las skins instaladas y las del usuario; la
@@ -790,27 +669,25 @@ La elección se escribe en los ajustes
 *skin*
 y
 *shadows*
-del archivo ini. Véase la sección
-[Skins](#skins)
-para los archivos de skin.
+del archivo ini. El orden en que se buscan los archivos de skin se describe
+en [Skins](#skins).
 
 ### Redefinir teclas <a id="learn-keys"></a>
 
-Este diálogo enseña a bluerig las secuencias de escape que envía su terminal
-para las teclas de función, las flechas y las teclas de navegación. Su título
-nombra el terminal, tomado de la variable
-**TERM**.
+Este diálogo asocia las secuencias de escape del terminal a las teclas de
+función, las flechas y las teclas de navegación. El título muestra el nombre
+del terminal, tomado de la variable **TERM**.
 
 Elija una combinación de modificadores (Ctrl, Alt, Shift) con las casillas, y
-pulse después el botón de una tecla. Pulse la tecla en el teclado y espere a
+pulse después el botón de una tecla. Pulse esa tecla en el teclado y espere a
 que desaparezca el mensaje de captura. La secuencia aprendida aparece junto
-al botón. Si otra tecla ya tiene esa secuencia, se avisa del conflicto.
+al botón. Si otra tecla ya la tiene, el editor avisa del conflicto.
 
 **Del**
-: Borrar la tecla aprendida en la que está el cursor.
+: Borrar la secuencia guardada de la tecla seleccionada.
 
 **Guardar**
-: Escribir las teclas aprendidas en
+: Escribir las asociaciones de teclas y secuencias en
 *~/.config/bluerig/term/\<TERM>*.
 
 **Edit term file**
@@ -818,11 +695,11 @@ al botón. Si otra tecla ya tiene esa secuencia, se avisa del conflicto.
 
 ### Key bindings <a id="key-bindings"></a>
 
-Las acciones del programa con las teclas a las que responden, en una tabla.
-Los botones de arriba eligen el grupo, Editor o Widgets, y después la parte
-del grupo: Main y Ctrl-X para el editor; Dialog, Menu, Input, Listbox, Radio y
-Help para los widgets. Back vuelve a los grupos. Las acciones marcadas
-con \* tienen teclas distintas de las teclas por omisión.
+La tabla muestra las acciones y las teclas asociadas a ellas. Los botones de
+arriba eligen el grupo, Editor o Widgets. El grupo Editor tiene las partes
+Main y Ctrl-X, el grupo Widgets tiene Dialog, Menu, Input, Listbox, Radio y
+Help. Back vuelve a la lista de grupos. Las acciones con asociaciones
+cambiadas llevan la marca \*.
 
 **Enter**
 : Sustituir la tecla de la acción: pulse la tecla que quiere asignar.
@@ -843,74 +720,62 @@ con \* tienen teclas distintas de las teclas por omisión.
 en el editor.
 
 **Edit term file**
-: Abrir las secuencias de teclas del terminal, el archivo que escribe
+: Abrir el archivo de las secuencias de escape guardadas en el diálogo
 [Redefinir teclas](#learn-keys).
 
-Si la tecla ya es de otra acción, se avisa y se pregunta si quitársela a esa
-acción.
+Si la tecla ya está asociada a otra acción, el editor pide confirmar la
+nueva asociación.
 
 ### Key sniffer <a id="key-sniffer"></a>
 
 Pulse
 **Capture key**,
-y después cualquier tecla. El diálogo muestra lo que ha llegado:
+y después la tecla que quiere comprobar. El diálogo muestra sus datos:
 
 ```
-Shortcut   the symbolic name, e.g. Ctrl-F5
-Action     the action of the key in the editor keymap
-Raw        the escape sequence and its bytes in hex
-Keycode    the internal numeric code
+Shortcut   el nombre de la combinación, por ejemplo Ctrl-F5
+Action     la acción asociada en el mapa de teclas del editor
+Raw        la secuencia de escape y los bytes que la componen
+Keycode    el código numérico interno
 ```
 
-Es el sitio donde mirar cuando una tecla no hace nada o hace otra cosa: una
-tecla que llega como una secuencia que el programa no reconoce hay que
-enseñarla en
-[Redefinir teclas](#learn-keys),
-y una que llega pero no tiene acción hay que asociarla en
-[Key bindings](#key-bindings).
+Si el editor no reconoce la secuencia, configúrela en el diálogo
+[Redefinir teclas](#learn-keys). Si la tecla se reconoce, compruebe la acción
+asociada a ella en el diálogo [Key bindings](#key-bindings).
 
 ### Manage plugins <a id="manage-plugins"></a>
 
-Los complementos que ha cargado el programa, en una tabla: el tipo, el nombre
-y lo que el complemento dice de sí mismo. Aquí se listan los complementos del
-editor y, si bluerig se compiló con Lua, el motor Lua como complemento del
-tipo
+La tabla muestra el tipo, el nombre y la descripción de cada complemento del
+editor. Si bluerig se compiló con Lua, la tabla tiene también el entorno Lua,
+del tipo
 *runtime*.
-Un complemento se desactiva y se activa con la casilla de su fila, y lo
-desactivado tampoco se carga la próxima vez; la elección se guarda en
-*~/.config/bluerig/plugins.ini*.
-Un complemento desactivado se queda en la lista, para poder activarlo de
-nuevo.
+La casilla de la fila de un complemento decide si se carga en el próximo
+arranque. La elección se guarda en *~/.config/bluerig/plugins.ini*.
+Los complementos desactivados se quedan en la lista.
 
 **Enter, F4**
-: Abrir la configuración del complemento en el que está el cursor. Si el
-complemento no tiene configuración, lo indica. En la fila del motor Lua abre
+: Abrir la configuración del complemento seleccionado. Si el complemento no
+tiene configuración, el editor lo indica. Para el entorno Lua abre el diálogo
 [Lua scripts](#lua-scripts).
-
-**IDE: project, build, debugger**
-: Activar juntos los tres complementos que hacen del editor un IDE, o
-desactivarlos juntos cuando están todos activos: el proyecto y sus archivos,
-la compilación y el depurador. Cada uno funciona también sin los otros.
 
 ### Plugin info <a id="plugin-info"></a>
 
-Los complementos que ha cargado el editor: el nombre, si está activo, qué
-ofrece y qué hace. Es una lista solo de consulta: los complementos se
-desactivan y se configuran en el diálogo
-[Manage plugins](#manage-plugins).
+La lista de los complementos cargados muestra su nombre, su estado, sus
+funciones y su descripción. La configuración y los interruptores de los
+complementos están en el diálogo [Manage plugins](#manage-plugins).
 
 ### Lua scripts <a id="lua-scripts"></a>
 
-Los guiones Lua encontrados, los del sistema y los del usuario, en una tabla:
-si está activo, dónde está el guion (global o de usuario), su identificador,
-su espacio de trabajo, qué ofrece y qué hace. Un guion se desactiva y se
-activa con la casilla de su fila; el cambio tiene efecto la próxima vez que
-arranca bluerig.
+La tabla muestra el estado, el lugar (global o de usuario), el identificador,
+el espacio de trabajo, las funciones y la descripción de cada guion Lua
+encontrado. La casilla de la fila de un guion decide si se carga en el
+próximo arranque de bluerig.
 
 **Settings**
-: Ejecutar el guion que lleva la configuración del paquete, si tiene uno.
+: Ejecutar el guion que contiene la configuración del paquete, si lo hay.
 
-Véase [Guiones Lua](#lua-scripting) para los guiones en sí.
+Consulte [Guiones Lua](#lua-scripting) para saber dónde se guardan los
+paquetes y cómo se organizan.
 
 # Búsqueda, reemplazo y filtro de líneas <a id="search-and-replace"></a>
 
@@ -942,46 +807,46 @@ a \\9 insertan los grupos capturados.
 
 **Filter**
 
-Oculta las líneas sin coincidencia; los números de línea no cambian, y la
-columna de estado de las líneas marca cada tramo oculto. Las líneas se ocultan
-una vez, al pulsar el botón: una línea cambiada o escrita después sigue
-visible aunque no coincida.
+El filtro oculta las líneas sin coincidencia y conserva los números de línea.
+La columna de estado de las líneas marca los tramos ocultos. El filtro se
+aplica al activarlo. Las líneas nuevas y las cambiadas siguen visibles hasta
+que el filtro se aplica de nuevo.
 
 |  |  |
 |--|--|
-| {{key:FilterToggle|Alt-s}} | Quita el filtro, o aplica la última búsqueda como filtro; sin búsqueda, abre el diálogo de búsqueda |
+| {{key:FilterToggle|Alt-s}} | Quita el filtro, o aplica la última búsqueda como filtro. Si aún no hubo búsqueda, abre el diálogo de búsqueda |
 | {{key:FilterWord|Alt-S}} | Filtra por el texto marcado o por la palabra bajo el cursor |
-| Utilidades \> Unfold all | Quita el filtro y todos los pliegues |
+| Utilidades \> Desplegar todo | Quita el filtro y todos los pliegues |
 
 # Plegado <a id="folding"></a>
 
-Un pliegue oculta un tramo de líneas tras su primera línea, que se queda en
-la pantalla con una marca en la columna de estado de las líneas.
-**Alt-F**
-(Fold / Unfold block en el menú Utilidades) pliega las líneas resaltadas o,
-sin nada resaltado, las líneas desde un paréntesis de la línea actual hasta el
-paréntesis que hace pareja con él. En la primera línea de un pliegue lo
-despliega.
-**Unfold all**
-abre todos los pliegues del archivo, y quita el filtro de líneas.
+Un pliegue muestra solo la primera línea de un bloque. La columna de estado
+de las líneas marca esa línea.
+{{key:FoldToggle|Alt-F}}
+(la entrada Fold / Unfold block del menú Utilidades) pliega las líneas
+marcadas o, sin nada marcado, las líneas desde un paréntesis de la línea
+actual hasta el paréntesis que hace pareja con él. En la primera línea de un
+pliegue esta tecla lo despliega.
+**Desplegar todo**
+abre todos los pliegues del archivo y quita el filtro de líneas.
 
 # Macros <a id="macros"></a>
 
 {{key:MacroStartStopRecord|Ctrl-r}}
-empieza a grabar una macro: se graban las teclas pulsadas después. Pulsar
-**Ctrl-r**
-de nuevo termina la grabación y espera la tecla a la que se asocia la macro;
-después esa tecla la ejecuta.
+empieza a grabar una macro. Para terminar la grabación, pulse
+{{key:MacroStartStopRecord|Ctrl-r}}
+de nuevo, y después la tecla que ejecutará la macro.
 
 Las macros se guardan en la sección
 **[editor]**
 del archivo
-**~/.local/share/bluerig/macros**,
-y una macro se borra borrando allí su línea, o en
+**~/.local/share/bluerig/macros**.
+Para borrar una macro, borre su línea del archivo o use
 [Macro Explorer](#macro-explorer).
 
+La entrada
 **Grabar/repetir acciones**
-en el menú Utilidades graba las acciones que siguen hasta que se elige de
+del menú Utilidades graba las acciones que siguen hasta que se elige de
 nuevo, y después pregunta cuántas veces repetirlas.
 
 También se puede asignar un guion del shell a una tecla, con una línea del
@@ -1027,18 +892,16 @@ l       comment selection
 
 ## Macro Explorer <a id="macro-explorer"></a>
 
-Las macros grabadas, con la tecla a la que responde cada una y lo que hace.
-Los botones son
+La lista de las macros grabadas muestra sus teclas y sus acciones.
 
 **Run**
-: Reproducir la macro en la que está el cursor.
+: Ejecutar la macro seleccionada.
 
 **Suprimir**
-: Quitarla, tras una pregunta.
+: Borrar la macro seleccionada, tras una pregunta.
 
 **Editar archivo**
-: Abrir el archivo de las macros, descrito en la sección
-[Macros](#macros).
+: Abrir el archivo de las macros. Su formato se describe en [Macros](#macros).
 
 # Menú de usuario <a id="edit-menu-file"></a>
 
@@ -1169,6 +1032,7 @@ Para separarlas, se ponen antes de la entrada dos líneas de condición, una con
 # Complementos <a id="plugins"></a>
 
 {{plugins}}
+
 Un complemento se activa y se desactiva en el menú Opciones, entrada
 [Manage plugins](#manage-plugins).
 
@@ -1176,34 +1040,28 @@ Un complemento se activa y se desactiva en el menú Opciones, entrada
 
 ## Guardar como <a id="save-file-as"></a>
 
-El nombre con el que escribir el archivo, y los saltos de línea con los que
-escribirlo: como los tiene el archivo, Unix (LF), Windows y DOS (CR LF), o
-Macintosh (CR). La elección vale para ese guardado; el archivo se queda con
-los saltos de línea que se le dan.
+Indique el nombre del archivo y el formato de los saltos de línea. Puede
+conservar el formato del archivo, o elegir Unix (LF), Windows y DOS (CR LF),
+o Macintosh (CR). El formato elegido se aplica al guardar el archivo.
 
 ## Archivos abiertos <a id="open-files"></a>
 
-Los archivos que tiene abiertos el editor, uno por línea. Enter va al archivo
-en el que está el cursor, Esc se queda en el archivo que se muestra. La
-misma lista es la entrada
+La lista tiene una línea por cada archivo abierto. Enter pasa el editor al
+archivo seleccionado, Esc cierra la lista. La entrada
 **Listado...**
-del menú Ventana.
+del menú Ventana abre la misma lista.
 
 ## Selector de pantallas <a id="screen-selector"></a>
 
-Además del editor, un guion Lua puede abrir pantallas propias, vistas a
+Además del editor, un guion Lua puede abrir pantallas propias, ventanas a
 pantalla completa que siguen abiertas mientras se vuelve al editor. Hay tres
 formas de pasar de una pantalla a otra:
 
-**Alt-}**
-: pasar a la pantalla siguiente;
-
-**Alt-{**
-: pasar a la pantalla anterior;
-
-**Alt-\`**
-: abrir una ventana de diálogo con la lista de las pantallas abiertas, para
-elegir una.
+|  |  |
+|--|--|
+| Alt-} | Pantalla siguiente |
+| Alt-{ | Pantalla anterior |
+| Alt-\` | Lista de las pantallas abiertas |
 
 ## Completado <a id="completion"></a>
 
@@ -1224,7 +1082,7 @@ en una línea de entrada de un diálogo completa el texto:
 | ~name | Un nombre de usuario |
 | Lo demás | Un nombre de archivo |
 
-Si encajan varios, el programa pita. El ajuste
+Si encajan varios, el editor pita. El ajuste
 *show_all_if_ambiguous*
 del archivo ini, desactivado por omisión, muestra su lista junto al cursor:
 **Enter**
@@ -1233,29 +1091,22 @@ la ocultan.
 
 ## Codificación de caracteres <a id="codepages-translation"></a>
 
-La lista de las páginas de códigos que conoce el programa, de
-**{{pkgdatadir}}/charsets**.
-Elegir una le dice al editor en qué página de códigos está escrito el texto
-del archivo, y el texto se recodifica de ella a la página de códigos del
-terminal para la pantalla;
-**\<Sin traducción>**
-lo deja como bytes. La lista se abre con
-**Alt-e**
-y con la entrada Código carácter... del menú Utilidades.
+El editor carga la lista de codificaciones de **{{pkgdatadir}}/charsets**.
+Elija la codificación del archivo; el editor convierte el texto desde ella
+para el terminal. La entrada **\<Sin traducción>** desactiva la conversión.
+La lista se abre con {{key:SelectCodepage|Alt-e}} o con la entrada Código
+carácter... del menú Utilidades.
 
-## Historia <a id="history-query"></a>
+## Historial <a id="history-query"></a>
 
-La lista de lo que se escribió antes en una línea de entrada, lo más reciente
-primero. La abre
-**Alt-h**
-para la línea en la que está el cursor. Enter lleva a la línea la entrada en
-la que está el cursor, Esc deja la línea como estaba, y
-**F8, Del**
-quita del historial la entrada en la que está el cursor. Los historiales se
-guardan en
+**Alt-h** abre el historial de la línea de entrada actual. Las entradas
+recientes van primero. Enter pone en la línea la entrada seleccionada, Esc
+cierra el historial sin cambiar la línea, y **F8, Del** borran la entrada
+seleccionada. El historial se guarda en
 *~/.local/share/bluerig/history*;
+el ajuste
 *num_history_items_recorded*
-dice cuántas entradas guarda cada uno.
+dice cuántas entradas guarda cada historial.
 
 # Resaltado de sintaxis <a id="syntax-highlighting"></a>
 
@@ -1281,17 +1132,17 @@ contextos, como los comentarios y las cadenas.
 | **~/.local/share/bluerig/syntax/Syntax** | Las reglas del usuario: lo que el usuario añadió o quiere de otra forma |
 | **{{pkgdatadir}}/syntax/Syntax** | Las reglas instaladas, para los tipos de archivo que no nombra el archivo del usuario |
 
-Una entrada del usuario sustituye a una instalada para los archivos con los
-que coincide. Los archivos nombrados por las líneas
+Si las reglas del usuario y las instaladas coinciden con un archivo, se
+aplican las del usuario. Los archivos nombrados por las líneas
 **include**
 se buscan primero en
 *~/.local/share/bluerig/syntax/*,
 y después entre los instalados. El archivo del usuario se lee de nuevo cada
 vez que se abre un archivo nuevo en el editor.
 
-Una copia completa del archivo instalado, como hacían versiones anteriores,
-oculta todos los tipos de archivo instalados después de ella, y su resaltado
-deja de funcionar: deje en la copia solo las entradas cambiadas.
+Una copia completa del archivo instalado puede ocultar las reglas de los tipos
+de archivo añadidos en una versión nueva. Deje en el archivo del usuario solo
+las entradas cambiadas.
 
 ## La sección file <a id="syntax-file"></a>
 
@@ -1388,7 +1239,7 @@ left y right fijan los dos lados por separado. Una línea
 **spellcheck**
 tras
 **context**
-pasa las palabras del contexto a la revisión ortográfica.
+activa la revisión ortográfica dentro del contexto.
 
 ## Incrustación y capas <a id="syntax-embed"></a>
 
@@ -1407,9 +1258,9 @@ en el archivo Syntax del que se leen las reglas, y después en el instalado con
 bluerig. Un tipo que no está en ninguno deja el contexto con sus propios
 colores. Los delimitadores conservan los colores del contexto. El delimitador
 derecho termina el texto incrustado esté donde esté, también dentro de una
-cadena o de un comentario de las reglas incrustadas. Una sintaxis incrustada
-puede incrustar otra, hasta unos pocos niveles. Por ejemplo, HTML pasa los
-scripts a las reglas de JavaScript:
+cadena o de un comentario de las reglas incrustadas. Las reglas de sintaxis se pueden
+anidar en varios niveles. Por ejemplo, las reglas de HTML pueden usar la sintaxis
+de JavaScript para el contenido de la etiqueta SCRIPT:
 
 ```
   context <SCRIPT*> </SCRIPT> brightcyan
@@ -1464,7 +1315,7 @@ así:
 
 |  |  |
 |--|--|
-| \\t, \\s | Tabulación y espacio: los blancos separan las palabras de la línea y no se pueden usar tal cual |
+| \\t, \\s | Representan una tabulación y un espacio. Use estas formas en los patrones, porque las tabulaciones y los espacios separan los campos de la regla |
 | \\n, \\r | Salto de línea y retorno de carro |
 | `\\` | Barra invertida |
 | \\\* | Asterisco |
@@ -1514,8 +1365,8 @@ principales del editor; fija atributos sin cambiar el color de fondo. Con
 256 colores existen además color16 a color255, rgb000 a rgb555 y gray0 a
 gray23.
 
-El color de primer plano puede ser un token de ámbito en lugar de un color: una
-palabra en mayúsculas que dice qué es el texto y no qué aspecto tiene:
+En lugar de un color de primer plano se puede dar un token de ámbito: una
+palabra en mayúsculas que nombra el tipo de texto. La skin fija su color:
 
 ```
 keyword  whole  if   KEYWORD_CONTROL
@@ -1524,19 +1375,19 @@ context  " " STRING_QUOTED_DOUBLE
 keyword  linestart TODO  KEYWORD_OTHER_TODO black
 ```
 
-El color de un token viene de la skin, de modo que una skin colorea el
-programa y el texto, y todos los lenguajes de la misma forma; véase
+La skin fija los colores de la interfaz y de los tokens de resaltado para
+todos los lenguajes. Véase
 [Skins](#skins).
-Un token se lee como un ámbito: en minúsculas, con puntos en lugar de los
-guiones bajos. KEYWORD_CONTROL_IMPORT es keyword.control.import, un tipo de
-keyword.control, que es un tipo de keyword. Son los nombres de ámbito de
-Sublime Text y TextMate. Lo que la skin no colorea conserva los colores que
-mcedit daba a ese texto. Un fondo o unos atributos tras un token se imponen a
-los colores de mcedit, como black arriba, pero no a un fondo o unos atributos
-que la skin da al propio token. Un token funciona también en un define, y en
-las líneas number, string y symbols de las reglas line-local. Los archivos de
-sintaxis instalados solo usan tokens; su lista con los colores de mcedit está
-en
+El nombre del ámbito se escribe en minúsculas, con puntos en lugar de los
+guiones bajos. Por ejemplo, KEYWORD_CONTROL_IMPORT es keyword.control.import,
+un tipo de keyword.control, que es un tipo de keyword. Son los nombres de
+ámbito de Sublime Text y TextMate. Un fondo y unos atributos de la skin tienen
+prioridad sobre los valores dados tras el token en la regla. Si la skin no los
+fija, se usan los valores de la regla, por ejemplo black arriba. Los demás
+valores vienen del esquema estándar de mcedit. Un token funciona también en un
+define, y en las líneas number, string y symbols de las reglas line-local. Los
+archivos de sintaxis instalados usan tokens. La lista de los tokens y sus
+colores de mcedit está en
 **{{pkgdatadir}}/syntax/README.txt**.
 
 Un archivo de sintaxis compartido con
@@ -1570,8 +1421,8 @@ respectivamente.
 
 Si el programa se compiló con el gestor de pantalla S-Lang en lugar de
 ncurses, también comprueba la variable
-**COLORTERM,**
-que, si está definida, tiene el mismo efecto que la opción -c.
+**COLORTERM**:
+si está definida, tiene el mismo efecto que la opción -c.
 
 Se pueden indicar terminales en los que siempre se fuerza el color añadiendo la
 variable
@@ -1623,10 +1474,10 @@ El formato de los archivos de skin se describe en
 **{{pkgdatadir}}/skins/README.txt**.
 Los colores del resaltado de sintaxis vienen de la sección
 **[syntax]**
-de la skin: allí un ámbito nombra los colores de un tipo de texto, y un
-ámbito y el ámbito del contexto en el que está, los dos con un espacio entre
-ellos, nombran los colores de ese tipo de texto en ese contexto. Gana el
-ámbito más largo que nombra la skin:
+de la skin. Una clave fija el color de un ámbito. Para fijar el color de un
+ámbito dentro de un contexto, dé primero el ámbito del contexto y después el
+ámbito del texto, con un espacio entre ellos. En cada caso se elige el nombre
+de ámbito coincidente más largo. El par con el contexto se comprueba primero:
 
 ```
 [syntax]
@@ -1638,10 +1489,9 @@ ellos, nombran los colores de ese tipo de texto en ese contexto. Gana el
     invalid = white;red;bold
 ```
 
-Un tipo de texto que la skin no nombra conserva los colores que le daba
-mcedit, así que una skin puede nombrar unos pocos tipos y dejar el resto. Las
-reglas que nombran colores en lugar de tokens de ámbito conservan sus colores
-sea cual sea la skin; véase
+Los ámbitos sin color en la skin usan los colores estándar de mcedit. Los
+colores dados explícitamente en las reglas de resaltado no cambian con
+ninguna skin. Véase
 [Resaltado de sintaxis](#syntax-highlighting).
 
 # Bases de datos de terminales <a id="terminal-databases"></a>
@@ -1706,16 +1556,14 @@ por tanto bluerig interpreta "\\e[[1;6D" como Ctrl-Alt-Left.
 
 El símbolo de tecla
 *complete*
-representa las secuencias de escape que invocan el completado; se invoca con
-Alt-tab, pero se pueden definir otras teclas para el mismo trabajo (en esos
-teclados con montones de teclas bonitas y sin usar por todas partes).
+fija las secuencias de escape del completado. Normalmente lo hace Alt-Tab.
+Se puede dar la secuencia de otra tecla.
 
 # Guiones Lua <a id="lua-scripting"></a>
 
-Si bluerig se compiló con Lua, ejecuta guiones Lua que amplían el editor:
-acciones asociadas a teclas y a menús, reacciones a los eventos del editor
-(se abre un archivo, se guarda, se pulsa una tecla), diálogos y vistas a
-pantalla completa. Varias órdenes del editor son guiones así: ordenar las
+Si bluerig se compiló con Lua, los guiones pueden añadir órdenes a los menús,
+asociarlas a teclas, atender los eventos del editor y abrir diálogos y
+ventanas a pantalla completa. El editor usa Lua, por ejemplo, para ordenar las
 líneas, formatear el párrafo, insertar la salida de una orden, insertar un
 carácter por su código, insertar la fecha, decodificar base64 y dibujar
 tablas.
@@ -1740,10 +1588,9 @@ con el valor 1, arranca el editor sin ningún guion Lua, y
 *enabled=false*
 en la sección
 **[Lua]**
-del archivo ini lo hace de forma permanente.
+del archivo ini desactiva Lua también en los arranques siguientes.
 
-Cómo escribir un guion, y las funciones que puede llamar un guion, se
-describe en
+Para escribir un guion o consultar la API de Lua, vea
 **LUA_PLUGINS.md**
 y
 **LUA_API_REFERENCE.md**,
@@ -1810,9 +1657,9 @@ completado es ambiguo. Véase [Completado](#completion).
 *keybar_modifiers*
 : Si es verdadero, la barra de teclas muestra las órdenes de Shift, Ctrl o Alt
 con las teclas F mientras se mantiene pulsado ese modificador. Necesita un
-terminal con el protocolo de teclado de kitty: bluerig le pide entonces cada
-tecla con su liberación, y los eventos de foco. Los demás terminales no se
-ven afectados. Falso por omisión.
+terminal con el protocolo de teclado de kitty. bluerig pide al terminal los
+eventos de pulsación y liberación de las teclas y los eventos de foco.
+Desactivado por omisión.
 
 *verbose*
 : Mostrar el progreso de las operaciones largas.
@@ -1910,9 +1757,9 @@ dos que esté definida; /tmp si no lo está ninguna.
 *~/.cache/bluerig/bluerig.log*.
 
 **BLUERIG_SPELL_LOG**
-: El archivo en el que el corrector ortográfico escribe su registro de
-depuración. No tiene un interruptor propio: el registro se escribe cuando la
-variable nombra un archivo.
+: La ruta del registro de depuración de la revisión ortográfica. Si la
+variable está definida, la revisión ortográfica escribe su registro en ese
+archivo.
 
 # ARCHIVOS <a id="files"></a>
 
@@ -1933,8 +1780,8 @@ y
 si están definidas.
 
 *{{pkgdatadir}}/help/bluerig.md*
-: El archivo de ayuda del programa, y los archivos de ayuda de los
-complementos del editor junto a él.
+: El archivo de ayuda del programa (las traducciones son bluerig.ru.md,
+etc.); los archivos de ayuda de los complementos del editor están junto a él.
 
 *{{sysconfdir}}/bluerig/bluerig.ini*, *{{pkgdatadir}}/bluerig.ini*
 : Archivos de configuración generales, que solo se usan si el usuario no tiene

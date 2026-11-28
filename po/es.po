@@ -568,9 +568,8 @@ msgid "Toggle code fold"
 msgstr ""
 
 #: lib/keybind.c:205
-#, fuzzy
 msgid "Unfold all"
-msgstr "buscar &Todos"
+msgstr "Desplegar todo"
 
 #: lib/keybind.c:206
 #, fuzzy
@@ -2734,9 +2733,8 @@ msgid "&Fold / Unfold block"
 msgstr ""
 
 #: src/editor/editmenu.c:324
-#, fuzzy
 msgid "&Unfold all"
-msgstr "buscar &Todos"
+msgstr "&Desplegar todo"
 
 #: src/editor/editmenu.c:326
 msgid "&Refresh screen"
