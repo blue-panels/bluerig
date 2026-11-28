@@ -4329,6 +4329,33 @@ tty_kitty_keyboard_want (guint flags)
 
 /* --------------------------------------------------------------------------------------------- */
 
+/* The release of the key that ended the program (Enter of the exit dialog) may be sent before
+   the terminal reads the reset of the protocol. Such bytes would land in the shell, so the input
+   that comes until the terminal goes quiet is dropped. */
+static void
+drop_late_key_events (void)
+{
+    gint64 end;
+
+    end = g_get_monotonic_time () + 200 * G_TIME_SPAN_MILLISECOND;
+
+    while (g_get_monotonic_time () < end)
+    {
+        fd_set fds;
+        struct timeval tv = { 0, 50 * 1000 };
+        char buf[256];
+
+        FD_ZERO (&fds);
+        FD_SET (input_fd, &fds);
+        if (select (input_fd + 1, &fds, NULL, NULL, &tv) <= 0)
+            break;
+        if (read (input_fd, buf, sizeof (buf)) <= 0)
+            break;
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 void
 disable_kitty_keyboard (void)
 {
@@ -4341,6 +4368,7 @@ disable_kitty_keyboard (void)
         win32_input_active = FALSE;
         key_repeat_left = 0;
         kitty_mod_keys = 0;
+        drop_late_key_events ();
         return;
     }
 
@@ -4351,6 +4379,7 @@ disable_kitty_keyboard (void)
         printf (ESC_STR "[?1004l");
     printf (ESC_STR "[<u");
     fflush (stdout);
+    drop_late_key_events ();
     kitty_keyboard_active = FALSE;
     kitty_mod_keys = 0;
 }
