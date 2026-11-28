@@ -9,43 +9,43 @@
                                   |___/
   {{MC_VERSION:32}}
 ```
- a terminal IDE, a continuation of cooledit
+ bluerig - konsolowe środowisko programistyczne
 
-Główny ekran pomocy programu **bluerig**.
+Aby dowiedzieć się, jak używać interaktywnej pomocy, naciśnij [Enter](#how-to-use-help). Możesz też przejść od razu do [spisu treści](#contents) albo do rozdziału o [edytorze](#internal-file-editor).
 
-Aby dowiedzieć się, jak używać interaktywnej pomocy, należy nacisnąć klawisz [Enter](#how-to-use-help). Można też przejść bezpośrednio do [spisu treści](#contents).
-
-Program GNU Midnight Commander został napisany przez jego [autorów](#authors).
+bluerig powstał na bazie edytorów cooledit i mcedit. Zobacz [Autorzy](#authors).
 
 Program bluerig jest dostarczany BEZ JAKIEJKOLWIEK [GWARANCJI](gnu-gpl-v3.0.md#warranty). Niniejszy program jest wolnym oprogramowaniem; można go rozprowadzać dalej na warunkach [GNU General Public License](gnu-gpl-v3.0.md#license).
 
 # Okna zapytań <a id="querybox"></a>
 
-W oknach dialogowych zapytań można używać klawiszy strzałek lub pierwszych liter, aby wybrać element albo kliknąć na przycisku.
+W oknie zapytania przycisk wybierasz strzałkami albo jego wyróżnioną literą, a naciskasz go klawiszem Enter; kliknięcie myszą na przycisku też go naciska. Esc zamyka okno bez odpowiedzi.
 
 # Jak używać pomocy <a id="how-to-use-help"></a>
 <a id="help"></a>
 
-Do obsługi przeglądarki można używać klawiszy kursora lub myszy. Naciśnięcie **strzałki w dół** przeniesie do następnego elementu lub przewinie w dół. Naciśnięcie **strzałki w górę** przeniesie do poprzedniego elementu lub przewinie w górę, Naciśnięcie **strzałki w prawo** podąży za zaznaczonym odnośnikiem. Naciśnięcie **strzałki w lewo** powróci do poprzednio odwiedzonego węzła.
+Pomoc otwiera się klawiszem F1 niemal wszędzie. Po oknie pomocy poruszasz się klawiszami kursora albo myszą. Naciśnij **strzałkę w dół**, aby przejść do następnego odnośnika albo przewinąć w dół. Naciśnij **strzałkę w górę**, aby przejść do poprzedniego odnośnika albo przewinąć w górę. Naciśnij **strzałkę w prawo** albo **Enter**, aby podążyć za bieżącym odnośnikiem. Naciśnij **strzałkę w lewo**, aby cofnąć się w historii odwiedzonych węzłów.
 
-Jeśli terminal nie obsługuje klawiszy kursora, można używać **spacji** do przewijania do przodu i klawisz **B**, aby przewijać do tyłu. Można używać klawisza **Tab**, aby przechodzić do następnego elementu i klawisza **Enter**, aby podążyć za zaznaczonym odnośnikiem. Klawisz **L** może być używany do przechodzenia do poprzednio odwiedzonego węzła. Naciśnięcie klawisza **Esc** zakończy przeglądarkę pomocy.
+Jeśli terminal nie obsługuje klawiszy kursora, **spacja** przewija do przodu, a klawisz **b** do tyłu. Klawisz **Tab** przechodzi do następnego odnośnika, a **Enter** za nim podąża. Klawisz **l** cofa w historii odwiedzonych węzłów. Naciśnij **Esc**, aby wyjść z pomocy.
 
-Lewy przycisk myszy podąży za odnośnikiem lub przewinie ekran. Prawy przycisk myszy może być używany, aby przechodzić do poprzednio odwiedzonego węzła.
+Lewy przycisk myszy podąża za odnośnikiem albo przewija. Prawy przycisk myszy cofa w historii węzłów.
 
-Pełna lista klawiszy przeglądarki pomocy:
+Pasek po prawej stronie ramki pokazuje, w którym miejscu węzła jest ekran: strzałka przewija o wiersz, kliknięcie obok suwaka o stronę, a suwak można przeciągać myszą.
+
+Pełna lista klawiszy okna pomocy:
 
 [Ogólne klawisze ruchu](#general-movement-keys) są akceptowane.
 
 ```
-Tab           Następny element.
-M-Tab         Poprzedni element.
-Dół           Następny element lub przewijanie o wiersz w dół.
-Góra          Poprzedni element lub przewijanie o wiersz w górę.
-Prawo, Enter  Podążanie za zaznaczonym odnośnikiem.
-Lewo, l       Ostatnio odwiedzony węzeł.
-F1            Pomoc dla przeglądarki pomocy.
-N             Następny węzeł.
-P             Poprzedni węzeł.
-C             Przejście do Spisu treści.
-F10, Esc      Zakończenie działanie przeglądarki pomocy. 
+Tab             następny odnośnik
+Alt-Tab         poprzedni odnośnik
+Dół             następny odnośnik albo wiersz w dół
+Góra            poprzedni odnośnik albo wiersz w górę
+Prawo, Enter    podążanie za bieżącym odnośnikiem
+Lewo, l, F3     wstecz w historii odwiedzonych węzłów
+F1              ta pomoc o pomocy
+n               następny węzeł
+p               poprzedni węzeł
+c, F2           spis treści
+F10, Esc        wyjście z pomocy
 ```

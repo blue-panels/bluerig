@@ -14,30 +14,11 @@ bluerig - terminalowe IDE.
 
 # OPIS <a id="description"></a>
 
-**bluerig**
-to terminalowe IDE. Jest kontynuacją
-**cooledit**,
-edytora Paula Sheera, którego terminalowa wersja przez wiele lat była rozwijana
-jako wbudowany edytor GNU Midnight Commandera; bluerig rozwija ten edytor dalej
-jako osobny program.
-**brg**
-to krótsza nazwa tego samego programu.
+**bluerig** to terminalowe IDE, które wyrosło z mcedit (GNU Midnight Commander) i cooledit Paula Sheera. **brg** to krótsza nazwa tego samego programu.
 
-Edytuje kilka plików naraz, każdy we własnym oknie, także pliki binarne. Ma
-kopiowanie, przenoszenie, usuwanie, wycinanie i wklejanie bloków; cofanie i
-ponawianie klawisz po klawiszu; menu rozwijane; wstawianie plików; makra;
-szukanie i zastępowanie wyrażeniami regularnymi; filtr wierszy; zwijanie;
-zakładki; zaznaczanie tekstu strzałkami z Shiftem (jeśli terminal to
-obsługuje); bloki kolumnowe; tryby wstawiania i zastępowania; automatyczne
-wcięcia; zawijanie wierszy i formatowanie akapitów; ustawialną szerokość
-tabulacji; podświetlanie składni dla wielu typów plików; menu użytkownika,
-które przepuszcza tekst przez polecenia powłoki; wtyczki edytora (nawigacja
-po tagach, sprawdzanie pisowni) i skrypty Lua.
+Edytor pracuje z kilkoma plikami naraz, każdym we własnym oknie, także z plikami binarnymi. Zaznacza bloki kolumnowe, filtruje wiersze, zwija tekst, nagrywa makra, przepuszcza tekst przez polecenia powłoki z menu użytkownika i uruchamia skrypty Lua. Wtyczki dodają projekty, budowanie i debugowanie, pokrycie kodu, serwery językowe (LSP), git i nawigację po kodzie oraz sprawdzanie pisowni.
 
-Każdy plik podany w wierszu poleceń otwiera się we własnym oknie. Bez pliku
-edytor otwiera puste okno. Plik większy niż
-*editor_filesize_threshold*
-(domyślnie 64 MB) otwiera się po pytaniu, a nie jest odrzucany.
+Obsługę języków można rozszerzać: podświetlanie składni, budowanie, debugowanie przez adaptery DAP i serwery językowe ustawia się dla każdego języka osobno. Domyślna konfiguracja ma podświetlanie składni dla ponad 100 typów plików, budowanie dla C (Meson, CMake i Make), Rusta i Go oraz debugowanie dla C, Rusta, Pythona, Basha, Go i JavaScriptu.
 
 # OPCJE <a id="options"></a>
 
@@ -51,6 +32,45 @@ dla pierwszego pliku.
 : Otwiera plik w tym wierszu, tak jak miejsce w pliku podają kompilatory i
 grep. Jeśli istnieje plik o całej tej nazwie, razem z dwukropkiem i numerem,
 otwiera się ten plik.
+
+**Tryby programu**
+
+*-Q, --query*
+: Otwiera plik w trybie zapytań do MongoDB albo PostgreSQL. Ustaw
+*MC_QUERY_KIND=mongo* albo *MC_QUERY_KIND=postgres*. Jeśli ta zmienna nie
+jest ustawiona, *MC_MONGO_URI* wybiera MongoDB, a plik z rozszerzeniem
+*.sql* wybiera PostgreSQL, gdy *MC_MONGO_URI* nie jest ustawiona.
+Potrzebna jest wtyczka Query.
+
+*-D katalog, --debug=katalog*
+: Otwiera projekt w trybie debugowania. Pokazuje drzewo projektu i panel
+debugera. Potrzebne są wtyczki Project, Build i Debugger.
+
+*-G katalog, --git=katalog*
+: Otwiera okno Git dla tego katalogu. Zamknięcie okna kończy bluerig.
+Po niej może stać jedna z poniższych opcji. Bez *--git* opcja dotyczy
+bieżącego katalogu.
+
+**Opcje Git**
+
+*--git-log*
+: Otwiera dziennik commitów.
+
+*--git-show=commit*
+: Pokazuje pliki i zmiany tego commita.
+
+*--git-commit*
+: Otwiera edytor opisu, aby zatwierdzić zmiany z indeksu.
+
+*--git-amend*
+: Zmienia ostatni commit, dodając do niego zmiany z indeksu.
+Otwiera edytor opisu commita.
+
+*--git-reword=commit*
+: Otwiera edytor opisu tego commita. Zapisanie opisu
+przepisuje historię Git.
+
+**Opcje ogólne**
 
 *-V, --version*
 : Pokazuje wersję programu.
@@ -68,74 +88,26 @@ danych, pliki użytkownika i wtyczki.
 *--no-lua*
 : Uruchamia program bez środowiska Lua: żaden skrypt Lua nie jest wczytywany.
 
-*-D, --debug=katalog*
-: Otwiera projekt tego katalogu do debugowania: ostatni plik projektu, drzewo
-projektu i panel debugera po prawej. Okna plików dostają klawisze debugera:
-F6 stawia punkt przerwania, F5 buduje program i uruchamia go, za pierwszym
-razem tworząc jego konfigurację debugowania, F7 i F8 wykonują krok, F3
-indeksuje symbole projektu; F2, F9 i F10 pozostają Zapisz, menu i Zakończ, a
-Alt-F5 przechodzi do panelu i z powrotem. Potrzebne są wtyczki projektu,
-budowania i debugera, a dla F3 także ctags. Menu Drawing, Format i Plugins nie
-ma na pasku menu; ich klawisze działają, a Opcje zachowują Manage plugins.
-
-*-Q, --query*
-: Wykonuje zapytania z pliku w bazie danych, MongoDB przez mongosh albo
-PostgreSQL przez libpq; odpowiedź pojawia się w kartach Output, Table i
-Historia na dole. *MC_QUERY_KIND* to *mongo* albo *postgres*; bez niej
-*MC_MONGO_URI* oznacza MongoDB, a plik *.sql* PostgreSQL. Dla MongoDB
-*MC_MONGO_URI* i *MC_MONGO_DB* mówią, z czym się połączyć, *MC_MONGOSH* podaje
-program; F5 wykonuje zaznaczenie, w przeciwnym razie część między wierszami
-*// ---* wokół kursora, a w przeciwnym razie cały plik. Dla PostgreSQL libpq
-bierze połączenie z *PGHOST*, *PGDATABASE*, *PGSERVICE* i podobnych, hasło z
-*~/.pgpass*; F5 wykonuje zaznaczenie, w przeciwnym razie cały plik.
-Ctrl-F5 wykonuje cały plik. Bez podanego pliku plikiem jest
-*~/.local/share/bluerig/queries/* z nazwą bazy danych i *.js*
-albo *postgres/*, nazwa połączenia oraz nazwa bazy danych i
-*.sql*. Okna, które projekt miał ostatnim razem, nie są
-pokazywane, a wtyczki projektu i kodu (project, build, debugger, ctags,
-etags, git, terminal, spell) nie są uruchamiane; skrypty działają, a także
-serwer językowy zapytań, jeśli podaje go lsp.json.
-Menu Drawing, Format i Plugins nie ma na pasku menu, tak jak przy -D.
-Potrzebna jest wtyczka query.
-
-*-G, --git=katalog*
-: Otwiera okno Git wtyczki git na drzewie roboczym tego katalogu; zamknięcie
-go kończy edytor. Okna, które projekt miał ostatnim razem, nie są pokazywane,
-a wtyczki projektu (project, build, debugger, ctags, etags) nie są
-uruchamiane. Do panelu git w menedżerze plików: z jedną z poniższych opcji
-po niej albo sama, dla bieżącego katalogu:
-
-*--git-log*
-: Okno Git z dziennikiem commitów.
-
-*--git-show=commit*
-: Okno Git z tym commitem: jego plikami i ich różnicami.
-
-*--git-commit*, *--git-amend*
-: Okno Git z opisem nowego commita zmian z indeksu albo ostatniego commita
-poprawionego o te zmiany; edytor kończy pracę, gdy opis zostanie zapisany i
-commit wykonany albo gdy okno zostanie zamknięte.
-
-*--git-reword=commit*
-: Nowy opis tego commita, w ten sam sposób; pod opisem są pliki commita.
-
 *-h, -?, --help*
-: Pokazuje opcje i ich działanie.
+: Pokazuje opcje wiersza poleceń i ich działanie.
+
+*--help-all*
+: Pokazuje opcje wiersza poleceń ze wszystkich grup.
 
 *--help-terminal, --help-color*
-: Pokazuje opcje terminala albo opcje kolorów opisane poniżej.
+: Pokazuje opcje terminala albo opcje kolorów.
 
-Opcje terminala:
+**Opcje terminala**
 
 *-x, --xterm*
-: Wymusza tryb xterm. Używa się go na terminalach zgodnych z xterm (dwa tryby
-ekranu i możliwość wysyłania sekwencji sterujących myszy).
+: Włącza tryb xterm. Używa się go na terminalach, które potrafią to co xterm:
+dwa tryby ekranu i sekwencje myszy.
 
 *-X, --no-x11*
 : Nie korzysta z systemu X Window przy odczycie stanu klawiszy modyfikujących.
 
 *-g, --oldmouse*
-: Używa starego sposobu śledzenia myszy przez terminal (highlight tracking).
+: Używa starego sposobu śledzenia myszy przez terminal.
 
 *-d, --nomouse*
 : Wyłącza obsługę myszy.
@@ -157,14 +129,13 @@ bluerig zbudowano z biblioteką S-Lang.
 *--nokeymap*
 : Nie wczytuje żadnego pliku klawiszy: używa przypisań wbudowanych w program.
 
-Opcje kolorów:
+**Opcje kolorów**
 
 *-b, --nocolor*
-: Wymusza tryb czarno-biały.
+: Tryb czarno-biały.
 
 *-c, --color*
-: Wymusza tryb kolorowy na terminalach, które wydają się nie obsługiwać
-kolorów.
+: Tryb kolorowy na terminalach, które nie zgłaszają obsługi kolorów.
 
 *-S skórka, --skin=skórka*
 : Używa skórki o tej nazwie. Zobacz
@@ -177,10 +148,9 @@ Na górze ekranu bluerig jest
 pod nim okna edytora, a na dole etykiety klawiszy funkcyjnych. Pasek menu
 może być ukryty: przywołuje go F9 albo kliknięcie w górny wiersz ekranu.
 
-Każde okno pokazuje jeden plik: jego nazwa, stan pliku i miejsce kursora są w
-wierszu stanu u góry okna. Można mieć otwartych kilka okien naraz;
-[menu Okno](#window-menu)
-przełącza między nimi, a każde z nich można przesuwać i zmieniać jego rozmiar.
+Wiersz stanu u góry okna pokazuje nazwę pliku, stan pliku i miejsce kursora.
+[Menu Okno](#window-menu) przełącza między otwartymi oknami. Okna można
+przesuwać i zmieniać ich rozmiar.
 
 # Edytor bluerig <a id="internal-file-editor"></a>
 
@@ -188,8 +158,7 @@ przełącza między nimi, a każde z nich można przesuwać i zmieniać jego roz
 **Klawisze**
 
 <!-- {{key:Action|F8}}: Action is the action name of misc/keymap.default.ini and src/keymap.c (Remove = f8); the help shows the keys bound to it now, the man page the default keys after the bar -->
-To są klawisze domyślne. Każdy z nich można zmienić, zobacz
-[Zmiana przypisań klawiszy](#keys_redefine).
+[Jak zmienić przypisania](#keys_redefine)
 
 <a id="moving-around"></a>
 **Ruch kursora**
@@ -470,9 +439,9 @@ bluerig obsługuje mysz. Działa ona w terminalu
 uruchomionym serwerem myszy
 **gpm**.
 
-Kliknięcie stawia kursor w miejscu kliknięcia, przeciągnięcie zaznacza tekst,
-a kliknięcie w menu, przycisk albo etykietę klawisza funkcyjnego wybiera go.
-Kółko przewija tekst.
+Kliknięcie w tekst przenosi kursor, a przeciągnięcie zaznacza tekst. Myszą
+otwiera się menu, naciska przyciski i uruchamia polecenia z dolnego wiersza
+ekranu. Kółko myszy przewija tekst.
 
 Domyślne tempo powtarzania przycisków myszy to 400 milisekund. Zmienia je
 ustawienie
@@ -486,85 +455,61 @@ Gdy bluerig działa z obsługą myszy, zwykłe zachowanie myszy terminala
 
 # Pasek menu <a id="menu-bar"></a>
 
-Pasek menu pojawia się po naciśnięciu F9 albo kliknięciu myszą w górny wiersz
-ekranu. Jego menu to Plik, Edycja, Wyszukaj, Polecenie, Navigate (tylko gdy
-wtyczka albo skrypt coś do niego dodaje), Okno, Plugins i Opcje. Skrypt Lua
-może dodać pozycje do każdego z nich albo własne menu.
+Pasek menu pojawia się po naciśnięciu {{key:Menu|F9}} albo kliknięciu myszą w
+górny wiersz ekranu. Jego menu to Plik, Edycja, Wyszukaj, Polecenie, Nawigacja
+(gdy wtyczka albo skrypt coś do niego dodaje), Okno, Wtyczki i Opcje. Skrypt
+Lua może dodać pozycje do każdego z nich albo własne menu.
 
 ## Menu Plik <a id="file-menu"></a>
 
-**Otwórz plik...**
-: Otwiera plik w nowym oknie.
-
-**Nowy**
-: Otwiera puste okno.
-
-**Zamknij**
-: Zamyka okno.
-
-**Historia...**
-: Lista wcześniej edytowanych plików, z której można otworzyć jeden ponownie.
-
-**Zapisz, Zapisz jako...**
-: Zapisuje plik pod jego nazwą albo pod inną. Zobacz
-[Zapisz jako](#save-file-as).
-
-**Wstaw plik..., Skopiuj do pliku...**
-: Wstawia plik w miejscu kursora albo zapisuje zaznaczony blok do pliku.
-
-**Menu użytkownika...**
-: [Menu użytkownika](#edit-menu-file).
-
-**O programie...**
-: Wersja programu.
-
-**Zakończ**
-: Wychodzi z edytora, pytając o niezapisane pliki.
+|  |  |
+|--|--|
+| Otwórz plik... | Otwiera plik w nowym oknie |
+| Nowy | Otwiera puste okno |
+| Zamknij | Zamyka bieżące okno |
+| Historia... | Otwiera listę ostatnio edytowanych plików |
+| Zapisz | Zapisuje bieżący plik |
+| Zapisz jako... | [Zapisuje plik pod nową nazwą](#save-file-as) |
+| Wstaw plik... | Wstawia zawartość pliku w miejscu kursora |
+| Skopiuj do pliku... | Zapisuje zaznaczony blok do pliku |
+| Menu użytkownika... | [Otwiera listę poleceń przetwarzających tekst](#edit-menu-file) |
+| O programie... | Pokazuje wersję programu |
+| Zakończ | Zamyka edytor. Proponuje zapisanie niezapisanych zmian |
 
 ## Menu Edycja <a id="edit-menu"></a>
 
-Cofnij, Ponów i Undo History; przełączanie między trybem wstawiania i
+Cofnij, Ponów i Undo history; przełączanie między trybem wstawiania i
 zastępowania; polecenia, które zaznaczają blok, blok kolumnowy albo cały plik,
 i zdejmują zaznaczenie; kopiowanie, przenoszenie i usuwanie bloku; kopiowanie
-i wycinanie do pliku schowka i wklejanie z niego; oraz przejście na początek i
-na koniec pliku.
+i wycinanie do pliku schowka i wklejanie z niego; przejście na początek i na
+koniec pliku.
 
 ## Menu Wyszukaj <a id="search-menu"></a>
 
-Wyszukaj, Wyszukaj ponownie i Zastąp; filtr wierszy (Toggle line filter,
-Filter by word; zobacz
-[Szukanie, zastępowanie i filtr wierszy](#search-and-replace));
-oraz zakładki: stawianie i zdejmowanie zakładki w bieżącym wierszu, przejście
-do następnej albo poprzedniej i usunięcie wszystkich.
+Polecenia szukania, zastępowania i filtra opisuje
+[Szukanie, zastępowanie i filtr wierszy](#search-and-replace).
+To samo menu stawia albo zdejmuje zakładkę w bieżącym wierszu, przechodzi do
+następnej albo poprzedniej zakładki i usuwa wszystkie zakładki.
 
 ## Menu Polecenie <a id="command-menu"></a>
 
-**Przejdź do wiersza...**
-: Przechodzi do wiersza o podanym numerze.
+|  |  |
+|--|--|
+| Przejdź do wiersza... | Przenosi kursor do wiersza o podanym numerze |
+| Przełącz stan wiersza | Włącza i wyłącza kolumnę stanu wiersza |
+| Przejdź do pasującego nawiasu | Przenosi kursor do pasującego nawiasu |
+| Przełącz wyróżnianie składni | Włącza i wyłącza podświetlanie w edytorze |
+| Przełącz prawy margines | Zaznacza kolumnę, w której zawijają się wiersze |
+| Przełącz znaki sterujące | Pokazuje znaki sterujące jako ^M, ^L i tak dalej |
+| Kodowanie... | [Wybiera kodowanie pliku](#codepages-translation) |
+| Zwiń / rozwiń blok | [Zwija albo rozwija blok](#folding) |
+| Rozwiń wszystko | Rozwija wszystkie zwinięcia i usuwa filtr wierszy |
+| Odśwież ekran | Odświeża ekran |
+| Rozpocznij/zatrzymaj nagrywanie makra | [Nagrywa makro i przypisuje je do klawisza](#macros) |
+| Przeglądarka makr... | [Otwiera listę nagranych makr](#macro-explorer) |
+| Nagraj/powtórz działania | Nagrywa działania i powtarza je podaną liczbę razy |
 
-**Przełącz stan wiersza**
-: Pokazuje albo ukrywa kolumnę numerów wierszy.
-
-**Przejdź do pasującego nawiasu**
-: Przechodzi do nawiasu pasującego do tego pod kursorem.
-
-**Przełącz wyróżnianie składni, Przełącz prawy margines, Toggle control characters**
-: Włączają i wyłączają te funkcje.
-
-**Kodowanie...**
-: Strona kodowa, w której zapisano tekst. Zobacz
-[Wybór strony kodowej](#codepages-translation).
-
-**Fold / Unfold block, Unfold all**
-: Zobacz [Zwijanie](#folding).
-
-**Odśwież ekran**
-: Odświeża ekran.
-
-**Rozpocznij/zatrzymaj nagrywanie makra, Macro explorer..., Nagraj/powtórz działania**
-: Zobacz [Makra](#macros).
-
-## Menu Navigate <a id="navigate-menu"></a>
+## Menu Nawigacja <a id="navigate-menu"></a>
 
 Polecenia wtyczek: przejście do deklaracji, szukanie odwołań, symbole pliku i
 inne. Zobacz
@@ -579,15 +524,14 @@ inne. Zobacz
 : Przełącza okno między pełnym ekranem a jego własnym rozmiarem.
 
 **Toggle sticky windows**
-: Gdy okna są sklejone, okna, których ramki przylegają do siebie, zmieniają
-rozmiar razem: róg okna przesuwa krawędź, na której leży, razem ze wszystkimi
-oknami wzdłuż niej, po obu stronach, i nie powstaje między nimi szczelina.
-Tam, gdzie spotykają się cztery okna, róg przesuwa obie krawędzie. Bok, który
-na początku zmiany rozmiaru leży na krawędzi ekranu, zostaje tam, okno
-zachowuje swój najmniejszy rozmiar, a krawędź zatrzymuje się na oknie, które
-stoi jej na drodze, i to okno zmienia wtedy rozmiar razem z innymi. Esc
-przywraca wszystkie okna. Okno przeciągane za tytuł przesuwa się samo, bez
-innych. Ustawienie jest przechowywane jako
+: Gdy przeciągasz róg okna, ramki sąsiednich okien przesuwają się razem z nim,
+więc okna zachowują wspólną krawędź. Tam, gdzie w rogu spotykają się cztery
+okna, można naraz przesunąć krawędź poziomą i pionową. Krawędź, która na
+początku leżała na brzegu ekranu, zostaje tam. Gdy przesuwana krawędź dojdzie
+do innego okna, to okno też zaczyna zmieniać rozmiar. Każde okno ma
+najmniejszy rozmiar. Esc anuluje zmianę. Okno przeciągane za tytuł przesuwa
+się samo.
+Ustawienie jest przechowywane jako
 **editor_sticky_windows**
 w pliku ini.
 
@@ -595,97 +539,39 @@ w pliku ini.
 : Przechodzi do następnego albo poprzedniego okna.
 
 **Lista...**
-: Lista otwartych okien, z której można przejść do jednego z nich. Zobacz
+: Otwarte okna, aby przejść do jednego z nich. Zobacz
 [Otwarcie plików](#open-files).
 
-Pod nimi są okna wtyczek: drzewo projektu, wynik budowania, panel i konsola
-debugera, terminal, terminal programu uruchomionego przez debuger, Preview.
-Pozycja otwiera swoje okno, wysuwa je na wierzch, gdy jest za innym, i
-zamyka je, gdy już jest na wierzchu; otwarte okno jest oznaczone *\**. Wyłączona
-wtyczka nie ma pozycji.
+## Menu Wtyczki <a id="plugins-menu"></a>
 
-Okna wtyczek stoją w dokach. Drzewo, panel debugera i Preview trafiają do
-kolumny po prawej, jedno nad drugim, na całą wysokość ekranu. Konsola, wynik
-budowania i terminal trafiają do rzędu na dole, pod oknami plików, i dzielą
-go jako karty: widać jedną, a jej tytuł wymienia nazwy wszystkich. Kliknięcie w
-nazwę albo
-**Ctrl-Alt-PgDn** i **Ctrl-Alt-PgUp** (*WindowTabNext* i *WindowTabPrev*
-w mapie klawiszy) pokazuje inną. Okno pliku na pełnym ekranie wypełnia resztę
-ekranu, a gdy doki są puste, znowu cały ekran. Zmiana rozmiaru zadokowanego
-okna zmienia rozmiar doku; przesunięcie okna wyjmuje je z doku.
-
-**Layout...**
-: Układy okien: które okna wtyczek są otwarte, w którym doku i jak duże są
-doki. *Edit* ma same pliki, *Project* drzewo projektu, *Debug* drzewo i panel
-debugera. **Use** ustawia okna w ten sposób; **Save as...** zapisuje bieżące
-ułożenie pod nazwą, także pod nazwą jednego z tych układów; **Delete** usuwa
-zapisany układ i wraca wtedy wbudowany układ o tej nazwie. Przy **Debug
-layout while debugging** start debugera ustawia okna tak, jak ma je *Debug*,
-a jego zatrzymanie przywraca poprzednie, przy czym karty na dole zostają,
-aby można je było przeczytać.
-
-Okna projektu są zachowywane, gdy edytor kończy pracę, i wracają, gdy startuje
-z plikiem projektu.
-*bluerig --debug* startuje z układem *Debug*. Układy są przechowywane w
-*layouts.ini* w katalogu ustawień.
-
-## Menu Plugins <a id="plugins-menu"></a>
-
-Wtyczki edytora, które mają własną pozycję, na przykład sprawdzanie pisowni;
-ich okna są w [menu Okno](#window-menu). Wtyczki wyłączonej w
+Wtyczki edytora, które mają własną pozycję w menu, na przykład sprawdzanie
+pisowni. Wtyczki wyłączonej w
 [Manage plugins](#manage-plugins)
 nie ma w menu.
 
 ## Menu Opcje <a id="options-menu"></a>
 
-**Ogólne...**
-: [Opcje edytora](#editor-options).
+|  |  |
+|--|--|
+| Ogólne... | [Ustawia wcięcia, zawijanie wierszy i inne opcje edytora](#editor-options) |
+| Tryb zapisu... | [Wybiera sposób zapisywania plików](#edit-save-mode) |
+| Wyróżnianie elementów składni... | Wybiera reguły podświetlania ręcznie albo według nazwy pliku i pierwszego wiersza |
+| Wygląd... | [Ustawia skórkę i cienie](#appearance) |
+| Określ klawisze... | [Przypisuje klawisze do sekwencji terminala](#learn-keys) |
+| Przypisania klawiszy... | [Przypisuje klawisze do działań](#key-bindings) |
+| Podgląd klawisza... | [Pokazuje sekwencję terminala i przypisane działanie](#key-sniffer) |
+| Zarządzaj wtyczkami... | [Włącza i wyłącza wtyczki i ustawia je](#manage-plugins) |
+| Informacje o wtyczkach... | [Pokazuje stan i funkcje wtyczek](#plugin-info) |
+| Skrypty Lua... | [Zarządza skryptami Lua](#lua-scripts). Jest, gdy bluerig zbudowano z Lua |
+| Plik składni | Otwiera w edytorze [plik składni użytkownika](#syntax-highlighting) |
+| Plik menu | Otwiera w edytorze [plik menu użytkownika](#edit-menu-file) |
+| Zapisz ustawienia | Zapisuje ustawienia do *~/.config/bluerig/ini* |
 
-**Tryb zapisu...**
-: Jak zapisywany jest plik. Zobacz [Modyfikuj tryb zapisu](#edit-save-mode).
+"Plik składni" otwiera *~/.local/share/bluerig/syntax/Syntax*. Jeśli plik
+jeszcze nie istnieje, edytor tworzy go z krótkim komentarzem. Plik systemowy
+jest czytany po pliku użytkownika.
 
-**Wyróżnianie elementów składni...**
-: Wybiera ręcznie reguły składni dla pliku albo zostawia je nazwie i
-pierwszemu wierszowi pliku.
-
-**Wygląd...**
-: Skórka i cienie. Zobacz [Wygląd](#appearance).
-
-**Określ klawisze...**
-: Zobacz [Określ klawisze](#learn-keys).
-
-**Key bindings...**
-: Zobacz [Key bindings](#key-bindings).
-
-**Key sniffer...**
-: Zobacz [Key sniffer](#key-sniffer).
-
-**Manage plugins...**
-: Zobacz [Manage plugins](#manage-plugins).
-
-**Plugin info...**
-: Zobacz [Plugin info](#plugin-info).
-
-**Lua scripts...**
-: Zobacz [Lua scripts](#lua-scripts). Pozycja jest tylko tam, gdzie bluerig
-zbudowano z Lua.
-
-**Plik składni**
-: Otwiera w edytorze plik składni użytkownika,
-*~/.local/share/bluerig/syntax/Syntax*.
-Gdy nie istnieje, jest tworzony z krótkim komentarzem o tym, co zawiera, a nie
-jako kopia pliku systemowego, który nadal jest czytany po nim. Zobacz
-[Podświetlanie składni](#syntax-highlighting).
-
-**Menu file**
-: Otwiera w edytorze plik [menu użytkownika](#edit-menu-file).
-
-**Zapisz ustawienia**
-: Zapisuje ustawienia do
-*~/.config/bluerig/ini*.
-Przy włączonym ustawieniu
-*auto_save_setup*
-są zapisywane przy każdym zakończeniu pracy edytora.
+Przy włączonym *auto_save_setup* edytor zapisuje ustawienia przy wyjściu.
 
 ### Opcje edytora <a id="editor-options"></a>
 
@@ -707,7 +593,7 @@ ini, zobacz
 
 |  |  |
 |--|--|
-| Połówki tabulacji | Między lewym marginesem a tekstem tabulacja przesuwa o połowę swojej szerokości, a w pliku są spacje i tabulacje |
+| Połówki tabulacji | We wcięciu kursor przesuwa się o pół tabulacji. W pliku są spacje i znaki tabulacji |
 | Backspace przez tabulacje | Backspace usuwa całe wcięcie do lewego marginesu, gdy między kursorem a marginesem nie ma tekstu |
 | Wypełnianie tabulacji spacjami | Wstawia spacje do następnej pozycji tabulacji zamiast znaku tabulacji |
 | Rozmiar tabulacji | Szerokość znaku tabulacji; domyślnie 8 |
@@ -716,7 +602,7 @@ ini, zobacz
 
 |  |  |
 |--|--|
-| Esc timeout, ms | Ile milisekund Esc czeka na resztę klawisza, zanim zostanie uznany za Esc; domyślnie 1000. W pliku ini to *old_esc_mode_timeout* w mikrosekundach, a zmienna **KEYBOARD_KEY_TIMEOUT_US** przy starcie ma przed nim pierwszeństwo |
+| Esc timeout, ms | Ile milisekund edytor czeka po Esc na resztę sekwencji sterującej. Domyślnie 1000. Ustawienie *old_esc_mode_timeout* jest w mikrosekundach. Przy starcie pierwszeństwo ma zmienna **KEYBOARD_KEY_TIMEOUT_US** |
 
 **Inne opcje**
 
@@ -724,14 +610,14 @@ ini, zobacz
 |--|--|
 | Automatyczne wcięcia | Enter zaczyna wiersz z wcięciem wiersza powyżej |
 | Potwierdzenie przed zapisaniem | Pyta przed zapisaniem pliku |
-| Zapisanie pozycji pliku | Otwiera plik tam, gdzie go zostawiono |
+| Zapisanie pozycji pliku | Przy otwarciu pliku przywraca pozycję kursora |
 | Widoczne spacje kończące | Oznacza spacje na końcu wierszy |
 | Widoczne tabulacje | Oznacza znaki tabulacji |
 | Show control characters | Pokazuje znaki sterujące jako ^M zamiast je ukrywać |
 | Wyróżnianie elementów składni | Koloruje tekst regułami składni jego typu |
 | Kursor po wstawionym bloku | Zostawia kursor na końcu wstawionego bloku, a nie na jego początku |
 | Trwałe zaznaczenie | Zachowuje zaznaczenie, gdy kursor się przesuwa |
-| Kursor poza końcem wiersza | Pozwala kursorowi wyjść za ostatni znak wiersza |
+| Kursor poza końcem wiersza | Pozwala kursorowi wyjść za koniec wiersza |
 | Grupowe cofnięcie | Cofa naraz serię zmian jednego rodzaju |
 | Punkt łamania wiersza | Kolumna, w której tryby zawijania łamią wiersz; domyślnie 72 |
 
@@ -741,12 +627,12 @@ Jak zapisywany jest plik; te same trzy tryby przyjmuje ustawienie
 *editor_option_save_mode*:
 
 **Szybki zapis**
-: Od razu nadpisuje plik. Jest szybki, ale awaria w połowie zostawia plik
-zapisany do połowy.
+: Zapisuje dane od razu do oryginalnego pliku. Jeśli zapis się nie uda, plik
+może zostać niekompletny.
 
 **Bezpieczny zapis**
-: Najpierw zapisuje plik tymczasowy, a gdy jest kompletny, zastępuje nim
-oryginał, więc awaria nie narusza oryginału.
+: Zapisuje dane do pliku tymczasowego i zastępuje nim oryginał dopiero wtedy,
+gdy zapis jest kompletny.
 
 **Wykonaj kopie zapasowe za pomocą tego rozszerzenia**
 : Bezpieczny zapis, a oryginał zostaje pod swoją nazwą z dodanym
@@ -758,8 +644,7 @@ też kopię zapasową.
 
 ### Wygląd <a id="appearance"></a>
 
-Skórka programu i to, czy okna dialogowe i menu
-rozwijane mają cień.
+Tu wybiera się skórkę i ustawia cienie okien dialogowych i menu rozwijanych.
 
 **Skórka**
 : Przycisk otwiera listę zainstalowanych skórek i skórek użytkownika; wybrana
@@ -773,26 +658,25 @@ Wybór jest zapisywany do ustawień
 *skin*
 i
 *shadows*
-pliku ini. O samych plikach skórek mówi rozdział
+pliku ini. Kolejność, w jakiej szukane są pliki skórek, opisuje
 [Skórki](#skins).
 
 ### Określ klawisze <a id="learn-keys"></a>
 
-To okno uczy bluerig sekwencji sterujących, które terminal wysyła dla
-klawiszy funkcyjnych, strzałek i klawiszy nawigacji. Jego tytuł podaje nazwę
-terminala, ze zmiennej
+To okno przypisuje sekwencje sterujące terminala klawiszom funkcyjnym,
+strzałkom i klawiszom nawigacji. Tytuł pokazuje nazwę terminala ze zmiennej
 **TERM**.
 
 Wybierz kombinację modyfikatorów (Ctrl, Alt, Shift) polami wyboru, a potem
-naciśnij przycisk klawisza. Naciśnij klawisz na klawiaturze i poczekaj, aż
+naciśnij przycisk klawisza. Naciśnij ten klawisz na klawiaturze i poczekaj, aż
 zniknie komunikat przechwytywania. Nauczona sekwencja pojawia się obok
-przycisku. Sekwencja, którą ma już inny klawisz, jest zgłaszana jako konflikt.
+przycisku. Jeśli ma ją już inny klawisz, edytor zgłasza konflikt.
 
 **Del**
-: Czyści nauczony klawisz, na którym stoi kursor.
+: Usuwa zapisaną sekwencję wybranego klawisza.
 
 **Zapisz**
-: Zapisuje nauczone klawisze do
+: Zapisuje przypisania klawiszy do sekwencji do
 *~/.config/bluerig/term/\<TERM>*.
 
 **Edit term file**
@@ -800,10 +684,10 @@ przycisku. Sekwencja, którą ma już inny klawisz, jest zgłaszana jako konflik
 
 ### Key bindings <a id="key-bindings"></a>
 
-Działania programu z klawiszami, na które odpowiadają, w tabeli. Przyciski u
-góry wybierają grupę, Editor albo Widgets, a potem jej część: Main i Ctrl-X
-dla edytora; Dialog, Menu, Input, Listbox, Radio i Help dla widżetów. Back
-wraca do grup. Działania oznaczone \* mają klawisze inne niż domyślne.
+Tabela pokazuje działania i przypisane do nich klawisze. Przyciski u góry
+wybierają grupę, Editor albo Widgets. Grupa Editor ma części Main i Ctrl-X,
+grupa Widgets ma Dialog, Menu, Input, Listbox, Radio i Help. Back wraca do
+listy grup. Działania ze zmienionymi przypisaniami są oznaczone \*.
 
 **Enter**
 : Zastępuje klawisz działania: naciśnij klawisz do przypisania.
@@ -824,70 +708,61 @@ wraca do grup. Działania oznaczone \* mają klawisze inne niż domyślne.
 w edytorze.
 
 **Edit term file**
-: Otwiera sekwencje klawiszy terminala, plik, który zapisuje
+: Otwiera plik sekwencji sterujących zapisanych w oknie
 [Określ klawisze](#learn-keys).
 
-Klawisz zajęty przez inne działanie jest zgłaszany z pytaniem, czy go stamtąd
-zabrać.
+Jeśli klawisz jest już przypisany do innego działania, edytor prosi o
+potwierdzenie nowego przypisania.
 
 ### Key sniffer <a id="key-sniffer"></a>
 
 Naciśnij
 **Capture key**,
-a potem dowolny klawisz. Okno pokazuje, co przyszło:
+a potem klawisz, który chcesz sprawdzić. Okno pokazuje jego dane:
 
 ```
 Shortcut   the symbolic name, e.g. Ctrl-F5
 Action     the action of the key in the editor keymap
-Raw        the escape sequence and its bytes in hex
+Raw        the escape sequence and its bytes
 Keycode    the internal numeric code
 ```
 
-Tu należy zajrzeć, gdy klawisz nic nie robi albo robi nie to, co trzeba:
-klawisza, który przychodzi jako sekwencja nierozpoznawana przez program,
-trzeba nauczyć w
-[Określ klawisze](#learn-keys),
-a taki, który przychodzi, ale nie ma działania, trzeba przypisać w
-[Key bindings](#key-bindings).
+Jeśli edytor nie rozpoznaje sekwencji, ustaw ją w oknie
+[Określ klawisze](#learn-keys). Jeśli klawisz jest rozpoznany, sprawdź
+przypisane do niego działanie w oknie [Key bindings](#key-bindings).
 
 ### Manage plugins <a id="manage-plugins"></a>
 
-Wtyczki wczytane przez program, w tabeli: rodzaj, nazwa i to, co wtyczka
-mówi o sobie. Są tu wtyczki edytora, a tam, gdzie bluerig zbudowano z Lua,
-także silnik Lua jako wtyczka rodzaju
+Tabela pokazuje rodzaj, nazwę i opis każdej wtyczki edytora. Jeśli bluerig
+zbudowano z Lua, w tabeli jest też środowisko Lua rodzaju
 *runtime*.
-Wtyczkę wyłącza się i włącza polem wyboru w jej wierszu, a wyłączona nie jest
-też wczytywana następnym razem; wybór jest przechowywany w
-*~/.config/bluerig/plugins.ini*.
-Wyłączona wtyczka zostaje na liście, aby można ją było znowu włączyć.
+Pole wyboru w wierszu wtyczki decyduje, czy zostanie wczytana przy następnym
+starcie. Wybór jest przechowywany w *~/.config/bluerig/plugins.ini*.
+Wyłączone wtyczki zostają na liście.
 
 **Enter, F4**
-: Otwiera ustawienia wtyczki, na której stoi kursor. Wtyczka, która ich nie
-ma, informuje o tym. W wierszu silnika Lua otwiera
+: Otwiera ustawienia wybranej wtyczki. Jeśli wtyczka nie ma ustawień, edytor
+o tym mówi. Dla środowiska Lua otwiera okno
 [Lua scripts](#lua-scripts).
-
-**IDE: project, build, debugger**
-: Włącza razem trzy wtyczki, które robią z edytora IDE, albo wyłącza je
-razem, gdy wszystkie są włączone: projekt i jego pliki, budowanie i debuger.
-Każda z nich działa też bez pozostałych.
 
 ### Plugin info <a id="plugin-info"></a>
 
-Wtyczki wczytane przez edytor: nazwa, czy jest włączona, co daje i co robi.
-To lista do oglądania; wtyczkę wyłącza się i otwiera jej ustawienia w oknie
+Lista wczytanych wtyczek pokazuje ich nazwy, stan, funkcje i opis. Ustawienia
+i przełączniki wtyczek są w oknie
 [Manage plugins](#manage-plugins).
 
 ### Lua scripts <a id="lua-scripts"></a>
 
-Znalezione skrypty Lua, systemowe i użytkownika, w tabeli: czy jest włączony,
-gdzie leży skrypt (globalny albo użytkownika), jego identyfikator, jego
-przestrzeń robocza, co daje i co robi. Skrypt wyłącza się i włącza polem
-wyboru w jego wierszu; zmiana działa od następnego startu bluerig.
+Tabela pokazuje stan, położenie (globalny albo użytkownika), identyfikator,
+przestrzeń roboczą, funkcje i opis każdego znalezionego skryptu Lua.
+Pole wyboru w wierszu skryptu decyduje, czy zostanie wczytany przy następnym
+starcie bluerig.
 
 **Settings**
-: Uruchamia skrypt z ustawieniami pakietu, jeśli pakiet go ma.
+: Uruchamia skrypt z ustawieniami pakietu, jeśli taki jest.
 
-O samych skryptach mówi [Skrypty Lua](#lua-scripting).
+Gdzie leżą pakiety i jak są zbudowane, opisuje
+[Skrypty Lua](#lua-scripting).
 
 # Szukanie, zastępowanie i filtr wierszy <a id="search-and-replace"></a>
 
@@ -919,46 +794,45 @@ O samych skryptach mówi [Skrypty Lua](#lua-scripting).
 
 **Filter**
 
-Ukrywa wiersze bez trafienia; numery wierszy się nie zmieniają, a kolumna
-stanu wiersza oznacza każdy ukryty fragment. Wiersze są ukrywane raz, w
-chwili naciśnięcia przycisku: wiersz zmieniony albo wpisany później zostaje
-pokazany, nawet jeśli nie pasuje.
+Filtr ukrywa wiersze bez trafienia i zachowuje numery wierszy. Kolumna stanu
+wiersza oznacza ukryte fragmenty. Filtr jest stosowany w chwili włączenia.
+Nowe i zmienione wiersze zostają widoczne, dopóki filtr nie zostanie
+zastosowany ponownie.
 
 |  |  |
 |--|--|
-| {{key:FilterToggle|Alt-s}} | Zdejmuje filtr albo stosuje ostatnie szukanie jako filtr; gdy nic nie szukano, otwiera okno szukania |
+| {{key:FilterToggle|Alt-s}} | Zdejmuje filtr albo stosuje ostatnie szukanie jako filtr. Jeśli jeszcze nic nie szukano, otwiera okno szukania |
 | {{key:FilterWord|Alt-S}} | Filtruje według zaznaczonego tekstu albo słowa pod kursorem |
-| Polecenie \> Unfold all | Zdejmuje filtr i rozwija wszystkie zwinięcia |
+| Polecenie \> Rozwiń wszystko | Zdejmuje filtr i rozwija wszystkie zwinięcia |
 
 # Zwijanie <a id="folding"></a>
 
-Zwinięcie chowa ciąg wierszy za jego pierwszym wierszem, który zostaje na
-ekranie ze znakiem w kolumnie stanu wiersza.
-**Alt-F**
-(Fold / Unfold block w menu Polecenie) zwija zaznaczone wiersze, a gdy nic
-nie jest zaznaczone, wiersze od nawiasu w bieżącym wierszu do pasującego do
-niego nawiasu. Na pierwszym wierszu zwinięcia rozwija je.
-**Unfold all**
-rozwija wszystkie zwinięcia pliku i zdejmuje filtr wierszy.
+Zwinięcie pokazuje tylko pierwszy wiersz bloku. Kolumna stanu wiersza
+oznacza ten wiersz.
+{{key:FoldToggle|Alt-F}}
+(pozycja Zwiń / rozwiń blok menu Polecenie) zwija zaznaczone wiersze, a gdy
+nic nie jest zaznaczone, wiersze od nawiasu w bieżącym wierszu do pasującego
+do niego nawiasu. Na pierwszym wierszu zwinięcia ten klawisz je rozwija.
+**Rozwiń wszystko**
+rozwija wszystkie zwinięcia pliku i usuwa filtr wierszy.
 
 # Makra <a id="macros"></a>
 
 {{key:MacroStartStopRecord|Ctrl-r}}
-zaczyna nagrywanie makra: klawisze naciśnięte po nim są nagrywane. Ponowne
-naciśnięcie
-**Ctrl-r**
-kończy nagrywanie i czeka na klawisz, do którego makro zostanie przypisane;
-ten klawisz potem je uruchamia.
+zaczyna nagrywanie makra. Aby zakończyć nagrywanie, naciśnij
+{{key:MacroStartStopRecord|Ctrl-r}}
+ponownie, a potem klawisz, który będzie uruchamiał makro.
 
 Makra są przechowywane w sekcji
 **[editor]**
 pliku
-**~/.local/share/bluerig/macros**,
-a makro usuwa się, usuwając tam jego wiersz, albo w oknie
+**~/.local/share/bluerig/macros**.
+Aby usunąć makro, usuń jego wiersz z pliku albo użyj okna
 [Macro Explorer](#macro-explorer).
 
+Pozycja
 **Nagraj/powtórz działania**
-w menu Polecenie nagrywa następne działania, dopóki nie zostanie wybrane
+menu Polecenie nagrywa następne działania, dopóki nie zostanie wybrane
 ponownie, a potem pyta, ile razy je powtórzyć.
 
 Do klawisza można też przypisać skrypt powłoki, wierszem pliku
@@ -1003,18 +877,16 @@ l       comment selection
 
 ## Macro Explorer <a id="macro-explorer"></a>
 
-Nagrane makra, z klawiszem, na który każde odpowiada, i tym, co robi.
-Przyciski to
+Lista nagranych makr pokazuje ich klawisze i działania.
 
 **Run**
-: Odtwarza makro, na którym stoi kursor.
+: Uruchamia wybrane makro.
 
 **Delete**
-: Usuwa je po pytaniu.
+: Usuwa wybrane makro po pytaniu.
 
 **Modyfikacja pliku**
-: Otwiera plik, w którym są zapisane makra, opisany w rozdziale
-[Makra](#macros).
+: Otwiera plik makr. Jego format opisuje [Makra](#macros).
 
 # Menu użytkownika <a id="edit-menu-file"></a>
 
@@ -1033,7 +905,7 @@ tekście edytora. Menu jest czytane z pierwszego znalezionego pliku z:
 Plik bieżącego katalogu jest czytany tylko wtedy, gdy należy do użytkownika
 albo do roota i nikt inny nie ma prawa go zapisywać: jego pozycje uruchamiają
 polecenia. Pozycja
-**Menu file**
+**Plik menu**
 menu Opcje otwiera plik menu w edytorze.
 
 Wiersz, który zaczyna się czymkolwiek poza spacją albo tabulacją, jest
@@ -1142,6 +1014,7 @@ warunków przed pozycją, jeden z '+' i jeden z '=', ustawiają oba warunki osob
 # Wtyczki <a id="plugins"></a>
 
 {{plugins}}
+
 Wtyczkę włącza się i wyłącza w menu Opcje, pozycja
 [Manage plugins](#manage-plugins).
 
@@ -1149,32 +1022,28 @@ Wtyczkę włącza się i wyłącza w menu Opcje, pozycja
 
 ## Zapisz jako <a id="save-file-as"></a>
 
-Nazwa, pod którą zapisać plik, i końce wierszy, z którymi go zapisać: takie,
-jakie ma plik, Unix (LF), Windows i DOS (CR LF) albo Macintosh (CR). Wybór
-obowiązuje dla tego zapisu; plik zachowuje to, co dostał.
+Podaj nazwę pliku i format końców wierszy. Można zachować format pliku albo
+wybrać Unix (LF), Windows i DOS (CR LF) albo Macintosh (CR).
+Wybrany format obowiązuje dla tego zapisu.
 
 ## Otwarcie plików <a id="open-files"></a>
 
-Pliki otwarte w edytorze, po jednym w wierszu. Enter przechodzi do pliku, na
-którym stoi kursor, Esc pozostaje przy bieżącym pliku. Ta sama lista to
-pozycja
+Lista ma jeden wiersz dla każdego otwartego pliku. Enter przełącza edytor na
+wybrany plik, Esc zamyka listę. Pozycja
 **Lista...**
-menu Okno.
+menu Okno otwiera tę samą listę.
 
 ## Wybór ekranu <a id="screen-selector"></a>
 
-Poza edytorem skrypt Lua może otwierać własne ekrany, widoki pełnoekranowe,
+Poza edytorem skrypt Lua może otwierać własne ekrany, okna pełnoekranowe,
 które zostają otwarte, gdy wracasz do edytora. Między ekranami przełącza się
 na trzy sposoby:
 
-**Alt-}**
-: przełącza na następny ekran;
-
-**Alt-{**
-: przełącza na poprzedni ekran;
-
-**Alt-\`**
-: otwiera okno z listą otwartych ekranów, aby wybrać jeden.
+|  |  |
+|--|--|
+| Alt-} | Następny ekran |
+| Alt-{ | Poprzedni ekran |
+| Alt-\` | Lista otwartych ekranów |
 
 ## Uzupełnianie <a id="completion"></a>
 
@@ -1194,7 +1063,7 @@ w wierszu wprowadzania okna dialogowego uzupełnia tekst:
 | ~name | Nazwę użytkownika |
 | Inaczej | Nazwę pliku |
 
-Gdy pasuje kilka, program wydaje dźwięk. Ustawienie
+Gdy pasuje kilka, edytor wydaje dźwięk. Ustawienie
 *show_all_if_ambiguous*
 pliku ini, domyślnie wyłączone, pokazuje ich listę obok kursora:
 **Enter**
@@ -1203,27 +1072,22 @@ chowają.
 
 ## Wybór strony kodowej <a id="codepages-translation"></a>
 
-Lista stron kodowych znanych programowi, z
-**{{pkgdatadir}}/charsets**.
-Wybór jednej mówi edytorowi, w jakiej stronie kodowej zapisano tekst pliku, a
-tekst jest przekodowywany z niej na stronę kodową terminala do wyświetlenia;
-**\<No translation>**
-zostawia go jako bajty. Listę otwiera
-**Alt-e**
-i pozycja Kodowanie menu Polecenie.
+Edytor wczytuje listę kodowań z **{{pkgdatadir}}/charsets**.
+Wybierz kodowanie pliku; edytor przekodowuje z niego tekst dla terminala.
+Pozycja **\<No translation>** wyłącza przekodowanie.
+Listę otwiera {{key:SelectCodepage|Alt-e}} albo pozycja Kodowanie...
+menu Polecenie.
 
 ## Historia <a id="history-query"></a>
 
-Lista tego, co wcześniej wpisano w wiersz wprowadzania, od najnowszych,
-którą
-**Alt-h**
-otwiera dla wiersza, w którym stoi kursor. Enter wstawia do wiersza wpis, na
-którym stoi kursor, Esc zostawia wiersz taki, jaki był, a
-**F8, Del**
-usuwa z historii wpis, na którym stoi kursor. Historie są przechowywane w
+**Alt-h** otwiera historię bieżącego wiersza wprowadzania. Najnowsze wpisy są
+pierwsze. Enter wstawia wybrany wpis do wiersza, Esc zamyka historię bez
+zmiany wiersza, a **F8, Del** usuwają wybrany wpis. Historia jest
+przechowywana w
 *~/.local/share/bluerig/history*;
+ustawienie
 *num_history_items_recorded*
-określa, ile wpisów zachowuje każda z nich.
+określa, ile wpisów zachowuje każda historia.
 
 # Podświetlanie składni <a id="syntax-highlighting"></a>
 
@@ -1249,17 +1113,16 @@ tam swoje kolory.
 | **~/.local/share/bluerig/syntax/Syntax** | Reguły użytkownika: to, co użytkownik dodał albo chce mieć inaczej |
 | **{{pkgdatadir}}/syntax/Syntax** | Zainstalowane reguły, dla typów plików, których plik użytkownika nie wymienia |
 
-Wpis użytkownika zastępuje zainstalowany dla plików, do których
-pasuje. Pliki wymienione w wierszach
+Gdy do pliku pasują i reguły użytkownika, i zainstalowane, obowiązują reguły
+użytkownika. Pliki wymienione w wierszach
 **include**
 są szukane najpierw w
 *~/.local/share/bluerig/syntax/*,
 a potem wśród zainstalowanych. Plik użytkownika jest czytany ponownie za
 każdym razem, gdy w edytorze otwiera się nowy plik.
 
-Pełna kopia zainstalowanego pliku, jaką robiły starsze wersje, przesłania
-wszystkie typy plików zainstalowane później i ich podświetlanie przestaje
-działać: zostaw w kopii tylko zmienione wpisy.
+Pełna kopia zainstalowanego pliku może przesłonić reguły typów plików dodanych
+w nowej wersji. Zostaw w pliku użytkownika tylko zmienione wpisy.
 
 ## Sekcja file <a id="syntax-file"></a>
 
@@ -1355,7 +1218,7 @@ strony osobno. Wiersz
 **spellcheck**
 po
 **context**
-przekazuje słowa kontekstu do sprawdzania pisowni.
+włącza sprawdzanie pisowni wewnątrz kontekstu.
 
 ## Osadzanie i warstwy <a id="syntax-embed"></a>
 
@@ -1374,8 +1237,8 @@ Syntax, z którego czytane są reguły, a potem w tym zainstalowanym z bluerig.
 Typ nieznaleziony w żadnym zostawia kontekst w jego własnych kolorach.
 Ograniczniki zachowują kolory kontekstu. Prawy ogranicznik kończy osadzony
 tekst, gdziekolwiek stoi, także wewnątrz napisu albo komentarza osadzonych
-reguł. Osadzona składnia może osadzić inną, na kilka poziomów w głąb. Na
-przykład HTML przekazuje skrypty regułom JavaScriptu:
+reguł. Składnie można zagnieżdżać na kilka poziomów w głąb. Na przykład
+reguły HTML mogą użyć składni JavaScriptu dla zawartości znacznika SCRIPT:
 
 ```
   context <SCRIPT*> </SCRIPT> brightcyan
@@ -1427,7 +1290,7 @@ Napisy słów kluczowych i ograniczników kontekstów są czytane tak:
 
 |  |  |
 |--|--|
-| \\t, \\s | Tabulacja i spacja: odstępy rozdzielają słowa wiersza i nie mogą być użyte wprost |
+| \\t, \\s | Tabulacja i spacja. Wpisane wprost rozdzielają słowa wiersza, więc wzorzec używa tych form |
 | \\n, \\r | Nowy wiersz i powrót karetki |
 | `\\` | Ukośnik wsteczny |
 | \\\* | Gwiazdka |
@@ -1476,8 +1339,8 @@ white. "default" to domyślny kolor terminala, "base" główne kolory edytora;
 ustawia atrybuty bez zmiany koloru tła. Przy 256 kolorach są też color16 do
 color255, rgb000 do rgb555 i gray0 do gray23.
 
-Kolor tekstu może być tokenem zakresu zamiast koloru: słowem pisanym
-wielkimi literami, które mówi, czym jest tekst, a nie jak wygląda:
+Zamiast koloru tekstu można podać token zakresu: słowo pisane wielkimi
+literami, które nazywa rodzaj tekstu. Jego kolor ustawia skórka:
 
 ```
 keyword  whole  if   KEYWORD_CONTROL
@@ -1486,18 +1349,18 @@ context  " " STRING_QUOTED_DOUBLE
 keyword  linestart TODO  KEYWORD_OTHER_TODO black
 ```
 
-Kolor tokenu pochodzi ze skórki, więc jedna skórka koloruje program i tekst,
-a każdy język tak samo; zobacz
+Skórka ustawia kolory interfejsu i tokenów podświetlania dla wszystkich
+języków. Zobacz
 [Skórki](#skins).
-Token jest czytany jako zakres: małymi literami, z kropkami zamiast
-podkreśleń. KEYWORD_CONTROL_IMPORT to keyword.control.import, rodzaj
+Nazwę zakresu pisze się małymi literami, z kropkami zamiast podkreśleń. Na
+przykład KEYWORD_CONTROL_IMPORT to keyword.control.import, rodzaj
 keyword.control, który jest rodzajem keyword. To nazwy zakresów Sublime Text
-i TextMate. To, czego skórka nie koloruje, zachowuje kolory, które temu
-tekstowi dawał mcedit. Tło albo atrybuty po tokenie mają pierwszeństwo przed
-kolorami mcedit, jak black powyżej, ale nie przed tłem albo atrybutami,
-które skórka daje samemu tokenowi. Token działa też w define oraz w
-wierszach number, string i symbols reguł line-local. Zainstalowane pliki
-składni używają tylko tokenów; ich lista z kolorami mcedit jest w
+i TextMate. Tło i atrybuty ze skórki mają pierwszeństwo przed wartościami
+podanymi po tokenie w regule. Jeśli skórka ich nie ustawia, używane są
+wartości reguły, na przykład black powyżej. Pozostałe wartości pochodzą ze
+standardowego schematu mcedit. Token działa też w define oraz w wierszach
+number, string i symbols reguł line-local. Zainstalowane pliki składni
+używają tokenów. Lista tokenów i ich kolorów mcedit jest w
 **{{pkgdatadir}}/syntax/README.txt**.
 
 Plik składni wspólny z
@@ -1530,7 +1393,7 @@ wymusić albo wyłączyć odpowiednio flagami -c i -b.
 
 Jeśli program skompilowano z menedżerem ekranu S-Lang zamiast ncurses,
 sprawdza też zmienną
-**COLORTERM,**
+**COLORTERM**:
 jeśli jest ustawiona, działa tak samo jak flaga -c.
 
 Terminale, dla których tryb kolorowy jest zawsze wymuszany, podaje się zmienną
@@ -1581,10 +1444,10 @@ Format plików skórek opisuje
 **{{pkgdatadir}}/skins/README.txt**.
 Kolory podświetlania składni pochodzą z sekcji
 **[syntax]**
-skórki: tam zakres podaje kolory rodzaju tekstu, a zakres i zakres
-kontekstu, w którym stoi, oba rozdzielone odstępem, podają kolory tego
-rodzaju tekstu w tym kontekście. Wygrywa najdłuższy zakres, który skórka
-podaje:
+skórki. Klucz ustawia kolor zakresu. Aby ustawić kolor zakresu wewnątrz
+kontekstu, podaj najpierw zakres kontekstu, a potem zakres tekstu, ze spacją
+między nimi. W każdym przypadku wybierana jest najdłuższa pasująca nazwa
+zakresu. Para z kontekstem jest sprawdzana jako pierwsza.
 
 ```
 [syntax]
@@ -1596,10 +1459,9 @@ podaje:
     invalid = white;red;bold
 ```
 
-Rodzaj tekstu, którego skórka nie podaje, zachowuje kolory, które dawał mu
-mcedit, więc skórka może podać kilka rodzajów i zostawić resztę. Reguły, które
-podają kolory zamiast tokenów zakresów, zachowują swoje kolory niezależnie od
-skórki; zobacz
+Zakresy bez koloru w skórce używają standardowych kolorów mcedit. Kolory
+podane wprost w regułach podświetlania pozostają takie same przy każdej
+skórce. Zobacz
 [Podświetlanie składni](#syntax-highlighting).
 
 # Bazy terminali <a id="terminal-databases"></a>
@@ -1663,17 +1525,14 @@ bluerig odczytuje "\\e[[1;6D" jako Ctrl-Alt-Left.
 
 Symbol klawisza
 *complete*
-oznacza sekwencje sterujące wywołujące uzupełnianie; wywołuje się je Alt-tab,
-ale można zdefiniować inne klawisze do tego samego celu (na klawiaturach z
-mnóstwem ładnych i nieużywanych klawiszy).
+ustawia sekwencje sterujące uzupełniania. Zwykle robi to Alt-Tab. Można
+podać sekwencję innego klawisza.
 
 # Skrypty Lua <a id="lua-scripting"></a>
 
-Tam, gdzie bluerig zbudowano z Lua, uruchamia on skrypty Lua, które
-rozszerzają edytor: działania przypisane do klawiszy i menu, reakcje na
-zdarzenia edytora (otwarcie pliku, jego zapis, naciśnięcie klawisza), okna
-dialogowe i widoki pełnoekranowe. Kilka poleceń edytora to takie skrypty:
-sortowanie wierszy, formatowanie akapitu, wstawianie wyniku polecenia,
+Gdy bluerig zbudowano z Lua, skrypty mogą dodawać polecenia do menu,
+przypisywać je do klawiszy, obsługiwać zdarzenia edytora i otwierać okna
+dialogowe i okna pełnoekranowe. W Lua są napisane na przykład sortowanie wierszy, formatowanie akapitu, wstawianie wyniku polecenia,
 wstawianie znaku według jego kodu, wstawianie daty, dekodowanie base64 i
 rysowanie tabel.
 
@@ -1697,7 +1556,7 @@ ustawiona na 1 uruchamia edytor bez żadnego skryptu Lua, a
 *enabled=false*
 w sekcji
 **[Lua]**
-pliku ini robi to na stałe.
+pliku ini wyłącza Lua także przy kolejnych startach.
 
 Jak napisać skrypt i jakie funkcje skrypt może wywołać, opisują
 **LUA_PLUGINS.md**
@@ -1765,9 +1624,8 @@ prostych terminalach (1, domyślnie) albo zawsze (2).
 *keybar_modifiers*
 : Gdy włączone, pasek klawiszy pokazuje polecenia Shift, Ctrl albo Alt z
 klawiszami F, gdy ten modyfikator jest wciśnięty. Wymaga to terminala z
-protokołem klawiatury kitty: bluerig prosi go wtedy o każdy klawisz wraz z jego
-zwolnieniem i o zdarzenia fokusu. Na inne terminale nie ma to wpływu.
-Domyślnie wyłączone.
+protokołem klawiatury kitty. bluerig prosi terminal o zdarzenia naciśnięcia i
+zwolnienia klawiszy oraz o zdarzenia fokusu. Domyślnie wyłączone.
 
 *verbose*
 : Pokazuje postęp długich operacji.
@@ -1864,9 +1722,8 @@ Bez **BLUERIG_LOG_FILE** używany jest plik podany przez *logfile* w sekcji
 *[Logging]* pliku *ini*, a bez tego wpisu *~/.cache/bluerig/bluerig.log*.
 
 **BLUERIG_SPELL_LOG**
-: Plik, do którego sprawdzanie pisowni zapisuje swój dziennik debugowania.
-Nie ma własnego przełącznika: dziennik jest zapisywany, gdy zmienna podaje
-plik.
+: Ścieżka dziennika debugowania sprawdzania pisowni. Jeśli zmienna jest
+ustawiona, sprawdzanie pisowni zapisuje dziennik do tego pliku.
 
 # PLIKI <a id="files"></a>
 
@@ -1888,7 +1745,8 @@ i
 gdy są ustawione.
 
 *{{pkgdatadir}}/help/bluerig.md*
-: Plik pomocy programu, a obok niego pliki pomocy wtyczek edytora.
+: Plik pomocy programu (tłumaczenia to bluerig.ru.md i tak dalej); obok
+niego są pliki pomocy wtyczek edytora.
 
 *{{sysconfdir}}/bluerig/bluerig.ini*, *{{pkgdatadir}}/bluerig.ini*
 : Systemowe pliki ustawień, używane tylko wtedy, gdy użytkownik nie ma
