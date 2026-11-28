@@ -565,14 +565,12 @@ msgid "Toggle code fold"
 msgstr ""
 
 #: lib/keybind.c:205
-#, fuzzy
 msgid "Unfold all"
-msgstr "Min&det"
+msgstr "Összes kibontása"
 
 #: lib/keybind.c:206
-#, fuzzy
 msgid "Toggle line filter"
-msgstr "Sor&számok"
+msgstr "Sor&szűrő be/ki"
 
 #: lib/keybind.c:207
 msgid "Filter by selection or word"
@@ -680,7 +678,7 @@ msgstr "&Látható sorvégi szóközök"
 
 #: lib/keybind.c:230
 msgid "Toggle control characters"
-msgstr ""
+msgstr "Vezérlőkarakterek be/ki"
 
 #: lib/keybind.c:231
 #, fuzzy
@@ -692,9 +690,8 @@ msgid "Choose syntax highlighting"
 msgstr "Válasszon szintaktikus szövegkiemelést"
 
 #: lib/keybind.c:233
-#, fuzzy
 msgid "Toggle right margin"
-msgstr "&Inverz kijelölés"
+msgstr "Jobb margó be/ki"
 
 #: lib/keybind.c:234
 #, fuzzy
@@ -2502,7 +2499,7 @@ msgstr "&Új"
 
 #: src/editor/editmenu.c:233
 msgid "&History..."
-msgstr ""
+msgstr "Elő&zmények..."
 
 #: src/editor/editmenu.c:236
 msgid "Save &as..."
@@ -2653,7 +2650,7 @@ msgstr ""
 
 #: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
-msgstr ""
+msgstr "&Vezérlőkarakterek be/ki"
 
 #: src/editor/editmenu.c:321
 msgid "Encod&ing..."
@@ -2664,9 +2661,8 @@ msgid "&Fold / Unfold block"
 msgstr ""
 
 #: src/editor/editmenu.c:324
-#, fuzzy
 msgid "&Unfold all"
-msgstr "Min&det"
+msgstr "Összes ki&bontása"
 
 #: src/editor/editmenu.c:326
 msgid "&Refresh screen"
@@ -2729,19 +2725,16 @@ msgid "Learn &keys..."
 msgstr "&Billentyűk..."
 
 #: src/editor/editmenu.c:374
-#, fuzzy
 msgid "Key &bindings..."
-msgstr "&Kódolás..."
+msgstr "Billentyű-&hozzárendelések..."
 
 #: src/editor/editmenu.c:375
-#, fuzzy
 msgid "Key s&niffer..."
-msgstr "&Kódolás..."
+msgstr "Billentyű&figyelő..."
 
 #: src/editor/editmenu.c:377
-#, fuzzy
 msgid "Manage &plugins..."
-msgstr "&Panelbeállítások..."
+msgstr "Bővítmények &kezelése..."
 
 #: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
