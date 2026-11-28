@@ -9,15 +9,13 @@
                                   |___/
   {{MC_VERSION:32}}
 ```
- a terminal IDE, a continuation of cooledit
+ bluerig - un IDE de consola
 
-Esta es la pantalla principal de ayuda de **bluerig**.
+Para aprender a usar la ayuda, pulse [Intro](#how-to-use-help). También puede ir directamente a los [contenidos](#contents) de la ayuda o al capítulo sobre [el editor](#internal-file-editor).
 
-Puede pulsar la tecla [«Intro»](#how-to-use-help) para aprender a navegar por el sistema de ayuda, o acceder directamente a los [contenidos](#contents).
+bluerig se basa en los editores cooledit y mcedit. Vea [Autores](#authors).
 
-GNU Midnight Commander es obra de sus [autores](#authors).
-
-bluerig NO INCLUYE NINGÚN TIPO DE [GARANTÍA](gnu-gpl-v3.0.md#warranty). Es un producto de software libre, y su redistribución es bienvenida en los términos y condiciones establecidas por la [Licencia Pública General de GNU (GPL)](gnu-gpl-v3.0.md#license), de la que existe una [traducción no oficial al español](#licencia-gnu-español).
+bluerig NO INCLUYE NINGUNA [GARANTÍA](gnu-gpl-v3.0.md#warranty). Es software libre, y puede redistribuirlo en los términos de la [Licencia Pública General de GNU](gnu-gpl-v3.0.md#license), de la que existe una [traducción no oficial al español](#licencia-gnu-español).
 
 # Licencia GNU (Español) <!-- help:notitle --><a id="licencia-gnu-español"></a>
 
@@ -317,37 +315,33 @@ La Licencia Pública General GNU no permite incorporar sus programas como parte 
 
 # Cuadros de diálogo <a id="querybox"></a>
 
-En los cuadros de diálogo puede desplazarse con el teclado usando las flechas o las teclas de las letras resaltadas.
-
-También se pueden pulsar los botones con el ratón.
+En un cuadro de diálogo, use las flechas para seleccionar un botón y pulse Intro para activarlo. También puede pulsar la letra resaltada del botón o hacer clic en él. Esc cierra el cuadro sin responder.
 
 # Uso de la ayuda <a id="how-to-use-help"></a>
 <a id="help"></a>
 
-Se pueden utilizar las flechas o el ratón para navegar por el sistema de ayuda.
+Puede abrir la ayuda con F1 casi en cualquier momento. Para navegar por la ayuda, use las flechas o el ratón. Pulse la flecha **abajo** para ir al enlace siguiente o desplazarse una línea hacia abajo, y la flecha **arriba** para ir al enlace anterior o desplazarse una línea hacia arriba. Pulse la flecha **derecha** o **Intro** para seguir el enlace actual. Pulse la flecha **izquierda** para volver a la página anterior del historial.
 
-La flecha de **abajo** cambia al siguiente elemento o baja. La tecla de **arriba** vuelve al elemento anterior o sube. La tecla **derecha** sigue el enlace activo. La tecla **izquierda** vuelve a la última página visitada.
+Si el terminal no admite las flechas, la **barra espaciadora** avanza el texto y la tecla **b** lo retrocede. El **tabulador** pasa al enlace siguiente, e **Intro** lo sigue. La tecla **l** vuelve a las páginas visitadas antes. **Esc** cierra la ayuda.
 
-Si el terminal no es compatible con las flechas de cursor se puede avanzar con la **barra espaciadora** y retroceder con la tecla **b** (back). El **tabulador** activa el elemento siguiente y con **INTRO** se puede entrar al enlace correspondiente. La tecla **l** (last) permite volver a la última página.
+El botón izquierdo del ratón sigue un enlace o desplaza el texto. El botón derecho vuelve a las páginas visitadas antes.
 
-ESC pulsada dos veces permite salir de la ayuda.
+La barra de desplazamiento indica qué parte de la página está visible. Haga clic en las flechas de la barra para desplazarse una línea, o encima o debajo del control deslizante para desplazarse una página. También puede arrastrar el control deslizante.
 
-El botón izquierdo del ratón avanza o sigue enlaces y el botón derecho retrocede o vuelve a la última página.
-
-La función de todas las teclas en la ayuda:
+Todas las teclas de la ventana de ayuda:
 
 Las [teclas de desplazamiento genéricas](#general-movement-keys) son válidas.
 
 ```
-tabulador       Avanzar al elemento posterior.
-Alt-tabulador   Retroceder al elemento anterior.
-abajo           Avanzar elemento o bajar una línea.
-arriba          Retroceder elemento o subir una línea.
-derecha, INTRO  Seguir enlace.
-izquierda, l    Volver a la última página visitada.
-F1              Mostrar la ayuda del sistema de ayuda.
-n               Pasar a la página siguiente.
-p               Pasar a la página anterior.
-c               Pasar a la página de contenidos.
-F10, ESC        Salir de la ayuda. 
+Tab             pasar al enlace siguiente
+Alt-Tab         pasar al enlace anterior
+Down            enlace siguiente, o bajar una línea
+Up              enlace anterior, o subir una línea
+Right, Enter    seguir el enlace actual
+Left, l, F3     volver a las páginas visitadas
+F1              mostrar la ayuda sobre la ayuda
+n               pasar a la página siguiente
+p               pasar a la página anterior
+c, F2           pasar a los contenidos
+F10, Esc        salir de la ayuda
 ```

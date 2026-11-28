@@ -14,33 +14,11 @@ bluerig - terminálos IDE.
 
 # LEÍRÁS <a id="description"></a>
 
-A
-**bluerig**
-terminálos IDE. A
-**cooledit**
-folytatása: ez Paul Sheer szerkesztője, amelynek terminálos változatát sok
-éven át a GNU Midnight Commander belső szerkesztőjeként fejlesztették; a
-bluerig önálló programként viszi tovább ezt a szerkesztőt. A
-**brg**
-ugyanennek a programnak a rövidebb neve.
+A **bluerig** terminálos IDE, amely az mcedit (GNU Midnight Commander) és Paul Sheer cooledit szerkesztőjéből nőtt ki. A **brg** ugyanennek a programnak a rövidebb neve.
 
-Egyszerre több fájlt szerkeszt, mindegyiket a saját ablakában, és bináris
-fájlokat is szerkeszt. Tud blokkot másolni, mozgatni, törölni, kivágni és
-beilleszteni; billentyűnként visszavonni és újra végrehajtani; vannak
-legördülő menüi; fájlt szúr be; vannak makrói; reguláris kifejezéssel keres és
-cserél; van sorszűrője, összecsukása és könyvjelzői; Shift-nyilakkal jelöl ki
-szöveget (ahol a terminál ezt ismeri); van oszlopblokkja; beszúró és felülíró
-módja; automatikus behúzása; sortörése és bekezdésformázása; állítható a
-tabulátor mérete; sok fájltípushoz van szintaxiskiemelése; van felhasználói
-menüje, amely a szöveget shell-parancsokon vezeti át; vannak szerkesztő
-bővítményei (címkék szerinti navigálás, helyesírás-ellenőrzés) és
-Lua-szkriptjei.
+A szerkesztő egyszerre több fájllal dolgozik, mindegyik a saját ablakában van, bináris fájlokkal is. Oszlopblokkot jelöl, sorokat szűr, szöveget csuk össze, makrókat rögzít, a felhasználói menüből shell-parancsokon vezeti át a szöveget, és Lua-szkripteket futtat. A bővítmények projekteket, fordítást és hibakeresést, kódlefedettséget, nyelvi kiszolgálókat (LSP), gitet, kódnavigációt és helyesírás-ellenőrzést adnak hozzá.
 
-A parancssorban megadott minden fájl a saját ablakában nyílik meg. Fájl nélkül
-a szerkesztő üres ablakot nyit. Az
-*editor_filesize_threshold*
-értéknél (alapértelmezésben 64 MB) nagyobb fájl kérdés után nyílik meg, a
-program nem utasítja el.
+A nyelvek támogatása bővíthető: a szintaxiskiemelés, a fordítás, a DAP-adaptereken át végzett hibakeresés és a nyelvi kiszolgálók nyelvenként állíthatók be. Az alapbeállításban több mint 100 fájltípushoz van szintaxiskiemelés, a C (Meson, CMake és Make), a Rust és a Go fordítása, valamint a C, a Rust, a Python, a Bash, a Go és a JavaScript hibakeresése.
 
 # KAPCSOLÓK <a id="options"></a>
 
@@ -54,6 +32,46 @@ utolsó számít, és csak az első fájlra.
 : A fájl megnyitása annál a sornál, ahogy a fordítóprogramok és a grep
 megadják a helyet a fájlban. Ha létezik olyan fájl, amelynek a neve a
 kettőspontot és a számot is tartalmazza, akkor az a fájl nyílik meg.
+
+**Alkalmazási módok**
+
+*-Q, --query*
+: A fájl megnyitása MongoDB- vagy PostgreSQL-lekérdezések módjában. Állítsa
+be a *MC_QUERY_KIND=mongo* vagy a *MC_QUERY_KIND=postgres* változót. Ha ez a
+változó nincs beállítva, a *MC_MONGO_URI* a MongoDB-t választja, a *.sql*
+kiterjesztésű fájl pedig a PostgreSQL-t, ha a *MC_MONGO_URI* nincs beállítva.
+A Query bővítmény kell hozzá.
+
+*-D könyvtár, --debug=könyvtár*
+: A projekt megnyitása hibakeresési módban. Megjelenik a projekt fája és a
+hibakereső panelje. A Project, a Build és a Debugger bővítmény kell hozzá.
+
+*-G könyvtár, --git=könyvtár*
+: Az adott könyvtár Git ablakának megnyitása. Az ablak bezárása kilép a
+bluerigből. Utána az alábbi kapcsolók egyike állhat. *--git* nélkül a
+kapcsoló az aktuális könyvtárra vonatkozik.
+
+**Git-kapcsolók**
+
+*--git-log*
+: A commitnapló megnyitása.
+
+*--git-show=commit*
+: Az adott commit fájljainak és változásainak megjelenítése.
+
+*--git-commit*
+: Az üzenetszerkesztő megnyitása az előkészített (staged) változások
+commitjához.
+
+*--git-amend*
+: Az utolsó commit módosítása: hozzáadja az előkészített változásokat.
+Megnyitja a commitüzenet szerkesztőjét.
+
+*--git-reword=commit*
+: Az adott commit üzenetszerkesztőjének megnyitása. Az üzenet mentése
+átírja a Git előzményeit.
+
+**Általános kapcsolók**
 
 *-V, --version*
 : A program verziójának kiírása.
@@ -71,77 +89,26 @@ adatfájlokról, a felhasználói fájlokról és a bővítményekről.
 *--no-lua*
 : Indítás Lua futtatókörnyezet nélkül: egyetlen Lua-szkript sem töltődik be.
 
-*-D, --debug=könyvtár*
-: Az adott könyvtár projektjének megnyitása hibakeresésre: a projekt
-legutóbbi fájlja, a projekt fája és jobbra a hibakereső panelje. A
-fájlablakok a hibakereső billentyűit kapják: az F6 töréspontot tesz, az F5
-lefordítja és elindítja a programot, első alkalommal elkészítve a
-hibakeresési beállítását, az F7 és az F8 léptet, az F3 indexeli a projekt
-szimbólumait; az F2, az F9 és az F10 marad a mentés, a menü és a kilépés, az
-Alt-F5 pedig a panelre lép és vissza. A project, a build és a debugger
-bővítmény kell hozzá, az F3-hoz a ctags is. A Drawing, a Format és a Plugins
-menü nincs a menüsorban; a billentyűik maradnak, és a Beállítások menüben
-megmarad a Manage plugins.
-
-*-Q, --query*
-: A fájl lekérdezéseinek futtatása adatbázisban: MongoDB-ben a mongosh,
-PostgreSQL-ben a libpq révén; a válasz alul az Output, a Table és a History
-fülön jelenik meg. A *MC_QUERY_KIND* értéke *mongo* vagy *postgres*; nélküle a
-*MC_MONGO_URI* MongoDB-t jelent, a *.sql* fájl PostgreSQL-t. MongoDB-nél a
-*MC_MONGO_URI* és a *MC_MONGO_DB* mondja meg, mihez kapcsolódjon, a
-*MC_MONGOSH* a programot; az F5 a kijelölést futtatja, ha nincs, akkor a
-kurzor körüli *// ---* sorok közötti részt, ha az sincs, az egész fájlt.
-PostgreSQL-nél a libpq a kapcsolatot a *PGHOST*, *PGDATABASE*, *PGSERVICE* és
-hasonló változókból veszi, a jelszót a *~/.pgpass* fájlból; az F5 a
-kijelölést futtatja, ha nincs, az egész fájlt. A Ctrl-F5 az egész fájlt
-futtatja. Ha nincs megadva fájl, a fájl a
-*~/.local/share/bluerig/queries/* könyvtárban van, az adatbázis nevével és
-*.js* kiterjesztéssel, illetve a *postgres/* könyvtárban, a kapcsolat
-nevével, az adatbázis nevével és *.sql* kiterjesztéssel. A projekt legutóbbi
-ablakai nem jelennek meg, és a projekt és a kód bővítményei (project, build,
-debugger, ctags, etags, git, terminal, spell) nem indulnak el; a szkriptek
-maradnak, és a lekérdezések nyelvi kiszolgálója is, ha a lsp.json megad
-ilyet. A Drawing, a Format és a Plugins menü nincs a menüsorban, mint a -D
-esetén. A query bővítmény kell hozzá.
-
-*-G, --git=könyvtár*
-: A git bővítmény Git ablakának megnyitása az adott könyvtár munkafáján; az
-ablak bezárása kilép a szerkesztőből. A projekt legutóbbi ablakai nem
-jelennek meg, és a projekt bővítményei (project, build, debugger, ctags,
-etags) nem indulnak el. Fájlkezelőben git panelként használható: utána a
-következők egyikével, vagy egymagában az aktuális könyvtárra:
-
-*--git-log*
-: A Git ablak a naplón.
-
-*--git-show=commit*
-: A Git ablak azon a commiton: a fájljai és azok eltérései.
-
-*--git-commit*, *--git-amend*
-: A Git ablak az előkészített (staged) változások commitjának üzenetével, vagy
-az utolsó commit üzenetével, amelyet ezekkel módosít; a szerkesztő kilép,
-amint az üzenetet menti és a commit elkészül, vagy ha bezárja az ablakot.
-
-*--git-reword=commit*
-: Ugyanígy új üzenet az adott commitnak, alatta a commit fájljaival.
-
 *-h, -?, --help*
-: A kapcsolók és jelentésük kiírása.
+: A parancssori kapcsolók és jelentésük kiírása.
+
+*--help-all*
+: Az összes csoport parancssori kapcsolóinak kiírása.
 
 *--help-terminal, --help-color*
-: Az alábbi terminál- vagy színkapcsolók kiírása.
+: A terminál- vagy a színkapcsolók kiírása.
 
-A terminálkapcsolók:
+**Terminálkapcsolók**
 
 *-x, --xterm*
-: Az xterm mód kikényszerítése. Xterm-képes terminálokon használatos (két
-képernyőmód, és egér-vezérlősorozatokat tud küldeni).
+: Az xterm mód bekapcsolása. Olyan terminálon használja, amely tudja, amit
+az xterm: két képernyőmódot és egérsorozatokat.
 
 *-X, --no-x11*
 : A módosítóbillentyűk állapotát ne az X Window rendszertől kérdezze.
 
 *-g, --oldmouse*
-: A terminál régi, kiemelő egérkövetésének használata.
+: A terminál régi egérkövetésének használata.
 
 *-d, --nomouse*
 : Az egér kikapcsolása.
@@ -151,7 +118,7 @@ képernyőmód, és egér-vezérlősorozatokat tud küldeni).
 létezik, ha a bluerig az S-Lang könyvtárral készült.
 
 *-s, --slow*
-: Lassú terminál: a képernyő kevesebb frissítéssel rajzolódik.
+: Lassú terminál: a képernyő ritkábban rajzolódik újra.
 
 *-a, --stickchars*
 : A keretek rajzolása egyszerű karakterekkel a terminál vonalrajzoló
@@ -165,17 +132,16 @@ karakterei helyett.
 : Semmilyen billentyűkiosztás-fájl ne töltődjön be: a programba épített
 társítások érvényesek.
 
-A színkapcsolók:
+**Színkapcsolók**
 
 *-b, --nocolor*
-: Fekete-fehér megjelenítés kikényszerítése.
+: Fekete-fehér megjelenítés.
 
 *-c, --color*
-: Színes mód kikényszerítése olyan terminálon, amely látszólag nem ismeri a
-színeket.
+: Színes mód olyan terminálon, amely nem jelzi, hogy ismeri a színeket.
 
 *-S téma, --skin=téma*
-: A megadott nevű téma (skin) használata. Lásd
+: Az adott nevű téma (skin) használata. Lásd
 [Témák](#skins).
 
 # Áttekintés <a id="overview"></a>
@@ -186,10 +152,9 @@ van, alatta a szerkesztőablakok, alul a funkcióbillentyűk feliratai. A
 menüsor rejtve is lehet: az F9 vagy egy kattintás a képernyő felső sorára
 előhozza.
 
-Minden ablak egy fájlt mutat: a fájl neve, állapota és a kurzor helye az
-ablak tetején lévő állapotsorban áll. Egyszerre több ablak is nyitva lehet; az
-[Ablak menü](#window-menu)
-lép közöttük, és mindegyik mozgatható és átméretezhető.
+Az ablak tetején lévő állapotsor a fájl nevét, a fájl állapotát és a kurzor
+helyét mutatja. Az [Ablak menü](#window-menu) a nyitott ablakok között vált.
+Az ablakok mozgathatók és átméretezhetők.
 
 # A bluerig szerkesztő <a id="internal-file-editor"></a>
 
@@ -197,8 +162,7 @@ lép közöttük, és mindegyik mozgatható és átméretezhető.
 **Billentyűk**
 
 <!-- {{key:Action|F8}}: Action is the action name of misc/keymap.default.ini and src/keymap.c (Remove = f8); the help shows the keys bound to it now, the man page the default keys after the bar -->
-Ezek az alapértelmezett billentyűk. Bármelyik megváltoztatható, lásd
-[A billentyűk átdefiniálása](#keys_redefine).
+[A társítások megváltoztatása](#keys_redefine)
 
 <a id="moving-around"></a>
 **Kurzormozgatás**
@@ -485,9 +449,9 @@ a Linux konzolon, ha fut a
 **gpm**
 egérkiszolgáló.
 
-A kattintás oda teszi a kurzort, ahová kattint, a húzás kijelöli a szöveget,
-a kattintás egy menün, gombon vagy funkcióbillentyű-feliraton pedig kiválasztja
-azt. A görgő görgeti a szöveget.
+A szövegre kattintás odaviszi a kurzort, a húzás kijelöli a szöveget. Az egér
+menüket nyit meg, gombokat nyom meg, és futtatja a képernyő alsó sorában
+látható parancsokat. Az egér görgője görgeti a szöveget.
 
 Az egérgombok alapértelmezett ismétlési ideje 400 ezredmásodperc. Ez az ini
 fájl
@@ -502,82 +466,59 @@ terminál saját egérkezelése (szöveg kivágása és beillesztése) érhető 
 
 # Menüsor <a id="menu-bar"></a>
 
-A menüsor az F9 megnyomására vagy a képernyő felső sorára kattintva jelenik
-meg. A menüi: Fájl, Szerkeszt, Keresés, Parancs, Navigate (csak akkor, ha egy
-bővítmény vagy szkript tesz bele valamit), Ablak, Plugins és Beállítások. Egy
-Lua-szkript bármelyikbe tehet tételeket, vagy saját menüket.
+A menüsor a {{key:Menu|F9}} megnyomására vagy a képernyő felső sorára
+kattintva jelenik meg. A menüi: Fájl, Szerkeszt, Keresés, Parancs, Navigate
+(ha egy bővítmény vagy szkript tett bele valamit), Ablak, Plugins és
+Beállítások. Egy Lua-szkript bármelyikbe tehet tételeket, vagy saját menüket.
 
 ## Fájl menü <a id="file-menu"></a>
 
-**Megnyitás...**
-: Fájl megnyitása új ablakban.
-
-**Új**
-: Üres ablak nyitása.
-
-**Bezárás**
-: Az ablak bezárása.
-
-**History...**
-: A korábban szerkesztett fájlok listája, hogy egyet újra megnyisson.
-
-**Mentés, Mentés másként**
-: A fájl kiírása a saját nevén vagy más néven. Lásd
-[Mentés másként](#save-file-as).
-
-**Fájl beszúrása..., Másolat fájlba...**
-: Fájl beszúrása a kurzorhoz, vagy a kijelölt blokk kiírása fájlba.
-
-**Felhasználói menü**
-: A [felhasználói menü](#edit-menu-file).
-
-**Névjegy...**
-: A program verziója.
-
-**Kilépés**
-: Kilépés a szerkesztőből; a nem mentett fájlokról kérdez.
+|  |  |
+|--|--|
+| Megnyitás... | Fájlt nyit meg új ablakban |
+| Új | Üres ablakot nyit |
+| Bezárás | Bezárja az aktuális ablakot |
+| Előzmények... | Megnyitja a legutóbb szerkesztett fájlok listáját |
+| Mentés | Kiírja az aktuális fájlt |
+| Mentés másként | [Új néven írja ki a fájlt](#save-file-as) |
+| Fájl beszúrása... | Egy fájl tartalmát szúrja be a kurzorhoz |
+| Másolat fájlba... | A kijelölt blokkot írja ki fájlba |
+| Felhasználói menü | [Megnyitja a szöveget feldolgozó parancsok listáját](#edit-menu-file) |
+| Névjegy... | Megmutatja a program verzióját |
+| Kilépés | Bezárja a szerkesztőt. Felajánlja a nem mentett változások mentését |
 
 ## Szerkeszt menü <a id="edit-menu"></a>
 
 Vissza, Újra és az Undo History; váltás a beszúró és a felülíró mód között; a
 parancsok, amelyek blokkot, oszlopblokkot vagy az egész fájlt jelölik ki, és
 amelyek a kijelölést megszüntetik; a blokk másolása, áthelyezése és törlése;
-másolás a vágólapfájlba, kivágás oda és beillesztés onnan; és ugrás a fájl
+másolás a vágólapfájlba, kivágás oda és beillesztés onnan; ugrás a fájl
 elejére és végére.
 
 ## Keresés menü <a id="search-menu"></a>
 
-Keresés, Keresés tovább és Csere; a sorszűrő (Toggle line filter, Filter by
-word; lásd [Keresés, csere és a sorszűrő](#search-and-replace)); és a
-könyvjelzők: könyvjelző be- és kikapcsolása az aktuális soron, ugrás a
-következőre vagy az előzőre, és mindegyik törlése.
+A keresés, a csere és a szűrés parancsait a
+[Keresés, csere és a sorszűrő](#search-and-replace) írja le.
+Ugyanez a menü könyvjelzőt tesz az aktuális sorra vagy leveszi róla, a
+következő vagy az előző könyvjelzőre ugrik, és minden könyvjelzőt töröl.
 
 ## Parancs menü <a id="command-menu"></a>
 
-**Ugrás sorra...**
-: Ugrás a számával megadott sorra.
-
-**Sorszámok**
-: A sorszámok oszlopának megjelenítése vagy elrejtése.
-
-**Ugrás zárójel párjára**
-: Ugrás a kurzor alatti zárójel párjára.
-
-**Szintaktikus szövegkiemelés ki/be, Toggle right margin, Toggle control characters**
-: Ezek be- és kikapcsolása.
-
-**Kódolás...**
-: Az a kódlap, amelyben a szöveg íródott. Lásd
-[Válasszon kódlapot](#codepages-translation).
-
-**Fold / Unfold block, Unfold all**
-: Lásd [Összecsukás](#folding).
-
-**Képernyő frissítése**
-: A képernyő újrarajzolása.
-
-**Makró rögzítésének indítása/leállítása, Macro explorer..., Akciók felvétele/ismétlése**
-: Lásd [Makrók](#macros).
+|  |  |
+|--|--|
+| Ugrás sorra... | A megadott számú sorra viszi a kurzort |
+| Sorszámok | Be- és kikapcsolja a sorállapot oszlopát |
+| Ugrás zárójel párjára | A zárójel párjára viszi a kurzort |
+| Szintaktikus szövegkiemelés ki/be | Be- és kikapcsolja a kiemelést a szerkesztőben |
+| Toggle right margin | Megjelöli az oszlopot, ahol a sorok törnek |
+| Vezérlőkarakterek be/ki | A vezérlőkaraktereket ^M, ^L stb. alakban mutatja |
+| Kódolás... | [A fájl kódolásának kiválasztása](#codepages-translation) |
+| Fold / Unfold block | [Blokk összecsukása vagy kinyitása](#folding) |
+| Összes kibontása | Minden összecsukást kinyit, és leveszi a sorszűrőt |
+| Képernyő frissítése | Újrarajzolja a képernyőt |
+| Makró rögzítésének indítása/leállítása | [Makrót rögzít és billentyűhöz köti](#macros) |
+| Macro explorer... | [Megnyitja a rögzített makrók listáját](#macro-explorer) |
+| Akciók felvétele/ismétlése | Műveleteket rögzít, és megadott számszor megismétli őket |
 
 ## Navigate menü <a id="navigate-menu"></a>
 
@@ -595,15 +536,14 @@ befejezi.
 : Az ablak váltása a teljes képernyő és a saját mérete között.
 
 **Toggle sticky windows**
-: Összetapadó ablakoknál az egymás mellett álló keretű ablakok együtt
-méreteződnek: az ablak sarka elmozdítja azt az élt, amelyen áll, az él
-mentén lévő összes ablakkal együtt, mindkét oldalon, és nem nyílik rés
-közöttük. Ahol négy ablak találkozik, a sarok mindkét élt mozgatja. Az az
-oldal, amely az átméretezés kezdetekor a képernyő szélén van, ott marad, az
-ablak megtartja a legkisebb méretét, és az él megáll egy útjában álló
-ablaknál, amely ezután a többivel együtt méreteződik. Az Esc minden ablakot
-visszatesz. A címénél fogva húzott ablak egyedül mozog. A beállítás az ini
-fájlban
+: Ha egy ablak sarkát húzza, a szomszédos ablakok keretei vele mozognak, így
+az ablakoknak közös határa marad. Ahol négy ablak találkozik egy sarokban, a
+vízszintes és a függőleges határ egyszerre mozgatható. Az a határ, amely
+kezdetben a képernyő szélén volt, ott marad. Ha a mozgatott határ egy másik
+ablakhoz ér, az az ablak is méreteződni kezd. Minden ablaknak van legkisebb
+mérete. Az Esc visszavonja a változtatást. A címénél fogva húzott ablak
+egyedül mozog.
+A beállítás az ini fájlban
 **editor_sticky_windows**
 néven marad meg.
 
@@ -614,97 +554,37 @@ néven marad meg.
 : A nyitott ablakok, hogy valamelyikre át lehessen lépni. Lásd
 [Nyitott fájlok](#open-files).
 
-Alattuk a bővítmények ablakai következnek: a projekt fája, a fordítás
-kimenete, a hibakereső panelje és konzolja, a terminál, a hibakereső által
-futtatott program terminálja, a Preview. Egy tétel megnyitja az ablakát,
-előre hozza, ha egy másik mögött van, és bezárja, ha már elöl van; a nyitott
-ablak *\** jelet kap. A kikapcsolt bővítménynek nincs tétele.
-
-A bővítmények ablakai dokkokban állnak. A fa, a hibakereső panelje és a
-Preview a jobb oldali oszlopba kerül, egymás alá, a képernyő teljes
-magasságában. A konzol, a fordítás kimenete és a terminál az alsó sorba
-kerül, a fájlok ablakai alá: a sort fülekként osztják meg: egy látszik, és a
-címe felsorolja a neveiket. Egy névre kattintva, vagy a
-**Ctrl-Alt-PgDn** és **Ctrl-Alt-PgUp** billentyűvel (*WindowTabNext* és
-*WindowTabPrev* a kiosztásban) egy másik jelenik meg. A teljes képernyős
-fájlablak kitölti a képernyő többi részét, és ismét az egész képernyőt, ha a
-dokkok üresek. Egy dokkolt ablak átméretezése a dokkot méretezi át; az
-áthelyezése kiveszi a dokkból.
-
-**Layout...**
-: Az ablakok elrendezései: a bővítmények mely ablakai vannak nyitva, melyik
-dokkban, és mekkorák a dokkok. Az *Edit* csak a fájlokat tartalmazza, a
-*Project* a projekt fáját, a *Debug* a fát és a hibakereső paneljét. A
-**Use** így rendezi el az ablakokat; a **Save as...** a jelenlegi állapotukban
-egy név alatt megőrzi őket, akár ezek egyikének nevén is; a **Töröl**
-elfelejt egy megőrzött elrendezést, és visszajön a szerkesztő azonos nevű
-elrendezése. A **Debug layout while debugging** bekapcsolásával a hibakereső
-indítása a *Debug* szerint rendezi el az ablakokat, a leállítása pedig
-visszaállítja őket, de az alsó fülek nyitva maradnak, hogy olvashatók legyenek.
-
-A projekt ablakai a szerkesztő kilépésekor megmaradnak, és visszajönnek, ha a
-szerkesztő a projekt egy fájljával indul.
-A *bluerig --debug* a *Debug* elrendezéssel indul. Az elrendezések a
-beállítások könyvtárában, a *layouts.ini* fájlban maradnak meg.
-
 ## Plugins menü <a id="plugins-menu"></a>
 
-Azok a szerkesztő bővítmények, amelyeknek saját tételük van, például a
-helyesírás-ellenőrző; az ablakaik az [Ablak menüben](#window-menu) vannak. A
+Azok a szerkesztő bővítmények, amelyeknek saját menütételük van, például a
+helyesírás-ellenőrző. A
 [Manage plugins](#manage-plugins)
 ablakban kikapcsolt bővítmény nincs a menüben.
 
 ## Beállítások menü <a id="options-menu"></a>
 
-**Általános...**
-: A [szerkesztő beállításai](#editor-options).
+|  |  |
+|--|--|
+| Általános... | [A behúzások, a sortörés és a szerkesztő többi beállítása](#editor-options) |
+| Mentési mód... | [Kiválasztja, hogyan íródnak ki a fájlok](#edit-save-mode) |
+| Szintaktikus szövegkiemelés | Kézzel, vagy a fájl neve és első sora alapján választja ki a kiemelés szabályait |
+| Megjelenítés... | [A téma és az árnyékok beállítása](#appearance) |
+| Billentyűk... | [Billentyűket párosít a terminál sorozataival](#learn-keys) |
+| Billentyű-hozzárendelések... | [Billentyűket köt műveletekhez](#key-bindings) |
+| Billentyűfigyelő... | [Megmutatja a terminál sorozatát és a kötött műveletet](#key-sniffer) |
+| Bővítmények kezelése... | [Be- és kikapcsolja és beállítja a bővítményeket](#manage-plugins) |
+| Plugin info... | [Megmutatja a bővítmények állapotát és képességeit](#plugin-info) |
+| Lua scripts... | [A Lua-szkriptek kezelése](#lua-scripts). Csak Luával készült programban van meg |
+| Szintaxisfájl szerkesztése | Megnyitja a [felhasználó szintaxisfájlját](#syntax-highlighting) a szerkesztőben |
+| Menu file | Megnyitja a [felhasználói menü fájlját](#edit-menu-file) a szerkesztőben |
+| Beállítások mentése | Kiírja a beállításokat a *~/.config/bluerig/ini* fájlba |
 
-**Mentési mód...**
-: Hogyan íródik ki a fájl. Lásd [Mentési mód](#edit-save-mode).
+A "Szintaxisfájl szerkesztése" a *~/.local/share/bluerig/syntax/Syntax* fájlt
+nyitja meg. Ha a fájl még nem létezik, a szerkesztő egy rövid megjegyzéssel
+hozza létre. A rendszerfájl a felhasználói fájl után olvasódik be.
 
-**Szintaktikus szövegkiemelés**
-: A fájl szintaxisszabályainak kézi kiválasztása, vagy rábízása a fájl nevére
-és első sorára.
-
-**Megjelenítés...**
-: A téma és az árnyékok. Lásd [Megjelenítés](#appearance).
-
-**Billentyűk...**
-: Lásd [Billentyűk](#learn-keys).
-
-**Key bindings...**
-: Lásd [Key bindings](#key-bindings).
-
-**Key sniffer...**
-: Lásd [Key sniffer](#key-sniffer).
-
-**Manage plugins...**
-: Lásd [Manage plugins](#manage-plugins).
-
-**Plugin info...**
-: Lásd [Plugin info](#plugin-info).
-
-**Lua scripts...**
-: Lásd [Lua scripts](#lua-scripts). A tétel csak akkor van meg, ha a bluerig
-Luával készült.
-
-**Szintaxisfájl szerkesztése**
-: A felhasználó szintaxisfájljának,
-*~/.local/share/bluerig/syntax/Syntax*,
-megnyitása a szerkesztőben. Ha nem létezik, a program egy rövid, a
-tartalmát leíró megjegyzéssel hozza létre, nem a rendszerfájl másolataként; a
-rendszerfájl utána is beolvasódik. Lásd
-[Szintaxiskiemelés](#syntax-highlighting).
-
-**Menu file**
-: A [felhasználói menü](#edit-menu-file) fájljának megnyitása a szerkesztőben.
-
-**Beállítások mentése**
-: A beállítások kiírása a
-*~/.config/bluerig/ini*
-fájlba. Ha az
-*auto_save_setup*
-beállítás be van kapcsolva, a szerkesztő minden kilépéskor kiírja őket.
+Ha az *auto_save_setup* be van kapcsolva, a szerkesztő kilépéskor menti a
+beállításokat.
 
 ### A szerkesztő beállításai <a id="editor-options"></a>
 
@@ -726,7 +606,7 @@ beállítás az ini fájlba íródik, lásd
 
 |  |  |
 |--|--|
-| Hamis fél-tabulátorok | A bal margó és a szöveg között a tabulátor a szélessége felével lép, és a fájlba szóközök és tabulátorok kerülnek |
+| Hamis fél-tabulátorok | A behúzásban a kurzor fél tabulátorpozíciót lép. A fájlba szóközök és tabulátor karakterek kerülnek |
 | Backspace: tabokat egyszerre | A Backspace a bal margóig az egész behúzást törli, ha a kurzor és a margó között nincs szöveg |
 | Tabulálás szóközökkel | Tabulátor karakter helyett szóközöket szúr be a következő tabulátorpozícióig |
 | Tabulátor méret | A tabulátor karakter szélessége; alapértelmezésben 8 |
@@ -735,7 +615,7 @@ beállítás az ini fájlba íródik, lásd
 
 |  |  |
 |--|--|
-| Esc timeout, ms | Hány ezredmásodpercig várja az Esc a billentyű többi részét, mielőtt Escnek számít; alapértelmezésben 1000. Az ini fájlban ez az *old_esc_mode_timeout*, mikroszekundumban, és indításkor a **KEYBOARD_KEY_TIMEOUT_US** változó felülírja |
+| Esc timeout, ms | Hány ezredmásodpercig várja a szerkesztő az Esc után a vezérlősorozat többi részét. Alapértelmezésben 1000. Az *old_esc_mode_timeout* beállítás mikroszekundumban van. Indításkor a **KEYBOARD_KEY_TIMEOUT_US** változó az erősebb |
 
 **További opciók**
 
@@ -743,14 +623,14 @@ beállítás az ini fájlba íródik, lásd
 |--|--|
 | Új sor auto. behúzás | Az Enter a fölötte lévő sor behúzásával kezdi a sort |
 | Mentés előtt megerősítés | A fájl kiírása előtt kérdez |
-| Fájlbeli pozíció mentése | A fájl ott nyílik meg, ahol legutóbb elhagyták |
+| Fájlbeli pozíció mentése | A fájl megnyitásakor visszaállítja a kurzor helyét |
 | Látható sorvégi szóközök | Megjelöli a sorok végén álló szóközöket |
 | Látható tabulátorok | Megjelöli a tabulátor karaktereket |
 | Show control characters | A vezérlőkaraktereket ^M alakban mutatja, nem rejti el |
 | Szintaktikus szövegkiemelés | A szöveget a típusa szintaxisszabályai szerint színezi |
 | Kurzor a beillesztett blokk után | A kurzort a beszúrt blokk végén hagyja, nem az elején |
 | Tartós kijelölés | A kurzor mozgatásakor megtartja a kijelölést |
-| Kurzor a sor vége mögött | A kurzor a sor utolsó karakterén túl is mehet |
+| Kurzor a sor vége mögött | A kurzor a sor végén túl is mehet |
 | Csoportos visszavonás | Az egyforma változtatások sorozatát egyszerre vonja vissza |
 | Sortörési pozíció | Az oszlop, ahol a tördelési módok törik a sort; alapértelmezésben 72 |
 
@@ -761,12 +641,12 @@ Hogyan íródik ki a fájl, ugyanaz a három mód, amelyet az
 beállítás felvehet:
 
 **Gyors mentés**
-: Közvetlenül felülírja a fájlt. Gyors, de egy közbeni hiba félig kiírt
-fájlt hagy hátra.
+: Az adatokat közvetlenül az eredeti fájlba írja. Ha az írás nem sikerül, a
+fájl hiányos maradhat.
 
 **Biztonságos mentés**
-: Előbb ideiglenes fájlba ír, és amikor az teljesen elkészült, átnevezi az
-eredetire, így egy hiba érintetlenül hagyja az eredetit.
+: Az adatokat ideiglenes fájlba írja, és csak az írás végeztével cseréli le
+vele az eredetit.
 
 **Biztonsági másolatok az alábbi kiterjesztéssel**
 : Biztonságos mentés, és az eredeti a saját nevén megmarad, a beviteli sor
@@ -778,8 +658,8 @@ biztonsági másolatot is lecseréli.
 
 ### Megjelenítés <a id="appearance"></a>
 
-A téma, amellyel a program rajzolódik, és hogy a párbeszédablakoknak és a
-legördülő menüknek van-e árnyéka.
+Itt választható ki a téma, és itt állítható be a párbeszédablakok és a
+legördülő menük árnyéka.
 
 **Skin**
 : A gomb megnyitja a telepített és a felhasználói témák listáját; a
@@ -793,29 +673,26 @@ A választás az ini fájl
 *skin*
 és
 *shadows*
-beállításába íródik. A témafájlokról magukról lásd a
-[Témák](#skins)
-szakaszt.
+beállításába íródik. A témafájlok keresési sorrendjét a [Témák](#skins)
+írja le.
 
 ### Billentyűk <a id="learn-keys"></a>
 
-Ez a párbeszédablak megtanítja a bluerignek azokat a vezérlősorozatokat,
-amelyeket a terminál a funkcióbillentyűkre, a nyilakra és a
-navigációs billentyűkre küld. A címe a terminált nevezi meg, a
-**TERM**
-változó alapján.
+Ez a párbeszédablak a terminál vezérlősorozatait párosítja a
+funkcióbillentyűkkel, a nyilakkal és a navigációs billentyűkkel. A cím a
+terminál nevét mutatja a **TERM** változóból.
 
 A jelölőnégyzetekkel válasszon módosító kombinációt (Ctrl, Alt, Shift), majd
-nyomja meg egy billentyű gombját. Nyomja le a billentyűt a billentyűzeten, és
-várja meg, amíg az elfogásról szóló üzenet eltűnik. A megtanult sorozat a gomb
-mellett jelenik meg. Az olyan sorozatot, amely már egy másik billentyűé,
-ütközésként jelzi.
+nyomja meg egy billentyű gombját. Nyomja le azt a billentyűt a billentyűzeten,
+és várja meg, amíg az elfogásról szóló üzenet eltűnik. A megtanult sorozat a
+gomb mellett jelenik meg. Ha egy másik billentyűnek már megvan, a szerkesztő
+ütközést jelez.
 
 **Del**
-: Annak a megtanult billentyűnek a törlése, amelyen a kurzor áll.
+: A kiválasztott billentyű mentett sorozatának törlése.
 
 **Mentés**
-: A megtanult billentyűk kiírása a
+: A billentyűk és sorozatok párosításának kiírása a
 *~/.config/bluerig/term/\<TERM>*
 fájlba.
 
@@ -824,12 +701,11 @@ fájlba.
 
 ### Key bindings <a id="key-bindings"></a>
 
-A program műveletei azokkal a billentyűkkel, amelyekre válaszolnak,
-táblázatban. A felül lévő gombok választják ki a csoportot, Editor vagy
-Widgets, majd annak részét: Main és Ctrl-X a szerkesztőnél; Dialog, Menu,
-Input, Listbox, Radio és Help a vezérlőelemeknél. A Back visszavisz a
-csoportokhoz. A \* jellel jelölt műveletek billentyűi eltérnek az
-alapértelmezettől.
+A táblázat a műveleteket és a hozzájuk kötött billentyűket mutatja. A felül
+lévő gombok választják ki a csoportot, Editor vagy Widgets. Az Editor
+csoport részei a Main és a Ctrl-X, a Widgets csoporté a Dialog, a Menu, az
+Input, a Listbox, a Radio és a Help. A Back visszavisz a csoportok listájához.
+A megváltoztatott kötésű műveleteket \* jelöli.
 
 **Enter**
 : A művelet billentyűjének cseréje: nyomja le a hozzárendelendő billentyűt.
@@ -851,77 +727,64 @@ fájlba.
 megnyitása a szerkesztőben.
 
 **Edit term file**
-: A terminál billentyűsorozatainak megnyitása, abban a fájlban, amelyet a
-[Billentyűk](#learn-keys)
-ír.
+: A [Billentyűk](#learn-keys)
+ablakban mentett vezérlősorozatok fájljának megnyitása.
 
-A más művelethez tartozó billentyűt jelzi, és megkérdezi, elvegye-e onnan.
+Ha a billentyű már egy másik művelethez van kötve, a szerkesztő megerősítést
+kér az új kötéshez.
 
 ### Key sniffer <a id="key-sniffer"></a>
 
 Nyomja meg a
 **Capture key**
-gombot, majd egy tetszőleges billentyűt. A párbeszédablak megmutatja, mi
-érkezett:
+gombot, majd nyomja le azt a billentyűt, amelyet ellenőrizni szeretne. A
+párbeszédablak megmutatja az adatait:
 
 ```
 Shortcut   the symbolic name, e.g. Ctrl-F5
 Action     the action of the key in the editor keymap
-Raw        the escape sequence and its bytes in hex
+Raw        the escape sequence and its bytes
 Keycode    the internal numeric code
 ```
 
-Ide érdemes nézni, ha egy billentyű nem csinál semmit, vagy mást csinál: a
-billentyűt, amely a program számára ismeretlen sorozatként érkezik, a
-[Billentyűk](#learn-keys)
-ablakban kell megtanítani, azt pedig, amely megérkezik, de nincs művelete, a
-[Key bindings](#key-bindings)
-ablakban kell társítani.
+Ha a szerkesztő nem ismeri fel a sorozatot, állítsa be a
+[Billentyűk](#learn-keys) ablakban. Ha a billentyűt felismeri, nézze meg a
+hozzá kötött műveletet a [Key bindings](#key-bindings) ablakban.
 
 ### Manage plugins <a id="manage-plugins"></a>
 
-A program által betöltött bővítmények táblázatban: a fajta, a név és amit a
-bővítmény magáról mond. Itt szerepelnek a szerkesztő bővítményei, és ahol a
-bluerig Luával készült, a Lua-motor is, mint
+A táblázat minden szerkesztő bővítmény fajtáját, nevét és leírását mutatja.
+Ha a bluerig Luával készült, a táblázatban a Lua futtatókörnyezet is szerepel,
 *runtime*
-fajtájú bővítmény. A bővítmény a sorában lévő jelölőnégyzettel kapcsolható ki
-és be, és ami ki van kapcsolva, az a következő alkalommal sem töltődik be; a
-választás a
-*~/.config/bluerig/plugins.ini*
-fájlban marad meg. A kikapcsolt bővítmény a listában marad, hogy újra be
-lehessen kapcsolni.
+fajtával.
+A bővítmény sorában lévő jelölőnégyzet dönti el, betöltődik-e a következő
+indításkor. A választás a *~/.config/bluerig/plugins.ini* fájlban marad meg.
+A kikapcsolt bővítmények a listában maradnak.
 
 **Enter, F4**
-: Annak a bővítménynek a beállításait nyitja meg, amelyen a kurzor áll. Ha a
-bővítménynek nincs beállítása, ezt jelzi. A Lua-motor sorában a
-[Lua scripts](#lua-scripts)
-ablakot nyitja meg.
-
-**IDE: project, build, debugger**
-: Az a három bővítmény, amely IDE-t csinál a szerkesztőből, együtt kapcsolható
-be, vagy együtt ki, ha mind a három be van kapcsolva: a projekt és a
-fájljai, a fordítás és a hibakereső. Mindegyik a többi nélkül is működik.
+: A kiválasztott bővítmény beállításainak megnyitása. Ha a bővítménynek nincs
+beállítása, a szerkesztő ezt jelzi. A Lua futtatókörnyezetnél a
+[Lua scripts](#lua-scripts) ablakot nyitja meg.
 
 ### Plugin info <a id="plugin-info"></a>
 
-A szerkesztő által betöltött bővítmények: a név, be van-e kapcsolva, mit nyújt
-és mit csinál. Ez megtekintésre szolgáló lista; a bővítményt a
-[Manage plugins](#manage-plugins)
-ablakban lehet kikapcsolni és a beállításait megnyitni.
+A betöltött bővítmények listája a nevüket, az állapotukat, a képességeiket és
+a leírásukat mutatja. A bővítmények beállításai és kapcsolói a
+[Manage plugins](#manage-plugins) ablakban vannak.
 
 ### Lua scripts <a id="lua-scripts"></a>
 
-A megtalált Lua-szkriptek, a rendszerszintűek és a felhasználóéi,
-táblázatban: be van-e kapcsolva, hol van a szkript (global vagy user), az
-azonosítója, a munkaterülete, mit nyújt és mit csinál. A szkript a sorában
-lévő jelölőnégyzettel kapcsolható ki és be; a változás a bluerig következő
-indításakor lép érvénybe.
+A táblázat minden megtalált Lua-szkript állapotát, helyét (global vagy user),
+azonosítóját, munkaterületét, képességeit és leírását mutatja.
+A szkript sorában lévő jelölőnégyzet dönti el, betöltődik-e a bluerig
+következő indításakor.
 
 **Settings**
 : Annak a szkriptnek a futtatása, amely a csomag beállításait tartalmazza, ha
 van ilyen.
 
-A szkriptekről magukról lásd [Lua-szkriptek](#lua-scripting).
+Hogy hol vannak a csomagok és hogyan épülnek fel, azt a
+[Lua-szkriptek](#lua-scripting) írja le.
 
 # Keresés, csere és a sorszűrő <a id="search-and-replace"></a>
 
@@ -953,43 +816,42 @@ csoportokat szúrja be.
 
 **Filter**
 
-Elrejti a találat nélküli sorokat; a sorszámok nem változnak, és a
-sorállapot-oszlop megjelöl minden elrejtett szakaszt. A sorok egyszer
-rejtődnek el, a gomb megnyomásakor: az utána megváltoztatott vagy beírt sor
-látható marad, akkor is, ha nem illeszkedik.
+A szűrő elrejti a találat nélküli sorokat, és megtartja a sorszámokat. A
+sorállapot-oszlop megjelöli az elrejtett szakaszokat. A szűrő a
+bekapcsolásakor lép érvénybe. Az új és a megváltoztatott sorok láthatók
+maradnak, amíg a szűrőt újra nem alkalmazzák.
 
 |  |  |
 |--|--|
-| {{key:FilterToggle|Alt-s}} | Leveszi a szűrőt, vagy az utolsó keresést alkalmazza szűrőként; ha nem volt keresés, megnyitja a keresés párbeszédablakát |
+| {{key:FilterToggle|Alt-s}} | Leveszi a szűrőt, vagy az utolsó keresést alkalmazza szűrőként. Ha még nem volt keresés, megnyitja a keresés párbeszédablakát |
 | {{key:FilterWord|Alt-S}} | A kijelölt szövegre vagy a kurzor alatti szóra szűr |
-| Parancs \> Unfold all | Leveszi a szűrőt és minden összecsukást |
+| Parancs \> Összes kibontása | Leveszi a szűrőt és minden összecsukást |
 
 # Összecsukás <a id="folding"></a>
 
-Az összecsukás sorok egy szakaszát rejti el az első sora mögé, amely a
-képernyőn marad, egy jellel a sorállapot-sávban. Az
-**Alt-F**
+Az összecsukás egy blokknak csak az első sorát mutatja. A sorállapot-oszlop
+megjelöli ezt a sort. A
+{{key:FoldToggle|Alt-F}}
 (a Parancs menü Fold / Unfold block tétele) a kijelölt sorokat csukja össze,
 vagy ha nincs kijelölés, az aktuális soron lévő zárójeltől a párjáig tartó
-sorokat. Az összecsukott rész első során kinyitja azt. Az
-**Unfold all**
+sorokat. Az összecsukott rész első során ez a billentyű kinyitja azt. Az
+**Összes kibontása**
 a fájl minden összecsukását kinyitja, és leveszi a sorszűrőt.
 
 # Makrók <a id="macros"></a>
 
 A {{key:MacroStartStopRecord|Ctrl-r}}
-elindítja a makró felvételét: rögzíti az utána lenyomott billentyűket. A
-**Ctrl-r**
-újabb megnyomása befejezi a felvételt, és várja azt a billentyűt, amelyhez a
-makró tartozik; ezután az a billentyű futtatja.
+elindítja a makró felvételét. A felvétel befejezéséhez nyomja meg újra a
+{{key:MacroStartStopRecord|Ctrl-r}}
+billentyűt, majd azt a billentyűt, amely a makrót futtatja majd.
 
 A makrók a
 **~/.local/share/bluerig/macros**
 fájl
 **[editor]**
-szakaszában maradnak meg, és egy makró a sorának ottani törlésével, vagy a
-[Macro Explorer](#macro-explorer)
-ablakban törölhető.
+szakaszában maradnak meg.
+Makró törléséhez törölje a sorát a fájlból, vagy használja a
+[Macro Explorer](#macro-explorer) ablakot.
 
 A Parancs menü
 **Akciók felvétele/ismétlése**
@@ -1039,19 +901,16 @@ l       comment selection
 
 ## Macro Explorer <a id="macro-explorer"></a>
 
-A felvett makrók, azzal a billentyűvel, amelyre mindegyik válaszol, és azzal,
-amit csinál. A gombok:
+A felvett makrók listája a billentyűiket és a műveleteiket mutatja.
 
 **Run**
-: Lejátssza azt a makrót, amelyen a kurzor áll.
+: A kiválasztott makró futtatása.
 
 **Töröl**
-: Kérdés után eltávolítja.
+: A kiválasztott makró törlése, kérdés után.
 
 **Fájl szerkesztése**
-: Megnyitja azt a fájlt, amelyben a makrók vannak, és amelyet a
-[Makrók](#macros)
-szakasz leír.
+: A makrófájl megnyitása. A formátumát a [Makrók](#macros) írja le.
 
 # Felhasználói menü <a id="edit-menu-file"></a>
 
@@ -1181,6 +1040,7 @@ feltételsor, egy '+' és egy '=' jelű, külön adja meg a kettőt.
 # Bővítmények <a id="plugins"></a>
 
 {{plugins}}
+
 A bővítmény a Beállítások menü
 [Manage plugins](#manage-plugins)
 tételében kapcsolható be és ki.
@@ -1189,34 +1049,29 @@ tételében kapcsolható be és ki.
 
 ## Mentés másként <a id="save-file-as"></a>
 
-A név, amelyen a fájl kiíródik, és a sortörések, amelyekkel kiíródik: ahogy a
-fájlban vannak, Unix (LF), Windows és DOS (CR LF), vagy Macintosh (CR). A
-választás erre a mentésre érvényes; a fájl azt tartja meg, amit kap.
+Adja meg a fájl nevét és a sortörések formátumát. Megtarthatja a fájl
+formátumát, vagy választhat Unix (LF), Windows és DOS (CR LF), vagy Macintosh
+(CR) formátumot. A választott formátum erre a mentésre érvényes.
 
 ## Nyitott fájlok <a id="open-files"></a>
 
-A szerkesztőben nyitott fájlok, soronként egy. Az Enter arra a fájlra lép,
-amelyen a kurzor áll, az Esc a megjelenített fájlt hagyja a helyén. Ugyanez a
-lista az Ablak menü
+A listában minden nyitott fájlnak egy sora van. Az Enter a kiválasztott
+fájlra vált, az Esc bezárja a listát. Ugyanezt a listát nyitja meg az Ablak
+menü
 **Lista**
 tétele.
 
 ## Képernyőválasztó <a id="screen-selector"></a>
 
 A szerkesztőn kívül egy Lua-szkript saját képernyőket is nyithat: teljes
-képernyős nézeteket, amelyek nyitva maradnak, miközben visszatér a
-szerkesztőbe. A
-képernyők között háromféleképpen lehet váltani:
+képernyős ablakokat, amelyek nyitva maradnak, miközben visszatér a
+szerkesztőbe. A képernyők között háromféleképpen lehet váltani:
 
-**Alt-}**
-: váltás a következő képernyőre;
-
-**Alt-{**
-: váltás az előző képernyőre;
-
-**Alt-\`**
-: párbeszédablak megnyitása a nyitott képernyők listájával, hogy egyet
-kiválasszon.
+|  |  |
+|--|--|
+| Alt-} | Következő képernyő |
+| Alt-{ | Előző képernyő |
+| Alt-\` | A nyitott képernyők listája |
 
 ## Kiegészítés <a id="completion"></a>
 
@@ -1237,7 +1092,7 @@ egy párbeszédablak beviteli sorában a szöveget egészíti ki:
 | ~név | Felhasználónév |
 | Egyébként | Fájlnév |
 
-Ahol több is illik, a program sípol. Az ini fájl
+Ha több is illik, a szerkesztő sípol. Az ini fájl
 *show_all_if_ambiguous*
 beállítása, amely alapértelmezésben ki van kapcsolva, a listájukat a kurzor
 mellett mutatja: az
@@ -1247,30 +1102,22 @@ Right elrejti.
 
 ## Válasszon kódlapot <a id="codepages-translation"></a>
 
-A program által ismert kódlapok listája, a
-**{{pkgdatadir}}/charsets**
-fájlból. Egy kódlap kiválasztása megmondja a szerkesztőnek, milyen kódlapon
-íródott a fájl szövege, és a szöveg a képernyőre ebből a terminál kódlapjára
-kódolódik át; a
-**\<No translation>**
-bájtokként hagyja. A listát az
-**Alt-e**
-és a Parancs menü Kódolás tétele nyitja meg.
+A szerkesztő a kódolások listáját a **{{pkgdatadir}}/charsets** fájlból
+tölti be. Válassza ki a fájl kódolását; a szerkesztő ebből alakítja át a
+szöveget a terminál számára. A **\<No translation>** tétel kikapcsolja az
+átalakítást. A lista a {{key:SelectCodepage|Alt-e}} billentyűvel vagy a
+Parancs menü Kódolás... tételével nyílik meg.
 
 ## Előzmények <a id="history-query"></a>
 
-Annak a listája, amit korábban egy beviteli sorba beírtak, a legújabb elöl;
-az
-**Alt-h**
-nyitja meg annak a sornak, amelyben a kurzor van. Az Enter a sorba veszi azt
-a tételt, amelyen a kurzor áll, az Esc a sort úgy hagyja, ahogy volt, az
-**F8, Del**
-pedig eltávolítja az előzményekből azt a tételt, amelyen a kurzor áll. Az
-előzmények a
+Az **Alt-h** megnyitja az aktuális beviteli sor előzményeit. A legutóbbi
+tételek vannak elöl. Az Enter a kiválasztott tételt a sorba teszi, az Esc a
+sor megváltoztatása nélkül bezárja az előzményeket, az **F8, Del** pedig
+törli a kiválasztott tételt. Az előzmények a
 *~/.local/share/bluerig/history*
 fájlban maradnak meg; a
 *num_history_items_recorded*
-mondja meg, hány tételt őriz meg mindegyik.
+beállítás mondja meg, hány tételt őriz meg egy-egy előzménylista.
 
 # Szintaxiskiemelés <a id="syntax-highlighting"></a>
 
@@ -1296,17 +1143,17 @@ kontextusok, például a megjegyzések és a karakterláncok.
 | **~/.local/share/bluerig/syntax/Syntax** | A felhasználó szabályai: amit a felhasználó hozzáadott, vagy másképp szeretne |
 | **{{pkgdatadir}}/syntax/Syntax** | A telepített szabályok, azokhoz a fájltípusokhoz, amelyeket a felhasználói fájl nem nevez meg |
 
-A felhasználói bejegyzés felülírja a telepítettet azoknál a fájloknál,
-amelyekre illeszkedik. Az
+Ha egy fájlra a felhasználói és a telepített szabályok is illeszkednek, a
+felhasználói szabályok érvényesek. Az
 **include**
 sorokban megnevezett fájlokat előbb a
 *~/.local/share/bluerig/syntax/*
 könyvtárban keresi, aztán a telepítettek között. A felhasználói fájl minden
 alkalommal újra beolvasódik, amikor egy új fájl nyílik meg a szerkesztőben.
 
-A telepített fájl teljes másolata, ahogy a régebbi változatok készítették,
-elrejt minden utána telepített fájltípust, és azok kiemelése nem működik: a
-másolatban csak a megváltoztatott bejegyzéseket tartsa meg.
+A telepített fájl teljes másolata elrejtheti az új változatban hozzáadott
+fájltípusok szabályait. A felhasználói fájlban csak a megváltoztatott
+bejegyzéseket tartsa meg.
 
 ## A file szakasz <a id="syntax-file"></a>
 
@@ -1404,7 +1251,7 @@ külön adja meg a két oldalt. Egy
 **spellcheck**
 sor a
 **context**
-után a kontextus szavait a helyesírás-ellenőrzésnek adja át.
+után bekapcsolja a helyesírás-ellenőrzést a kontextuson belül.
 
 ## Beágyazás és rétegek <a id="syntax-embed"></a>
 
@@ -1423,9 +1270,9 @@ fájlban keresi, amelyből a szabályok olvasódnak, aztán a bluerig-gel
 telepítettben. Ha egyikben sincs meg a típus, a kontextus a saját színeiben
 marad. A határolók a kontextus színeit tartják meg. A jobb határoló bárhol
 lezárja a beágyazott szöveget, a beágyazott szabályok karakterláncán vagy
-megjegyzésén belül is. Egy beágyazott szintaxis beágyazhat egy másikat,
-néhány szint mélységig. Például a HTML a szkripteket a JavaScript
-szabályainak adja át:
+megjegyzésén belül is. A szintaxisok több szint mélységig egymásba
+ágyazhatók. Például a HTML szabályai a SCRIPT címke tartalmára a JavaScript
+szintaxisát használhatják:
 
 ```
   context <SCRIPT*> </SCRIPT> brightcyan
@@ -1478,7 +1325,7 @@ A kulcsszavak és a kontextushatárolók karakterláncai így olvasódnak:
 
 |  |  |
 |--|--|
-| \\t, \\s | Tabulátor és szóköz: az üres helyek a sor szavait választják el, és nem használhatók úgy, ahogy vannak |
+| \\t, \\s | Tabulátor és szóköz. Ahogy vannak, a sor szavait választják el, ezért a minta ezeket az alakokat használja |
 | \\n, \\r | Újsor és kocsivissza |
 | `\\` | Fordított perjel |
 | \\\* | Csillag |
@@ -1527,8 +1374,8 @@ színei; ezzel attribútumok állíthatók be a háttérszín megváltoztatása
 nélkül. 256 színnél van még color16 - color255, rgb000 - rgb555 és
 gray0 - gray23 is.
 
-Az előtérszín helyett hatókör-token (scope token) is állhat: nagybetűs szó,
-amely azt mondja meg, mi a szöveg, nem azt, hogyan néz ki:
+Az előtérszín helyett hatókör-token (scope token) is megadható: nagybetűs szó,
+amely a szöveg fajtáját nevezi meg. A színét a téma adja meg:
 
 ```
 keyword  whole  if   KEYWORD_CONTROL
@@ -1537,19 +1384,17 @@ context  " " STRING_QUOTED_DOUBLE
 keyword  linestart TODO  KEYWORD_OTHER_TODO black
 ```
 
-A token színe a témából jön, így egy téma színezi a programot és a szöveget,
-és minden nyelvet ugyanúgy; lásd
+A téma adja meg a felület és a kiemelési tokenek színeit minden nyelvre. Lásd
 [Témák](#skins).
-A token hatókörként olvasódik: kisbetűvel, az aláhúzások helyén pontokkal. A
+A hatókör neve kisbetűvel íródik, az aláhúzások helyén pontokkal. Például a
 KEYWORD_CONTROL_IMPORT a keyword.control.import, a keyword.control egy
 fajtája, amely a keyword egy fajtája. Ezek a Sublime Text és a TextMate
-hatókörnevei. Amit a téma nem színez, az megtartja azokat a színeket, amelyeket
-az mcedit adott annak a szövegnek. A token utáni háttér vagy attribútumok az
-mcedit színei fölött állnak, ahogy fent a black, de nem a téma által magának
-a tokennek adott háttér vagy attribútumok fölött. A token a
-define sorban is működik, és a line-local szabályok number, string és
-symbols sorában is. A telepített szintaxisfájlok csak tokeneket használnak; a
-listájuk az mcedit színeivel a
+hatókörnevei. A témában megadott háttér és attribútumok erősebbek, mint a
+szabályban a token után megadott értékek. Ha a téma nem adja meg őket, a
+szabály értékei érvényesek, például fent a black. A többi érték a szabványos
+mcedit-sémából jön. A token a define sorban is működik, és a line-local
+szabályok number, string és symbols sorában is. A telepített szintaxisfájlok
+tokeneket használnak. A tokenek listája az mcedit-színeikkel a
 **{{pkgdatadir}}/syntax/README.txt**
 fájlban van.
 
@@ -1583,8 +1428,8 @@ megállapítani, hogy a terminál ismeri-e a színeket. Néha téved, ezért a s
 mód a -c kapcsolóval kikényszeríthető, a -b kapcsolóval pedig kikapcsolható.
 
 Ha a program az ncurses helyett az S-Lang képernyőkezelővel készült, a
-**COLORTERM,**
-változót is megnézi; ha be van állítva, ugyanaz a hatása, mint a -c
+**COLORTERM**
+változót is megnézi: ha be van állítva, ugyanaz a hatása, mint a -c
 kapcsolónak.
 
 Megadhatók olyan terminálok, amelyeken mindig színes mód van: ehhez az
@@ -1635,10 +1480,11 @@ A témafájlok formátumát a
 **{{pkgdatadir}}/skins/README.txt**
 írja le. A szintaxiskiemelés színei a téma
 **[syntax]**
-szakaszából jönnek: ott egy hatókör egy szövegfajta színeit adja meg; két
-hatókör üres hellyel elválasztva, a szövegé és annak a kontextusé, amelyben
-áll, az adott szövegfajta színeit abban a kontextusban. A téma által
-megnevezett leghosszabb hatókör nyer:
+szakaszából jönnek. Egy kulcs egy hatókör színét adja meg. Ha egy hatókör
+színét egy kontextuson belül akarja megadni, előbb a kontextus hatókörét adja
+meg, aztán a szövegét, köztük szóközzel. A program mindkét esetben a
+leghosszabb illeszkedő hatókörnevet választja. A kontextussal megadott pár
+kerül sorra először.
 
 ```
 [syntax]
@@ -1650,10 +1496,9 @@ megnevezett leghosszabb hatókör nyer:
     invalid = white;red;bold
 ```
 
-Az a szövegfajta, amelyet a téma nem nevez meg, megtartja az mcedit által
-adott színeit, így a téma megnevezhet néhány fajtát, és a többit meghagyhatja.
-Azok a szabályok, amelyek hatókör-tokenek helyett színeket neveznek meg, a
-témától függetlenül megtartják a színeiket; lásd
+Azok a hatókörök, amelyeknek a téma nem ad színt, a szabványos mcedit-színeket
+kapják. A kiemelési szabályokban kifejezetten megadott színek bármely témával
+ugyanazok maradnak. Lásd
 [Szintaxiskiemelés](#syntax-highlighting).
 
 # Terminál-adatbázisok <a id="terminal-databases"></a>
@@ -1718,18 +1563,15 @@ bluerig a "\\e[[1;6D" sorozatot Ctrl-Alt-Left billentyűként értelmezi.
 
 A
 *complete*
-billentyűszimbólum azokat a vezérlősorozatokat jelöli, amelyek a kiegészítést
-indítják; ezt az Alt-tab indítja, de más billentyűk is megadhatók ugyanerre
-(azokon a billentyűzeteken, amelyeken rengeteg szép és használatlan billentyű
-van mindenfelé).
+billentyűszimbólum a kiegészítés vezérlősorozatait adja meg. Általában az
+Alt-Tab végzi. Megadható egy másik billentyű sorozata is.
 
 # Lua-szkriptek <a id="lua-scripting"></a>
 
-Ahol a bluerig Luával készült, Lua-szkripteket futtat, amelyek a
-szerkesztőt bővítik: billentyűkhöz és menükhöz kötött műveletek, válaszok a
-szerkesztő eseményeire (fájl nyílik meg, mentődik, billentyűt nyomnak le),
-párbeszédablakok és teljes képernyős nézetek. A szerkesztő több parancsa is
-ilyen szkript: a sorok rendezése, a bekezdés formázása, egy parancs
+Ha a bluerig Luával készült, a szkriptek parancsokat tehetnek a menükbe,
+billentyűkhöz köthetik őket, kezelhetik a szerkesztő eseményeit, és
+párbeszédablakokat és teljes képernyős ablakokat nyithatnak. Luában készült
+például a sorok rendezése, a bekezdés formázása, egy parancs
 kimenetének beszúrása, karakter beszúrása a kódpontja alapján, a dátum
 beszúrása, base64 dekódolása és táblázatok rajzolása.
 
@@ -1753,7 +1595,7 @@ változó, Lua-szkript nélkül indítja a szerkesztőt, az ini fájl
 **[Lua]**
 szakaszában az
 *enabled=false*
-pedig véglegesen.
+pedig a későbbi indításokra is kikapcsolja a Luát.
 
 Hogy hogyan kell szkriptet írni, és milyen függvényeket hívhat egy szkript,
 azt a
@@ -1825,10 +1667,9 @@ működjön.
 *keybar_modifiers*
 : Ha igaz, a Shift, a Ctrl vagy az Alt nyomva tartása alatt a billentyűsor
 azokat a parancsokat mutatja, amelyeket az F billentyűk ezzel a módosítóval
-adnak. Ehhez a kitty
-billentyűzet-protokollt ismerő terminál kell: a bluerig ekkor minden
-billentyűt a felengedésével együtt kér tőle, és a fókuszeseményeket is. Más
-terminálokat nem érint. Alapértelmezésben hamis.
+adnak. Ehhez a kitty billentyűzet-protokollt ismerő terminál kell. A bluerig
+lenyomási és felengedési eseményeket, valamint fókuszeseményeket kér a
+termináltól. Alapértelmezésben ki van kapcsolva.
 
 *verbose*
 : A hosszú műveletek előrehaladásának megjelenítése.
@@ -1927,9 +1768,8 @@ bejegyzése által megnevezett fájl használatos, és e bejegyzés nélkül a
 *~/.cache/bluerig/bluerig.log*.
 
 **BLUERIG_SPELL_LOG**
-: Az a fájl, amelybe a helyesírás-ellenőrző a hibakeresési naplóját írja.
-Nincs saját kapcsolója: a napló akkor íródik, ha a változó egy fájlt nevez
-meg.
+: A helyesírás-ellenőrzés hibakeresési naplójának útvonala. Ha a változó be
+van állítva, a helyesírás-ellenőrzés ebbe a fájlba írja a naplóját.
 
 # FÁJLOK <a id="files"></a>
 
@@ -1952,7 +1792,8 @@ a
 értékét jelenti, ahol ezek be vannak állítva.
 
 *{{pkgdatadir}}/help/bluerig.md*
-: A program súgófájlja, és mellette a szerkesztő bővítményeinek súgófájljai.
+: A program súgófájlja (a fordítások bluerig.ru.md és így tovább); mellette
+vannak a szerkesztő bővítményeinek súgófájljai.
 
 *{{sysconfdir}}/bluerig/bluerig.ini*, *{{pkgdatadir}}/bluerig.ini*
 : A rendszerszintű beállítófájlok; csak akkor használatosak, ha a

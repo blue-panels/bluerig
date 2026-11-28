@@ -14,35 +14,13 @@ bluerig \- terminálos IDE.
 
 .SH LEÍRÁS
 .PP
-A
-\fBbluerig\fP
-terminálos IDE. A
-\fBcooledit\fP
-folytatása: ez Paul Sheer szerkesztője, amelynek terminálos változatát sok
-éven át a GNU Midnight Commander belső szerkesztőjeként fejlesztették; a
-bluerig önálló programként viszi tovább ezt a szerkesztőt. A
-\fBbrg\fP
-ugyanennek a programnak a rövidebb neve.
+A \fBbluerig\fP terminálos IDE, amely az mcedit (GNU Midnight Commander) és Paul Sheer cooledit szerkesztőjéből nőtt ki. A \fBbrg\fP ugyanennek a programnak a rövidebb neve.
 
 .PP
-Egyszerre több fájlt szerkeszt, mindegyiket a saját ablakában, és bináris
-fájlokat is szerkeszt. Tud blokkot másolni, mozgatni, törölni, kivágni és
-beilleszteni; billentyűnként visszavonni és újra végrehajtani; vannak
-legördülő menüi; fájlt szúr be; vannak makrói; reguláris kifejezéssel keres és
-cserél; van sorszűrője, összecsukása és könyvjelzői; Shift\-nyilakkal jelöl ki
-szöveget (ahol a terminál ezt ismeri); van oszlopblokkja; beszúró és felülíró
-módja; automatikus behúzása; sortörése és bekezdésformázása; állítható a
-tabulátor mérete; sok fájltípushoz van szintaxiskiemelése; van felhasználói
-menüje, amely a szöveget shell\-parancsokon vezeti át; vannak szerkesztő
-bővítményei (címkék szerinti navigálás, helyesírás\-ellenőrzés) és
-Lua\-szkriptjei.
+A szerkesztő egyszerre több fájllal dolgozik, mindegyik a saját ablakában van, bináris fájlokkal is. Oszlopblokkot jelöl, sorokat szűr, szöveget csuk össze, makrókat rögzít, a felhasználói menüből shell\-parancsokon vezeti át a szöveget, és Lua\-szkripteket futtat. A bővítmények projekteket, fordítást és hibakeresést, kódlefedettséget, nyelvi kiszolgálókat (LSP), gitet, kódnavigációt és helyesírás\-ellenőrzést adnak hozzá.
 
 .PP
-A parancssorban megadott minden fájl a saját ablakában nyílik meg. Fájl nélkül
-a szerkesztő üres ablakot nyit. Az
-\fIeditor_filesize_threshold\fP
-értéknél (alapértelmezésben 64 MB) nagyobb fájl kérdés után nyílik meg, a
-program nem utasítja el.
+A nyelvek támogatása bővíthető: a szintaxiskiemelés, a fordítás, a DAP\-adaptereken át végzett hibakeresés és a nyelvi kiszolgálók nyelvenként állíthatók be. Az alapbeállításban több mint 100 fájltípushoz van szintaxiskiemelés, a C (Meson, CMake és Make), a Rust és a Go fordítása, valamint a C, a Rust, a Python, a Bash, a Go és a JavaScript hibakeresése.
 
 
 .SH KAPCSOLÓK
@@ -58,6 +36,57 @@ utolsó számít, és csak az első fájlra.
 A fájl megnyitása annál a sornál, ahogy a fordítóprogramok és a grep
 megadják a helyet a fájlban. Ha létezik olyan fájl, amelynek a neve a
 kettőspontot és a számot is tartalmazza, akkor az a fájl nyílik meg.
+
+.PP
+\fBAlkalmazási módok\fP
+
+.TP
+\fI\-Q, \-\-query\fP
+A fájl megnyitása MongoDB\- vagy PostgreSQL\-lekérdezések módjában. Állítsa
+be a \fIMC_QUERY_KIND=mongo\fP vagy a \fIMC_QUERY_KIND=postgres\fP változót. Ha ez a
+változó nincs beállítva, a \fIMC_MONGO_URI\fP a MongoDB\-t választja, a \fI\&.sql\fP
+kiterjesztésű fájl pedig a PostgreSQL\-t, ha a \fIMC_MONGO_URI\fP nincs beállítva.
+A Query bővítmény kell hozzá.
+
+.TP
+\fI\-D könyvtár, \-\-debug=könyvtár\fP
+A projekt megnyitása hibakeresési módban. Megjelenik a projekt fája és a
+hibakereső panelje. A Project, a Build és a Debugger bővítmény kell hozzá.
+
+.TP
+\fI\-G könyvtár, \-\-git=könyvtár\fP
+Az adott könyvtár Git ablakának megnyitása. Az ablak bezárása kilép a
+bluerigből. Utána az alábbi kapcsolók egyike állhat. \fI\-\-git\fP nélkül a
+kapcsoló az aktuális könyvtárra vonatkozik.
+
+.PP
+\fBGit\-kapcsolók\fP
+
+.TP
+\fI\-\-git\-log\fP
+A commitnapló megnyitása.
+
+.TP
+\fI\-\-git\-show=commit\fP
+Az adott commit fájljainak és változásainak megjelenítése.
+
+.TP
+\fI\-\-git\-commit\fP
+Az üzenetszerkesztő megnyitása az előkészített (staged) változások
+commitjához.
+
+.TP
+\fI\-\-git\-amend\fP
+Az utolsó commit módosítása: hozzáadja az előkészített változásokat.
+Megnyitja a commitüzenet szerkesztőjét.
+
+.TP
+\fI\-\-git\-reword=commit\fP
+Az adott commit üzenetszerkesztőjének megnyitása. Az üzenet mentése
+átírja a Git előzményeit.
+
+.PP
+\fBÁltalános kapcsolók\fP
 
 .TP
 \fI\-V, \-\-version\fP
@@ -81,81 +110,24 @@ A program konfigurálásakor megadott kapcsolók kiírása.
 Indítás Lua futtatókörnyezet nélkül: egyetlen Lua\-szkript sem töltődik be.
 
 .TP
-\fI\-D, \-\-debug=könyvtár\fP
-Az adott könyvtár projektjének megnyitása hibakeresésre: a projekt
-legutóbbi fájlja, a projekt fája és jobbra a hibakereső panelje. A
-fájlablakok a hibakereső billentyűit kapják: az F6 töréspontot tesz, az F5
-lefordítja és elindítja a programot, első alkalommal elkészítve a
-hibakeresési beállítását, az F7 és az F8 léptet, az F3 indexeli a projekt
-szimbólumait; az F2, az F9 és az F10 marad a mentés, a menü és a kilépés, az
-Alt\-F5 pedig a panelre lép és vissza. A project, a build és a debugger
-bővítmény kell hozzá, az F3\-hoz a ctags is. A Drawing, a Format és a Plugins
-menü nincs a menüsorban; a billentyűik maradnak, és a Beállítások menüben
-megmarad a Manage plugins.
-
-.TP
-\fI\-Q, \-\-query\fP
-A fájl lekérdezéseinek futtatása adatbázisban: MongoDB\-ben a mongosh,
-PostgreSQL\-ben a libpq révén; a válasz alul az Output, a Table és a History
-fülön jelenik meg. A \fIMC_QUERY_KIND\fP értéke \fImongo\fP vagy \fIpostgres\fP; nélküle a
-\fIMC_MONGO_URI\fP MongoDB\-t jelent, a \fI\&.sql\fP fájl PostgreSQL\-t. MongoDB\-nél a
-\fIMC_MONGO_URI\fP és a \fIMC_MONGO_DB\fP mondja meg, mihez kapcsolódjon, a
-\fIMC_MONGOSH\fP a programot; az F5 a kijelölést futtatja, ha nincs, akkor a
-kurzor körüli \fI// \-\-\-\fP sorok közötti részt, ha az sincs, az egész fájlt.
-PostgreSQL\-nél a libpq a kapcsolatot a \fIPGHOST\fP, \fIPGDATABASE\fP, \fIPGSERVICE\fP és
-hasonló változókból veszi, a jelszót a \fI~/.pgpass\fP fájlból; az F5 a
-kijelölést futtatja, ha nincs, az egész fájlt. A Ctrl\-F5 az egész fájlt
-futtatja. Ha nincs megadva fájl, a fájl a
-\fI~/.local/share/bluerig/queries/\fP könyvtárban van, az adatbázis nevével és
-\fI\&.js\fP kiterjesztéssel, illetve a \fIpostgres/\fP könyvtárban, a kapcsolat
-nevével, az adatbázis nevével és \fI\&.sql\fP kiterjesztéssel. A projekt legutóbbi
-ablakai nem jelennek meg, és a projekt és a kód bővítményei (project, build,
-debugger, ctags, etags, git, terminal, spell) nem indulnak el; a szkriptek
-maradnak, és a lekérdezések nyelvi kiszolgálója is, ha a lsp.json megad
-ilyet. A Drawing, a Format és a Plugins menü nincs a menüsorban, mint a \-D
-esetén. A query bővítmény kell hozzá.
-
-.TP
-\fI\-G, \-\-git=könyvtár\fP
-A git bővítmény Git ablakának megnyitása az adott könyvtár munkafáján; az
-ablak bezárása kilép a szerkesztőből. A projekt legutóbbi ablakai nem
-jelennek meg, és a projekt bővítményei (project, build, debugger, ctags,
-etags) nem indulnak el. Fájlkezelőben git panelként használható: utána a
-következők egyikével, vagy egymagában az aktuális könyvtárra:
-
-.TP
-\fI\-\-git\-log\fP
-A Git ablak a naplón.
-
-.TP
-\fI\-\-git\-show=commit\fP
-A Git ablak azon a commiton: a fájljai és azok eltérései.
-
-.TP
-\fI\-\-git\-commit\fP, \fI\-\-git\-amend\fP
-A Git ablak az előkészített (staged) változások commitjának üzenetével, vagy
-az utolsó commit üzenetével, amelyet ezekkel módosít; a szerkesztő kilép,
-amint az üzenetet menti és a commit elkészül, vagy ha bezárja az ablakot.
-
-.TP
-\fI\-\-git\-reword=commit\fP
-Ugyanígy új üzenet az adott commitnak, alatta a commit fájljaival.
-
-.TP
 \fI\-h, \-?, \-\-help\fP
-A kapcsolók és jelentésük kiírása.
+A parancssori kapcsolók és jelentésük kiírása.
+
+.TP
+\fI\-\-help\-all\fP
+Az összes csoport parancssori kapcsolóinak kiírása.
 
 .TP
 \fI\-\-help\-terminal, \-\-help\-color\fP
-Az alábbi terminál\- vagy színkapcsolók kiírása.
+A terminál\- vagy a színkapcsolók kiírása.
 
 .PP
-A terminálkapcsolók:
+\fBTerminálkapcsolók\fP
 
 .TP
 \fI\-x, \-\-xterm\fP
-Az xterm mód kikényszerítése. Xterm\-képes terminálokon használatos (két
-képernyőmód, és egér\-vezérlősorozatokat tud küldeni).
+Az xterm mód bekapcsolása. Olyan terminálon használja, amely tudja, amit
+az xterm: két képernyőmódot és egérsorozatokat.
 
 .TP
 \fI\-X, \-\-no\-x11\fP
@@ -163,7 +135,7 @@ A módosítóbillentyűk állapotát ne az X Window rendszertől kérdezze.
 
 .TP
 \fI\-g, \-\-oldmouse\fP
-A terminál régi, kiemelő egérkövetésének használata.
+A terminál régi egérkövetésének használata.
 
 .TP
 \fI\-d, \-\-nomouse\fP
@@ -176,7 +148,7 @@ létezik, ha a bluerig az S\-Lang könyvtárral készült.
 
 .TP
 \fI\-s, \-\-slow\fP
-Lassú terminál: a képernyő kevesebb frissítéssel rajzolódik.
+Lassú terminál: a képernyő ritkábban rajzolódik újra.
 
 .TP
 \fI\-a, \-\-stickchars\fP
@@ -194,20 +166,19 @@ Semmilyen billentyűkiosztás\-fájl ne töltődjön be: a programba épített
 társítások érvényesek.
 
 .PP
-A színkapcsolók:
+\fBSzínkapcsolók\fP
 
 .TP
 \fI\-b, \-\-nocolor\fP
-Fekete\-fehér megjelenítés kikényszerítése.
+Fekete\-fehér megjelenítés.
 
 .TP
 \fI\-c, \-\-color\fP
-Színes mód kikényszerítése olyan terminálon, amely látszólag nem ismeri a
-színeket.
+Színes mód olyan terminálon, amely nem jelzi, hogy ismeri a színeket.
 
 .TP
 \fI\-S téma, \-\-skin=téma\fP
-A megadott nevű téma (skin) használata. Lásd
+Az adott nevű téma (skin) használata. Lásd
 Témák\&.
 
 
@@ -220,10 +191,9 @@ menüsor rejtve is lehet: az F9 vagy egy kattintás a képernyő felső sorára
 előhozza.
 
 .PP
-Minden ablak egy fájlt mutat: a fájl neve, állapota és a kurzor helye az
-ablak tetején lévő állapotsorban áll. Egyszerre több ablak is nyitva lehet; az
-Ablak menü
-lép közöttük, és mindegyik mozgatható és átméretezhető.
+Az ablak tetején lévő állapotsor a fájl nevét, a fájl állapotát és a kurzor
+helyét mutatja. Az Ablak menü a nyitott ablakok között vált.
+Az ablakok mozgathatók és átméretezhetők.
 
 
 .SH A bluerig szerkesztő
@@ -232,8 +202,7 @@ lép közöttük, és mindegyik mozgatható és átméretezhető.
 \fBBillentyűk\fP
 
 .PP
-Ezek az alapértelmezett billentyűk. Bármelyik megváltoztatható, lásd
-A billentyűk átdefiniálása\&.
+A társítások megváltoztatása
 
 .PP
 
@@ -863,9 +832,9 @@ a Linux konzolon, ha fut a
 egérkiszolgáló.
 
 .PP
-A kattintás oda teszi a kurzort, ahová kattint, a húzás kijelöli a szöveget,
-a kattintás egy menün, gombon vagy funkcióbillentyű\-feliraton pedig kiválasztja
-azt. A görgő görgeti a szöveget.
+A szövegre kattintás odaviszi a kurzort, a húzás kijelöli a szöveget. Az egér
+menüket nyit meg, gombokat nyom meg, és futtatja a képernyő alsó sorában
+látható parancsokat. Az egér görgője görgeti a szöveget.
 
 .PP
 Az egérgombok alapértelmezett ismétlési ideje 400 ezredmásodperc. Ez az ini
@@ -883,97 +852,123 @@ terminál saját egérkezelése (szöveg kivágása és beillesztése) érhető 
 
 .SH Menüsor
 .PP
-A menüsor az F9 megnyomására vagy a képernyő felső sorára kattintva jelenik
-meg. A menüi: Fájl, Szerkeszt, Keresés, Parancs, Navigate (csak akkor, ha egy
-bővítmény vagy szkript tesz bele valamit), Ablak, Plugins és Beállítások. Egy
-Lua\-szkript bármelyikbe tehet tételeket, vagy saját menüket.
+A menüsor a F9 megnyomására vagy a képernyő felső sorára
+kattintva jelenik meg. A menüi: Fájl, Szerkeszt, Keresés, Parancs, Navigate
+(ha egy bővítmény vagy szkript tett bele valamit), Ablak, Plugins és
+Beállítások. Egy Lua\-szkript bármelyikbe tehet tételeket, vagy saját menüket.
 
 .SH Fájl menü
 .TP
 \fBMegnyitás...\fP
-Fájl megnyitása új ablakban.
+Fájlt nyit meg új ablakban
 
 .TP
 \fBÚj\fP
-Üres ablak nyitása.
+Üres ablakot nyit
 
 .TP
 \fBBezárás\fP
-Az ablak bezárása.
+Bezárja az aktuális ablakot
 
 .TP
-\fBHistory...\fP
-A korábban szerkesztett fájlok listája, hogy egyet újra megnyisson.
+\fBElőzmények...\fP
+Megnyitja a legutóbb szerkesztett fájlok listáját
 
 .TP
-\fBMentés, Mentés másként\fP
-A fájl kiírása a saját nevén vagy más néven. Lásd
-Mentés másként\&.
+\fBMentés\fP
+Kiírja az aktuális fájlt
 
 .TP
-\fBFájl beszúrása..., Másolat fájlba...\fP
-Fájl beszúrása a kurzorhoz, vagy a kijelölt blokk kiírása fájlba.
+\fBMentés másként\fP
+Új néven írja ki a fájlt
+
+.TP
+\fBFájl beszúrása...\fP
+Egy fájl tartalmát szúrja be a kurzorhoz
+
+.TP
+\fBMásolat fájlba...\fP
+A kijelölt blokkot írja ki fájlba
 
 .TP
 \fBFelhasználói menü\fP
-A felhasználói menü\&.
+Megnyitja a szöveget feldolgozó parancsok listáját
 
 .TP
 \fBNévjegy...\fP
-A program verziója.
+Megmutatja a program verzióját
 
 .TP
 \fBKilépés\fP
-Kilépés a szerkesztőből; a nem mentett fájlokról kérdez.
+Bezárja a szerkesztőt. Felajánlja a nem mentett változások mentését
 
 .SH Szerkeszt menü
 .PP
 Vissza, Újra és az Undo History; váltás a beszúró és a felülíró mód között; a
 parancsok, amelyek blokkot, oszlopblokkot vagy az egész fájlt jelölik ki, és
 amelyek a kijelölést megszüntetik; a blokk másolása, áthelyezése és törlése;
-másolás a vágólapfájlba, kivágás oda és beillesztés onnan; és ugrás a fájl
+másolás a vágólapfájlba, kivágás oda és beillesztés onnan; ugrás a fájl
 elejére és végére.
 
 .SH Keresés menü
 .PP
-Keresés, Keresés tovább és Csere; a sorszűrő (Toggle line filter, Filter by
-word; lásd Keresés, csere és a sorszűrő); és a
-könyvjelzők: könyvjelző be\- és kikapcsolása az aktuális soron, ugrás a
-következőre vagy az előzőre, és mindegyik törlése.
+A keresés, a csere és a szűrés parancsait a
+Keresés, csere és a sorszűrő írja le.
+Ugyanez a menü könyvjelzőt tesz az aktuális sorra vagy leveszi róla, a
+következő vagy az előző könyvjelzőre ugrik, és minden könyvjelzőt töröl.
 
 .SH Parancs menü
 .TP
 \fBUgrás sorra...\fP
-Ugrás a számával megadott sorra.
+A megadott számú sorra viszi a kurzort
 
 .TP
 \fBSorszámok\fP
-A sorszámok oszlopának megjelenítése vagy elrejtése.
+Be\- és kikapcsolja a sorállapot oszlopát
 
 .TP
 \fBUgrás zárójel párjára\fP
-Ugrás a kurzor alatti zárójel párjára.
+A zárójel párjára viszi a kurzort
 
 .TP
-\fBSzintaktikus szövegkiemelés ki/be, Toggle right margin, Toggle control characters\fP
-Ezek be\- és kikapcsolása.
+\fBSzintaktikus szövegkiemelés ki/be\fP
+Be\- és kikapcsolja a kiemelést a szerkesztőben
+
+.TP
+\fBToggle right margin\fP
+Megjelöli az oszlopot, ahol a sorok törnek
+
+.TP
+\fBVezérlőkarakterek be/ki\fP
+A vezérlőkaraktereket ^M, ^L stb. alakban mutatja
 
 .TP
 \fBKódolás...\fP
-Az a kódlap, amelyben a szöveg íródott. Lásd
-Válasszon kódlapot\&.
+A fájl kódolásának kiválasztása
 
 .TP
-\fBFold / Unfold block, Unfold all\fP
-Lásd Összecsukás\&.
+\fBFold / Unfold block\fP
+Blokk összecsukása vagy kinyitása
+
+.TP
+\fBÖsszes kibontása\fP
+Minden összecsukást kinyit, és leveszi a sorszűrőt
 
 .TP
 \fBKépernyő frissítése\fP
-A képernyő újrarajzolása.
+Újrarajzolja a képernyőt
 
 .TP
-\fBMakró rögzítésének indítása/leállítása, Macro explorer..., Akciók felvétele/ismétlése\fP
-Lásd Makrók\&.
+\fBMakró rögzítésének indítása/leállítása\fP
+Makrót rögzít és billentyűhöz köti
+
+.TP
+\fBMacro explorer...\fP
+Megnyitja a rögzített makrók listáját
+
+.TP
+\fBAkciók felvétele/ismétlése\fP
+Műveleteket rögzít, és megadott számszor megismétli őket
 
 .SH Navigate menü
 .PP
@@ -993,15 +988,14 @@ Az ablak váltása a teljes képernyő és a saját mérete között.
 
 .TP
 \fBToggle sticky windows\fP
-Összetapadó ablakoknál az egymás mellett álló keretű ablakok együtt
-méreteződnek: az ablak sarka elmozdítja azt az élt, amelyen áll, az él
-mentén lévő összes ablakkal együtt, mindkét oldalon, és nem nyílik rés
-közöttük. Ahol négy ablak találkozik, a sarok mindkét élt mozgatja. Az az
-oldal, amely az átméretezés kezdetekor a képernyő szélén van, ott marad, az
-ablak megtartja a legkisebb méretét, és az él megáll egy útjában álló
-ablaknál, amely ezután a többivel együtt méreteződik. Az Esc minden ablakot
-visszatesz. A címénél fogva húzott ablak egyedül mozog. A beállítás az ini
-fájlban
+Ha egy ablak sarkát húzza, a szomszédos ablakok keretei vele mozognak, így
+az ablakoknak közös határa marad. Ahol négy ablak találkozik egy sarokban, a
+vízszintes és a függőleges határ egyszerre mozgatható. Az a határ, amely
+kezdetben a képernyő szélén volt, ott marad. Ha a mozgatott határ egy másik
+ablakhoz ér, az az ablak is méreteződni kezd. Minden ablaknak van legkisebb
+mérete. Az Esc visszavonja a változtatást. A címénél fogva húzott ablak
+egyedül mozog.
+A beállítás az ini fájlban
 \fBeditor_sticky_windows\fP
 néven marad meg.
 
@@ -1014,113 +1008,74 @@ Ugrás a következő vagy az előző ablakra.
 A nyitott ablakok, hogy valamelyikre át lehessen lépni. Lásd
 Nyitott fájlok\&.
 
-.PP
-Alattuk a bővítmények ablakai következnek: a projekt fája, a fordítás
-kimenete, a hibakereső panelje és konzolja, a terminál, a hibakereső által
-futtatott program terminálja, a Preview. Egy tétel megnyitja az ablakát,
-előre hozza, ha egy másik mögött van, és bezárja, ha már elöl van; a nyitott
-ablak \fI*\fP jelet kap. A kikapcsolt bővítménynek nincs tétele.
-
-.PP
-A bővítmények ablakai dokkokban állnak. A fa, a hibakereső panelje és a
-Preview a jobb oldali oszlopba kerül, egymás alá, a képernyő teljes
-magasságában. A konzol, a fordítás kimenete és a terminál az alsó sorba
-kerül, a fájlok ablakai alá: a sort fülekként osztják meg: egy látszik, és a
-címe felsorolja a neveiket. Egy névre kattintva, vagy a
-\fBCtrl\-Alt\-PgDn\fP és \fBCtrl\-Alt\-PgUp\fP billentyűvel (\fIWindowTabNext\fP és
-\fIWindowTabPrev\fP a kiosztásban) egy másik jelenik meg. A teljes képernyős
-fájlablak kitölti a képernyő többi részét, és ismét az egész képernyőt, ha a
-dokkok üresek. Egy dokkolt ablak átméretezése a dokkot méretezi át; az
-áthelyezése kiveszi a dokkból.
-
-.TP
-\fBLayout...\fP
-Az ablakok elrendezései: a bővítmények mely ablakai vannak nyitva, melyik
-dokkban, és mekkorák a dokkok. Az \fIEdit\fP csak a fájlokat tartalmazza, a
-\fIProject\fP a projekt fáját, a \fIDebug\fP a fát és a hibakereső paneljét. A
-\fBUse\fP így rendezi el az ablakokat; a \fBSave as...\fP a jelenlegi állapotukban
-egy név alatt megőrzi őket, akár ezek egyikének nevén is; a \fBTöröl\fP
-elfelejt egy megőrzött elrendezést, és visszajön a szerkesztő azonos nevű
-elrendezése. A \fBDebug layout while debugging\fP bekapcsolásával a hibakereső
-indítása a \fIDebug\fP szerint rendezi el az ablakokat, a leállítása pedig
-visszaállítja őket, de az alsó fülek nyitva maradnak, hogy olvashatók legyenek.
-
-.PP
-A projekt ablakai a szerkesztő kilépésekor megmaradnak, és visszajönnek, ha a
-szerkesztő a projekt egy fájljával indul.
-A \fIbluerig \-\-debug\fP a \fIDebug\fP elrendezéssel indul. Az elrendezések a
-beállítások könyvtárában, a \fIlayouts.ini\fP fájlban maradnak meg.
-
 .SH Plugins menü
 .PP
-Azok a szerkesztő bővítmények, amelyeknek saját tételük van, például a
-helyesírás\-ellenőrző; az ablakaik az Ablak menüben vannak. A
+Azok a szerkesztő bővítmények, amelyeknek saját menütételük van, például a
+helyesírás\-ellenőrző. A
 Manage plugins
 ablakban kikapcsolt bővítmény nincs a menüben.
 
 .SH Beállítások menü
 .TP
 \fBÁltalános...\fP
-A szerkesztő beállításai\&.
+A behúzások, a sortörés és a szerkesztő többi beállítása
 
 .TP
 \fBMentési mód...\fP
-Hogyan íródik ki a fájl. Lásd Mentési mód\&.
+Kiválasztja, hogyan íródnak ki a fájlok
 
 .TP
 \fBSzintaktikus szövegkiemelés\fP
-A fájl szintaxisszabályainak kézi kiválasztása, vagy rábízása a fájl nevére
-és első sorára.
+Kézzel, vagy a fájl neve és első sora alapján választja ki a kiemelés szabályait
 
 .TP
 \fBMegjelenítés...\fP
-A téma és az árnyékok. Lásd Megjelenítés\&.
+A téma és az árnyékok beállítása
 
 .TP
 \fBBillentyűk...\fP
-Lásd Billentyűk\&.
+Billentyűket párosít a terminál sorozataival
 
 .TP
-\fBKey bindings...\fP
-Lásd Key bindings\&.
+\fBBillentyű\-hozzárendelések...\fP
+Billentyűket köt műveletekhez
 
 .TP
-\fBKey sniffer...\fP
-Lásd Key sniffer\&.
+\fBBillentyűfigyelő...\fP
+Megmutatja a terminál sorozatát és a kötött műveletet
 
 .TP
-\fBManage plugins...\fP
-Lásd Manage plugins\&.
+\fBBővítmények kezelése...\fP
+Be\- és kikapcsolja és beállítja a bővítményeket
 
 .TP
 \fBPlugin info...\fP
-Lásd Plugin info\&.
+Megmutatja a bővítmények állapotát és képességeit
 
 .TP
 \fBLua scripts...\fP
-Lásd Lua scripts\&. A tétel csak akkor van meg, ha a bluerig
-Luával készült.
+A Lua\-szkriptek kezelése\&. Csak Luával készült programban van meg
 
 .TP
 \fBSzintaxisfájl szerkesztése\fP
-A felhasználó szintaxisfájljának,
-\fI~/.local/share/bluerig/syntax/Syntax\fP,
-megnyitása a szerkesztőben. Ha nem létezik, a program egy rövid, a
-tartalmát leíró megjegyzéssel hozza létre, nem a rendszerfájl másolataként; a
-rendszerfájl utána is beolvasódik. Lásd
-Szintaxiskiemelés\&.
+Megnyitja a felhasználó szintaxisfájlját a szerkesztőben
 
 .TP
 \fBMenu file\fP
-A felhasználói menü fájljának megnyitása a szerkesztőben.
+Megnyitja a felhasználói menü fájlját a szerkesztőben
 
 .TP
 \fBBeállítások mentése\fP
-A beállítások kiírása a
-\fI~/.config/bluerig/ini\fP
-fájlba. Ha az
-\fIauto_save_setup\fP
-beállítás be van kapcsolva, a szerkesztő minden kilépéskor kiírja őket.
+Kiírja a beállításokat a \fI~/.config/bluerig/ini\fP fájlba
+
+.PP
+A "Szintaxisfájl szerkesztése" a \fI~/.local/share/bluerig/syntax/Syntax\fP fájlt
+nyitja meg. Ha a fájl még nem létezik, a szerkesztő egy rövid megjegyzéssel
+hozza létre. A rendszerfájl a felhasználói fájl után olvasódik be.
+
+.PP
+Ha az \fIauto_save_setup\fP be van kapcsolva, a szerkesztő kilépéskor menti a
+beállításokat.
 
 .SS A szerkesztő beállításai
 .PP
@@ -1150,7 +1105,7 @@ Gépelés közben a tördelési hossznál töri a sort
 
 .TP
 \fBHamis fél\-tabulátorok\fP
-A bal margó és a szöveg között a tabulátor a szélessége felével lép, és a fájlba szóközök és tabulátorok kerülnek
+A behúzásban a kurzor fél tabulátorpozíciót lép. A fájlba szóközök és tabulátor karakterek kerülnek
 
 .TP
 \fBBackspace: tabokat egyszerre\fP
@@ -1169,7 +1124,7 @@ A tabulátor karakter szélessége; alapértelmezésben 8
 
 .TP
 \fBEsc timeout, ms\fP
-Hány ezredmásodpercig várja az Esc a billentyű többi részét, mielőtt Escnek számít; alapértelmezésben 1000. Az ini fájlban ez az \fIold_esc_mode_timeout\fP, mikroszekundumban, és indításkor a \fBKEYBOARD_KEY_TIMEOUT_US\fP változó felülírja
+Hány ezredmásodpercig várja a szerkesztő az Esc után a vezérlősorozat többi részét. Alapértelmezésben 1000. Az \fIold_esc_mode_timeout\fP beállítás mikroszekundumban van. Indításkor a \fBKEYBOARD_KEY_TIMEOUT_US\fP változó az erősebb
 
 .PP
 \fBTovábbi opciók\fP
@@ -1184,7 +1139,7 @@ A fájl kiírása előtt kérdez
 
 .TP
 \fBFájlbeli pozíció mentése\fP
-A fájl ott nyílik meg, ahol legutóbb elhagyták
+A fájl megnyitásakor visszaállítja a kurzor helyét
 
 .TP
 \fBLátható sorvégi szóközök\fP
@@ -1212,7 +1167,7 @@ A kurzor mozgatásakor megtartja a kijelölést
 
 .TP
 \fBKurzor a sor vége mögött\fP
-A kurzor a sor utolsó karakterén túl is mehet
+A kurzor a sor végén túl is mehet
 
 .TP
 \fBCsoportos visszavonás\fP
@@ -1230,13 +1185,13 @@ beállítás felvehet:
 
 .TP
 \fBGyors mentés\fP
-Közvetlenül felülírja a fájlt. Gyors, de egy közbeni hiba félig kiírt
-fájlt hagy hátra.
+Az adatokat közvetlenül az eredeti fájlba írja. Ha az írás nem sikerül, a
+fájl hiányos maradhat.
 
 .TP
 \fBBiztonságos mentés\fP
-Előbb ideiglenes fájlba ír, és amikor az teljesen elkészült, átnevezi az
-eredetire, így egy hiba érintetlenül hagyja az eredetit.
+Az adatokat ideiglenes fájlba írja, és csak az írás végeztével cseréli le
+vele az eredetit.
 
 .TP
 \fBBiztonsági másolatok az alábbi kiterjesztéssel\fP
@@ -1250,8 +1205,8 @@ Kiírás előtt rákérdez, ha a fájl végéről hiányzik az újsor karakter.
 
 .SS Megjelenítés
 .PP
-A téma, amellyel a program rajzolódik, és hogy a párbeszédablakoknak és a
-legördülő menüknek van\-e árnyéka.
+Itt választható ki a téma, és itt állítható be a párbeszédablakok és a
+legördülő menük árnyéka.
 
 .TP
 \fBSkin\fP
@@ -1268,32 +1223,29 @@ A választás az ini fájl
 \fIskin\fP
 és
 \fIshadows\fP
-beállításába íródik. A témafájlokról magukról lásd a
-Témák
-szakaszt.
+beállításába íródik. A témafájlok keresési sorrendjét a Témák
+írja le.
 
 .SS Billentyűk
 .PP
-Ez a párbeszédablak megtanítja a bluerignek azokat a vezérlősorozatokat,
-amelyeket a terminál a funkcióbillentyűkre, a nyilakra és a
-navigációs billentyűkre küld. A címe a terminált nevezi meg, a
-\fBTERM\fP
-változó alapján.
+Ez a párbeszédablak a terminál vezérlősorozatait párosítja a
+funkcióbillentyűkkel, a nyilakkal és a navigációs billentyűkkel. A cím a
+terminál nevét mutatja a \fBTERM\fP változóból.
 
 .PP
 A jelölőnégyzetekkel válasszon módosító kombinációt (Ctrl, Alt, Shift), majd
-nyomja meg egy billentyű gombját. Nyomja le a billentyűt a billentyűzeten, és
-várja meg, amíg az elfogásról szóló üzenet eltűnik. A megtanult sorozat a gomb
-mellett jelenik meg. Az olyan sorozatot, amely már egy másik billentyűé,
-ütközésként jelzi.
+nyomja meg egy billentyű gombját. Nyomja le azt a billentyűt a billentyűzeten,
+és várja meg, amíg az elfogásról szóló üzenet eltűnik. A megtanult sorozat a
+gomb mellett jelenik meg. Ha egy másik billentyűnek már megvan, a szerkesztő
+ütközést jelez.
 
 .TP
 \fBDel\fP
-Annak a megtanult billentyűnek a törlése, amelyen a kurzor áll.
+A kiválasztott billentyű mentett sorozatának törlése.
 
 .TP
 \fBMentés\fP
-A megtanult billentyűk kiírása a
+A billentyűk és sorozatok párosításának kiírása a
 \fI~/.config/bluerig/term/<TERM>\fP
 fájlba.
 
@@ -1303,12 +1255,11 @@ Ennek a fájlnak a megnyitása a szerkesztőben.
 
 .SS Key bindings
 .PP
-A program műveletei azokkal a billentyűkkel, amelyekre válaszolnak,
-táblázatban. A felül lévő gombok választják ki a csoportot, Editor vagy
-Widgets, majd annak részét: Main és Ctrl\-X a szerkesztőnél; Dialog, Menu,
-Input, Listbox, Radio és Help a vezérlőelemeknél. A Back visszavisz a
-csoportokhoz. A * jellel jelölt műveletek billentyűi eltérnek az
-alapértelmezettől.
+A táblázat a műveleteket és a hozzájuk kötött billentyűket mutatja. A felül
+lévő gombok választják ki a csoportot, Editor vagy Widgets. Az Editor
+csoport részei a Main és a Ctrl\-X, a Widgets csoporté a Dialog, a Menu, az
+Input, a Listbox, a Radio és a Help. A Back visszavisz a csoportok listájához.
+A megváltoztatott kötésű műveleteket * jelöli.
 
 .TP
 \fBEnter\fP
@@ -1336,75 +1287,60 @@ megnyitása a szerkesztőben.
 
 .TP
 \fBEdit term file\fP
-A terminál billentyűsorozatainak megnyitása, abban a fájlban, amelyet a
-Billentyűk
-ír.
+A Billentyűk
+ablakban mentett vezérlősorozatok fájljának megnyitása.
 
 .PP
-A más művelethez tartozó billentyűt jelzi, és megkérdezi, elvegye\-e onnan.
+Ha a billentyű már egy másik művelethez van kötve, a szerkesztő megerősítést
+kér az új kötéshez.
 
 .SS Key sniffer
 .PP
 Nyomja meg a
 \fBCapture key\fP
-gombot, majd egy tetszőleges billentyűt. A párbeszédablak megmutatja, mi
-érkezett:
+gombot, majd nyomja le azt a billentyűt, amelyet ellenőrizni szeretne. A
+párbeszédablak megmutatja az adatait:
 
 .EX
 Shortcut   the symbolic name, e.g. Ctrl\-F5
 Action     the action of the key in the editor keymap
-Raw        the escape sequence and its bytes in hex
+Raw        the escape sequence and its bytes
 Keycode    the internal numeric code
 .EE
 
 .PP
-Ide érdemes nézni, ha egy billentyű nem csinál semmit, vagy mást csinál: a
-billentyűt, amely a program számára ismeretlen sorozatként érkezik, a
-Billentyűk
-ablakban kell megtanítani, azt pedig, amely megérkezik, de nincs művelete, a
-Key bindings
-ablakban kell társítani.
+Ha a szerkesztő nem ismeri fel a sorozatot, állítsa be a
+Billentyűk ablakban. Ha a billentyűt felismeri, nézze meg a
+hozzá kötött műveletet a Key bindings ablakban.
 
 .SS Manage plugins
 .PP
-A program által betöltött bővítmények táblázatban: a fajta, a név és amit a
-bővítmény magáról mond. Itt szerepelnek a szerkesztő bővítményei, és ahol a
-bluerig Luával készült, a Lua\-motor is, mint
+A táblázat minden szerkesztő bővítmény fajtáját, nevét és leírását mutatja.
+Ha a bluerig Luával készült, a táblázatban a Lua futtatókörnyezet is szerepel,
 \fIruntime\fP
-fajtájú bővítmény. A bővítmény a sorában lévő jelölőnégyzettel kapcsolható ki
-és be, és ami ki van kapcsolva, az a következő alkalommal sem töltődik be; a
-választás a
-\fI~/.config/bluerig/plugins.ini\fP
-fájlban marad meg. A kikapcsolt bővítmény a listában marad, hogy újra be
-lehessen kapcsolni.
+fajtával.
+A bővítmény sorában lévő jelölőnégyzet dönti el, betöltődik\-e a következő
+indításkor. A választás a \fI~/.config/bluerig/plugins.ini\fP fájlban marad meg.
+A kikapcsolt bővítmények a listában maradnak.
 
 .TP
 \fBEnter, F4\fP
-Annak a bővítménynek a beállításait nyitja meg, amelyen a kurzor áll. Ha a
-bővítménynek nincs beállítása, ezt jelzi. A Lua\-motor sorában a
-Lua scripts
-ablakot nyitja meg.
-
-.TP
-\fBIDE: project, build, debugger\fP
-Az a három bővítmény, amely IDE\-t csinál a szerkesztőből, együtt kapcsolható
-be, vagy együtt ki, ha mind a három be van kapcsolva: a projekt és a
-fájljai, a fordítás és a hibakereső. Mindegyik a többi nélkül is működik.
+A kiválasztott bővítmény beállításainak megnyitása. Ha a bővítménynek nincs
+beállítása, a szerkesztő ezt jelzi. A Lua futtatókörnyezetnél a
+Lua scripts ablakot nyitja meg.
 
 .SS Plugin info
 .PP
-A szerkesztő által betöltött bővítmények: a név, be van\-e kapcsolva, mit nyújt
-és mit csinál. Ez megtekintésre szolgáló lista; a bővítményt a
-Manage plugins
-ablakban lehet kikapcsolni és a beállításait megnyitni.
+A betöltött bővítmények listája a nevüket, az állapotukat, a képességeiket és
+a leírásukat mutatja. A bővítmények beállításai és kapcsolói a
+Manage plugins ablakban vannak.
 
 .SS Lua scripts
 .PP
-A megtalált Lua\-szkriptek, a rendszerszintűek és a felhasználóéi,
-táblázatban: be van\-e kapcsolva, hol van a szkript (global vagy user), az
-azonosítója, a munkaterülete, mit nyújt és mit csinál. A szkript a sorában
-lévő jelölőnégyzettel kapcsolható ki és be; a változás a bluerig következő
-indításakor lép érvénybe.
+A táblázat minden megtalált Lua\-szkript állapotát, helyét (global vagy user),
+azonosítóját, munkaterületét, képességeit és leírását mutatja.
+A szkript sorában lévő jelölőnégyzet dönti el, betöltődik\-e a bluerig
+következő indításakor.
 
 .TP
 \fBSettings\fP
@@ -1412,7 +1348,8 @@ Annak a szkriptnek a futtatása, amely a csomag beállításait tartalmazza, ha
 van ilyen.
 
 .PP
-A szkriptekről magukról lásd Lua\-szkriptek\&.
+Hogy hol vannak a csomagok és hogyan épülnek fel, azt a
+Lua\-szkriptek írja le.
 
 
 .SH Keresés, csere és a sorszűrő
@@ -1484,52 +1421,51 @@ Meghagyja ezt a találatot, és keresi a következőt
 \fBFilter\fP
 
 .PP
-Elrejti a találat nélküli sorokat; a sorszámok nem változnak, és a
-sorállapot\-oszlop megjelöl minden elrejtett szakaszt. A sorok egyszer
-rejtődnek el, a gomb megnyomásakor: az utána megváltoztatott vagy beírt sor
-látható marad, akkor is, ha nem illeszkedik.
+A szűrő elrejti a találat nélküli sorokat, és megtartja a sorszámokat. A
+sorállapot\-oszlop megjelöli az elrejtett szakaszokat. A szűrő a
+bekapcsolásakor lép érvénybe. Az új és a megváltoztatott sorok láthatók
+maradnak, amíg a szűrőt újra nem alkalmazzák.
 
 .TP
 \fBAlt\-s\fP
-Leveszi a szűrőt, vagy az utolsó keresést alkalmazza szűrőként; ha nem volt keresés, megnyitja a keresés párbeszédablakát
+Leveszi a szűrőt, vagy az utolsó keresést alkalmazza szűrőként. Ha még nem volt keresés, megnyitja a keresés párbeszédablakát
 
 .TP
 \fBAlt\-S\fP
 A kijelölt szövegre vagy a kurzor alatti szóra szűr
 
 .TP
-\fBParancs > Unfold all\fP
+\fBParancs > Összes kibontása\fP
 Leveszi a szűrőt és minden összecsukást
 
 
 .SH Összecsukás
 .PP
-Az összecsukás sorok egy szakaszát rejti el az első sora mögé, amely a
-képernyőn marad, egy jellel a sorállapot\-sávban. Az
-\fBAlt\-F\fP
+Az összecsukás egy blokknak csak az első sorát mutatja. A sorállapot\-oszlop
+megjelöli ezt a sort. A
+Alt\-F
 (a Parancs menü Fold / Unfold block tétele) a kijelölt sorokat csukja össze,
 vagy ha nincs kijelölés, az aktuális soron lévő zárójeltől a párjáig tartó
-sorokat. Az összecsukott rész első során kinyitja azt. Az
-\fBUnfold all\fP
+sorokat. Az összecsukott rész első során ez a billentyű kinyitja azt. Az
+\fBÖsszes kibontása\fP
 a fájl minden összecsukását kinyitja, és leveszi a sorszűrőt.
 
 
 .SH Makrók
 .PP
 A Ctrl\-r
-elindítja a makró felvételét: rögzíti az utána lenyomott billentyűket. A
-\fBCtrl\-r\fP
-újabb megnyomása befejezi a felvételt, és várja azt a billentyűt, amelyhez a
-makró tartozik; ezután az a billentyű futtatja.
+elindítja a makró felvételét. A felvétel befejezéséhez nyomja meg újra a
+Ctrl\-r
+billentyűt, majd azt a billentyűt, amely a makrót futtatja majd.
 
 .PP
 A makrók a
 \fB~/.local/share/bluerig/macros\fP
 fájl
 \fB[editor]\fP
-szakaszában maradnak meg, és egy makró a sorának ottani törlésével, vagy a
-Macro Explorer
-ablakban törölhető.
+szakaszában maradnak meg.
+Makró törléséhez törölje a sorát a fájlból, vagy használja a
+Macro Explorer ablakot.
 
 .PP
 A Parancs menü
@@ -1584,22 +1520,19 @@ l       comment selection
 
 .SH Macro Explorer
 .PP
-A felvett makrók, azzal a billentyűvel, amelyre mindegyik válaszol, és azzal,
-amit csinál. A gombok:
+A felvett makrók listája a billentyűiket és a műveleteiket mutatja.
 
 .TP
 \fBRun\fP
-Lejátssza azt a makrót, amelyen a kurzor áll.
+A kiválasztott makró futtatása.
 
 .TP
 \fBTöröl\fP
-Kérdés után eltávolítja.
+A kiválasztott makró törlése, kérdés után.
 
 .TP
 \fBFájl szerkesztése\fP
-Megnyitja azt a fájlt, amelyben a makrók vannak, és amelyet a
-Makrók
-szakasz leír.
+A makrófájl megnyitása. A formátumát a Makrók írja le.
 
 
 .SH Felhasználói menü
@@ -1786,37 +1719,35 @@ tételében kapcsolható be és ki.
 .SH Párbeszédablakok
 .SH Mentés másként
 .PP
-A név, amelyen a fájl kiíródik, és a sortörések, amelyekkel kiíródik: ahogy a
-fájlban vannak, Unix (LF), Windows és DOS (CR LF), vagy Macintosh (CR). A
-választás erre a mentésre érvényes; a fájl azt tartja meg, amit kap.
+Adja meg a fájl nevét és a sortörések formátumát. Megtarthatja a fájl
+formátumát, vagy választhat Unix (LF), Windows és DOS (CR LF), vagy Macintosh
+(CR) formátumot. A választott formátum erre a mentésre érvényes.
 
 .SH Nyitott fájlok
 .PP
-A szerkesztőben nyitott fájlok, soronként egy. Az Enter arra a fájlra lép,
-amelyen a kurzor áll, az Esc a megjelenített fájlt hagyja a helyén. Ugyanez a
-lista az Ablak menü
+A listában minden nyitott fájlnak egy sora van. Az Enter a kiválasztott
+fájlra vált, az Esc bezárja a listát. Ugyanezt a listát nyitja meg az Ablak
+menü
 \fBLista\fP
 tétele.
 
 .SH Képernyőválasztó
 .PP
 A szerkesztőn kívül egy Lua\-szkript saját képernyőket is nyithat: teljes
-képernyős nézeteket, amelyek nyitva maradnak, miközben visszatér a
-szerkesztőbe. A
-képernyők között háromféleképpen lehet váltani:
+képernyős ablakokat, amelyek nyitva maradnak, miközben visszatér a
+szerkesztőbe. A képernyők között háromféleképpen lehet váltani:
 
 .TP
 \fBAlt\-}\fP
-váltás a következő képernyőre;
+Következő képernyő
 
 .TP
 \fBAlt\-{\fP
-váltás az előző képernyőre;
+Előző képernyő
 
 .TP
 \fBAlt\-`\fP
-párbeszédablak megnyitása a nyitott képernyők listájával, hogy egyet
-kiválasszon.
+A nyitott képernyők listája
 
 .SH Kiegészítés
 .PP
@@ -1845,7 +1776,7 @@ Felhasználónév
 Fájlnév
 
 .PP
-Ahol több is illik, a program sípol. Az ini fájl
+Ha több is illik, a szerkesztő sípol. Az ini fájl
 \fIshow_all_if_ambiguous\fP
 beállítása, amely alapértelmezésben ki van kapcsolva, a listájukat a kurzor
 mellett mutatja: az
@@ -1855,30 +1786,22 @@ Right elrejti.
 
 .SH Válasszon kódlapot
 .PP
-A program által ismert kódlapok listája, a
-\fB{{pkgdatadir}}/charsets\fP
-fájlból. Egy kódlap kiválasztása megmondja a szerkesztőnek, milyen kódlapon
-íródott a fájl szövege, és a szöveg a képernyőre ebből a terminál kódlapjára
-kódolódik át; a
-\fB<No translation>\fP
-bájtokként hagyja. A listát az
-\fBAlt\-e\fP
-és a Parancs menü Kódolás tétele nyitja meg.
+A szerkesztő a kódolások listáját a \fB{{pkgdatadir}}/charsets\fP fájlból
+tölti be. Válassza ki a fájl kódolását; a szerkesztő ebből alakítja át a
+szöveget a terminál számára. A \fB<No translation>\fP tétel kikapcsolja az
+átalakítást. A lista a Alt\-e billentyűvel vagy a
+Parancs menü Kódolás... tételével nyílik meg.
 
 .SH Előzmények
 .PP
-Annak a listája, amit korábban egy beviteli sorba beírtak, a legújabb elöl;
-az
-\fBAlt\-h\fP
-nyitja meg annak a sornak, amelyben a kurzor van. Az Enter a sorba veszi azt
-a tételt, amelyen a kurzor áll, az Esc a sort úgy hagyja, ahogy volt, az
-\fBF8, Del\fP
-pedig eltávolítja az előzményekből azt a tételt, amelyen a kurzor áll. Az
-előzmények a
+Az \fBAlt\-h\fP megnyitja az aktuális beviteli sor előzményeit. A legutóbbi
+tételek vannak elöl. Az Enter a kiválasztott tételt a sorba teszi, az Esc a
+sor megváltoztatása nélkül bezárja az előzményeket, az \fBF8, Del\fP pedig
+törli a kiválasztott tételt. Az előzmények a
 \fI~/.local/share/bluerig/history\fP
 fájlban maradnak meg; a
 \fInum_history_items_recorded\fP
-mondja meg, hány tételt őriz meg mindegyik.
+beállítás mondja meg, hány tételt őriz meg egy\-egy előzménylista.
 
 
 .SH Szintaxiskiemelés
@@ -1926,8 +1849,8 @@ A felhasználó szabályai: amit a felhasználó hozzáadott, vagy másképp sze
 A telepített szabályok, azokhoz a fájltípusokhoz, amelyeket a felhasználói fájl nem nevez meg
 
 .PP
-A felhasználói bejegyzés felülírja a telepítettet azoknál a fájloknál,
-amelyekre illeszkedik. Az
+Ha egy fájlra a felhasználói és a telepített szabályok is illeszkednek, a
+felhasználói szabályok érvényesek. Az
 \fBinclude\fP
 sorokban megnevezett fájlokat előbb a
 \fI~/.local/share/bluerig/syntax/\fP
@@ -1935,9 +1858,9 @@ könyvtárban keresi, aztán a telepítettek között. A felhasználói fájl mi
 alkalommal újra beolvasódik, amikor egy új fájl nyílik meg a szerkesztőben.
 
 .PP
-A telepített fájl teljes másolata, ahogy a régebbi változatok készítették,
-elrejt minden utána telepített fájltípust, és azok kiemelése nem működik: a
-másolatban csak a megváltoztatott bejegyzéseket tartsa meg.
+A telepített fájl teljes másolata elrejtheti az új változatban hozzáadott
+fájltípusok szabályait. A felhasználói fájlban csak a megváltoztatott
+bejegyzéseket tartsa meg.
 
 .SH A file szakasz
 .PP
@@ -2054,7 +1977,7 @@ külön adja meg a két oldalt. Egy
 \fBspellcheck\fP
 sor a
 \fBcontext\fP
-után a kontextus szavait a helyesírás\-ellenőrzésnek adja át.
+után bekapcsolja a helyesírás\-ellenőrzést a kontextuson belül.
 
 .SH Beágyazás és rétegek
 .PP
@@ -2075,9 +1998,9 @@ fájlban keresi, amelyből a szabályok olvasódnak, aztán a bluerig\-gel
 telepítettben. Ha egyikben sincs meg a típus, a kontextus a saját színeiben
 marad. A határolók a kontextus színeit tartják meg. A jobb határoló bárhol
 lezárja a beágyazott szöveget, a beágyazott szabályok karakterláncán vagy
-megjegyzésén belül is. Egy beágyazott szintaxis beágyazhat egy másikat,
-néhány szint mélységig. Például a HTML a szkripteket a JavaScript
-szabályainak adja át:
+megjegyzésén belül is. A szintaxisok több szint mélységig egymásba
+ágyazhatók. Például a HTML szabályai a SCRIPT címke tartalmára a JavaScript
+szintaxisát használhatják:
 
 .EX
   context <SCRIPT*> </SCRIPT> brightcyan
@@ -2135,7 +2058,7 @@ A kulcsszavak és a kontextushatárolók karakterláncai így olvasódnak:
 
 .TP
 \fB\et, \es\fP
-Tabulátor és szóköz: az üres helyek a sor szavait választják el, és nem használhatók úgy, ahogy vannak
+Tabulátor és szóköz. Ahogy vannak, a sor szavait választják el, ezért a minta ezeket az alakokat használja
 
 .TP
 \fB\en, \er\fP
@@ -2212,8 +2135,8 @@ nélkül. 256 színnél van még color16 \- color255, rgb000 \- rgb555 és
 gray0 \- gray23 is.
 
 .PP
-Az előtérszín helyett hatókör\-token (scope token) is állhat: nagybetűs szó,
-amely azt mondja meg, mi a szöveg, nem azt, hogyan néz ki:
+Az előtérszín helyett hatókör\-token (scope token) is megadható: nagybetűs szó,
+amely a szöveg fajtáját nevezi meg. A színét a téma adja meg:
 
 .EX
 keyword  whole  if   KEYWORD_CONTROL
@@ -2223,19 +2146,17 @@ keyword  linestart TODO  KEYWORD_OTHER_TODO black
 .EE
 
 .PP
-A token színe a témából jön, így egy téma színezi a programot és a szöveget,
-és minden nyelvet ugyanúgy; lásd
+A téma adja meg a felület és a kiemelési tokenek színeit minden nyelvre. Lásd
 Témák\&.
-A token hatókörként olvasódik: kisbetűvel, az aláhúzások helyén pontokkal. A
+A hatókör neve kisbetűvel íródik, az aláhúzások helyén pontokkal. Például a
 KEYWORD_CONTROL_IMPORT a keyword.control.import, a keyword.control egy
 fajtája, amely a keyword egy fajtája. Ezek a Sublime Text és a TextMate
-hatókörnevei. Amit a téma nem színez, az megtartja azokat a színeket, amelyeket
-az mcedit adott annak a szövegnek. A token utáni háttér vagy attribútumok az
-mcedit színei fölött állnak, ahogy fent a black, de nem a téma által magának
-a tokennek adott háttér vagy attribútumok fölött. A token a
-define sorban is működik, és a line\-local szabályok number, string és
-symbols sorában is. A telepített szintaxisfájlok csak tokeneket használnak; a
-listájuk az mcedit színeivel a
+hatókörnevei. A témában megadott háttér és attribútumok erősebbek, mint a
+szabályban a token után megadott értékek. Ha a téma nem adja meg őket, a
+szabály értékei érvényesek, például fent a black. A többi érték a szabványos
+mcedit\-sémából jön. A token a define sorban is működik, és a line\-local
+szabályok number, string és symbols sorában is. A telepített szintaxisfájlok
+tokeneket használnak. A tokenek listája az mcedit\-színeikkel a
 \fB{{pkgdatadir}}/syntax/README.txt\fP
 fájlban van.
 
@@ -2287,8 +2208,8 @@ mód a \-c kapcsolóval kikényszeríthető, a \-b kapcsolóval pedig kikapcsolh
 
 .PP
 Ha a program az ncurses helyett az S\-Lang képernyőkezelővel készült, a
-\fBCOLORTERM,\fP
-változót is megnézi; ha be van állítva, ugyanaz a hatása, mint a \-c
+\fBCOLORTERM\fP
+változót is megnézi: ha be van állítva, ugyanaz a hatása, mint a \-c
 kapcsolónak.
 
 .PP
@@ -2346,10 +2267,11 @@ A témafájlok formátumát a
 \fB{{pkgdatadir}}/skins/README.txt\fP
 írja le. A szintaxiskiemelés színei a téma
 \fB[syntax]\fP
-szakaszából jönnek: ott egy hatókör egy szövegfajta színeit adja meg; két
-hatókör üres hellyel elválasztva, a szövegé és annak a kontextusé, amelyben
-áll, az adott szövegfajta színeit abban a kontextusban. A téma által
-megnevezett leghosszabb hatókör nyer:
+szakaszából jönnek. Egy kulcs egy hatókör színét adja meg. Ha egy hatókör
+színét egy kontextuson belül akarja megadni, előbb a kontextus hatókörét adja
+meg, aztán a szövegét, köztük szóközzel. A program mindkét esetben a
+leghosszabb illeszkedő hatókörnevet választja. A kontextussal megadott pár
+kerül sorra először.
 
 .EX
 [syntax]
@@ -2362,10 +2284,9 @@ megnevezett leghosszabb hatókör nyer:
 .EE
 
 .PP
-Az a szövegfajta, amelyet a téma nem nevez meg, megtartja az mcedit által
-adott színeit, így a téma megnevezhet néhány fajtát, és a többit meghagyhatja.
-Azok a szabályok, amelyek hatókör\-tokenek helyett színeket neveznek meg, a
-témától függetlenül megtartják a színeiket; lásd
+Azok a hatókörök, amelyeknek a téma nem ad színt, a szabványos mcedit\-színeket
+kapják. A kiemelési szabályokban kifejezetten megadott színek bármely témával
+ugyanazok maradnak. Lásd
 Szintaxiskiemelés\&.
 
 
@@ -2436,19 +2357,16 @@ bluerig a "\ee[[1;6D" sorozatot Ctrl\-Alt\-Left billentyűként értelmezi.
 .PP
 A
 \fIcomplete\fP
-billentyűszimbólum azokat a vezérlősorozatokat jelöli, amelyek a kiegészítést
-indítják; ezt az Alt\-tab indítja, de más billentyűk is megadhatók ugyanerre
-(azokon a billentyűzeteken, amelyeken rengeteg szép és használatlan billentyű
-van mindenfelé).
+billentyűszimbólum a kiegészítés vezérlősorozatait adja meg. Általában az
+Alt\-Tab végzi. Megadható egy másik billentyű sorozata is.
 
 
 .SH Lua\-szkriptek
 .PP
-Ahol a bluerig Luával készült, Lua\-szkripteket futtat, amelyek a
-szerkesztőt bővítik: billentyűkhöz és menükhöz kötött műveletek, válaszok a
-szerkesztő eseményeire (fájl nyílik meg, mentődik, billentyűt nyomnak le),
-párbeszédablakok és teljes képernyős nézetek. A szerkesztő több parancsa is
-ilyen szkript: a sorok rendezése, a bekezdés formázása, egy parancs
+Ha a bluerig Luával készült, a szkriptek parancsokat tehetnek a menükbe,
+billentyűkhöz köthetik őket, kezelhetik a szerkesztő eseményeit, és
+párbeszédablakokat és teljes képernyős ablakokat nyithatnak. Luában készült
+például a sorok rendezése, a bekezdés formázása, egy parancs
 kimenetének beszúrása, karakter beszúrása a kódpontja alapján, a dátum
 beszúrása, base64 dekódolása és táblázatok rajzolása.
 
@@ -2474,7 +2392,7 @@ változó, Lua\-szkript nélkül indítja a szerkesztőt, az ini fájl
 \fB[Lua]\fP
 szakaszában az
 \fIenabled=false\fP
-pedig véglegesen.
+pedig a későbbi indításokra is kikapcsolja a Luát.
 
 .PP
 Hogy hogyan kell szkriptet írni, és milyen függvényeket hívhat egy szkript,
@@ -2564,10 +2482,9 @@ működjön.
 \fIkeybar_modifiers\fP
 Ha igaz, a Shift, a Ctrl vagy az Alt nyomva tartása alatt a billentyűsor
 azokat a parancsokat mutatja, amelyeket az F billentyűk ezzel a módosítóval
-adnak. Ehhez a kitty
-billentyűzet\-protokollt ismerő terminál kell: a bluerig ekkor minden
-billentyűt a felengedésével együtt kér tőle, és a fókuszeseményeket is. Más
-terminálokat nem érint. Alapértelmezésben hamis.
+adnak. Ehhez a kitty billentyűzet\-protokollt ismerő terminál kell. A bluerig
+lenyomási és felengedési eseményeket, valamint fókuszeseményeket kér a
+termináltól. Alapértelmezésben ki van kapcsolva.
 
 .TP
 \fIverbose\fP
@@ -2770,9 +2687,8 @@ bejegyzése által megnevezett fájl használatos, és e bejegyzés nélkül a
 
 .TP
 \fBBLUERIG_SPELL_LOG\fP
-Az a fájl, amelybe a helyesírás\-ellenőrző a hibakeresési naplóját írja.
-Nincs saját kapcsolója: a napló akkor íródik, ha a változó egy fájlt nevez
-meg.
+A helyesírás\-ellenőrzés hibakeresési naplójának útvonala. Ha a változó be
+van állítva, a helyesírás\-ellenőrzés ebbe a fájlba írja a naplóját.
 
 
 .SH FÁJLOK
@@ -2797,7 +2713,8 @@ a
 
 .TP
 \fI{{pkgdatadir}}/help/bluerig.md\fP
-A program súgófájlja, és mellette a szerkesztő bővítményeinek súgófájljai.
+A program súgófájlja (a fordítások bluerig.ru.md és így tovább); mellette
+vannak a szerkesztő bővítményeinek súgófájljai.
 
 .TP
 \fI{{sysconfdir}}/bluerig/bluerig.ini\fP, \fI{{pkgdatadir}}/bluerig.ini\fP

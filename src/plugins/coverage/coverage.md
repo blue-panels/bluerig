@@ -2,15 +2,17 @@
 
 **Coverage**
 
-Marks in the gutter the lines that ran when the tests or the program ran,
-and the lines of code that did not run. Works in *bluerig -D*.
+Shows the share of covered code in the project tree. A mark left of the
+line number shows whether the line ran when the tests or the program ran.
+Works in *bluerig -D*.
 
 |  |  |
 |--|--|
 | Project > Show/hide coverage | Show or take off the coverage marks |
 | Project > Reread coverage | Read the coverage data now |
 
-A line that ran gets a green bar, a line that did not run a yellow one.
+A line covered by the tests gets a green bar, a line not covered a yellow
+one.
 Lines without code, comments and empty lines get no mark. The marks move
 with their lines while the file is edited, until the data is read again.
 The project tree shows after each file the share of its lines of code that

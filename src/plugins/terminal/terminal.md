@@ -2,77 +2,79 @@
 
 **Terminal**
 
-Runs your shell in a window of the editor. This is the shell named by the
-**SHELL**
-variable, and it starts in the directory of the edited file. Works with bash,
-zsh, fish and tcsh, and with other shells that print a prompt.
+Runs the shell from the **SHELL** variable in a window of the editor. If the
+variable is not set, the user's login shell is used, and if there is none -
+the first one found in */bin*, for example *bash* or *zsh*.
+The shell starts in the directory of the edited file. If no file is open
+or the directory is not available, the working directory of the editor is used.
+Works with bash, zsh, fish, tcsh and other shells.
 
-**Ctrl-o**
+**Ctrl-O**
 : Show the terminal window: the first time at the bottom of the screen, later
 as it was when it was hidden. A file shown full screen becomes a window above
-the terminal. Ctrl-o in the terminal hides the window again, and the file
+the terminal. Ctrl-O in the terminal hides the window again, and the file
 takes the whole screen again, unless it was moved or resized in between. The
 shell goes on running while the window is hidden: what it prints then is
 there when the window is shown again. If the window is on the screen but
-under another window, Ctrl-o brings it to the top.
+under another window, Ctrl-O brings it to the top.
 
-The terminal window is a window of the editor like the windows of files: it
-is moved, resized, shown full screen and closed with its frame or from the
-Window menu, and Window > List... shows it. The title shows the directory the
-shell is in and the command it runs.
+The terminal window can be moved, resized, shown full screen and closed with
+the [X] button on its frame. To go to it, use the Terminal item of the Window
+menu or the window list (Window > List...).
 
-Closing the window ends the shell. If a command runs in it, the editor asks
-first, and asks the same when the editor ends. After the shell ends, for
-example with
-**exit**,
-Ctrl-o starts a new one in the window.
+The title shows the directory the shell is in and the command it runs.
+
+Closing the window ends the shell. If the editor sees that the shell runs a
+command, it asks for confirmation when the window closes and when the editor
+exits. After the shell ends, for example with *exit*, Ctrl-O starts a new one
+in the window.
 
 **The keys**
 
-Every key not listed below goes to the shell, including the function keys,
-Esc, the cursor keys, Home and End, which the shell's line editor and
-history use. A full-screen program, an editor or a pager, takes all
-keys itself, Ctrl-o too. The menu and the button bar work with the mouse.
+Every key not listed below goes to the shell, including the function keys and
+Esc, and also the cursor keys, Home and End, which the shell uses to edit the
+command and browse its history.
+A program that switched to the alternate screen of the terminal gets all
+keys, Ctrl-O too. The menu and the button bar work with the mouse.
 
-The terminal keeps a scrollback of all the shell printed. Shift with the
-cursor keys marks it, starting where the shell waits for input.
+The terminal keeps up to 5000 lines of scrollback. Long lines can make this
+smaller because of a limit on the number of cells. Shift with the cursor keys
+marks the output, starting where the shell waits for input.
 
 |  |  |
 |--|--|
-| Ctrl-Insert, Enter, F2 | Copy the marked output to the clipboard file |
-| Ctrl-Shift-u | Remove the mark |
+| Ctrl-Insert, Enter, F2 | Copy the marked output to the clipboard file. Without a mark Enter goes to the shell |
+| Ctrl-Shift-U | Remove the mark |
 | Alt-s | Search the output for what is typed next |
-| Alt-S | Show only the rows with what is typed next |
-| Ctrl-l | Clear the screen, keep the scrollback |
-| Ctrl-Shift-l, Ctrl-Alt-l, F6 | Clear the screen and the scrollback |
-| PgUp, PgDn | Scroll the output |
-| Ctrl-Home | Oldest row of the output |
-| Ctrl-End | Newest row |
+| Alt-S | Show only the lines with what is typed next |
+| Ctrl-L | Clear the screen, keep the scrollback |
+| Ctrl-Shift-L, Ctrl-Alt-L, F6 | Clear the screen and the scrollback |
+| Ctrl-Up, Ctrl-Down | Scroll the output one line |
+| PgUp, PgDn | Scroll the output one page |
+| Ctrl-Home | To the oldest line of the output |
+| Ctrl-End | To the newest line of the output |
 | F3 | Mark the whole output or remove the mark |
-| F4 | Show only the rows with the marked text or the word under the cursor |
+| F4 | Show only the lines with the marked text or the word under the cursor |
 | F5 | Turn this filter off and on again |
 
-Alt-s and Alt-S take a pattern typed on the top row of the window, and the
-output follows it as it grows. Case does not matter. Enter ends the typing
-and leaves the view on what was found; Esc ends the typing and puts the view
-back.
+Alt-s and Alt-S open a field on the top line of the window for the text to
+search or filter. The result follows as you type; case does not matter. Enter
+ends the typing and leaves the result on the screen; Esc cancels the typing
+and puts the old view back.
 
-All these keys are in the
-**[mcterm]**
-section of the keymap file, and they can be changed there or in the Key
-bindings dialog of the Options menu.
+Keys can be reassigned in the *[mcterm]* section of
+*~/.config/bluerig/keymap.ini* or in the Key bindings dialog of the Options menu.
+Ctrl-O is the *Shell* action of the *[editor]* section.
 
 **Settings**
 
-The
-**[Terminal]**
-section of the ini file holds the settings of the terminal.
+The *[Terminal]* section of *~/.config/bluerig/ini* holds the settings of the
+terminal.
 
 *window_height*
 : Height of the window when it is shown the first time, in percent of the
-screen. Default is 25.
+work area of the editor. From 10 to 100, default 25.
 
 *search_direction*
-: The direction in which Alt-s and Alt-S go through the output: down (the
-default) or up, as in
-**less**.
+: The direction in which Alt-s and Alt-S go through the output: down
+(the default) or up, as in *less*.

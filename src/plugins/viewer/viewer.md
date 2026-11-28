@@ -2,19 +2,27 @@
 
 **Preview**
 
-Shows the file in a window to its right, the way it is meant to be read:
-markdown with headings and tables, JSON and XML with indents and colors.
-Draws the view again as you edit and follows the cursor.
+The plugin previews files, for example Markdown, JSON and XML. Other file
+formats can be added with your own Lua script in
+*~/.local/share/bluerig/lua/scripts/*, following render-markdown,
+render-json and render-xml. How to write scripts is described in
+[Lua scripting](bluerig.md#lua-scripting).
+
+The preview window is updated as you edit and scrolls with the cursor of the
+editor.
 
 |  |  |
 |--|--|
-| Ctrl-Alt-p | Show or hide the Preview window |
+| Ctrl-Alt-P | Show or hide the Preview window |
 
 The key is set by the *key* entry of the *[Preview]* section of
-*viewer.ini*. The same item is in the Plugins menu and in the Window menu.
+*~/.config/bluerig/viewer.ini*.
+The same item is in the Plugins menu and in the Window menu. In Git mode
+(*bluerig -G*) the key and the Preview item of the Window menu are not available.
 
-The focus stays in the file, and the window shows the file that comes to the
-front. The window is moved, resized and closed like a file window.
+When the preview opens, the focus stays in the editor. When you go to another
+editor window, the preview shows the file of that window.
+The preview can be moved, resized and closed like a file window.
 
 **Keys in the window**
 
@@ -22,31 +30,44 @@ When the window has the focus, it has a cursor of its own:
 
 |  |  |
 |--|--|
-| Arrow keys, Home, End | Move the cursor |
+| Cursor keys, Home, End | Move the cursor |
 | PgUp, PgDn | Page up, down |
 | Ctrl-Home, Ctrl-End | To the start, to the end of the text |
 | Ctrl-Left, Ctrl-Right | Eight columns left, right |
 | Click | Put the cursor there |
+| Mouse drag, Shift with movement keys | Mark text |
+| F3 | Start or end the mark |
+| Ctrl-A | Mark the whole text |
+| Ctrl-Insert, Enter | Copy the marked text to the clipboard file |
 | Mouse wheel | Scroll, even without focus |
 | Shift-wheel | Scroll sideways |
 
 **File types**
 
-A renderer for the file type draws the file; the viewer picks the renderer by
-the end of the file name or by the start of the text. A file no renderer knows is shown
-as text.
+The preview first finds the format by the end of the file name.
+If that does not work, it checks the start of the text. For example, JSON
+is found by the extension, and XML also by the start `<?xml`. If the format
+is not found, the preview shows the source text.
 
 |  |  |
 |--|--|
-| Markdown | Headings, lists, tables, code blocks, formulas and mermaid diagrams |
+| Markdown | Headings, lists, tables, code blocks, formulas and Mermaid diagrams |
 | JSON, JSON Lines | A value to a line, sizes of objects and arrays, objects of one kind as a table |
 | XML | An element to a line, number of nested elements, elements of one kind as a table |
 
-The renderers are the Lua scripts render-markdown, render-json and
-render-xml. The Manage plugins dialog sets the render-markdown settings;
-they are kept in *~/.config/bluerig/render-markdown.ini*.
+Of Mermaid diagrams, flowcharts (`flowchart` and `graph`), sequence diagrams
+(`sequenceDiagram`), class diagrams (`classDiagram`) and pie charts (`pie`)
+are supported.
 
-While JSON or XML cannot be parsed, in the middle of an edit for example,
-the error and its place are shown at the top, and the last good view under it.
-A long base64 string is cut to its first letters, and what it holds is shown
-beside it: the start of the text or the file type, and the size.
+The Manage plugins dialog sets the render-markdown settings;
+they are kept in
+*~/.config/bluerig/render-markdown.ini*.
+
+JSON and XML over 16 MiB are shown as plain text.
+
+On a parse error the preview shows its message, line and column.
+The last good view stays under it. If there is none yet, the source text
+is shown.
+
+A long base64 string is cut to its first letters, and beside it you see what
+it holds: the start of the text or the file type, and the size.

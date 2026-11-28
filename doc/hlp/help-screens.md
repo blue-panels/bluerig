@@ -9,13 +9,11 @@
                                   |___/
   {{MC_VERSION:32}}
 ```
- a terminal IDE, a continuation of cooledit
-
-This is the main help screen of **bluerig**, a terminal IDE.
+ bluerig - a console IDE
 
 To learn how to use the interactive help, just press [Enter](#how-to-use-help). You may want to go directly to the help [contents](#contents), or to the chapter on [the editor](#internal-file-editor).
 
-bluerig continues cooledit by Paul Sheer; see its [authors](#authors).
+bluerig is based on the cooledit and mcedit editors. See [Authors](#authors).
 
 bluerig comes with ABSOLUTELY NO [WARRANTY](gnu-gpl-v3.0.md#warranty). This is free software, and you are welcome to redistribute it under the terms of the [GNU General Public License](gnu-gpl-v3.0.md#license).
 
@@ -26,7 +24,7 @@ In a query box, use the arrow keys or the highlighted letter of a button to choo
 # How to use help <a id="how-to-use-help"></a>
 <a id="help"></a>
 
-You can use the cursor keys or the mouse to move around in the help window. Press **down arrow** to move to the next link or to scroll down. Press **up arrow** to move to the previous link or to scroll up. Press **right arrow** or **Enter** to follow the current link. Press **left arrow** to go back in the history of the nodes you have visited.
+Help opens with F1 almost anywhere. You can use the cursor keys or the mouse to move around in the help window. Press **down arrow** to move to the next link or to scroll down. Press **up arrow** to move to the previous link or to scroll up. Press **right arrow** or **Enter** to follow the current link. Press **left arrow** to go back in the history of the nodes you have visited.
 
 If your terminal doesn't support the cursor keys, use the **space bar** to scroll forward and the **b** key to scroll back. The **Tab** key moves to the next link, and **Enter** follows it. The **l** key goes back in the history of the nodes you have visited. Press **Esc** to leave the help.
 

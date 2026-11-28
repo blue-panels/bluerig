@@ -564,9 +564,8 @@ msgid "Toggle code fold"
 msgstr ""
 
 #: lib/keybind.c:205
-#, fuzzy
 msgid "Unfold all"
-msgstr "&Znajdź wszystkie"
+msgstr "Rozwiń wszystko"
 
 #: lib/keybind.c:206
 #, fuzzy
@@ -679,7 +678,7 @@ msgstr "&Widoczne spacje kończące"
 
 #: lib/keybind.c:230
 msgid "Toggle control characters"
-msgstr ""
+msgstr "Przełącz znaki sterujące"
 
 #: lib/keybind.c:231
 #, fuzzy
@@ -2551,9 +2550,8 @@ msgid "No macros recorded"
 msgstr ""
 
 #: src/editor/editmacros.c:865
-#, fuzzy
 msgid "Run"
-msgstr "rosyjski"
+msgstr "Uruchom"
 
 #: src/editor/editmacros.c:868
 #, fuzzy
@@ -2721,7 +2719,7 @@ msgstr "Przełącz prawy &margines"
 
 #: src/editor/editmenu.c:319
 msgid "Toggle &control characters"
-msgstr ""
+msgstr "Przełącz znaki &sterujące"
 
 #: src/editor/editmenu.c:321
 msgid "Encod&ing..."
@@ -2729,12 +2727,11 @@ msgstr "Kodowan&ie…"
 
 #: src/editor/editmenu.c:323
 msgid "&Fold / Unfold block"
-msgstr ""
+msgstr "&Zwiń / rozwiń blok"
 
 #: src/editor/editmenu.c:324
-#, fuzzy
 msgid "&Unfold all"
-msgstr "&Znajdź wszystkie"
+msgstr "Rozwiń &wszystko"
 
 #: src/editor/editmenu.c:326
 msgid "&Refresh screen"
@@ -2746,7 +2743,7 @@ msgstr "Roz&pocznij/zatrzymaj nagrywanie makra"
 
 #: src/editor/editmenu.c:330
 msgid "Macro e&xplorer..."
-msgstr ""
+msgstr "Przeglądarka ma&kr..."
 
 #: src/editor/editmenu.c:332
 msgid "Record/Repeat &actions"
@@ -2797,34 +2794,30 @@ msgid "Learn &keys..."
 msgstr "Określ &klawisze…"
 
 #: src/editor/editmenu.c:374
-#, fuzzy
 msgid "Key &bindings..."
-msgstr "&Kodowanie…"
+msgstr "&Przypisania klawiszy..."
 
 #: src/editor/editmenu.c:375
-#, fuzzy
 msgid "Key s&niffer..."
-msgstr "&Kodowanie…"
+msgstr "Po&dgląd klawisza..."
 
 #: src/editor/editmenu.c:377
-#, fuzzy
 msgid "Manage &plugins..."
-msgstr "Opcje &panelu…"
+msgstr "Zarządzaj &wtyczkami..."
 
 #: src/editor/editmenu.c:378
 msgid "Pl&ugin info..."
-msgstr ""
+msgstr "&Informacje o wtyczkach..."
 
 #: src/editor/editmenu.c:380
 msgid "&Lua scripts..."
-msgstr ""
+msgstr "Skrypty &Lua..."
 
 #: src/editor/editmenu.c:383
 msgid "S&yntax file"
 msgstr "Plik &składni"
 
 #: src/editor/editmenu.c:384
-#, fuzzy
 msgid "M&enu file"
 msgstr "Plik &menu"
 
@@ -2853,9 +2846,8 @@ msgid "&Command"
 msgstr "Pole&cenie"
 
 #: src/editor/editmenu.c:553
-#, fuzzy
 msgid "&Navigate"
-msgstr "Nawigacja"
+msgstr "Na&wigacja"
 
 #: src/editor/editmenu.c:580
 msgid "&Window"
@@ -2863,7 +2855,7 @@ msgstr "&Okno"
 
 #: src/editor/editmenu.c:586
 msgid "Pl&ugins"
-msgstr ""
+msgstr "W&tyczki"
 
 #: src/editor/editmenu.c:592
 msgid "&Options"
